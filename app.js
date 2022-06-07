@@ -1,5 +1,6 @@
 const express = require('express');
 const authRoutes = require('./routes/auth.js');
+const categoriesRoutes = require('./routes/category.js')
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -35,7 +36,9 @@ app.use(morgan('dev'));
 // Регистрируем Cors
 app.use(cors());
 
-
+// Инициализируем passport и подключаем файл обработчик для логики защиты и проверки роутов
+app.use(passport.initialize());
+require('./middleware/passport')(passport);
 
 
 
@@ -44,17 +47,19 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 
 
+// Регистрируем роут auth
+app.use('/api/categories', categoriesRoutes);
 
 
 
-// Инициализируем passport и подключаем файл обработчик для логики защиты и проверки роутов
-// app.use(passport.initialize());
-// require('./middleware/passport')(passport);
+
+
+
 
 
 
 // Добавляем возможность отдавать с сервера картинки по запросу. (Когда будет запрос к uploads, делай эту папку статической)
-// app.use('/uploads', express.static('uploads'));
+app.use('/uploads/cars', express.static('uploads/cars'));
 
 
 
