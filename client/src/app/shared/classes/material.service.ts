@@ -13,6 +13,7 @@ declare var M: {
   Tooltip: any;
   Datepicker: any;
   TapTarget: any;
+  Tabs: any;
 };
 
 
@@ -76,6 +77,13 @@ export class MaterialService
     static initTapTarget(ref: ElementRef): MaterialInstance
     {
         return M.TapTarget.init(ref.nativeElement);
+    }
+
+
+    // Инициализируем табы
+    static initTabs(ref:ElementRef, options ={}): MaterialInstance
+    {
+        return M.Tabs.init(ref, options);
     }
 
     

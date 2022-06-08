@@ -11,6 +11,8 @@ import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './shared/classes/token.interceptor';
+import { OverviewPageComponent } from './overview-page/overview-page.component';
+import { AddCarComponent } from './cars-page/add-car/add-car.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { TokenInterceptor } from './shared/classes/token.interceptor';
     RegisterPageComponent,
     CarsPageComponent,
     AuthLayoutComponent,
-    SiteLayoutComponent
+    SiteLayoutComponent,
+    OverviewPageComponent,
+    AddCarComponent
   ],
   imports: [
     BrowserModule,
