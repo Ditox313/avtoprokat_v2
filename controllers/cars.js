@@ -19,6 +19,7 @@ module.exports.create = async function(req, res) {
             vladelec: req.body.vladelec,
             status: req.body.status,
             category: req.body.category,
+            previewSrc: req.file ? req.file.path : '', //Если файл загружен то задаем путь до файла
             user: req.user.id,
         }).save();
 

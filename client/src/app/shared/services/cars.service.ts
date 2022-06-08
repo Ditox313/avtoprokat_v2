@@ -15,8 +15,31 @@ export class CarsService {
 
 
   // Создаем новую позицию
-  create(car: Car): Observable<Car> {
-    return this.http.post<Car>(`/api/cars`, car);
+  create(car: Car, image?: File): Observable<Car> {
+
+
+  
+    const fd = new FormData(); 
+      fd.append('marka', car.marka);
+      fd.append('model', car.model);
+      fd.append('probeg', car.probeg);
+      fd.append('price', car.price);
+      fd.append('start_arenda', car.start_arenda);
+      fd.append('end_arenda', car.end_arenda);
+      fd.append('vladelec', car.vladelec);
+      fd.append('status', car.status);
+      fd.append('category', car.category);
+
+      if(image)
+      {
+         fd.append('previewSrc', image, image.name);
+      }
+
+      
+
+
+
+    return this.http.post<Car>(`/api/cars`, fd);
   }
 
   // // Получаем список всех позиций

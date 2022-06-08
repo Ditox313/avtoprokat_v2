@@ -74,7 +74,20 @@ const carSchema = new Schema({
     user: {
         ref: 'users',
         type: Schema.Types.ObjectId
-    }
+    },
+
+
+
+
+    // Создаем поле изображения юзера
+    previewSrc: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+
+
 
 
 

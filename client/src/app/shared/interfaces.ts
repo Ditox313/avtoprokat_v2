@@ -42,12 +42,14 @@ export interface MaterialDatepicker extends MaterialInstance {
 //Интерфейс для автомобиля
 export interface Car
 {
+    price: string
     marka: string
     model: string
     probeg: string
-    start_arenda: Date
-    end_arenda: Date
+    start_arenda: any
+    end_arenda: any
     vladelec: string
     category: string
     status: string
+    previewSrc?: any
 }

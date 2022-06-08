@@ -33,6 +33,17 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
   // Храним дату конца
   end: MaterialDatepicker | any;
 
+  // Задаем переменную для хранения картинки после пото как загрузили с устройтста
+  image!: File
+
+
+  // Превью изображения авто
+  imagePreview : any = '';
+
+
+  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
+  @ViewChild('input') inputRef!: ElementRef;
+
   constructor(private cars: CarsService) { }
 
   ngOnInit(): void {
@@ -77,6 +88,40 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
 
 
 
+  // Обрабатываем загрузку картинок
+  onFileUpload(event: any)
+  {
+    const file = event.target.files['0'];
+    this.image = file;
+
+    
+
+    // Подключаем ридер для считывания картинки
+    const reader = new FileReader();
+
+
+    // Метод вызовется тогда, когда загрузится вся картинка
+    reader.onload = () => {
+
+      // Переменная для хранения информации об изображении
+      this.imagePreview = reader.result;
+    };
+
+
+    // Читаем нужный нам файл
+      reader.readAsDataURL(file);
+  }
+
+
+
+  // Обрабатываем кнопку загрузки тригиря клик по скрытому инпуту
+  triggerClick()
+  {
+    this.inputRef.nativeElement.click();
+  }
+
+
+
   // Отправка формы
   onSubmit(){
     // this.form.disable();
@@ -94,11 +139,11 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
       category:  this.form.value.category,
       status:  this.form.value.status,
     }
+    
 
 
-     
-
-   this.Sub = this.cars.create(car).subscribe((car) =>{
+    
+   this.Sub = this.cars.create(car, this.image).subscribe((car) =>{
         console.log(car);
     });    
   }

@@ -399,7 +399,32 @@ input[type=text]:not(.browser-default).validate+label {
     width: 49%;
 }
 
+.xs_form label {
+    color: #333 !important;
+}
+
 .xs_form {
     display: flex;
     justify-content: space-between;
+}
+
+.dn {
+    display: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+.xs_car__preview {
+    margin-bottom: 30px;
+}
+
+.prevEmpty {
+    font-size: 18px;
+    font-weight: 400;
+    border: 1px dashed #333;
+    padding: 15px;
+    display: inline-block;
+    opacity: 0.5;
 }
