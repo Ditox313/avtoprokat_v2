@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CarsPageComponent } from './cars-page/cars-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
+import { AuthGuard } from './shared/classes/auth.guard';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
 import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component';
 
@@ -30,7 +31,7 @@ const routes: Routes = [
   {
     path: '',
     component: SiteLayoutComponent,
-    //canActivate: [AuthGuard], //Защищаем роуты которые относятся к самому приложению
+    canActivate: [AuthGuard], //Защищаем роуты которые относятся к самому приложению
     children: [
       {
         path: 'cars-page',

@@ -20,10 +20,6 @@ declare var M: {
 export class MaterialService
 {
 
-    
-    // static initModal() {
-    //   throw new Error('Method not implemented.');
-    // }
 
     
     static toast(message: string)

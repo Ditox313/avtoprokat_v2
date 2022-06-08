@@ -22,7 +22,6 @@ export interface MaterialInstance
 
 
 
-
 //Интерфейс для сообщения
 export interface Message
 {
