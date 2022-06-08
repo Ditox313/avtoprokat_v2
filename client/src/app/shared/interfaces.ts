@@ -29,3 +29,25 @@ export interface Message
 }
 
 
+
+
+// Интерфейс для датепикера
+export interface MaterialDatepicker extends MaterialInstance {
+  date?: Date;
+}
+
+
+
+
+//Интерфейс для автомобиля
+export interface Car
+{
+    marka: string
+    model: string
+    probeg: string
+    start_arenda: Date
+    end_arenda: Date
+    vladelec: string
+    category: string
+    status: string
+}

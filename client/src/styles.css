@@ -351,6 +351,55 @@ th {
     font-weight: 600;
 }
 
+.tabs li.tab {
+    margin-right: 40px !important;
+}
+
 .tabs {
     margin-bottom: 50px;
+}
+
+.tabs li.tab:last-child {
+    margin-right: 0px;
+}
+
+.xs_form .input-field {
+    padding-left: 0;
+}
+
+.xs_form .input-field.col label {
+    left: 0;
+}
+
+select {
+    display: block;
+}
+
+.xs_select label {
+    position: static;
+    font-size: 12px;
+}
+
+.xs_select select {
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.xs_form input {
+    position: relative;
+    z-index: 2;
+}
+
+input[type=text]:not(.browser-default).validate+label {
+    color: #333 !important;
+}
+
+.xs_form__item {
+    width: 49%;
+}
+
+.xs_form {
+    display: flex;
+    justify-content: space-between;
 }

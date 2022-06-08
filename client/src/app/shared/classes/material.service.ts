@@ -14,6 +14,7 @@ declare var M: {
   Datepicker: any;
   TapTarget: any;
   Tabs: any;
+  FormSelect: any;
 };
 
 

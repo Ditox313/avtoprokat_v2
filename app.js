@@ -1,6 +1,6 @@
 const express = require('express');
 const authRoutes = require('./routes/auth.js');
-const categoriesRoutes = require('./routes/category.js')
+const carsRoutes = require('./routes/cars.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -48,7 +48,7 @@ app.use('/api/auth', authRoutes);
 
 
 // Регистрируем роут auth
-app.use('/api/categories', categoriesRoutes);
+app.use('/api/cars', carsRoutes);
 
 
 
