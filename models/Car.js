@@ -44,14 +44,14 @@ const carSchema = new Schema({
 
     // Начало аренды
     start_arenda: {
-        type: Date,
+        type: String,
         required: false,
     },
 
 
     // Конец аренды
     end_arenda: {
-        type: Date,
+        type: String,
         required: false,
     },
 

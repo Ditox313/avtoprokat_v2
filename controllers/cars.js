@@ -67,7 +67,7 @@ module.exports.update = async function(req, res) {
             updated.previewSrc = req.file.path;
         }
 
-        // updated.content = JSON.parse(req.body.content)
+
 
 
 
@@ -78,7 +78,7 @@ module.exports.update = async function(req, res) {
         );
 
         // Возвращаем пользователю обновленную позицию 
-        res.status(200).json(carUpdate);
+        res.status(200).json(req.body);
     } catch (e) {
         errorHandler(res, e);
     }

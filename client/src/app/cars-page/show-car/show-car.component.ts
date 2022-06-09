@@ -5,6 +5,7 @@ import { Car, MaterialDatepicker } from 'src/app/shared/interfaces';
 import { CarsService } from '../../shared/services/cars.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-show-car',
@@ -39,6 +40,11 @@ export class ShowCarComponent implements OnInit,OnDestroy {
   // Храним дату конца
   end: MaterialDatepicker | any;
 
+
+  // Храним  даты из ответа для форматирования
+  start_date_responce!: any
+  end_date_responce!: any
+
   // Задаем переменную для хранения картинки после пото как загрузили с устройтста
   image!: File
 
@@ -46,11 +52,13 @@ export class ShowCarComponent implements OnInit,OnDestroy {
   // Превью изображения авто
   imagePreview : any = '';
 
+  test!: any;
+
 
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
 
-  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute) { }
+  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, public datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -95,9 +103,12 @@ export class ShowCarComponent implements OnInit,OnDestroy {
         status: res.status, 
       })
 
+
+      // Форматируем даты
+      this.start_date_responce = this.datePipe.transform(res.start_arenda,'dd.MM.yyyy'); 
+      this.end_date_responce = this.datePipe.transform(res.end_arenda,'dd.MM.yyyy'); 
+      
     
-      
-      
     });
   }
 
@@ -185,7 +196,6 @@ export class ShowCarComponent implements OnInit,OnDestroy {
     
    this.cars.update(this.carId, car, this.image).subscribe((car) =>{
         MaterialService.toast('Автомобиль Изменен')
-        // this.router.navigate(['/cars-page'])
     });    
 
     

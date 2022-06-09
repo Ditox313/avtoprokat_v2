@@ -15,6 +15,9 @@
     </div>
 
     <div class="xs_add__car__content">
+
+        <span>В платформе с {{test}}</span>
+
         <div class="row">
             <div class="col s12">
                 <ul class="tabs" #tabs>
@@ -80,13 +83,13 @@
 
 
                         <div class="input-field col s12">
-                            <input placeholder="Введите значение" id="start_arenda" type="text" class="validate" formControlName="start_arenda" [ngClass]="{'invalid': form.controls['start_arenda'].invalid && form.controls['start_arenda'].touched}" #start_arenda>
+                            <input placeholder="Введите значение" id="start_arenda" type="text" class="validate" formControlName="start_arenda" [ngClass]="{'invalid': form.controls['start_arenda'].invalid && form.controls['start_arenda'].touched}" #start_arenda ngModel="{{start_date_responce}}">
                             <label for="start_arenda">Начало аренды</label>
                         </div>
 
 
                         <div class="input-field col s12">
-                            <input placeholder="Введите значение" id="end_arenda" type="text" class="validate" formControlName="end_arenda" [ngClass]="{'invalid': form.controls['end_arenda'].invalid && form.controls['end_arenda'].touched}" #end_arenda>
+                            <input placeholder="Введите значение" id="end_arenda" type="text" class="validate" formControlName="end_arenda" [ngClass]="{'invalid': form.controls['end_arenda'].invalid && form.controls['end_arenda'].touched}" #end_arenda ngModel="{{end_date_responce}}">
                             <label for="end_arenda">Конец аренды</label>
                         </div>
 
