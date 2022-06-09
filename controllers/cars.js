@@ -40,8 +40,10 @@ module.exports.fetch = async function(req, res) {
     try {
         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
         const cars = await Car.find({
-            user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
-        });
+                user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+            }).sort({ date: -1 })
+            .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
+            .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
 
         // Возвращаем пользователю позиции 
         res.status(200).json(cars);
@@ -49,6 +51,10 @@ module.exports.fetch = async function(req, res) {
         errorHandler(res, e);
     }
 };
+
+
+
+
 
 
 
@@ -104,18 +110,19 @@ module.exports.getById = async function(req, res) {
 
 
 
-// Контроллер для remove(Удаляем позицию)
-// module.exports.remove = async function(req, res) {
-//     try {
-//         await Position.remove({
-//             _id: req.params.id
-//         });
+// Контроллер для remove
+module.exports.remove = async function(req, res) {
+    try {
+        await Car.remove({
+            _id: req.params.id
+        });
 
-//         // Возвращаем результат
-//         res.status(200).json({
-//             message: "Позиция была удалена"
-//         });
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+
+        // Возвращаем результат
+        res.status(200).json({
+            message: "Автомобиль удален"
+        });
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};

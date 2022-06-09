@@ -45,8 +45,8 @@
                     <td>{{car.category}}</td>
                     <td>{{car.status}}</td>
                     <td class="xs_actions ">
-                        <a href="# "><span class="material-icons ">mode_edit</span></a>
-                        <a href="# "><span class="material-icons ">delete</span></a>
+                        <a [routerLink]="['/show-car','edit',car._id]"><span class="material-icons ">mode_edit</span></a>
+                        <a (click)="onDeleteCar($event, car)"><span class="material-icons ">delete</span></a>
                     </td>
                 </tr>
             </tbody>
@@ -57,5 +57,9 @@
                 </div>
             </ng-template>
         </table>
+
+        <div class="xs_cars__more" *ngIf="!noMoreCars">
+            <span (click)="loadmore()">Загрузить еще...</span>
+        </div>
     </div>
 </div>

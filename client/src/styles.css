@@ -445,3 +445,23 @@ img {
     display: block;
     width: 100%;
 }
+
+.xs_actions a:last-child {
+    cursor: pointer;
+}
+
+.xs_cars__more {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.xs_cars__more span {
+    display: inline-block;
+    padding: 7px 15px;
+    border-radius: 7px;
+    background-color: #194A9E;
+    color: #fff;
+    margin-top: 60px;
+    cursor: pointer;
+}

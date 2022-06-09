@@ -21,6 +21,6 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), controller.
 
 
 // // Роут на remove
-// router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.remove);
+router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.remove);
 
 module.exports = router;

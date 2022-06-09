@@ -1,7 +1,7 @@
 import { Message } from './../interfaces';
 // Сервис позиций
 import { Car } from 'src/app/shared/interfaces';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
 
@@ -38,8 +38,12 @@ export class CarsService {
   }
 
   // // Получаем список всех позиций
-  fetch(): Observable<Car[]> {
-    return this.http.get<Car[]>('/api/cars');
+  fetch(params: any = {}): Observable<Car[]> {
+    return this.http.get<Car[]>('/api/cars', {
+       params: new HttpParams({
+          fromObject: params
+       })
+    });
   }
 
   
@@ -70,12 +74,13 @@ export class CarsService {
   // Получаем позицию по id
   getById(id: string): Observable<Car>
    {
-      return this.http.get<Car>(`api/cars/${id}`);
+      return this.http.get<Car>(`/api/cars/${id}`);
    }
 
 
-  // // Удалить позицию
-  // delete(position: Position): Observable<Message> {
-  //   return this.http.delete<Message>(`/api/position/${position._id}`);
-  // }
+   // Удаление авто
+   delete(id: any): Observable<any>
+   {
+      return this.http.delete<any>(`/api/cars/${id}`);
+   }
 }
