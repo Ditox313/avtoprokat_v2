@@ -16,9 +16,6 @@ export class CarsService {
 
   // Создаем новую позицию
   create(car: Car, image?: File): Observable<Car> {
-
-
-  
     const fd = new FormData(); 
       fd.append('marka', car.marka);
       fd.append('model', car.model);
@@ -46,10 +43,36 @@ export class CarsService {
   }
 
   
-  // // Редактируем позицию
-  // update(position: Position): Observable<Position> {
-  //   return this.http.patch<Position>(`/api/position/${position._id}`, position);
-  // }
+  update(id:string, xscar: Car, image?: File): Observable<Car> {
+
+      const fd = new FormData(); 
+      fd.append('marka', xscar.marka);
+      fd.append('model', xscar.model);
+      fd.append('probeg', xscar.probeg);
+      fd.append('price', xscar.price);
+      fd.append('start_arenda', xscar.start_arenda);
+      fd.append('end_arenda', xscar.end_arenda);
+      fd.append('vladelec', xscar.vladelec);
+      fd.append('status', xscar.status);
+      fd.append('category', xscar.category);
+      fd.append('number', xscar.number);
+      fd.append('carId', id);
+
+      if(image)
+      {
+         fd.append('previewSrc', image, image.name);
+      }
+
+      return this.http.patch<Car>(`/api/cars/update/${id}`, fd);
+   }
+
+
+  // Получаем позицию по id
+  getById(id: string): Observable<Car>
+   {
+      return this.http.get<Car>(`api/cars/${id}`);
+   }
+
 
   // // Удалить позицию
   // delete(position: Position): Observable<Message> {

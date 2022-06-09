@@ -264,7 +264,7 @@ footer {
 }
 
 .xs_actions a {
-    display: inline-block;
+    display: inline-block !important;
     margin-right: 15px;
 }
 
@@ -439,4 +439,9 @@ img {
 
 .xs_car_list_img {
     width: 100px;
+}
+
+.xs_cars__content tr>a {
+    display: block;
+    width: 100%;
 }

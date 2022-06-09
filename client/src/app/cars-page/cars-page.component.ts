@@ -37,6 +37,8 @@ export class CarsPageComponent implements OnInit, OnDestroy {
       this.Sub = this.cars.fetch().subscribe((cars) =>{
         this.xscars = cars
         this.loading = false
+        console.log(cars);
+        
     });    
   }
     // Отправляем параметры для пагинации

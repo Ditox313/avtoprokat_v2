@@ -55,6 +55,55 @@ module.exports.fetch = async function(req, res) {
 
 
 
+// Контроллер для update
+module.exports.update = async function(req, res) {
+    try {
+
+        const updated = req.body;
+
+
+        // Если объект file есть,то заполняем параметр путем фала
+        if (req.file) {
+            updated.previewSrc = req.file.path;
+        }
+
+        // updated.content = JSON.parse(req.body.content)
+
+
+
+        // Находим и обновляем позицию. 
+        const carUpdate = await Car.findOneAndUpdate({ _id: updated.carId }, //Ищем по id
+            { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
+            { new: true } //обновит позицию и верет нам уже обновленную
+        );
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(carUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+
+// Контроллер для getById
+module.exports.getById = async function(req, res) {
+    try {
+        const xscar = await Car.findById(req.params.id); //Ищем категорию по id из переданных параметров
+        res.status(200).json(xscar);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+
 // Контроллер для remove(Удаляем позицию)
 // module.exports.remove = async function(req, res) {
 //     try {
@@ -66,35 +115,6 @@ module.exports.fetch = async function(req, res) {
 //         res.status(200).json({
 //             message: "Позиция была удалена"
 //         });
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Контроллер для update
-// module.exports.update = async function(req, res) {
-//     try {
-
-//         // Находим и обновляем позицию. 
-//         const position = await Position.findOneAndUpdate({ _id: req.params.id, }, //Ищем по id
-//             { $set: req.body }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
-//             { new: true } //обновит позицию и верет нам уже обновленную
-//         );
-
-//         // Возвращаем пользователю обновленную позицию 
-//         res.status(200).json(position);
 //     } catch (e) {
 //         errorHandler(res, e);
 //     }

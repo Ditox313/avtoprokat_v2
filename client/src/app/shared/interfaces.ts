@@ -53,4 +53,6 @@ export interface Car
     status: string
     previewSrc?: any
     number: any
+    _id?: any
+    imagePreview?: any
 }

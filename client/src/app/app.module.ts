@@ -14,6 +14,7 @@ import { TokenInterceptor } from './shared/classes/token.interceptor';
 import { OverviewPageComponent } from './overview-page/overview-page.component';
 import { AddCarComponent } from './cars-page/add-car/add-car.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
+import { ShowCarComponent } from './cars-page/show-car/show-car.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
     SiteLayoutComponent,
     OverviewPageComponent,
     AddCarComponent,
-    LoaderComponent
+    LoaderComponent,
+    ShowCarComponent
   ],
   imports: [
     BrowserModule,
