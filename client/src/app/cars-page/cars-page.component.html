@@ -13,11 +13,14 @@
     </div>
 
 
+
     <div class="xs_cars__content">
-        <table class="striped">
+        <app-loader *ngIf="loading"></app-loader>
+        <table class="striped" *ngIf="!loading">
             <thead>
                 <tr>
-                    <th>Название</th>
+                    <th>Изображение</th>
+                    <th>Марка</th>
                     <th>Номер</th>
                     <th>Категория</th>
                     <th>Статус</th>
@@ -25,18 +28,25 @@
                 </tr>
             </thead>
 
-            <tbody>
-                <tr>
-                    <td>ВАЗ 21012</td>
-                    <td>а455еу 152</td>
-                    <td>Бизнес</td>
-                    <td>В аренде</td>
+            <tbody *ngIf="xscars.length !== 0; else empty">
+                <tr *ngFor="let car of xscars">
+                    <td><img src="{{car.previewSrc}}" alt="Обложка авто" class="xs_car_list_img"></td>
+                    <td>{{car.marka}} {{car.model}}</td>
+                    <td>{{car.number}}</td>
+                    <td>{{car.category}}</td>
+                    <td>{{car.status}}</td>
                     <td class="xs_actions">
                         <a href="#"><span class="material-icons">mode_edit</span></a>
                         <a href="#"><span class="material-icons">delete</span></a>
                     </td>
                 </tr>
             </tbody>
+
+            <ng-template #empty>
+                <div style="font-size: 20px;" class="xs_empty">
+                    Нет автомобилей в автопарке...
+                </div>
+            </ng-template>
         </table>
     </div>
 </div>

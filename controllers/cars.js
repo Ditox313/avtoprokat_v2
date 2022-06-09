@@ -12,6 +12,7 @@ module.exports.create = async function(req, res) {
         const car = await new Car({
             marka: req.body.marka,
             model: req.body.model,
+            number: req.body.number,
             probeg: req.body.probeg,
             price: req.body.price,
             start_arenda: req.body.start_arenda,
@@ -34,21 +35,20 @@ module.exports.create = async function(req, res) {
 
 
 
-// Контроллер для getByCategoryId(Получение всех позиций по Id категории)
-// module.exports.getByCategoryId = async function(req, res) {
-//     try {
-//         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
-//         const positions = await Position.find({
-//             category: req.params.categoryId,
-//             user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
-//         });
+// Контроллер для fetch
+module.exports.fetch = async function(req, res) {
+    try {
+        // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
+        const cars = await Car.find({
+            user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+        });
 
-//         // Возвращаем пользователю позиции 
-//         res.status(200).json(positions);
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+        // Возвращаем пользователю позиции 
+        res.status(200).json(cars);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
 
 
 

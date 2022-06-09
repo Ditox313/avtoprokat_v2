@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { MaterialDatepicker } from 'src/app/shared/interfaces';
 import { MaterialService } from '../../shared/classes/material.service';
 import { CarsService } from '../../shared/services/cars.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-car',
@@ -44,12 +45,13 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
 
-  constructor(private cars: CarsService) { }
+  constructor(private cars: CarsService, private router: Router) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
       marka: new FormControl(null, [Validators.required]),
       model: new FormControl(null, [Validators.required]),
+      number: new FormControl(null, [Validators.required]),
       probeg: new FormControl(null, [Validators.required]),
       price: new FormControl(null, [Validators.required]),
       start_arenda: new FormControl(null),
@@ -131,6 +133,7 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
     const car = {
       marka: this.form.value.marka,
       model:  this.form.value.model,
+      number:  this.form.value.number,
       probeg:  this.form.value.probeg,
       price:  this.form.value.price,
       start_arenda:  this.start.date,
@@ -140,11 +143,9 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
       status:  this.form.value.status,
     }
     
-
-
-    
    this.Sub = this.cars.create(car, this.image).subscribe((car) =>{
-        console.log(car);
+        MaterialService.toast('Автомобиль добавлен')
+        this.router.navigate(['/cars-page'])
     });    
   }
 

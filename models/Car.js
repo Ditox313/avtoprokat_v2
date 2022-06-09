@@ -19,6 +19,13 @@ const carSchema = new Schema({
         required: true,
     },
 
+
+    // Номер
+    number: {
+        type: String,
+        required: true,
+    },
+
     // Пробег
     probeg: {
         type: String,

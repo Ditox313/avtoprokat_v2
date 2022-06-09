@@ -13,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './shared/classes/token.interceptor';
 import { OverviewPageComponent } from './overview-page/overview-page.component';
 import { AddCarComponent } from './cars-page/add-car/add-car.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AddCarComponent } from './cars-page/add-car/add-car.component';
     AuthLayoutComponent,
     SiteLayoutComponent,
     OverviewPageComponent,
-    AddCarComponent
+    AddCarComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

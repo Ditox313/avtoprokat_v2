@@ -47,6 +47,17 @@
                             </span>
                         </div>
 
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="number" type="text" class="validate" formControlName="number" [ngClass]="{'invalid': form.controls['number'].invalid && form.controls['number'].touched}">
+                            <label for="number">Номер</label>
+                            <span class="helper-text red-text" *ngIf="form.controls['number'].invalid && form.controls['number'].touched">
+                                <p *ngIf="form.controls['model'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="probeg" type="text" class="validate" formControlName="probeg" [ngClass]="{'invalid': form.controls['probeg'].invalid && form.controls['probeg'].touched}">
                             <label for="probeg">Пробег</label>

@@ -428,3 +428,15 @@ img {
     display: inline-block;
     opacity: 0.5;
 }
+
+.grey.darken-1 {
+    background-color: #194A9E !important;
+}
+
+.xs_empty {
+    padding: 50px;
+}
+
+.xs_car_list_img {
+    width: 100px;
+}

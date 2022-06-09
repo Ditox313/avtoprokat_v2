@@ -29,23 +29,21 @@ export class CarsService {
       fd.append('vladelec', car.vladelec);
       fd.append('status', car.status);
       fd.append('category', car.category);
+      fd.append('number', car.number);
 
       if(image)
       {
          fd.append('previewSrc', image, image.name);
       }
 
-      
-
-
-
+    
     return this.http.post<Car>(`/api/cars`, fd);
   }
 
   // // Получаем список всех позиций
-  // fetch(categoryId: string): Observable<Position[]> {
-  //   return this.http.get<Position[]>(`/api/position/${categoryId}`);
-  // }
+  fetch(): Observable<Car[]> {
+    return this.http.get<Car[]>('/api/cars');
+  }
 
   
   // // Редактируем позицию

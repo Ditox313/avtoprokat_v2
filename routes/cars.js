@@ -9,8 +9,8 @@ const upload = require('../middleware/upload');
 // Роут на create
 router.post('/', passport.authenticate('jwt', { session: false }), upload.single('previewSrc'), controller.create);
 
-// Роут на getByCategoryId
-// router.get('/:categoryId', passport.authenticate('jwt', { session: false }), controller.getByCategoryId);
+// Роут на fetch
+router.get('/', passport.authenticate('jwt', { session: false }), controller.fetch);
 
 
 

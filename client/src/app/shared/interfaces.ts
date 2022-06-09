@@ -52,4 +52,5 @@ export interface Car
     category: string
     status: string
     previewSrc?: any
+    number: any
 }
