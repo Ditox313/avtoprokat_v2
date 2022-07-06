@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-// Создаем схему для таблицы positions
+// Создаем схему для таблицы cars
 
 const carSchema = new Schema({
 
@@ -241,5 +241,5 @@ const carSchema = new Schema({
 });
 
 
-// Создаем таблицу positions
+// Создаем таблицу cars
 module.exports = mongoose.model('cars', carSchema);
