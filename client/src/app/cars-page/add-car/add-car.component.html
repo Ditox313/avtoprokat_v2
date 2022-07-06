@@ -81,7 +81,7 @@
 
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="start_arenda" type="text" class="validate" formControlName="start_arenda" [ngClass]="{'invalid': form.controls['start_arenda'].invalid && form.controls['start_arenda'].touched}" #start_arenda>
-                            <label for="start_arenda">Начало аренды</label>
+                            <label for="start_arenda">Дата заезда авто в парк</label>
                         </div>
 
 
@@ -117,10 +117,10 @@
                             <label for="status">Статус</label>
                             <select id="status" formControlName="status" [ngClass]="{'invalid': form.controls['status'].invalid && form.controls['status'].touched}">
                                 <option value="" disabled selected>Статус:</option>
-                                <option value="Свободен">Свободен</option>
-                                <option value="Занят">Занят</option>
-                                <option value="Забронирован">Забронирован</option>
-                                <option value="По запросу">По запросу</option>
+                                <option value="Рабочий в парке">Рабочий в парке</option>
+                                <option value="Тех.обслуживание">Тех.обслуживание</option>
+                                <option value="Кузовной ремонт">Кузовной ремонт</option>
+                                <option value="По запросу">Выбыл с парка</option>
                             </select>
                         </div>
 

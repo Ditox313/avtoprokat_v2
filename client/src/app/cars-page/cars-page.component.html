@@ -30,7 +30,7 @@
             </thead>
 
             <tbody *ngIf="xscars.length !== 0; else empty">
-                <tr *ngFor="let car of xscars">
+                <tr *ngFor="let car of xscars" class="xs_cars_td">
                     <td>
                         <a [routerLink]="['/show-car','edit',car._id]">
                             <img src="{{car.previewSrc}} " alt="Обложка авто " class="xs_car_list_img ">

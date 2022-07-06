@@ -79,7 +79,7 @@ export class CarsPageComponent implements OnInit, OnDestroy {
     event.stopPropagation();
 
 
-    const dicision = window.confirm(`Удалить кейс?`);
+    const dicision = window.confirm(`Удалить автомобиль?`);
 
     if (dicision) {
       this.cars.delete(xscar._id).subscribe(res => {
@@ -92,20 +92,5 @@ export class CarsPageComponent implements OnInit, OnDestroy {
       })
     }
   }
-    // Отправляем параметры для пагинации
-    // const params = {
-    //   offset: this.offset,
-    //   limit: this.limit
-    // }
-
-    // this.xsSub = this.caseServise.fetch(params).subscribe((cases)=>{
-    //   if(cases.length < STEP)
-    //   {
-    //     this.noMoreCases = true
-    //   }
-       
-    //   this.loading = false
-    //   this.cases = this.cases.concat(cases)
-    // });
-    
+  
 }

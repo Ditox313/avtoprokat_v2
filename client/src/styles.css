@@ -465,3 +465,19 @@ img {
     margin-top: 60px;
     cursor: pointer;
 }
+
+
+.input-field
+{
+    margin-bottom: 0;
+}
+
+#information
+{
+    padding-left: 0;
+}
+
+.xs_cars_td td
+{
+    padding: 5px 0;
+}
