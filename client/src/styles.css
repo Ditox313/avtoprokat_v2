@@ -496,3 +496,9 @@ img {
 {
     background-color: #194A9E !important;
 }
+
+
+.btn, .btn-large, .btn-small
+{
+    background-color: #194A9E !important;
+}

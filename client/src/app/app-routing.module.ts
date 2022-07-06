@@ -5,6 +5,8 @@ import { CarsPageComponent } from './cars-page/cars-page.component';
 import { ShowCarComponent } from './cars-page/show-car/show-car.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { OverviewPageComponent } from './overview-page/overview-page.component';
+import { AddPartnerComponent } from './partners/add-partner/add-partner.component';
+import { PartnersComponent } from './partners/partners.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { AuthGuard } from './shared/classes/auth.guard';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
@@ -31,6 +33,7 @@ const routes: Routes = [
       },
     ],
   },
+  
   {
     path: '',
     component: SiteLayoutComponent,
@@ -47,6 +50,8 @@ const routes: Routes = [
       ,
       { path: 'add-car', component: AddCarComponent },
       { path: 'show-car/edit/:id', component: ShowCarComponent},
+      { path: 'partners-page',component: PartnersComponent,},
+      { path: 'add-partner', component: AddPartnerComponent},
     ],
   },
 ];

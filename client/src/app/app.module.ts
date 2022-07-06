@@ -15,6 +15,8 @@ import { OverviewPageComponent } from './overview-page/overview-page.component';
 import { AddCarComponent } from './cars-page/add-car/add-car.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { ShowCarComponent } from './cars-page/show-car/show-car.component';
+import { PartnersComponent } from './partners/partners.component';
+import { AddPartnerComponent } from './partners/add-partner/add-partner.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { ShowCarComponent } from './cars-page/show-car/show-car.component';
     OverviewPageComponent,
     AddCarComponent,
     LoaderComponent,
-    ShowCarComponent
+    ShowCarComponent,
+    PartnersComponent,
+    AddPartnerComponent
   ],
   imports: [
     BrowserModule,

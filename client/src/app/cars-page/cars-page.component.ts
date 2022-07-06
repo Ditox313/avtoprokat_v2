@@ -8,7 +8,7 @@ import { CarsService } from '../shared/services/cars.service';
 
 
 // Шаг пагинации
-  const STEP = 2
+  const STEP = 10
 
 
 
