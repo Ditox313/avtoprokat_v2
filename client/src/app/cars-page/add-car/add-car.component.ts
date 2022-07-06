@@ -17,6 +17,10 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
   @ViewChild('start_arenda') start_arenda_avto!: ElementRef;
   @ViewChild('end_arenda') end_arenda_avto!: ElementRef;
 
+  @ViewChild('sts_date_info') sts_date_info_avto!: ElementRef;
+  @ViewChild('osago_date_finish_info') osago_date_finish_info_avto!: ElementRef;
+  @ViewChild('to_date_info') to_date_info_avto!: ElementRef;
+
 
   //Создаем переменную, в которую помещаем наш стим, что бы потом отписаться от него
   Sub!: Subscription; 
@@ -34,6 +38,15 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
   // Храним дату конца
   end: MaterialDatepicker | any;
 
+  // Храним дату выдачи СТС
+  sts_date_x: MaterialDatepicker | any;
+
+  // Храним дату окончания полиса осаго
+  osago_date_finish_x: MaterialDatepicker | any;
+
+  // Храним дату последнего ТО
+  to_date_x: MaterialDatepicker | any;
+
   // Задаем переменную для хранения картинки после пото как загрузили с устройтста
   image!: File
 
@@ -49,33 +62,33 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      marka: new FormControl(null, [Validators.required]),
-      model: new FormControl(null, [Validators.required]),
-      number: new FormControl(null, [Validators.required]),
-      probeg: new FormControl(null,),
-      price: new FormControl(null, ),
-      start_arenda: new FormControl(null),
-      end_arenda: new FormControl(null),
-      vladelec: new FormControl(null, [Validators.required]),
-      category: new FormControl(null, [Validators.required]),
-      status: new FormControl(null, [Validators.required]),
-      sts_seria: new FormControl(null),
-      sts_number: new FormControl(null),
-      sts_date: new FormControl(null),
-      osago_seria: new FormControl(null),
-      osago_number: new FormControl(null),
-      osago_date_finish: new FormControl(null),
-      vin: new FormControl(null),
-      color: new FormControl(null),
-      year_production: new FormControl(null),
-      price_ocenka: new FormControl(null),
-      to_date: new FormControl(null),
-      to_probeg_prev: new FormControl(null),
-      to_probeg_next: new FormControl(null),
-      to_interval: new FormControl(null),
-      oil_name: new FormControl(null),
-      stoa_name: new FormControl(null),
-      stoa_phone: new FormControl(null),
+      marka: new FormControl('', [Validators.required]),
+      model: new FormControl('', [Validators.required]),
+      number: new FormControl('', [Validators.required]),
+      probeg: new FormControl('',),
+      price: new FormControl('', ),
+      start_arenda: new FormControl(''),
+      end_arenda: new FormControl(''),
+      vladelec: new FormControl('', [Validators.required]),
+      category: new FormControl('', [Validators.required]),
+      status: new FormControl('', [Validators.required]),
+      sts_seria: new FormControl(''),
+      sts_number: new FormControl(''),
+      sts_date: new FormControl(''),
+      osago_seria: new FormControl(''),
+      osago_number: new FormControl(''),
+      osago_date_finish: new FormControl(''),
+      vin: new FormControl(''),
+      color: new FormControl(''),
+      year_production: new FormControl(''),
+      price_ocenka: new FormControl(''),
+      to_date: new FormControl(''),
+      to_probeg_prev: new FormControl(''),
+      to_probeg_next: new FormControl(''),
+      to_interval: new FormControl(''),
+      oil_name: new FormControl(''),
+      stoa_name: new FormControl(''),
+      stoa_phone: new FormControl(''),
     });
   }
 
@@ -89,6 +102,10 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
     MaterialService.initTabs(this.tabs.nativeElement)
     this.start = MaterialService.initDatepicker(this.start_arenda_avto, this.validate.bind(this));
     this.end = MaterialService.initDatepicker(this.end_arenda_avto, this.validate.bind(this));
+
+    this.sts_date_x = MaterialService.initDatepicker(this.sts_date_info_avto, this.validate.bind(this));
+    this.osago_date_finish_x = MaterialService.initDatepicker(this.osago_date_finish_info_avto, this.validate.bind(this));
+    this.to_date_x = MaterialService.initDatepicker(this.to_date_info_avto, this.validate.bind(this));
     MaterialService.updateTextInputs();
   }
 
@@ -160,15 +177,15 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
       status:  this.form.value.status,
       sts_seria:  this.form.value.sts_seria,
       sts_number:  this.form.value.sts_number,
-      sts_date:  this.form.value.sts_date,
+      sts_date:  this.sts_date_x.date,
       osago_seria:  this.form.value.osago_seria,
       osago_number:  this.form.value.osago_number,
-      osago_date_finish:  this.form.value.osago_date_finish,
+      osago_date_finish:  this.osago_date_finish_x.date,
       vin:  this.form.value.vin,
       color:  this.form.value.color,
       year_production:  this.form.value.year_production,
       price_ocenka:  this.form.value.price_ocenka,
-      to_date:  this.form.value.to_date,
+      to_date:  this.to_date_x.date,
       to_probeg_prev:  this.form.value.to_probeg_prev,
       to_probeg_next:  this.form.value.to_probeg_next,
       to_interval:  this.form.value.to_interval,

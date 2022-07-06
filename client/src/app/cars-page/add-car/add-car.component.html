@@ -162,7 +162,7 @@
 
                     <div class="input-field col s12">
                         <input placeholder="Введите значение" id="sts_date" type="text" class="validate" formControlName="sts_date"
-                            [ngClass]="{'invalid': form.controls['sts_date'].invalid && form.controls['sts_date'].touched}">
+                            [ngClass]="{'invalid': form.controls['sts_date'].invalid && form.controls['sts_date'].touched}" #sts_date_info>
                         <label for="model">Дата выдачи СТС</label>
                     </div>
 
@@ -180,7 +180,7 @@
 
                     <div class="input-field col s12">
                         <input placeholder="Введите значение" id="osago_date_finish" type="text" class="validate" formControlName="osago_date_finish"
-                            [ngClass]="{'invalid': form.controls['osago_date_finish'].invalid && form.controls['osago_date_finish'].touched}">
+                            [ngClass]="{'invalid': form.controls['osago_date_finish'].invalid && form.controls['osago_date_finish'].touched}" #osago_date_finish_info >
                         <label for="model">Дата окончания полиса ОСАГО</label>
                     </div>
 
@@ -215,7 +215,7 @@
                 <div class="xs_form__item">
                     <div class="input-field col s12">
                         <input placeholder="Введите значение" id="to_date" type="text" class="validate" formControlName="to_date"
-                            [ngClass]="{'invalid': form.controls['to_date'].invalid && form.controls['to_date'].touched}">
+                            [ngClass]="{'invalid': form.controls['to_date'].invalid && form.controls['to_date'].touched}" #to_date_info>
                         <label for="model">Дата последнего ТО</label>
                     </div>
 

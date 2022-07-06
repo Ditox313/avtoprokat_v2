@@ -9,6 +9,7 @@ const carSchema = new Schema({
     // Марка
     marka: {
         type: String,
+        default: '',
         required: true,
     },
 
@@ -16,6 +17,7 @@ const carSchema = new Schema({
     // Модель
     model: {
         type: String,
+        default: '',
         required: true,
     },
 
@@ -23,6 +25,7 @@ const carSchema = new Schema({
     // Номер
     number: {
         type: String,
+        default: '',
         required: true,
     },
 
@@ -30,18 +33,21 @@ const carSchema = new Schema({
     // VIN автомобиля
     vin: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Год выпуска
     year_production: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Пробег
     probeg: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -50,6 +56,7 @@ const carSchema = new Schema({
     // Стоимость
     price: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -58,6 +65,7 @@ const carSchema = new Schema({
     // Начало аренды
     start_arenda: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -65,6 +73,7 @@ const carSchema = new Schema({
     // Конец аренды
     end_arenda: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -72,6 +81,7 @@ const carSchema = new Schema({
     // Владелец
     vladelec: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -79,6 +89,7 @@ const carSchema = new Schema({
     // Статус
     status: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -86,6 +97,7 @@ const carSchema = new Schema({
     // Категория
     category: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -119,18 +131,21 @@ const carSchema = new Schema({
     // Серия СТС
     sts_seria: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Номер СТС
     sts_number: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Дата выдачи СТС
     sts_date: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -138,18 +153,21 @@ const carSchema = new Schema({
     // Серия ОСАГО
     osago_seria: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Номер ОСАГО
     osago_number: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Дата окончания полиса ОСАГО
     osago_date_finish: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -157,6 +175,7 @@ const carSchema = new Schema({
     // Цвет
     color: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -164,6 +183,7 @@ const carSchema = new Schema({
     // Оценочная стоимость
     price_ocenka: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -171,12 +191,14 @@ const carSchema = new Schema({
     // Дата последнего ТО
     to_date: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Пробег на последнем ТО
     to_probeg_prev: {
         type: String,
+        default: '',
         required: false,
     },
 
@@ -184,30 +206,35 @@ const carSchema = new Schema({
     // Пробег для следующего ТО
     to_probeg_next: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Интервал ТО
     to_interval: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Наименование моторного масла
     oil_name: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Назание СТОА
     stoa_name: {
         type: String,
+        default: '',
         required: false,
     },
 
     // Телефон СТОА
     stoa_phone: {
         type: String,
+        default: '',
         required: false,
     },
 
