@@ -55,4 +55,21 @@ export interface Car
     number: any
     _id?: any
     imagePreview?: any
+    sts_seria?: any
+    sts_number?: any
+    sts_date?: any
+    osago_seria?: any
+    osago_number?: any
+    osago_date_finish?: any
+    vin?: any
+    color?: any
+    year_production?: any
+    price_ocenka?: any
+    to_date?: any
+    to_probeg_prev?: any
+    to_probeg_next?: any
+    to_interval?: any
+    oil_name?: any
+    stoa_name?: any
+    stoa_phone?: any
 }

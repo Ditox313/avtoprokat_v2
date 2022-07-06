@@ -330,7 +330,7 @@ th {
     background-color: transparent !important;
     text-align: left;
     color: #333;
-    padding-left: 5px;
+    padding-left: 0px;
     padding-right: 0;
 }
 
@@ -470,6 +470,7 @@ img {
 .input-field
 {
     margin-bottom: 0;
+    padding-left: 0 !important;
 }
 
 #information
@@ -480,4 +481,18 @@ img {
 .xs_cars_td td
 {
     padding: 5px 0;
+}
+
+.xs_add__car__content .col
+{
+    padding-left: 0 !important;
+}
+
+.input-field.col label {
+    left: 0 !important;
+}
+
+.currentColor
+{
+    background-color: #194A9E !important;
 }

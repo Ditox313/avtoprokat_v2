@@ -147,8 +147,126 @@
                     </div>
                 </div>
             </div>
-            <div id="register_data" class="col s12">Контент таба №2</div>
-            <div id="to" class="col s12">Контент таба №3</div>
+            <div id="register_data" class="col s12">
+                <div class="xs_form__item">
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="sts_seria" type="text" class="validate"
+                            formControlName="sts_seria"
+                            [ngClass]="{'invalid': form.controls['sts_seria'].invalid && form.controls['sts_seria'].touched}">
+                        <label for="model">Серия СТС</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="sts_number" type="text" class="validate"
+                            formControlName="sts_number"
+                            [ngClass]="{'invalid': form.controls['sts_number'].invalid && form.controls['sts_number'].touched}">
+                        <label for="model">Номер СТС</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="sts_date" type="text" class="validate" formControlName="sts_date"
+                            [ngClass]="{'invalid': form.controls['sts_date'].invalid && form.controls['sts_date'].touched}">
+                        <label for="model">Дата выдачи СТС</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="osago_seria" type="text" class="validate"
+                            formControlName="osago_seria"
+                            [ngClass]="{'invalid': form.controls['osago_seria'].invalid && form.controls['osago_seria'].touched}">
+                        <label for="model">Серия ОСАГО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="osago_number" type="text" class="validate"
+                            formControlName="osago_number"
+                            [ngClass]="{'invalid': form.controls['osago_number'].invalid && form.controls['osago_number'].touched}">
+                        <label for="model">Номер ОСАГО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="osago_date_finish" type="text" class="validate"
+                            formControlName="osago_date_finish"
+                            [ngClass]="{'invalid': form.controls['osago_date_finish'].invalid && form.controls['osago_date_finish'].touched}">
+                        <label for="model">Дата окончания полиса ОСАГО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="vin" type="text" class="validate" formControlName="vin"
+                            [ngClass]="{'invalid': form.controls['vin'].invalid && form.controls['vin'].touched}">
+                        <label for="model">VIN автомобиля</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="color" type="text" class="validate" formControlName="color"
+                            [ngClass]="{'invalid': form.controls['color'].invalid && form.controls['color'].touched}">
+                        <label for="model">Цвет автомобиля</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="year_production" type="text" class="validate"
+                            formControlName="year_production"
+                            [ngClass]="{'invalid': form.controls['year_production'].invalid && form.controls['year_production'].touched}">
+                        <label for="model">Год выпуска автомобиля</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="price_ocenka" type="text" class="validate"
+                            formControlName="price_ocenka"
+                            [ngClass]="{'invalid': form.controls['price_ocenka'].invalid && form.controls['price_ocenka'].touched}">
+                        <label for="model">Оценочная стоимость автомобиля</label>
+                    </div>
+                </div>
+            </div>
+            <div id="to" class="col s12">
+                <div class="xs_form__item">
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="to_date" type="text" class="validate" formControlName="to_date"
+                            [ngClass]="{'invalid': form.controls['to_date'].invalid && form.controls['to_date'].touched}">
+                        <label for="model">Дата последнего ТО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="to_probeg_prev" type="text" class="validate"
+                            formControlName="to_probeg_prev"
+                            [ngClass]="{'invalid': form.controls['to_probeg_prev'].invalid && form.controls['to_probeg_prev'].touched}">
+                        <label for="model">Пробег на последнем ТО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="to_probeg_next" type="text" class="validate"
+                            formControlName="to_probeg_next"
+                            [ngClass]="{'invalid': form.controls['to_probeg_next'].invalid && form.controls['to_probeg_next'].touched}">
+                        <label for="model">Пробег для следующего ТО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="to_interval" type="text" class="validate"
+                            formControlName="to_interval"
+                            [ngClass]="{'invalid': form.controls['to_interval'].invalid && form.controls['to_interval'].touched}">
+                        <label for="model">Интервал ТО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="oil_name" type="text" class="validate" formControlName="oil_name"
+                            [ngClass]="{'invalid': form.controls['oil_name'].invalid && form.controls['oil_name'].touched}">
+                        <label for="model">Наименование моторного масла</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="stoa_name" type="text" class="validate"
+                            formControlName="stoa_name"
+                            [ngClass]="{'invalid': form.controls['stoa_name'].invalid && form.controls['stoa_name'].touched}">
+                        <label for="model">Название СТОА</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="stoa_phone" type="text" class="validate"
+                            formControlName="stoa_phone"
+                            [ngClass]="{'invalid': form.controls['stoa_phone'].invalid && form.controls['stoa_phone'].touched}">
+                        <label for="model">Телефон СТОА</label>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

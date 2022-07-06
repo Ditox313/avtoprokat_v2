@@ -26,10 +26,23 @@ const carSchema = new Schema({
         required: true,
     },
 
+
+    // VIN автомобиля
+    vin: {
+        type: String,
+        required: false,
+    },
+
+    // Год выпуска
+    year_production: {
+        type: String,
+        required: false,
+    },
+
     // Пробег
     probeg: {
         type: String,
-        required: true,
+        required: false,
     },
 
 
@@ -37,7 +50,7 @@ const carSchema = new Schema({
     // Стоимость
     price: {
         type: String,
-        required: true,
+        required: false,
     },
 
 
@@ -59,21 +72,21 @@ const carSchema = new Schema({
     // Владелец
     vladelec: {
         type: String,
-        required: true,
+        required: false,
     },
 
 
     // Статус
     status: {
         type: String,
-        required: true,
+        required: false,
     },
 
 
     // Категория
     category: {
         type: String,
-        required: true,
+        required: false,
     },
 
 
@@ -94,6 +107,8 @@ const carSchema = new Schema({
     },
 
 
+
+    // Дата создания
     date: {
         type: Date,
         default: Date.now,
@@ -101,17 +116,100 @@ const carSchema = new Schema({
 
 
 
+    // Серия СТС
+    sts_seria: {
+        type: String,
+        required: false,
+    },
+
+    // Номер СТС
+    sts_number: {
+        type: String,
+        required: false,
+    },
+
+    // Дата выдачи СТС
+    sts_date: {
+        type: String,
+        required: false,
+    },
 
 
+    // Серия ОСАГО
+    osago_seria: {
+        type: String,
+        required: false,
+    },
 
-    // // Создаем поле с ID категории
-    // category: {
-    //     ref: 'categories',
-    //     type: Schema.Types.ObjectId
-    // },
+    // Номер ОСАГО
+    osago_number: {
+        type: String,
+        required: false,
+    },
+
+    // Дата окончания полиса ОСАГО
+    osago_date_finish: {
+        type: String,
+        required: false,
+    },
 
 
-    // Создаем поле с ID юзера
+    // Цвет
+    color: {
+        type: String,
+        required: false,
+    },
+
+
+    // Оценочная стоимость
+    price_ocenka: {
+        type: String,
+        required: false,
+    },
+
+
+    // Дата последнего ТО
+    to_date: {
+        type: String,
+        required: false,
+    },
+
+    // Пробег на последнем ТО
+    to_probeg_prev: {
+        type: String,
+        required: false,
+    },
+
+
+    // Пробег для следующего ТО
+    to_probeg_next: {
+        type: String,
+        required: false,
+    },
+
+    // Интервал ТО
+    to_interval: {
+        type: String,
+        required: false,
+    },
+
+    // Наименование моторного масла
+    oil_name: {
+        type: String,
+        required: false,
+    },
+
+    // Назание СТОА
+    stoa_name: {
+        type: String,
+        required: false,
+    },
+
+    // Телефон СТОА
+    stoa_phone: {
+        type: String,
+        required: false,
+    },
 
 });
 

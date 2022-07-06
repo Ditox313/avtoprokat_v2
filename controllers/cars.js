@@ -22,6 +22,24 @@ module.exports.create = async function(req, res) {
             category: req.body.category,
             previewSrc: req.file ? req.file.path : '', //Если файл загружен то задаем путь до файла
             user: req.user.id,
+
+            sts_seria: req.body.sts_seria,
+            sts_number: req.body.sts_number,
+            sts_date: req.body.sts_date,
+            osago_seria: req.body.osago_seria,
+            osago_number: req.body.osago_number,
+            osago_date_finish: req.body.osago_date_finish,
+            vin: req.body.vin,
+            color: req.body.color,
+            year_production: req.body.year_production,
+            price_ocenka: req.body.price_ocenka,
+            to_date: req.body.to_date,
+            to_probeg_prev: req.body.to_probeg_prev,
+            to_probeg_next: req.body.to_probeg_next,
+            to_interval: req.body.to_interval,
+            oil_name: req.body.oil_name,
+            stoa_name: req.body.stoa_name,
+            stoa_phone: req.body.stoa_phone,
         }).save();
 
         // Возвращаем пользователю позицию которую создали 

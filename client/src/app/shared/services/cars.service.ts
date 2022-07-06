@@ -28,6 +28,24 @@ export class CarsService {
       fd.append('category', car.category);
       fd.append('number', car.number);
 
+      fd.append('sts_seria', car.sts_seria);
+      fd.append('sts_number', car.sts_number);
+      fd.append('sts_date', car.sts_date);
+      fd.append('osago_seria', car.osago_seria);
+      fd.append('osago_number', car.osago_number);
+      fd.append('osago_date_finish', car.osago_date_finish);
+      fd.append('vin', car.vin);
+      fd.append('color', car.color);
+      fd.append('year_production', car.year_production);
+      fd.append('price_ocenka', car.price_ocenka);
+      fd.append('to_date', car.to_date);
+      fd.append('to_probeg_prev', car.to_probeg_prev);
+      fd.append('to_probeg_next', car.to_probeg_next);
+      fd.append('to_interval', car.to_interval);
+      fd.append('oil_name', car.oil_name);
+      fd.append('stoa_name', car.stoa_name);
+      fd.append('stoa_phone', car.stoa_phone);
+
       if(image)
       {
          fd.append('previewSrc', image, image.name);
@@ -61,6 +79,24 @@ export class CarsService {
       fd.append('category', xscar.category);
       fd.append('number', xscar.number);
       fd.append('carId', id);
+
+      fd.append('sts_seria', xscar.sts_seria);
+      fd.append('sts_number', xscar.sts_number);
+      fd.append('sts_date', xscar.sts_date);
+      fd.append('osago_seria', xscar.osago_seria);
+      fd.append('osago_number', xscar.osago_number);
+      fd.append('osago_date_finish', xscar.osago_date_finish);
+      fd.append('vin', xscar.vin);
+      fd.append('color', xscar.color);
+      fd.append('year_production', xscar.year_production);
+      fd.append('price_ocenka', xscar.price_ocenka);
+      fd.append('to_date', xscar.to_date);
+      fd.append('to_probeg_prev', xscar.to_probeg_prev);
+      fd.append('to_probeg_next', xscar.to_probeg_next);
+      fd.append('to_interval', xscar.to_interval);
+      fd.append('oil_name', xscar.oil_name);
+      fd.append('stoa_name', xscar.stoa_name);
+      fd.append('stoa_phone', xscar.stoa_phone);
 
       if(image)
       {
