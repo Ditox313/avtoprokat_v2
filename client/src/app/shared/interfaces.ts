@@ -100,4 +100,5 @@ export interface Partner
     phone_3_dop_number?: any
     phone_4_dop_name?: any
     phone_4_dop_number?: any
+    _id?: any
 }

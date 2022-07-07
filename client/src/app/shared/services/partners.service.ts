@@ -64,5 +64,21 @@ export class PartnersService {
     return this.http.post<Partner>(`/api/partners`, fd);
   }
 
+  // // Получаем список всех позиций
+  fetch(params: any = {}): Observable<Partner[]> {
+    return this.http.get<Partner[]>('/api/partners', {
+       params: new HttpParams({
+          fromObject: params
+       })
+    });
+  }
+
+
+  // Удаление
+   delete(id: any): Observable<any>
+   {
+      return this.http.delete<any>(`/api/partners/${id}`);
+   }
+
 
 }

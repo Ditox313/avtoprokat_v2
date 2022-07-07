@@ -52,21 +52,21 @@ module.exports.create = async function(req, res) {
 
 
 // Контроллер для fetch
-// module.exports.fetch = async function(req, res) {
-//     try {
-//         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
-//         const cars = await Car.find({
-//                 user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
-//             }).sort({ date: -1 })
-//             .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
-//             .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
+module.exports.fetch = async function(req, res) {
+    try {
+        // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
+        const partners = await Partner.find({
+                user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+            }).sort({ date: -1 })
+            .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
+            .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
 
-//         // Возвращаем пользователю позиции 
-//         res.status(200).json(cars);
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+        // Возвращаем пользователю позиции 
+        res.status(200).json(partners);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
 
 
 
@@ -127,18 +127,18 @@ module.exports.create = async function(req, res) {
 
 
 // Контроллер для remove
-// module.exports.remove = async function(req, res) {
-//     try {
-//         await Car.remove({
-//             _id: req.params.id
-//         });
+module.exports.remove = async function(req, res) {
+    try {
+        await Partner.remove({
+            _id: req.params.id
+        });
 
 
-//         // Возвращаем результат
-//         res.status(200).json({
-//             message: "Автомобиль удален"
-//         });
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+        // Возвращаем результат
+        res.status(200).json({
+            message: "Партнер удален"
+        });
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};

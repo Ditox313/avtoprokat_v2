@@ -11,7 +11,7 @@ const upload_2 = require('../middleware/upload_2');
 router.post('/', passport.authenticate('jwt', { session: false }), upload_2.fields([{name: 'passport_1_img'},{name: 'passport_2_img'},{name: 'prava_1_img'},{name: 'prava_2_img'}]), controller.create);
 
 // Роут на fetch
-// router.get('/', passport.authenticate('jwt', { session: false }), controller.fetch);
+router.get('/', passport.authenticate('jwt', { session: false }), controller.fetch);
 
 // Роут на update
 // router.patch('/update/:id', passport.authenticate('jwt', { session: false }), upload.single('previewSrc'), controller.update);
@@ -22,6 +22,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), upload_2.fiel
 
 
 // // Роут на remove
-// router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.remove);
+router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.remove);
 
 module.exports = router;

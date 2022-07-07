@@ -541,3 +541,15 @@ img {
 {
     height: 182px;
 }
+
+.xs_partners_tr td a
+{
+    font-size: 22px;
+    color: #194A9E;
+}
+
+.xs_partners_tr td
+{
+    font-size: 22px;
+    color: #194A9E;
+}
