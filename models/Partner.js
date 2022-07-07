@@ -45,7 +45,7 @@ const partnerSchema = new Schema({
     passport_date: {
         type: String,
         default: '',
-        required: true,
+        required: false,
     },
 
     // Кем выдан пасспорт
@@ -94,7 +94,7 @@ const partnerSchema = new Schema({
     prava_date: {
         type: String,
         default: '',
-        required: true,
+        required: false,
     },
 
     // Дата выдачи водительского удостоверения
@@ -104,50 +104,77 @@ const partnerSchema = new Schema({
         required: true,
     },
 
-    // Имя номера телефона №1
-    phone_1_name: {
+    // Основной номер телефона
+    phone_main: {
         type: String,
         default: '',
         required: true,
     },
 
-    // Номер номера телефона №1
-    phone_1_number: {
+    // Дополнительный телефон №1 - имя
+    phone_1_dop_name: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Дополнительный телефон №1 - номер
+    phone_1_dop_number: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+
+     // Дополнительный телефон №2 - имя
+    phone_2_dop_name: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Дополнительный телефон №2 - номер
+    phone_2_dop_number: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+
+    // Дополнительный телефон №3 - имя
+    phone_3_dop_name: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Дополнительный телефон №3 - номер
+    phone_3_dop_number: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Дополнительный телефон №4 - имя
+    phone_4_dop_name: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Дополнительный телефон №4 - номер
+    phone_4_dop_number: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Пользователь который создал партнера
+    user: {
         type: String,
         default: '',
         required: true,
     },
-
-
-    // Имя номера телефона №2
-    phone_2_name: {
-        type: String,
-        default: '',
-        required: true,
-    },
-
-    // Номер номера телефона №2
-    phone_2_number: {
-        type: String,
-        default: '',
-        required: true,
-    },
-
-    // Имя номера телефона №3
-    phone_3_name: {
-        type: String,
-        default: '',
-        required: true,
-    },
-
-     // Номер номера телефона №3
-    phone_3_number: {
-        type: String,
-        default: '',
-        required: true,
-    },
-
-
 });
 
 

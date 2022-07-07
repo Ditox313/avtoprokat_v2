@@ -20,7 +20,7 @@ export class SiteLayoutComponent implements AfterViewInit {
   // Метод будет вызван когда загрузится все DOM дерево
   ngAfterViewInit(): void
   {
-    MaterialService.initializeFloatingButton(this.floatingRef);
+    // MaterialService.initializeFloatingButton(this.floatingRef);
   }
 
 

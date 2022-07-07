@@ -21,6 +21,8 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
   @ViewChild('osago_date_finish_info') osago_date_finish_info_avto!: ElementRef;
   @ViewChild('to_date_info') to_date_info_avto!: ElementRef;
 
+  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
+  @ViewChild('input') inputRef!: ElementRef;
 
   //Создаем переменную, в которую помещаем наш стим, что бы потом отписаться от него
   Sub!: Subscription; 
@@ -55,8 +57,7 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
   imagePreview : any = '';
 
 
-  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
-  @ViewChild('input') inputRef!: ElementRef;
+  
 
   constructor(private cars: CarsService, private router: Router) { }
 

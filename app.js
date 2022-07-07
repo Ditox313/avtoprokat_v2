@@ -8,10 +8,12 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const keys = require('./config/keys.js');
 const passport = require('passport');
-
-
-
 const app = express();
+
+
+// Регистрируем модуль bodyParser
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 // Подключаемся к MongoDB
@@ -26,9 +28,7 @@ mongoose.connect(keys.mongoUri, { useNewUrlParser: true, useUnifiedTopology: tru
 
 
 
-// Регистрируем модуль bodyParser
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
 
 
 // Регистрируем Morgan 

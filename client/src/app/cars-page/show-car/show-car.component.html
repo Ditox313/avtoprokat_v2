@@ -31,7 +31,7 @@
                     <div class="xs_form__item">
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="marka" type="text" class="validate" formControlName="marka" [ngClass]="{'invalid': form.controls['marka'].invalid && form.controls['marka'].touched}">
-                            <label for="marka">Марка</label>
+                            <label for="marka">Марка<span class="xszv">*</span></label>
                             <span class="helper-text red-text" *ngIf="form.controls['marka'].invalid && form.controls['marka'].touched">
                                 <p *ngIf="form.controls['marka'].errors?.required">
                                     Поле не должно быть пустым
@@ -41,7 +41,7 @@
 
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="model" type="text" class="validate" formControlName="model" [ngClass]="{'invalid': form.controls['model'].invalid && form.controls['model'].touched}">
-                            <label for="model">Модель</label>
+                            <label for="model">Модель<span class="xszv">*</span></label>
                             <span class="helper-text red-text" *ngIf="form.controls['model'].invalid && form.controls['model'].touched">
                                 <p *ngIf="form.controls['model'].errors?.required">
                                     Поле не должно быть пустым
@@ -52,7 +52,7 @@
 
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="number" type="text" class="validate" formControlName="number" [ngClass]="{'invalid': form.controls['number'].invalid && form.controls['number'].touched}">
-                            <label for="number">Номер</label>
+                            <label for="number">Номер<span class="xszv">*</span></label>
                             <span class="helper-text red-text" *ngIf="form.controls['number'].invalid && form.controls['number'].touched">
                                 <p *ngIf="form.controls['model'].errors?.required">
                                     Поле не должно быть пустым

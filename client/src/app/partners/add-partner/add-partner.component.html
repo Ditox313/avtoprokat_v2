@@ -1,4 +1,4 @@
-<form class="xs_add__car">
+<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="xs_add__car___top">
         <h1>
             <span class="material-icons">garage</span> Добавить партнера
@@ -31,7 +31,7 @@
                             <input placeholder="Введите значение" id="name" type="text" class="validate"
                                 formControlName="name"
                                 [ngClass]="{'invalid': form.controls['name'].invalid && form.controls['name'].touched}">
-                            <label for="marka">Имя</label>
+                            <label for="marka">Имя<span class="xszv">*</span></label>
                             <span class="helper-text red-text"
                                 *ngIf="form.controls['name'].invalid && form.controls['name'].touched">
                                 <p *ngIf="form.controls['name'].errors?.required">
@@ -39,9 +39,272 @@
                                 </p>
                             </span>
                         </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="surname" type="text" class="validate" formControlName="surname"
+                                [ngClass]="{'invalid': form.controls['surname'].invalid && form.controls['surname'].touched}">
+                            <label for="marka">Фамилия<span class="xszv">*</span></label>
+                            <span class="helper-text red-text" *ngIf="form.controls['surname'].invalid && form.controls['surname'].touched">
+                                <p *ngIf="form.controls['surname'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="lastname" type="text" class="validate" formControlName="lastname"
+                                [ngClass]="{'invalid': form.controls['lastname'].invalid && form.controls['lastname'].touched}">
+                            <label for="marka">Отчество<span class="xszv">*</span></label>
+                            <span class="helper-text red-text" *ngIf="form.controls['lastname'].invalid && form.controls['lastname'].touched">
+                                <p *ngIf="form.controls['lastname'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="passport_seria" type="text" class="validate" formControlName="passport_seria"
+                                [ngClass]="{'invalid': form.controls['passport_seria'].invalid && form.controls['passport_seria'].touched}">
+                            <label for="marka">Серия паспорта<span class="xszv">*</span></label>
+                            <span class="helper-text red-text" *ngIf="form.controls['passport_seria'].invalid && form.controls['passport_seria'].touched">
+                                <p *ngIf="form.controls['passport_seria'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="passport_number" type="text" class="validate"
+                                formControlName="passport_number"
+                                [ngClass]="{'invalid': form.controls['passport_number'].invalid && form.controls['passport_number'].touched}">
+                            <label for="marka">Номер паспорта<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['passport_number'].invalid && form.controls['passport_number'].touched">
+                                <p *ngIf="form.controls['passport_number'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="passport_date" type="text" class="validate"
+                                formControlName="passport_date"
+                                [ngClass]="{'invalid': form.controls['passport_date'].invalid && form.controls['passport_date'].touched}" #passport__date>
+                            <label for="marka">Дата выдачи паспорта<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['passport_date'].invalid && form.controls['passport_date'].touched">
+                                <p *ngIf="form.controls['passport_date'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="passport_who_take" type="text" class="validate"
+                                formControlName="passport_who_take"
+                                [ngClass]="{'invalid': form.controls['passport_who_take'].invalid && form.controls['passport_who_take'].touched}">
+                            <label for="marka">Кем выдан паспорт<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['passport_who_take'].invalid && form.controls['passport_who_take'].touched">
+                                <p *ngIf="form.controls['passport_who_take'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="code_podrazdeleniya" type="text" class="validate"
+                                formControlName="code_podrazdeleniya"
+                                [ngClass]="{'invalid': form.controls['code_podrazdeleniya'].invalid && form.controls['code_podrazdeleniya'].touched}">
+                            <label for="marka">Код подразделения<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['code_podrazdeleniya'].invalid && form.controls['code_podrazdeleniya'].touched">
+                                <p *ngIf="form.controls['code_podrazdeleniya'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+                        
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="passport_register" type="text" class="validate"
+                                formControlName="passport_register"
+                                [ngClass]="{'invalid': form.controls['passport_register'].invalid && form.controls['passport_register'].touched}">
+                            <label for="marka">Регистрация<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['passport_register'].invalid && form.controls['passport_register'].touched">
+                                <p *ngIf="form.controls['passport_register'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="passport_address_fact" type="text" class="validate"
+                                formControlName="passport_address_fact"
+                                [ngClass]="{'invalid': form.controls['passport_address_fact'].invalid && form.controls['passport_address_fact'].touched}">
+                            <label for="marka">Фактический адрес проживания<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['passport_address_fact'].invalid && form.controls['passport_address_fact'].touched">
+                                <p *ngIf="form.controls['passport_address_fact'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="prava_seria" type="text" class="validate" formControlName="prava_seria"
+                                [ngClass]="{'invalid': form.controls['prava_seria'].invalid && form.controls['prava_seria'].touched}">
+                            <label for="marka">Права - серия<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['prava_seria'].invalid && form.controls['prava_seria'].touched">
+                                <p *ngIf="form.controls['prava_seria'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+                        
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="prava_number" type="text" class="validate" formControlName="prava_number"
+                                [ngClass]="{'invalid': form.controls['prava_number'].invalid && form.controls['prava_number'].touched}">
+                            <label for="marka">Права - номер<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['prava_number'].invalid && form.controls['prava_number'].touched">
+                                <p *ngIf="form.controls['prava_number'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+                        
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="prava_date" type="text" class="validate" formControlName="prava_date"
+                                [ngClass]="{'invalid': form.controls['prava_date'].invalid && form.controls['prava_date'].touched}" #prava__date>
+                            <label for="marka">Права - дата выдачи<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['prava_date'].invalid && form.controls['prava_date'].touched">
+                                <p *ngIf="form.controls['prava_date'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
                     </div>
 
                     <div class="xs_form__item xs_form__item___img">
+                        <div class="xs_form__item___img___info">
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="phone_main" type="text" class="validate" formControlName="phone_main"
+                                    [ngClass]="{'invalid': form.controls['phone_main'].invalid && form.controls['phone_main'].touched}">
+                                <label for="marka">Основной телефон<span class="xszv">*</span></label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['phone_main'].invalid && form.controls['phone_main'].touched">
+                                    <p *ngIf="form.controls['phone_main'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="phone_1_dop_name" type="text" class="validate" formControlName="phone_1_dop_name"
+                                    [ngClass]="{'invalid': form.controls['phone_1_dop_name'].invalid && form.controls['phone_1_dop_name'].touched}">
+                                <label for="marka">Дополнительный телефон №1 - имя<span class="xszv">*</span></label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['phone_1_dop_name'].invalid && form.controls['phone_1_dop_name'].touched">
+                                    <p *ngIf="form.controls['phone_1_dop_name'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="phone_1_dop_number" type="text" class="validate"
+                                    formControlName="phone_1_dop_name"
+                                    [ngClass]="{'invalid': form.controls['phone_1_dop_number'].invalid && form.controls['phone_1_dop_number'].touched}">
+                                <label for="marka">Дополнительный телефон №1 - телефон<span class="xszv">*</span></label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['phone_1_dop_number'].invalid && form.controls['phone_1_dop_number'].touched">
+                                    <p *ngIf="form.controls['phone_1_dop_number'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="phone_2_dop_name" type="text" class="validate"
+                                    formControlName="phone_2_dop_name"
+                                    [ngClass]="{'invalid': form.controls['phone_2_dop_name'].invalid && form.controls['phone_2_dop_name'].touched}">
+                                <label for="marka">Дополнительный телефон №2 - имя<span class="xszv">*</span></label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['phone_2_dop_name'].invalid && form.controls['phone_2_dop_name'].touched">
+                                    <p *ngIf="form.controls['phone_2_dop_name'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+                            
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="phone_2_dop_number" type="text" class="validate"
+                                    formControlName="phone_2_dop_number"
+                                    [ngClass]="{'invalid': form.controls['phone_2_dop_number'].invalid && form.controls['phone_2_dop_number'].touched}">
+                                <label for="marka">Дополнительный телефон №2 - телефон<span class="xszv">*</span></label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['phone_2_dop_number'].invalid && form.controls['phone_2_dop_number'].touched">
+                                    <p *ngIf="form.controls['phone_2_dop_number'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="phone_3_dop_name" type="text" class="validate"
+                                    formControlName="phone_3_dop_name"
+                                    [ngClass]="{'invalid': form.controls['phone_3_dop_name'].invalid && form.controls['phone_3_dop_name'].touched}">
+                                <label for="marka">Дополнительный телефон №3 - имя</label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['phone_3_dop_name'].invalid && form.controls['phone_3_dop_name'].touched">
+                                    <p *ngIf="form.controls['phone_3_dop_name'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+                            
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="phone_3_dop_number" type="text" class="validate"
+                                    formControlName="phone_3_dop_number"
+                                    [ngClass]="{'invalid': form.controls['phone_3_dop_number'].invalid && form.controls['phone_3_dop_number'].touched}">
+                                <label for="marka">Дополнительный телефон №3 - телефон</label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['phone_3_dop_number'].invalid && form.controls['phone_3_dop_number'].touched">
+                                    <p *ngIf="form.controls['phone_3_dop_number'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="phone_4_dop_name" type="text" class="validate"
+                                    formControlName="phone_4_dop_name"
+                                    [ngClass]="{'invalid': form.controls['phone_4_dop_name'].invalid && form.controls['phone_4_dop_name'].touched}">
+                                <label for="marka">Дополнительный телефон №4 - имя</label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['phone_4_dop_name'].invalid && form.controls['phone_4_dop_name'].touched">
+                                    <p *ngIf="form.controls['phone_4_dop_name'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+                            
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="phone_4_dop_number" type="text" class="validate"
+                                    formControlName="phone_4_dop_number"
+                                    [ngClass]="{'invalid': form.controls['phone_4_dop_number'].invalid && form.controls['phone_4_dop_number'].touched}">
+                                <label for="marka">Дополнительный телефон №4 - телефон</label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['phone_4_dop_number'].invalid && form.controls['phone_4_dop_number'].touched">
+                                    <p *ngIf="form.controls['phone_4_dop_number'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+                        </div>
                         <!-- <div class="xs_car__preview">
                             <img [src]="[imagePreview]" alt="Изображение" *ngIf="imagePreview !== ''">
                             <div class="prevEmpty" *ngIf="imagePreview == ''">Загрузить обложку автомобиля</div>

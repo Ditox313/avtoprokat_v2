@@ -238,6 +238,15 @@ const carSchema = new Schema({
         required: false,
     },
 
+    // Пользователь который создал партнера
+    user: {
+        type: String,
+        default: '',
+        required: true,
+    },
+    
+    
+
 });
 
 

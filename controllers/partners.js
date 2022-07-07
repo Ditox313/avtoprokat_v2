@@ -9,41 +9,35 @@ const errorHandler = require('../Utils/errorHendler');
 // Контроллер для create
 module.exports.create = async function(req, res) {
     try {
-        const car = await new Car({
-            // marka: req.body.marka,
-            // model: req.body.model,
-            // number: req.body.number,
-            // probeg: req.body.probeg,
-            // price: req.body.price,
-            // start_arenda: req.body.start_arenda,
-            // end_arenda: req.body.end_arenda,
-            // vladelec: req.body.vladelec,
-            // status: req.body.status,
-            // category: req.body.category,
-            // previewSrc: req.file ? req.file.path : '', //Если файл загружен то задаем путь до файла
-            // user: req.user.id,
-
-            // sts_seria: req.body.sts_seria,
-            // sts_number: req.body.sts_number,
-            // sts_date: req.body.sts_date,
-            // osago_seria: req.body.osago_seria,
-            // osago_number: req.body.osago_number,
-            // osago_date_finish: req.body.osago_date_finish,
-            // vin: req.body.vin,
-            // color: req.body.color,
-            // year_production: req.body.year_production,
-            // price_ocenka: req.body.price_ocenka,
-            // to_date: req.body.to_date,
-            // to_probeg_prev: req.body.to_probeg_prev,
-            // to_probeg_next: req.body.to_probeg_next,
-            // to_interval: req.body.to_interval,
-            // oil_name: req.body.oil_name,
-            // stoa_name: req.body.stoa_name,
-            // stoa_phone: req.body.stoa_phone,
+        const partner = await new Partner({
+            name: req.body.name,
+            surname: req.body.surname,
+            lastname: req.body.lastname,
+            passport_seria: req.body.passport_seria,
+            passport_number: req.body.passport_number,
+            passport_date: req.body.passport_date,
+            passport_who_take: req.body.passport_who_take,
+            code_podrazdeleniya: req.body.code_podrazdeleniya,
+            passport_register: req.body.passport_register,
+            passport_address_fact: req.body.passport_address_fact,
+            prava_seria: req.body.prava_seria,
+            prava_number: req.body.prava_number,
+            prava_date: req.body.prava_date,
+            phone_main: req.body.phone_main,
+            phone_1_dop_name: req.body.phone_1_dop_name,
+            phone_1_dop_number: req.body.phone_1_dop_number,
+            phone_2_dop_name: req.body.phone_2_dop_name,
+            phone_2_dop_number: req.body.phone_2_dop_number,
+            phone_3_dop_name: req.body.phone_3_dop_name,
+            phone_3_dop_number: req.body.phone_3_dop_number,
+            phone_4_dop_name: req.body.phone_4_dop_name,
+            phone_4_dop_number: req.body.phone_4_dop_number,
+            user: req.user._id,
+            //previewSrc: req.file ? req.file.path : '', //Если файл загружен то задаем путь до файла
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
-        res.status(201).json(car);
+        res.status(201).json(partner);
     } catch (e) {
         errorHandler(res, e);
     }

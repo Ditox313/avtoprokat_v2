@@ -73,3 +73,31 @@ export interface Car
     stoa_name?: any
     stoa_phone?: any
 }
+
+
+//Интерфейс для партнера
+export interface Partner
+{
+    name: string
+    surname: string
+    lastname: string
+    passport_seria: string
+    passport_number: string
+    passport_date: string
+    passport_who_take: string
+    code_podrazdeleniya: string
+    passport_register: string
+    passport_address_fact: string
+    prava_seria: string
+    prava_number: string
+    prava_date: string
+    phone_main: string
+    phone_1_dop_name: string
+    phone_1_dop_number: string
+    phone_2_dop_name: string
+    phone_2_dop_number: string
+    phone_3_dop_name?: any
+    phone_3_dop_number?: any
+    phone_4_dop_name?: any
+    phone_4_dop_number?: any
+}
