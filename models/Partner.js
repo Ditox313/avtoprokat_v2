@@ -169,6 +169,36 @@ const partnerSchema = new Schema({
         required: false,
     },
 
+    // Пасспорт 1 страница
+    passport_1_img: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
+    // Пасспорт 1 страница
+    passport_2_img: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
+    // Права 1 страница
+    prava_1_img: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
+    // Права 2 страница
+    prava_2_img: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
+    
+
     // Пользователь который создал партнера
     user: {
         type: String,

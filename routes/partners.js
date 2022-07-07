@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const controller = require('../controllers/partners.js');
-const upload = require('../middleware/upload');
+const upload_2 = require('../middleware/upload_2');
 
 
 
 // Роут на create
 // router.post('/a', passport.authenticate('jwt', { session: false }), controller.create);
-router.post('/', passport.authenticate('jwt', { session: false }), upload.single('previewSrc'), controller.create);
+router.post('/', passport.authenticate('jwt', { session: false }), upload_2.fields([{name: 'passport_1_img'},{name: 'passport_2_img'},{name: 'prava_1_img'},{name: 'prava_2_img'}]), controller.create);
 
 // Роут на fetch
 // router.get('/', passport.authenticate('jwt', { session: false }), controller.fetch);

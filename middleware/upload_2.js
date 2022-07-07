@@ -14,7 +14,7 @@ const moment = require('moment');
 // Создаем переменную storage. Она описывает как будут хранится и где будут хранится загруженный файлы. 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
-        cb(null, 'uploads/cars');
+        cb(null, 'uploads/docs');
     },
     filename(req, file, cb) {
         const date = moment().format('DDMMYYYY-HHmmss_SS');
@@ -49,6 +49,6 @@ const limits = {
 
 module.exports = multer({
     storage: storage,
-    fileFilter: fileFilter,
-    limits: limits
+    limits: limits,
+    fileFilter: fileFilter
 })

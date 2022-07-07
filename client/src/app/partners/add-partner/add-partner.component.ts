@@ -14,6 +14,11 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
   @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
+  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
+  @ViewChild('input') inputRef!: ElementRef;
+  @ViewChild('input2') inputRef2!: ElementRef;
+  @ViewChild('input3') inputRef3!: ElementRef;
+  @ViewChild('input4') inputRef4!: ElementRef;
   
   form: any;
   // tabs: any;
@@ -23,6 +28,19 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
 
   // Храним дату выдачи прав
   prava__date__x: MaterialDatepicker | any;
+
+  // Храним фалы загруженных документов
+  passport__1!: File
+  passport__2!: File
+  prava__1!: File
+  prava__2!: File
+
+
+  // Превью загруженных документов
+  passport_1_preview : any = '';
+  passport_2_preview : any = '';
+  prava_1_preview : any = '';
+  prava_2_preview : any = '';
 
   constructor(private partners: PartnersService, private router: Router) { }
 
@@ -69,8 +87,6 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
   // Отправка формы
   onSubmit(){
     // this.form.disable();
-
-
     // Создаем авто
     const partner = {
       name: this.form.value.name,
@@ -99,10 +115,125 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
 
     
     
-   this.partners.create(partner).subscribe((partner) =>{
+   this.partners.create(partner, this.passport__1,this.passport__2,this.prava__1,this.prava__2).subscribe((partner) =>{
         MaterialService.toast('Автомобиль добавлен')
         this.router.navigate(['/partners-page'])
     });    
+  }
+
+
+
+  
+
+  // Обрабатываем загрузку картинок
+  onFileUpload(event: any)
+  {
+    const file = event.target.files['0'];
+    this.passport__1 = file;
+
+    
+
+    // Подключаем ридер для считывания картинки
+    const reader = new FileReader();
+
+
+    // Метод вызовется тогда, когда загрузится вся картинка
+    reader.onload = () => {
+
+      // Переменная для хранения информации об изображении
+      this.passport_1_preview = reader.result;
+    };
+
+
+    // Читаем нужный нам файл
+      reader.readAsDataURL(file);
+  }
+  onFileUpload2(event: any)
+  {
+    const file = event.target.files['0'];
+    this.passport__2 = file;
+
+    
+
+    // Подключаем ридер для считывания картинки
+    const reader = new FileReader();
+
+
+    // Метод вызовется тогда, когда загрузится вся картинка
+    reader.onload = () => {
+
+      // Переменная для хранения информации об изображении
+      this.passport_2_preview = reader.result;
+    };
+
+
+    // Читаем нужный нам файл
+      reader.readAsDataURL(file);
+  }
+  onFileUpload3(event: any)
+  {
+    const file = event.target.files['0'];
+    this.prava__1 = file;
+
+    
+
+    // Подключаем ридер для считывания картинки
+    const reader = new FileReader();
+
+
+    // Метод вызовется тогда, когда загрузится вся картинка
+    reader.onload = () => {
+
+      // Переменная для хранения информации об изображении
+      this.prava_1_preview = reader.result;
+    };
+
+
+    // Читаем нужный нам файл
+      reader.readAsDataURL(file);
+  }
+  onFileUpload4(event: any)
+  {
+    const file = event.target.files['0'];
+    this.prava__2 = file;
+
+    
+
+    // Подключаем ридер для считывания картинки
+    const reader = new FileReader();
+
+
+    // Метод вызовется тогда, когда загрузится вся картинка
+    reader.onload = () => {
+
+      // Переменная для хранения информации об изображении
+      this.prava_2_preview = reader.result;
+    };
+
+
+    // Читаем нужный нам файл
+      reader.readAsDataURL(file);
+  }
+
+
+
+
+  // Обрабатываем кнопку загрузки тригиря клик по скрытому инпуту
+  triggerClick()
+  {
+    this.inputRef.nativeElement.click();
+  }
+  triggerClick2()
+  {
+    this.inputRef2.nativeElement.click();
+  }
+  triggerClick3()
+  {
+    this.inputRef3.nativeElement.click();
+  }
+  triggerClick4()
+  {
+    this.inputRef4.nativeElement.click();
   }
 
 

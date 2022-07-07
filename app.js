@@ -64,6 +64,7 @@ app.use('/api/partners', partnersRoutes);
 
 // Добавляем возможность отдавать с сервера картинки по запросу. (Когда будет запрос к uploads, делай эту папку статической)
 app.use('/uploads/cars', express.static('uploads/cars'));
+app.use('/uploads/docs', express.static('uploads/docs'));
 
 
 

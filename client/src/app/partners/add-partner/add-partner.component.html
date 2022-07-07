@@ -216,7 +216,7 @@
 
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="phone_1_dop_number" type="text" class="validate"
-                                    formControlName="phone_1_dop_name"
+                                    formControlName="phone_1_dop_number"
                                     [ngClass]="{'invalid': form.controls['phone_1_dop_number'].invalid && form.controls['phone_1_dop_number'].touched}">
                                 <label for="marka">Дополнительный телефон №1 - телефон<span class="xszv">*</span></label>
                                 <span class="helper-text red-text"
@@ -305,21 +305,76 @@
                                 </span>
                             </div>
                         </div>
-                        <!-- <div class="xs_car__preview">
-                            <img [src]="[imagePreview]" alt="Изображение" *ngIf="imagePreview !== ''">
-                            <div class="prevEmpty" *ngIf="imagePreview == ''">Загрузить обложку автомобиля</div>
+
+                        <div class="xs_form__item___img___wrap">
+                            <div class="xs_form__item___img___item">
+                                <div class="xs_passport_1_prev">
+                                    <img [src]="[passport_1_preview]" alt="Изображение" *ngIf="passport_1_preview !== ''">
+                                    <div class="prevEmpty" *ngIf="passport_1_preview == ''">1 страница пасспорта</div>
+                                </div>
+
+                                <div>
+                                    <input type="file" class="dn" #input (change)="onFileUpload($event)">
+
+                                    <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2" (click)="triggerClick()"
+                                        [disabled]="form.disabled">
+                                        <i class="material-icons left">backup</i>
+                                        Загрузить изображение
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="xs_form__item___img___item">
+                                <div class="xs_passport_1_prev">
+                                    <img [src]="[passport_2_preview]" alt="Изображение" *ngIf="passport_2_preview !== ''">
+                                    <div class="prevEmpty" *ngIf="passport_2_preview == ''">2 страница пасспорта</div>
+                                </div>
+                            
+                                <div>
+                                    <input type="file" class="dn" #input2 (change)="onFileUpload2($event)">
+                            
+                                    <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2" (click)="triggerClick2()"
+                                        [disabled]="form.disabled">
+                                        <i class="material-icons left">backup</i>
+                                        Загрузить изображение
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="xs_form__item___img___item">
+                                <div class="xs_passport_1_prev">
+                                    <img [src]="[prava_1_preview]" alt="Изображение" *ngIf="prava_1_preview !== ''">
+                                    <div class="prevEmpty" *ngIf="prava_1_preview == ''">Первая сторона прав</div>
+                                </div>
+                            
+                                <div>
+                                    <input type="file" class="dn" #input3 (change)="onFileUpload3($event)">
+                            
+                                    <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2" (click)="triggerClick3()"
+                                        [disabled]="form.disabled">
+                                        <i class="material-icons left">backup</i>
+                                        Загрузить изображение
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="xs_form__item___img___item">
+                                <div class="xs_passport_1_prev">
+                                    <img [src]="[prava_2_preview]" alt="Изображение" *ngIf="prava_2_preview !== ''">
+                                    <div class="prevEmpty" *ngIf="prava_2_preview == ''">Первая сторона прав</div>
+                                </div>
+                            
+                                <div>
+                                    <input type="file" class="dn" #input4 (change)="onFileUpload4($event)">
+                            
+                                    <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2" (click)="triggerClick4()"
+                                        [disabled]="form.disabled">
+                                        <i class="material-icons left">backup</i>
+                                        Загрузить изображение
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-
-                        <div>
-                            <input type="file" class="dn" #input (change)="onFileUpload($event)">
-
-                            <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2"
-                                (click)="triggerClick()" [disabled]="form.disabled">
-                                <i class="material-icons left">backup</i>
-                                Загрузить изображение
-                            </button>
-                        </div> -->
-
                     </div>
                 </div>
             </div>

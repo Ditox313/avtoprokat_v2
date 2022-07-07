@@ -509,3 +509,35 @@ img {
     font-weight: 600;
     font-size: 16px;
 }
+
+.xs_form__item___img___wrap
+{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.xs_form__item___img___item
+{
+    width: 49%;
+    margin-top: 20px;
+}
+
+.xs_form__item___img___item .prevEmpty
+{
+    padding:5px;
+    width: 100%;
+    text-align: center;
+}
+
+.xs_form__item___img___item button
+{
+    width: 100%;
+    margin-top: 10px;
+}
+
+.xs_passport_1_prev img
+{
+    height: 182px;
+}

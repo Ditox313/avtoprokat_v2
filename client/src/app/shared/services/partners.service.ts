@@ -14,7 +14,7 @@ export class PartnersService {
 
 
   // Создаем нового партнера
-  create(partner: Partner, image?: File): Observable<Partner> {
+  create(partner: Partner, passport__1?: File,passport__2?: File,prava__1?: File, prava__2?: File): Observable<Partner> {
     const fd = new FormData(); 
       fd.append('name', partner.name);
       fd.append('surname', partner.surname);
@@ -39,6 +39,27 @@ export class PartnersService {
       fd.append('phone_4_dop_name', partner.phone_4_dop_name);
       fd.append('phone_4_dop_number', partner.phone_4_dop_number);
 
+      if(passport__1)
+      {
+         fd.append('passport_1_img', passport__1, passport__1.name);
+      }
+
+
+      if(passport__2)
+      {
+         fd.append('passport_2_img', passport__2, passport__2.name);
+      }
+
+      if(prava__1)
+      {
+         fd.append('prava_1_img', prava__1, prava__1.name);
+      }
+
+      if(prava__2)
+      {
+         fd.append('prava_2_img', prava__2, prava__2.name);
+      }
+      
 
     return this.http.post<Partner>(`/api/partners`, fd);
   }
