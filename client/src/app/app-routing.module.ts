@@ -7,6 +7,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { OverviewPageComponent } from './overview-page/overview-page.component';
 import { AddPartnerComponent } from './partners/add-partner/add-partner.component';
 import { PartnersComponent } from './partners/partners.component';
+import { ShowPartnerComponent } from './partners/show-partner/show-partner.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { AuthGuard } from './shared/classes/auth.guard';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
@@ -52,6 +53,8 @@ const routes: Routes = [
       { path: 'show-car/edit/:id', component: ShowCarComponent},
       { path: 'partners-page',component: PartnersComponent,},
       { path: 'add-partner', component: AddPartnerComponent},
+      { path: 'show-partner/edit/:id', component: ShowPartnerComponent},
+      
     ],
   },
 ];

@@ -78,33 +78,45 @@ module.exports.fetch = async function(req, res) {
 
 
 // Контроллер для update
-// module.exports.update = async function(req, res) {
-//     try {
+module.exports.update = async function(req, res) {
+    try {
 
-//         const updated = req.body;
+        const updated = req.body;
+
+        // // Если объект file есть,то заполняем параметр путем фала
+        if (req.files.passport_1_img) {
+            updated.passport_1_img = req.files.passport_1_img[0].path;
+        }
+
+        if (req.files.passport_2_img) {
+            updated.passport_2_img = req.files.passport_2_img[0].path;
+        }
 
 
-//         // Если объект file есть,то заполняем параметр путем фала
-//         if (req.file) {
-//             updated.previewSrc = req.file.path;
-//         }
+        if (req.files.prava_1_img) {
+            updated.prava_1_img = req.files.prava_1_img[0].path;
+        }
+
+        if (req.files.prava_2_img) {
+            updated.prava_2_img = req.files.prava_2_img[0].path;
+        }
 
 
 
 
 
-//         // Находим и обновляем позицию. 
-//         const carUpdate = await Car.findOneAndUpdate({ _id: updated.carId }, //Ищем по id
-//             { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
-//             { new: true } //обновит позицию и верет нам уже обновленную
-//         );
+        // Находим и обновляем позицию. 
+        const partnerUpdate = await Partner.findOneAndUpdate({ _id: updated.partnerId }, //Ищем по id
+            { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
+            { new: true } //обновит позицию и верет нам уже обновленную
+        );
 
-//         // Возвращаем пользователю обновленную позицию 
-//         res.status(200).json(req.body);
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(partnerUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
 
 
 
@@ -112,14 +124,14 @@ module.exports.fetch = async function(req, res) {
 
 
 // Контроллер для getById
-// module.exports.getById = async function(req, res) {
-//     try {
-//         const xscar = await Car.findById(req.params.id); //Ищем категорию по id из переданных параметров
-//         res.status(200).json(xscar);
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+module.exports.getById = async function(req, res) {
+    try {
+        const xspartner = await Partner.findById(req.params.id); //Ищем категорию по id из переданных параметров
+        res.status(200).json(xspartner);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
 
 
 

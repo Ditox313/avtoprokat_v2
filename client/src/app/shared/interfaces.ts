@@ -100,5 +100,9 @@ export interface Partner
     phone_3_dop_number?: any
     phone_4_dop_name?: any
     phone_4_dop_number?: any
+    passport_1_img?: any
+    passport_2_img?: any
+    prava_1_img?: any
+    prava_2_img?: any
     _id?: any
 }

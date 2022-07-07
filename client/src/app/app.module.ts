@@ -17,6 +17,7 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
 import { ShowCarComponent } from './cars-page/show-car/show-car.component';
 import { PartnersComponent } from './partners/partners.component';
 import { AddPartnerComponent } from './partners/add-partner/add-partner.component';
+import { ShowPartnerComponent } from './partners/show-partner/show-partner.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AddPartnerComponent } from './partners/add-partner/add-partner.componen
     LoaderComponent,
     ShowCarComponent,
     PartnersComponent,
-    AddPartnerComponent
+    AddPartnerComponent,
+    ShowPartnerComponent
   ],
   imports: [
     BrowserModule,
