@@ -6,6 +6,7 @@ import { CarsService } from '../../shared/services/cars.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { PartnersService } from 'src/app/shared/services/partners.service';
 
 @Component({
   selector: 'app-show-car',
@@ -69,13 +70,16 @@ export class ShowCarComponent implements OnInit,OnDestroy {
   // Превью изображения авто
   imagePreview : any = '';
 
-  test!: any;
+  // test!: any;
+
+  // Список владельцев
+  xspartners!: any
 
 
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
 
-  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, public datePipe: DatePipe) { }
+  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, public datePipe: DatePipe,private partners: PartnersService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -165,6 +169,10 @@ export class ShowCarComponent implements OnInit,OnDestroy {
       
     
     });
+
+
+    // Получаем список партнеров
+    this.partners.get_all().subscribe(res => {this.xspartners = res})
   }
 
 

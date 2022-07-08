@@ -52,7 +52,7 @@ export class PartnersComponent implements OnInit {
       
     this.loading = false
     this.xspartners = this.xspartners.concat(partners)
-    console.log(this.xspartners);
+
     
     });    
   }

@@ -70,6 +70,23 @@ module.exports.fetch = async function(req, res) {
 
 
 
+// Контроллер для get_all
+module.exports.get_all = async function(req, res) {
+    try {
+            // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
+            const partners = await Partner.find({
+                user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+            })
+
+        // Возвращаем пользователю позиции 
+        res.status(200).json(partners);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
 
 
 
