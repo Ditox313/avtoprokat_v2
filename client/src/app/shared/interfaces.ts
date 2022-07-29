@@ -75,8 +75,8 @@ export interface Car
 }
 
 
-//Интерфейс для партнера
-export interface Partner
+//Интерфейс для клиента
+export interface Client
 {
     name: string
     surname: string

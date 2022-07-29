@@ -15,9 +15,9 @@ import { OverviewPageComponent } from './overview-page/overview-page.component';
 import { AddCarComponent } from './cars-page/add-car/add-car.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { ShowCarComponent } from './cars-page/show-car/show-car.component';
-import { PartnersComponent } from './partners/partners.component';
-import { AddPartnerComponent } from './partners/add-partner/add-partner.component';
-import { ShowPartnerComponent } from './partners/show-partner/show-partner.component';
+import { ClientsComponent } from './clients/clients.component';
+import { AddClientComponent } from './clients/add-client/add-client.component';
+import { ShowClientComponent } from './clients/show-client/show-client.component';
 
 @NgModule({
   declarations: [
@@ -31,9 +31,9 @@ import { ShowPartnerComponent } from './partners/show-partner/show-partner.compo
     AddCarComponent,
     LoaderComponent,
     ShowCarComponent,
-    PartnersComponent,
-    AddPartnerComponent,
-    ShowPartnerComponent
+    ClientsComponent,
+    AddClientComponent,
+    ShowClientComponent
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,7 @@ import { MaterialDatepicker } from 'src/app/shared/interfaces';
 import { MaterialService } from '../../shared/classes/material.service';
 import { CarsService } from '../../shared/services/cars.service';
 import { Router } from '@angular/router';
-import { PartnersService } from 'src/app/shared/services/partners.service';
+import { ClientsService } from 'src/app/shared/services/clients.service';
 
 @Component({
   selector: 'app-add-car',
@@ -59,12 +59,12 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
 
 
   // Список владельцев
-  xspartners!: any
+  xsclients!: any
 
 
   
 
-  constructor(private cars: CarsService, private router: Router,private partners: PartnersService) { }
+  constructor(private cars: CarsService, private router: Router,private clients: ClientsService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -99,12 +99,10 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
 
 
     // Получаем список партнеров
-    this.partners.get_all().subscribe(res => {this.xspartners = res})
+    this.clients.get_all().subscribe(res => {this.xsclients = res})
   }
 
-//   0: {name: 'Петр', surname: 'Петров', lastname: 'Петрович', passport_seria: '44444444', passport_number: '444444444', …}
-// 1: {name: 'Александр', surname: 'Александров', lastname: 'Александрович', passport_seria: '9999', passport_number: '99999999999', …}
-// 2: {name: 'Геннадий', surname: 'Малов', lastname: 'Сергеевич', passport_seria: '2212', passport_number: '1212121212', …}
+
 
   ngOnDestroy(): void {
     this.start.destroy()

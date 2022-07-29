@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-// Создаем схему для таблицы partners
+// Создаем схему для таблицы clients
 
-const partnerSchema = new Schema({
+const clientSchema = new Schema({
 
     // Имя
     name: {
@@ -214,5 +214,5 @@ const partnerSchema = new Schema({
 });
 
 
-// Создаем таблицу partners
-module.exports = mongoose.model('partners', partnerSchema);
+// Создаем таблицу clients
+module.exports = mongoose.model('clients', clientSchema);

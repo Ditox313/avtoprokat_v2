@@ -2,18 +2,17 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/classes/material.service';
-import { MaterialDatepicker, Partner } from 'src/app/shared/interfaces';
-import { PartnersService } from 'src/app/shared/services/partners.service';
+import { MaterialDatepicker, Client } from 'src/app/shared/interfaces';
+import { ClientsService } from 'src/app/shared/services/clients.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-show-partner',
-  templateUrl: './show-partner.component.html',
-  styleUrls: ['./show-partner.component.css']
+  selector: 'app-show-client',
+  templateUrl: './show-client.component.html',
+  styleUrls: ['./show-client.component.css'],
 })
-export class ShowPartnerComponent implements OnInit, AfterViewInit {
-
- @ViewChild('tabs') tabs!: ElementRef;
+export class ShowClientComponent implements OnInit, AfterViewInit {
+  @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
@@ -21,41 +20,44 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
   @ViewChild('input2') inputRef2!: ElementRef;
   @ViewChild('input3') inputRef3!: ElementRef;
   @ViewChild('input4') inputRef4!: ElementRef;
-  
-  partnerId!: string; 
-  xsActualPartner!: Partner;
+
+  clientId!: string;
+  xsActualClient!: Client;
   form: any;
   // tabs: any;
 
-   // Храним дату выдачи пасспорта
+  // Храним дату выдачи пасспорта
   passport__date__x: MaterialDatepicker | any;
 
   // Храним дату выдачи прав
   prava__date__x: MaterialDatepicker | any;
 
   // Храним фалы загруженных документов
-  passport__1!: File
-  passport__2!: File
-  prava__1!: File
-  prava__2!: File
-
+  passport__1!: File;
+  passport__2!: File;
+  prava__1!: File;
+  prava__2!: File;
 
   // Превью загруженных документов
-  passport_1_preview : any = '';
-  passport_2_preview : any = '';
-  prava_1_preview : any = '';
-  prava_2_preview : any = '';
-
+  passport_1_preview: any = '';
+  passport_2_preview: any = '';
+  prava_1_preview: any = '';
+  prava_2_preview: any = '';
 
   // Храним  даты из ответа для форматирования
-  passport__date_responce!: any
-  prava__date_responce!: any
+  passport__date_responce!: any;
+  prava__date_responce!: any;
 
-  constructor(private partners: PartnersService, private router: Router, private rote: ActivatedRoute,public datePipe: DatePipe) { }
+  constructor(
+    private clients: ClientsService,
+    private router: Router,
+    private rote: ActivatedRoute,
+    public datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]), 
+      name: new FormControl('', [Validators.required]),
       surname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
       passport_seria: new FormControl('', [Validators.required]),
@@ -67,7 +69,7 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
       passport_address_fact: new FormControl('', [Validators.required]),
       prava_seria: new FormControl('', [Validators.required]),
       prava_number: new FormControl('', [Validators.required]),
-      prava_date: new FormControl('',),
+      prava_date: new FormControl(''),
       phone_main: new FormControl('', [Validators.required]),
       phone_1_dop_name: new FormControl('', [Validators.required]),
       phone_1_dop_number: new FormControl('', [Validators.required]),
@@ -80,47 +82,40 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
     });
 
     // Достаем параметры
-    this.rote.params.subscribe((params)=>{
-      this.partnerId = params['id'];
+    this.rote.params.subscribe((params) => {
+      this.clientId = params['id'];
     });
 
+    this.clients.getById(this.clientId).subscribe((res) => {
+      this.xsActualClient = res;
 
-    this.partners.getById(this.partnerId).subscribe((res)=> {
-      this.xsActualPartner = res
-
-      
-      if(res.passport_1_img)
-      {
-        this.passport_1_preview = res.passport_1_img
+      if (res.passport_1_img) {
+        this.passport_1_preview = res.passport_1_img;
       }
 
-      if(res.passport_2_img)
-      {
-        this.passport_2_preview = res.passport_2_img
+      if (res.passport_2_img) {
+        this.passport_2_preview = res.passport_2_img;
       }
 
-      if(res.prava_1_img)
-      {
-        this.prava_1_preview = res.prava_1_img
+      if (res.prava_1_img) {
+        this.prava_1_preview = res.prava_1_img;
       }
 
-      if(res.prava_2_img)
-      {
-        this.prava_2_preview = res.prava_2_img
+      if (res.prava_2_img) {
+        this.prava_2_preview = res.prava_2_img;
       }
 
-
-      this.form.patchValue({ 
-        name: res.name, 
-        surname: res.surname, 
-        lastname: res.lastname, 
-        passport_seria: res.passport_seria, 
-        passport_number: res.passport_number, 
-        passport_date: res.passport_date, 
-        passport_who_take: res.passport_who_take, 
-        code_podrazdeleniya: res.code_podrazdeleniya, 
-        passport_register: res.passport_register, 
-        passport_address_fact: res.passport_address_fact, 
+      this.form.patchValue({
+        name: res.name,
+        surname: res.surname,
+        lastname: res.lastname,
+        passport_seria: res.passport_seria,
+        passport_number: res.passport_number,
+        passport_date: res.passport_date,
+        passport_who_take: res.passport_who_take,
+        code_podrazdeleniya: res.code_podrazdeleniya,
+        passport_register: res.passport_register,
+        passport_address_fact: res.passport_address_fact,
         prava_seria: res.prava_seria,
         prava_number: res.prava_number,
         prava_date: res.prava_date,
@@ -133,42 +128,49 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
         phone_3_dop_number: res.phone_3_dop_number,
         phone_4_dop_name: res.phone_4_dop_name,
         phone_4_dop_number: res.phone_4_dop_number,
-      })
-
+      });
 
       // // Форматируем даты
-      this.passport__date_responce = this.datePipe.transform(res.passport_date,'dd.MM.yyyy'); 
-      this.prava__date_responce = this.datePipe.transform(res.prava_date,'dd.MM.yyyy'); 
-
-      
-    
+      this.passport__date_responce = this.datePipe.transform(
+        res.passport_date,
+        'dd.MM.yyyy'
+      );
+      this.prava__date_responce = this.datePipe.transform(
+        res.prava_date,
+        'dd.MM.yyyy'
+      );
     });
 
     MaterialService.updateTextInputs();
-
   }
 
   ngAfterViewInit(): void {
-      MaterialService.initTabs(this.tabs.nativeElement)
-      MaterialService.updateTextInputs();
+    MaterialService.initTabs(this.tabs.nativeElement);
+    MaterialService.updateTextInputs();
 
-      this.passport__date__x = MaterialService.initDatepicker(this.passport__date__info, this.validate.bind(this));
-      this.prava__date__x = MaterialService.initDatepicker(this.prava__date__info, this.validate.bind(this));
+    this.passport__date__x = MaterialService.initDatepicker(
+      this.passport__date__info,
+      this.validate.bind(this)
+    );
+    this.prava__date__x = MaterialService.initDatepicker(
+      this.prava__date__info,
+      this.validate.bind(this)
+    );
   }
-// Валидация
+  // Валидация
   validate() {}
 
   // Отправка формы
-  onSubmit(){
+  onSubmit() {
     // this.form.disable();
-    // Создаем авто
-    const partner = {
+    const client = {
       name: this.form.value.name,
       surname: this.form.value.surname,
       lastname: this.form.value.lastname,
       passport_seria: this.form.value.passport_seria,
       passport_number: this.form.value.passport_number,
-      passport_date: this.passport__date__x.date || this.form.value.passport_date ,
+      passport_date:
+        this.passport__date__x.date || this.form.value.passport_date,
       passport_who_take: this.form.value.passport_who_take,
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
       passport_register: this.form.value.passport_register,
@@ -185,127 +187,99 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
       phone_3_dop_number: this.form.value.phone_3_dop_number,
       phone_4_dop_name: this.form.value.phone_4_dop_name,
       phone_4_dop_number: this.form.value.phone_4_dop_number,
-    }
+    };
 
-    
-    
-   this.partners.update(this.partnerId, partner, this.passport__1,this.passport__2,this.prava__1,this.prava__2).subscribe((car) =>{
-        MaterialService.toast('Автомобиль Изменен')
-    });       
+    this.clients
+      .update(
+        this.clientId,
+        client,
+        this.passport__1,
+        this.passport__2,
+        this.prava__1,
+        this.prava__2
+      )
+      .subscribe((car) => {
+        MaterialService.toast('Клиент Изменен');
+      });
   }
 
-
-
-  
-
   // Обрабатываем загрузку картинок
-  onFileUpload(event: any)
-  {
+  onFileUpload(event: any) {
     const file = event.target.files['0'];
     this.passport__1 = file;
-
-    
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
 
-
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-
       // Переменная для хранения информации об изображении
       this.passport_1_preview = reader.result;
     };
 
-
     // Читаем нужный нам файл
-      reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
   }
-  onFileUpload2(event: any)
-  {
+  onFileUpload2(event: any) {
     const file = event.target.files['0'];
     this.passport__2 = file;
-
-    
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
 
-
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-
       // Переменная для хранения информации об изображении
       this.passport_2_preview = reader.result;
     };
 
-
     // Читаем нужный нам файл
-      reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
   }
-  onFileUpload3(event: any)
-  {
+  onFileUpload3(event: any) {
     const file = event.target.files['0'];
     this.prava__1 = file;
-
-    
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
 
-
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-
       // Переменная для хранения информации об изображении
       this.prava_1_preview = reader.result;
     };
 
-
     // Читаем нужный нам файл
-      reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
   }
-  onFileUpload4(event: any)
-  {
+  onFileUpload4(event: any) {
     const file = event.target.files['0'];
     this.prava__2 = file;
-
-    
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
 
-
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-
       // Переменная для хранения информации об изображении
       this.prava_2_preview = reader.result;
     };
 
-
     // Читаем нужный нам файл
-      reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
   }
-
-
-
 
   // Обрабатываем кнопку загрузки тригиря клик по скрытому инпуту
-  triggerClick()
-  {
+  triggerClick() {
     this.inputRef.nativeElement.click();
   }
-  triggerClick2()
-  {
+  triggerClick2() {
     this.inputRef2.nativeElement.click();
   }
-  triggerClick3()
-  {
+  triggerClick3() {
     this.inputRef3.nativeElement.click();
   }
-  triggerClick4()
-  {
+  triggerClick4() {
     this.inputRef4.nativeElement.click();
   }
 }

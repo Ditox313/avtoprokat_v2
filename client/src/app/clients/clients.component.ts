@@ -1,35 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Partner } from '../shared/interfaces';
-import { PartnersService } from '../shared/services/partners.service';
+import { Client } from '../shared/interfaces';
 import { Subscription } from 'rxjs';
 import { MaterialService } from '../shared/classes/material.service';
+import { ClientsService } from '../shared/services/clients.service';
 // Шаг пагинации
   const STEP = 15
 
 @Component({
-  selector: 'app-partners',
-  templateUrl: './partners.component.html',
-  styleUrls: ['./partners.component.css']
+  selector: 'app-clients',
+  templateUrl: './clients.component.html',
+  styleUrls: ['./clients.component.css']
 })
-export class PartnersComponent implements OnInit {
+export class ClientsComponent implements OnInit {
 
     //Создаем переменную, в которую помещаем наш стим, что бы потом отписаться от него
   Sub!: Subscription; 
-  xspartners: Partner[] = []
+  xsclients: Client[] = []
   offset: any = 0
   limit: any = STEP
   loading = false;
   noMoreCars: Boolean = false
-  constructor(private partners: PartnersService, private router: Router, private rote: ActivatedRoute) { }
+  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.fetch()    
   }
 
-  ngOnDestroy(): void {
-  }
-  
 
 
 
@@ -43,15 +40,15 @@ export class PartnersComponent implements OnInit {
     }
 
     this.loading = true
-    this.Sub = this.partners.fetch(params).subscribe((partners) =>{
+    this.Sub = this.clients.fetch(params).subscribe((clients) =>{
 
-    if(partners.length < STEP)
+    if(clients.length < STEP)
     {
       this.noMoreCars = true
     }
       
     this.loading = false
-    this.xspartners = this.xspartners.concat(partners)
+    this.xsclients = this.xsclients.concat(clients)
 
     
     });    
@@ -70,18 +67,18 @@ export class PartnersComponent implements OnInit {
 
 
 
-  // Удалить позицию
-  onDeleteCar(event: Event, xspartner: Partner): void
+  
+  onDeleteCar(event: Event, xsclient: Client): void
   {
     event.stopPropagation();
 
 
-    const dicision = window.confirm(`Удалить партнера?`);
+    const dicision = window.confirm(`Удалить клиента?`);
 
     if (dicision) {
-      this.partners.delete(xspartner._id).subscribe(res => {
-        const idxPos = this.xspartners.findIndex(p => p._id === xspartner._id);
-        this.xspartners.splice(idxPos, 1);
+      this.clients.delete(xsclient._id).subscribe(res => {
+        const idxPos = this.xsclients.findIndex((p) => p._id === xsclient._id);
+        this.xsclients.splice(idxPos, 1);
         MaterialService.toast(res.message)
         
       }, error => {

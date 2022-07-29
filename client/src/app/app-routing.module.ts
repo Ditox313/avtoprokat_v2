@@ -5,9 +5,9 @@ import { CarsPageComponent } from './cars-page/cars-page.component';
 import { ShowCarComponent } from './cars-page/show-car/show-car.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { OverviewPageComponent } from './overview-page/overview-page.component';
-import { AddPartnerComponent } from './partners/add-partner/add-partner.component';
-import { PartnersComponent } from './partners/partners.component';
-import { ShowPartnerComponent } from './partners/show-partner/show-partner.component';
+import { AddClientComponent } from './clients/add-client/add-client.component';
+import { ClientsComponent } from './clients/clients.component';
+import { ShowClientComponent } from './clients/show-client/show-client.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { AuthGuard } from './shared/classes/auth.guard';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
@@ -51,9 +51,9 @@ const routes: Routes = [
       ,
       { path: 'add-car', component: AddCarComponent },
       { path: 'show-car/edit/:id', component: ShowCarComponent},
-      { path: 'partners-page',component: PartnersComponent,},
-      { path: 'add-partner', component: AddPartnerComponent},
-      { path: 'show-partner/edit/:id', component: ShowPartnerComponent},
+      { path: 'clients-page',component: ClientsComponent,},
+      { path: 'add-client', component: AddClientComponent},
+      { path: 'show-client/edit/:id', component: ShowClientComponent},
       
     ],
   },

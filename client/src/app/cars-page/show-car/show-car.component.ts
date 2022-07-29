@@ -6,7 +6,7 @@ import { CarsService } from '../../shared/services/cars.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { PartnersService } from 'src/app/shared/services/partners.service';
+import { ClientsService } from 'src/app/shared/services/clients.service';
 
 @Component({
   selector: 'app-show-car',
@@ -73,13 +73,13 @@ export class ShowCarComponent implements OnInit,OnDestroy {
   // test!: any;
 
   // Список владельцев
-  xspartners!: any
+  xsclients!: any
 
 
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
 
-  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, public datePipe: DatePipe,private partners: PartnersService) { }
+  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, public datePipe: DatePipe, private clients: ClientsService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -127,52 +127,59 @@ export class ShowCarComponent implements OnInit,OnDestroy {
         this.imagePreview = res.previewSrc
       }
 
+      console.log('111', res);
 
-      this.form.patchValue({ 
-        marka: res.marka, 
-        model: res.model, 
-        number: res.number, 
-        probeg: res.probeg, 
-        price: res.price, 
-        start_arenda: res.start_arenda, 
-        end_arenda: res.end_arenda, 
-        vladelec: res.vladelec, 
-        category: res.category, 
-        status: res.status, 
+      // Форматируем даты
+      // this.start_date_responce = this.datePipe.transform(res.start_arenda,'dd.MM.yyyy'); 
+      // this.end_date_responce = this.datePipe.transform(res.end_arenda,'dd.MM.yyyy'); 
+
+      // this.sts_date_date_responce = this.datePipe.transform(res.sts_date,'dd.MM.yyyy'); 
+      // this.osago_date_finish_responce = this.datePipe.transform(res.osago_date_finish,'dd.MM.yyyy'); 
+      // this.to_date_responce = this.datePipe.transform(res.to_date,'dd.MM.yyyy'); 
+      
+
+            
+
+
+      this.form.patchValue({
+        marka: res.marka,
+        model: res.model,
+        number: res.number,
+        probeg: res.probeg,
+        price: res.price,
+        start_arenda: this.datePipe.transform(res.start_arenda, 'dd.MM.yyyy'),
+        end_arenda: this.datePipe.transform(res.end_arenda, 'dd.MM.yyyy'),
+        vladelec: res.vladelec,
+        category: res.category,
+        status: res.status,
         sts_seria: res.sts_seria,
         sts_number: res.sts_number,
-        sts_date: res.sts_date,
+        sts_date: this.datePipe.transform(res.sts_date, 'dd.MM.yyyy'),
         osago_seria: res.osago_seria,
         osago_number: res.osago_number,
-        osago_date_finish: res.osago_date_finish,
+        osago_date_finish: this.datePipe.transform(res.osago_date_finish, 'dd.MM.yyyy'),
         vin: res.vin,
         color: res.color,
         year_production: res.year_production,
         price_ocenka: res.price_ocenka,
-        to_date: res.to_date,
+        to_date: this.datePipe.transform(res.to_date, 'dd.MM.yyyy'),
         to_probeg_prev: res.to_probeg_prev,
         to_probeg_next: res.to_probeg_next,
         to_interval: res.to_interval,
         oil_name: res.oil_name,
         stoa_name: res.stoa_name,
         stoa_phone: res.stoa_phone,
-      })
+      });
 
 
-      // Форматируем даты
-      this.start_date_responce = this.datePipe.transform(res.start_arenda,'dd.MM.yyyy'); 
-      this.end_date_responce = this.datePipe.transform(res.end_arenda,'dd.MM.yyyy'); 
-
-      this.sts_date_date_responce = this.datePipe.transform(res.sts_date,'dd.MM.yyyy'); 
-      this.osago_date_finish_responce = this.datePipe.transform(res.osago_date_finish,'dd.MM.yyyy'); 
-      this.to_date_responce = this.datePipe.transform(res.to_date,'dd.MM.yyyy'); 
+      
       
     
     });
 
 
     // Получаем список партнеров
-    this.partners.get_all().subscribe(res => {this.xspartners = res})
+    this.clients.get_all().subscribe(res => {this.xsclients = res})
   }
 
 
@@ -246,6 +253,7 @@ export class ShowCarComponent implements OnInit,OnDestroy {
   onSubmit(){
     // this.form.disable();
 
+    
 
     // Обновляем авто
     const car = {

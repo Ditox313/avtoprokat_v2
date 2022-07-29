@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser');
-const Partner = require('../models/Partner');
+const Client = require('../models/Client');
 const errorHandler = require('../Utils/errorHendler');
 
 
@@ -9,7 +9,7 @@ const errorHandler = require('../Utils/errorHendler');
 // Контроллер для create
 module.exports.create = async function(req, res) {
     try {
-        const partner = await new Partner({
+        const partner = await new Client({
             name: req.body.name,
             surname: req.body.surname,
             lastname: req.body.lastname,
@@ -41,7 +41,7 @@ module.exports.create = async function(req, res) {
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
-        res.status(201).json(partner);
+        res.status(201).json(Client);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -55,14 +55,14 @@ module.exports.create = async function(req, res) {
 module.exports.fetch = async function(req, res) {
     try {
         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
-        const partners = await Partner.find({
+        const clients = await Client.find({
                 user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
             }).sort({ date: -1 })
             .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
             .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
 
         // Возвращаем пользователю позиции 
-        res.status(200).json(partners);
+        res.status(200).json(clients);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -74,12 +74,12 @@ module.exports.fetch = async function(req, res) {
 module.exports.get_all = async function(req, res) {
     try {
             // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
-            const partners = await Partner.find({
+            const clients = await Client.find({
                 user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
             })
 
         // Возвращаем пользователю позиции 
-        res.status(200).json(partners);
+        res.status(200).json(clients);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -123,13 +123,13 @@ module.exports.update = async function(req, res) {
 
 
         // Находим и обновляем позицию. 
-        const partnerUpdate = await Partner.findOneAndUpdate({ _id: updated.partnerId }, //Ищем по id
+        const clientUpdate = await Client.findOneAndUpdate({ _id: updated.clientId }, //Ищем по id
             { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
             { new: true } //обновит позицию и верет нам уже обновленную
         );
 
         // Возвращаем пользователю обновленную позицию 
-        res.status(200).json(partnerUpdate);
+        res.status(200).json(clientUpdate);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -143,8 +143,8 @@ module.exports.update = async function(req, res) {
 // Контроллер для getById
 module.exports.getById = async function(req, res) {
     try {
-        const xspartner = await Partner.findById(req.params.id); //Ищем категорию по id из переданных параметров
-        res.status(200).json(xspartner);
+        const xsclient = await Client.findById(req.params.id); //Ищем категорию по id из переданных параметров
+        res.status(200).json(xsclient);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -158,14 +158,14 @@ module.exports.getById = async function(req, res) {
 // Контроллер для remove
 module.exports.remove = async function(req, res) {
     try {
-        await Partner.remove({
+        await Client.remove({
             _id: req.params.id
         });
 
 
         // Возвращаем результат
         res.status(200).json({
-            message: "Партнер удален"
+            message: "Клиент удален"
         });
     } catch (e) {
         errorHandler(res, e);
