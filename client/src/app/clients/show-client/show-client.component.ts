@@ -130,15 +130,15 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
         phone_4_dop_number: res.phone_4_dop_number,
       });
 
-      // // Форматируем даты
-      this.passport__date_responce = this.datePipe.transform(
-        res.passport_date,
-        'dd.MM.yyyy'
-      );
-      this.prava__date_responce = this.datePipe.transform(
-        res.prava_date,
-        'dd.MM.yyyy'
-      );
+      // // // Форматируем даты
+      // this.passport__date_responce = this.datePipe.transform(
+      //   res.passport_date,
+      //   'dd.MM.yyyy'
+      // );
+      // this.prava__date_responce = this.datePipe.transform(
+      //   res.prava_date,
+      //   'dd.MM.yyyy'
+      // );
     });
 
     MaterialService.updateTextInputs();
@@ -169,15 +169,14 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
       lastname: this.form.value.lastname,
       passport_seria: this.form.value.passport_seria,
       passport_number: this.form.value.passport_number,
-      passport_date:
-        this.passport__date__x.date || this.form.value.passport_date,
+      passport_date:  this.passport__date__x.date === undefined ? this.xsActualClient.passport_date: new Date(this.passport__date__x.date).toLocaleDateString('ru-RU'),
       passport_who_take: this.form.value.passport_who_take,
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
       passport_register: this.form.value.passport_register,
       passport_address_fact: this.form.value.passport_address_fact,
       prava_seria: this.form.value.prava_seria,
       prava_number: this.form.value.prava_number,
-      prava_date: this.prava__date__x.date || this.form.value.prava_date,
+      prava_date: this.prava__date__x.date === undefined ? this.xsActualClient.prava_date: new Date(this.prava__date__x.date).toLocaleDateString('ru-RU'),
       phone_main: this.form.value.phone_main,
       phone_1_dop_name: this.form.value.phone_1_dop_name,
       phone_1_dop_number: this.form.value.phone_1_dop_number,

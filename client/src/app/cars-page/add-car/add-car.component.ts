@@ -6,6 +6,7 @@ import { MaterialService } from '../../shared/classes/material.service';
 import { CarsService } from '../../shared/services/cars.service';
 import { Router } from '@angular/router';
 import { ClientsService } from 'src/app/shared/services/clients.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-car',
@@ -64,7 +65,7 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
 
   
 
-  constructor(private cars: CarsService, private router: Router,private clients: ClientsService) { }
+  constructor(private cars: CarsService, private router: Router,private clients: ClientsService,  public datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -174,42 +175,41 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
   onSubmit(){
     // this.form.disable();
 
-
     // Создаем авто
     const car = {
       marka: this.form.value.marka,
-      model:  this.form.value.model,
-      number:  this.form.value.number,
-      probeg:  this.form.value.probeg,
-      price:  this.form.value.price,
-      start_arenda:  this.start.date,
-      end_arenda:  this.end.date,
-      vladelec:  this.form.value.vladelec,
-      category:  this.form.value.category,
-      status:  this.form.value.status,
-      sts_seria:  this.form.value.sts_seria,
-      sts_number:  this.form.value.sts_number,
-      sts_date:  this.sts_date_x.date,
-      osago_seria:  this.form.value.osago_seria,
-      osago_number:  this.form.value.osago_number,
-      osago_date_finish:  this.osago_date_finish_x.date,
-      vin:  this.form.value.vin,
-      color:  this.form.value.color,
-      year_production:  this.form.value.year_production,
-      price_ocenka:  this.form.value.price_ocenka,
-      to_date:  this.to_date_x.date,
-      to_probeg_prev:  this.form.value.to_probeg_prev,
-      to_probeg_next:  this.form.value.to_probeg_next,
-      to_interval:  this.form.value.to_interval,
-      oil_name:  this.form.value.oil_name,
-      stoa_name:  this.form.value.stoa_name,
-      stoa_phone:  this.form.value.stoa_phone,
-    }
-    
-   this.Sub = this.cars.create(car, this.image).subscribe((car) =>{
-        MaterialService.toast('Автомобиль добавлен')
-        this.router.navigate(['/cars-page'])
-    });    
+      model: this.form.value.model,
+      number: this.form.value.number,
+      probeg: this.form.value.probeg,
+      price: this.form.value.price,
+      start_arenda: new Date(this.start.date).toLocaleDateString('ru-RU'),
+      end_arenda: new Date(this.end.date).toLocaleDateString('ru-RU'),
+      vladelec: this.form.value.vladelec,
+      category: this.form.value.category,
+      status: this.form.value.status,
+      sts_seria: this.form.value.sts_seria,
+      sts_number: this.form.value.sts_number,
+      sts_date: new Date(this.sts_date_x.date).toLocaleDateString('ru-RU'),
+      osago_seria: this.form.value.osago_seria,
+      osago_number: this.form.value.osago_number,
+      osago_date_finish:  new Date(this.osago_date_finish_x.date).toLocaleDateString('ru-RU'),
+      vin: this.form.value.vin,
+      color: this.form.value.color,
+      year_production: this.form.value.year_production,
+      price_ocenka: this.form.value.price_ocenka,
+      to_date:  new Date(this.to_date_x.date).toLocaleDateString('ru-RU'),
+      to_probeg_prev: this.form.value.to_probeg_prev,
+      to_probeg_next: this.form.value.to_probeg_next,
+      to_interval: this.form.value.to_interval,
+      oil_name: this.form.value.oil_name,
+      stoa_name: this.form.value.stoa_name,
+      stoa_phone: this.form.value.stoa_phone,
+    };
+
+    this.Sub = this.cars.create(car, this.image).subscribe((car) => {
+      MaterialService.toast('Автомобиль добавлен');
+      this.router.navigate(['/cars-page']);
+    });
   }
 
   
