@@ -12,6 +12,9 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { AuthGuard } from './shared/classes/auth.guard';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
 import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component';
+import { PartnersComponent } from './partners/partners.component';
+import { AddPartnerComponent } from './partners/add-partner/add-partner.component';
+import { ShowPartnerComponent } from './partners/show-partner/show-partner.component';
 
 // Массив наших роутов. Роуты делим на layouts
 const routes: Routes = [
@@ -34,7 +37,7 @@ const routes: Routes = [
       },
     ],
   },
-  
+
   {
     path: '',
     component: SiteLayoutComponent,
@@ -47,14 +50,16 @@ const routes: Routes = [
       {
         path: 'overview-page',
         component: OverviewPageComponent,
-      }
-      ,
+      },
       { path: 'add-car', component: AddCarComponent },
-      { path: 'show-car/edit/:id', component: ShowCarComponent},
-      { path: 'clients-page',component: ClientsComponent,},
-      { path: 'add-client', component: AddClientComponent},
-      { path: 'show-client/edit/:id', component: ShowClientComponent},
-      
+      { path: 'show-car/edit/:id', component: ShowCarComponent },
+      { path: 'clients-page', component: ClientsComponent },
+      { path: 'add-client', component: AddClientComponent },
+      { path: 'show-client/edit/:id', component: ShowClientComponent },
+
+      { path: 'partners-page', component: PartnersComponent },
+      { path: 'add-partner', component: AddPartnerComponent },
+      { path: 'show-partner/edit/:id', component: ShowPartnerComponent },
     ],
   },
 ];

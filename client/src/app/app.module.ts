@@ -18,6 +18,9 @@ import { ShowCarComponent } from './cars-page/show-car/show-car.component';
 import { ClientsComponent } from './clients/clients.component';
 import { AddClientComponent } from './clients/add-client/add-client.component';
 import { ShowClientComponent } from './clients/show-client/show-client.component';
+import { PartnersComponent } from './partners/partners.component';
+import { AddPartnerComponent } from './partners/add-partner/add-partner.component';
+import { ShowPartnerComponent } from './partners/show-partner/show-partner.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { ShowClientComponent } from './clients/show-client/show-client.component
     ShowCarComponent,
     ClientsComponent,
     AddClientComponent,
-    ShowClientComponent
+    ShowClientComponent,
+    PartnersComponent,
+    AddPartnerComponent,
+    ShowPartnerComponent
   ],
   imports: [
     BrowserModule,

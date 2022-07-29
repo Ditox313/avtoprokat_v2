@@ -2,6 +2,7 @@ const express = require('express');
 const authRoutes = require('./routes/auth.js');
 const carsRoutes = require('./routes/cars.js');
 const clientsRoutes = require('./routes/clients.js');
+const partnersRoutes = require('./routes/partners.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -54,6 +55,10 @@ app.use('/api/cars', carsRoutes);
 
 // Регистрируем роут clients
 app.use('/api/clients', clientsRoutes);
+
+
+// Регистрируем роут partners
+app.use('/api/partners', partnersRoutes);
 
 
 

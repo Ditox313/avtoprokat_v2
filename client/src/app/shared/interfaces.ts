@@ -106,3 +106,28 @@ export interface Client
     prava_2_img?: any
     _id?: any
 }
+
+
+
+
+//Интерфейс для партнера
+export interface Partner
+{
+    name: string
+    surname: string
+    lastname: string
+    passport_seria: string
+    passport_number: string
+    passport_date: string
+    passport_who_take: string
+    code_podrazdeleniya: string
+    passport_register: string
+    phone_main: string
+    phone_1_dop_name: string
+    phone_1_dop_number: string
+    phone_2_dop_name: string
+    phone_2_dop_number: string
+    passport_1_img?: any
+    passport_2_img?: any
+    _id?: any
+}
