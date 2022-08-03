@@ -97,8 +97,8 @@
                             <label for="vladelec">Владелец</label>
                             <select id="vladelec" formControlName="vladelec" [ngClass]="{'invalid': form.controls['vladelec'].invalid && form.controls['vladelec'].touched}">
                                 <option value="" disabled selected>Владелец:</option>
-                                <option value="{{xsclient.surname}} {{xsclient.name}} {{xsclient.lastname}}" *ngFor="let xsclient of xsclients">
-                                    {{xsclient.surname}} {{xsclient.name}} {{xsclient.lastname}}</option>
+                                <option value="{{xspartner.surname}} {{xspartner.name}} {{xspartner.lastname}}" *ngFor="let xspartner of xspartners">
+                                    {{xspartner.surname}} {{xspartner.name}} {{xspartner.lastname}}</option>
                             </select>
                         </div>
 

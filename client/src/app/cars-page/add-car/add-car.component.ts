@@ -5,8 +5,8 @@ import { MaterialDatepicker } from 'src/app/shared/interfaces';
 import { MaterialService } from '../../shared/classes/material.service';
 import { CarsService } from '../../shared/services/cars.service';
 import { Router } from '@angular/router';
-import { ClientsService } from 'src/app/shared/services/clients.service';
 import { DatePipe } from '@angular/common';
+import { PartnersService } from 'src/app/shared/services/partners.service';
 
 @Component({
   selector: 'app-add-car',
@@ -60,12 +60,12 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
 
 
   // Список владельцев
-  xsclients!: any
+  xspartners!: any
 
 
   
 
-  constructor(private cars: CarsService, private router: Router,private clients: ClientsService,  public datePipe: DatePipe) { }
+  constructor(private cars: CarsService, private router: Router,private partners: PartnersService,  public datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -100,7 +100,7 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
 
 
     // Получаем список партнеров
-    this.clients.get_all().subscribe(res => {this.xsclients = res})
+    this.partners.get_all().subscribe(res => {this.xspartners = res;})
   }
 
 

@@ -51,6 +51,10 @@ export class PartnersService {
     });
   }
 
+  get_all(): Observable<Partner[]> {
+    return this.http.get<Partner[]>('/api/partners/all');
+  }
+
   // Обновление
   update(
     id: string,

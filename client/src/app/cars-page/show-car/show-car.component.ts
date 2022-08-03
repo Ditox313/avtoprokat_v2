@@ -5,7 +5,7 @@ import { Car, MaterialDatepicker } from 'src/app/shared/interfaces';
 import { CarsService } from '../../shared/services/cars.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ClientsService } from 'src/app/shared/services/clients.service';
+import { PartnersService } from 'src/app/shared/services/partners.service';
 
 
 @Component({
@@ -74,13 +74,13 @@ export class ShowCarComponent implements OnInit,OnDestroy {
   // test!: any;
 
   // Список владельцев
-  xsclients!: any
+  xspartners!: any
 
 
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
 
-  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, private clients: ClientsService) { }
+  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, private partners: PartnersService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -177,7 +177,7 @@ export class ShowCarComponent implements OnInit,OnDestroy {
 
 
     // Получаем список партнеров
-    this.clients.get_all().subscribe(res => {this.xsclients = res})
+    this.partners.get_all().subscribe(res => {this.xspartners = res;})
   }
 
 
