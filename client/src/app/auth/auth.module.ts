@@ -7,6 +7,11 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { reducers } from 'src/app/auth/store/reducers';
+import { StoreModule } from '@ngrx/store';
+import { RegisterEffect } from 'src/app/auth/store/effects/register.effect';
+import { EffectsModule } from '@ngrx/effects';
+
 
 
 const routes = [
@@ -34,13 +39,19 @@ const routes = [
 
 
 @NgModule({
-  declarations: [RegisterPageComponent, AuthLayoutComponent, LoginPageComponent],
+  declarations: [
+    RegisterPageComponent,
+    AuthLayoutComponent,
+    LoginPageComponent,
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
+    StoreModule.forFeature('auth', reducers),
+    EffectsModule.forFeature([RegisterEffect]),
   ],
   providers: [AuthService],
 })

@@ -27,9 +27,11 @@ module.exports.login = async function(req, res) {
                 keys.jwt, { expiresIn: 60 * 60 }
             );
 
+
+
             // Отправляем ответ
             res.status(200).json({
-                token: `Bearer ${token}`
+                token: `Bearer ${token}`,
             });
         } else {
             res.status(401).json({
@@ -74,9 +76,15 @@ module.exports.register = async function(req, res) {
             password: bcrypt.hashSync(password, salt)
         });
 
+
+        const userResponse = {
+            email: user.email,
+            _id: user._id
+        }
+
         try {
             await user.save();
-            res.status(201).json(user);
+            res.status(201).json(userResponse);
         } catch (error) {
             errorHandler(res, error);
         }

@@ -12,11 +12,15 @@ import { ClientsModule } from './clients/clients.module';
 import { PartnersModule } from './partners/partners.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { TokenInterceptor } from './shared/other/token.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,7 +32,13 @@ import { TokenInterceptor } from './shared/other/token.interceptor';
     LoaderModule,
     ClientsModule,
     PartnersModule,
-    DashboardModule
+    DashboardModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [
     {

@@ -7,7 +7,15 @@
 export interface User
 {
     email: string,
-    password: string
+    password?: string
+    _id?: string
+}
+
+
+
+// Интерфейс для токена
+export interface Token {
+  token: string
 }
 
 
@@ -130,4 +138,23 @@ export interface Partner
     passport_1_img?: any
     passport_2_img?: any
     _id?: any
+}
+
+
+
+
+
+// Интерфейс для state auth
+export interface AuthStateInterface {
+  currentUser: User | null;
+  isLoggedIn: boolean | null;
+  isSubmitting: boolean | null;
+}
+
+
+
+
+// Интерфейс для глобального state
+export interface AppStateInterface {
+  auth: AuthStateInterface;
 }
