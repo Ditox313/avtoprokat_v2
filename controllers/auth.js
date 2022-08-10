@@ -28,10 +28,22 @@ module.exports.login = async function(req, res) {
             );
 
 
+            const user = await User.findOne({
+                _id: candidate._id
+            })
+
+
+            const userResponse = {
+                email: user.email,
+                _id: user._id
+            }
+
+
 
             // Отправляем ответ
             res.status(200).json({
                 token: `Bearer ${token}`,
+                currentUser: userResponse
             });
         } else {
             res.status(401).json({

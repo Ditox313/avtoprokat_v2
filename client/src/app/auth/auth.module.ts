@@ -11,6 +11,7 @@ import { reducers } from 'src/app/auth/store/reducers';
 import { StoreModule } from '@ngrx/store';
 import { RegisterEffect } from 'src/app/auth/store/effects/register.effect';
 import { EffectsModule } from '@ngrx/effects';
+import { LoginEffect } from './store/effects/login.effect';
 
 
 
@@ -51,7 +52,7 @@ const routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     StoreModule.forFeature('auth', reducers),
-    EffectsModule.forFeature([RegisterEffect]),
+    EffectsModule.forFeature([RegisterEffect, LoginEffect]),
   ],
   providers: [AuthService],
 })

@@ -6,10 +6,10 @@ export const authFeatureSelector = createFeatureSelector< AuthStateInterface>('a
 
 
 // Выбираем нужное поле из нашей фичи
-export const isSubmittingSelector = createSelector(
-  authFeatureSelector,
-  (authState: AuthStateInterface) => authState.isSubmitting
-)
+// export const isSubmittingSelector = createSelector(
+//   authFeatureSelector,
+//   (authState: AuthStateInterface) => authState.isSubmitting
+// )
 
 
 

@@ -6,7 +6,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 import { AuthService } from '../../services/auth.service';
 import { Store, select } from '@ngrx/store';
 import { registerAction } from '../../store/actions/register.action';
-import {isSubmittingSelector,} from 'src/app/auth/store/selectors';
+// import {isSubmittingSelector,} from 'src/app/auth/store/selectors';
 
 
 @Component({
@@ -39,7 +39,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
 
     // Получаем данные из store
-    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector))
+    // this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector))
     
   }
 

@@ -4,8 +4,14 @@ import {createReducer, on, Action} from '@ngrx/store'
 import {
   registerAction,
   registerSuccessAction,
-  registerFailureAction
-} from 'src/app/auth/store/actions/register.action'
+  registerFailureAction,
+} from 'src/app/auth/store/actions/register.action';
+
+import {
+  loginAction,
+  loginSuccessAction,
+  loginFailureAction,
+} from 'src/app/auth/store/actions/login.action';
 import { AuthStateInterface } from 'src/app/shared/types/interfaces'
 
 
@@ -13,40 +19,58 @@ import { AuthStateInterface } from 'src/app/shared/types/interfaces'
 const initialState: AuthStateInterface = {
   currentUser: null,
   isLoggedIn: false,
-  isSubmitting: false,
+  token: '',
 };
 
 
 
-// Обработчик Начала регистрации
 const authReducer = createReducer(
   initialState,
   on(
     registerAction,
     (state): AuthStateInterface => ({
       ...state,
-      isSubmitting: true,
     })
   ),
 
-  
   on(
     registerSuccessAction,
     (state, action): AuthStateInterface => ({
       ...state,
-      isSubmitting: false,
-      isLoggedIn: true,
-      currentUser: action.currentUser
+      currentUser: action.currentUser,
     })
   ),
   on(
     registerFailureAction,
     (state, action): AuthStateInterface => ({
       ...state,
-      isSubmitting: false,
+    })
+  ),
+  on(
+    loginAction,
+    (state): AuthStateInterface => ({
+      ...state,
+    })
+  ),
+
+  on(
+    loginSuccessAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isLoggedIn: true,
+      token: action.token,
+    })
+  ),
+  on(
+    loginFailureAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
     })
   )
-)
+);
+
+
+
 
 
 

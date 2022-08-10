@@ -13,10 +13,6 @@ export interface User
 
 
 
-// Интерфейс для токена
-export interface Token {
-  token: string
-}
 
 
 // Интерфейс для материалайза
@@ -148,7 +144,7 @@ export interface Partner
 export interface AuthStateInterface {
   currentUser: User | null;
   isLoggedIn: boolean | null;
-  isSubmitting: boolean | null;
+  token: string | null;
 }
 
 
@@ -158,3 +154,13 @@ export interface AuthStateInterface {
 export interface AppStateInterface {
   auth: AuthStateInterface;
 }
+
+
+
+
+export interface LoginResponse {
+  token: string,
+  currentUser: User
+}
+
+
