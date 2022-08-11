@@ -6,6 +6,14 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 import { Client } from 'src/app/shared/types/interfaces';
 import { ClientsService } from '../../services/clients.service';
 
+
+import { Store, select } from '@ngrx/store';
+import {
+  clientsAddAction,
+  clientsDeleteAction,
+} from '../../store/actions/clients.action';
+
+
 // Шаг пагинации
   const STEP = 15
 
@@ -23,7 +31,7 @@ export class ClientsComponent implements OnInit {
   limit: any = STEP
   loading = false;
   noMoreCars: Boolean = false
-  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute) { }
+  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute, private store: Store) { }
 
   ngOnInit(): void {
     this.fetch()    
@@ -43,6 +51,8 @@ export class ClientsComponent implements OnInit {
 
     this.loading = true
     this.Sub = this.clients.fetch(params).subscribe((clients) =>{
+
+    this.store.dispatch(clientsAddAction({ clients: clients }));
 
     if(clients.length < STEP)
     {
@@ -81,6 +91,7 @@ export class ClientsComponent implements OnInit {
       this.clients.delete(xsclient._id).subscribe(res => {
         const idxPos = this.xsclients.findIndex((p) => p._id === xsclient._id);
         this.xsclients.splice(idxPos, 1);
+        this.store.dispatch(clientsAddAction({ clients: this.xsclients }));
         MaterialService.toast(res.message)
         
       }, error => {

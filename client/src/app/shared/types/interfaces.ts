@@ -148,9 +148,14 @@ export interface AuthStateInterface {
 }
 
 
-// Интерфейс для state auth
+// Интерфейс для state cars
 export interface CarsStateInterface {
   cars: Car[]
+}
+
+// Интерфейс для state clients
+export interface ClientsStateInterface {
+  clients: Client[];
 }
 
 

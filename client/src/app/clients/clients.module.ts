@@ -12,6 +12,12 @@ import { ClientsService } from './services/clients.service';
 import { SiteLayoutComponent } from '../shared/layouts/components/site-layout/site-layout.component';
 import { LayoutsModule } from '../shared/layouts/layouts.module';
 
+
+import { StoreModule } from '@ngrx/store';
+import { reducers } from 'src/app/clients/store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { ClientsEffect } from './store/effects/clients.effect';
+
 const routes = [
   {
     path: '',
@@ -26,11 +32,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [
-    ClientsComponent,
-    AddClientComponent,
-    ShowClientComponent,
-  ],
+  declarations: [ClientsComponent, AddClientComponent, ShowClientComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -39,7 +41,9 @@ const routes = [
     RouterModule,
     RouterModule.forChild(routes),
     LoaderModule,
-    LayoutsModule
+    LayoutsModule,
+    StoreModule.forFeature('clients', reducers),
+    EffectsModule.forFeature([ClientsEffect]),
   ],
   providers: [ClientsService],
 })
