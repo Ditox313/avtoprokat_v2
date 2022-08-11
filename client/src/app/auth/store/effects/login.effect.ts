@@ -39,10 +39,9 @@ export class LoginEffect {
       switchMap(({ user }) => {
         //Редактируем поток и возвращаем новый
         return this.authService.login(user).pipe(
-          map((token) => {
-            return loginSuccessAction(token); //Вызываем action registerSuccessAction и передаем props
+          map((data) => {
+            return loginSuccessAction(data); //Вызываем action registerSuccessAction и передаем props
           }),
-
           catchError((errorResponse: HttpErrorResponse) => {
             MaterialService.toast(errorResponse.error.message);
             return of(

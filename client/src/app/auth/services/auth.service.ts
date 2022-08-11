@@ -15,9 +15,10 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   // Делаем запрос на сервис. ПОлучаем или не получаем токен, который потом будем использовать в запросах
-  login(user: User): Observable<{ token: string}> { //Возвращаем резульат стрима(Ответ), из которого вернется token типа string
+  login(user: User): Observable<{ token: string; currentUser: User }> {
+    //Возвращаем резульат стрима(Ответ), из которого вернется token типа string
     return this.http
-      .post<{ token: string }>('/api/auth/login', user)
+      .post<{ token: string; currentUser: User }>('/api/auth/login', user)
       .pipe(
         //Делаем ajax на нужный бэкэнд роут. Отдаем user
         tap(({ token }) => {

@@ -69,6 +69,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     };
 
     this.store.dispatch(loginAction({ user }));
+    this.form.enable();
 
     // Когда auth.login(из сервиса auth.service) успешно отработает(как промис), перенаправляем на нужную страницу и обрататываем ошибку
     // this.uSub = this.auth.login(user).subscribe(

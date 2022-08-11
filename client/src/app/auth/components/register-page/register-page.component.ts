@@ -62,6 +62,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
     // Диспатчим action для отправки запроса на регистрацию
     this.store.dispatch(registerAction({ user }));
+    this.form.enable();
 
     // Выполняме метод auth.register из сервиса auth.service и в случае успеха делаем редирект на логин и обрабатываем ошибку
     // this.uSub = this.auth.register(user).subscribe(
