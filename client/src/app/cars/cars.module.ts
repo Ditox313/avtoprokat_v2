@@ -12,6 +12,11 @@ import { LoaderModule } from '../shared/loader/loader.module';
 import { SiteLayoutComponent } from '../shared/layouts/components/site-layout/site-layout.component';
 import { LayoutsModule } from '../shared/layouts/layouts.module';
 
+import { StoreModule } from '@ngrx/store';
+import { reducers } from 'src/app/cars/store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { CarsEffect } from './store/effects/cars.effect';
+
 
 const routes = [
   {
@@ -28,7 +33,7 @@ const routes = [
 
 
 @NgModule({
-  declarations: [AddCarComponent, ShowCarComponent, CarsPageComponent,],
+  declarations: [AddCarComponent, ShowCarComponent, CarsPageComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -37,7 +42,9 @@ const routes = [
     RouterModule,
     RouterModule.forChild(routes),
     LoaderModule,
-    LayoutsModule
+    LayoutsModule,
+    StoreModule.forFeature('cars', reducers),
+    EffectsModule.forFeature([CarsEffect]),
   ],
   providers: [CarsService],
 })

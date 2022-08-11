@@ -3,11 +3,7 @@ import {createEffect, Actions, ofType} from '@ngrx/effects'
 import {map, catchError, switchMap, tap} from 'rxjs/operators'
 import {HttpErrorResponse} from '@angular/common/http'
 
-import {
-  registerAction,
-  registerSuccessAction,
-  registerFailureAction
-} from '../actions/register.action'
+
 
 
 import {

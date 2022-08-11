@@ -148,6 +148,12 @@ export interface AuthStateInterface {
 }
 
 
+// Интерфейс для state auth
+export interface CarsStateInterface {
+  cars: Car[]
+}
+
+
 
 
 // Интерфейс для глобального state
@@ -157,10 +163,23 @@ export interface AppStateInterface {
 
 
 
-
+// Ответ с сервера для login
 export interface LoginResponse {
   token: string,
   currentUser: User
 }
+
+
+
+// Запрос для fetch в cars
+export interface CarsFetcRequest {
+  offset: any;
+  limit: any;
+}
+
+
+
+
+
 
 
