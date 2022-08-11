@@ -159,6 +159,12 @@ export interface ClientsStateInterface {
 }
 
 
+// Интерфейс для state partners
+export interface PartnersStateInterface {
+  partners: Partner[];
+}
+
+
 
 
 // Интерфейс для глобального state

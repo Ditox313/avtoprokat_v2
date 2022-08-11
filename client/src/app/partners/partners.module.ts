@@ -13,6 +13,12 @@ import { ShowPartnerComponent } from './components/show-partner/show-partner.com
 import { PartnersService } from './services/partners.service';
 
 
+import { StoreModule } from '@ngrx/store';
+import { reducers } from 'src/app/partners/store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { PartnersEffect } from './store/effects/partners.effect';
+
+
 const routes = [
   {
     path: '',
@@ -37,6 +43,8 @@ const routes = [
     RouterModule.forChild(routes),
     LoaderModule,
     LayoutsModule,
+    StoreModule.forFeature('partners', reducers),
+    EffectsModule.forFeature([PartnersEffect]),
   ],
   providers: [PartnersService],
 })

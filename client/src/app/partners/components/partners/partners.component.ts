@@ -5,6 +5,12 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 import { Partner } from 'src/app/shared/types/interfaces';
 import { PartnersService } from '../../services/partners.service';
 
+import { Store, select } from '@ngrx/store';
+import {
+  partnersAddAction,
+  partnersDeleteAction,
+} from '../../store/actions/partners.action';
+
 
 // Шаг пагинации
   const STEP = 15
@@ -25,7 +31,8 @@ export class PartnersComponent implements OnInit {
   constructor(
     private partners: PartnersService,
     private router: Router,
-    private rote: ActivatedRoute
+    private rote: ActivatedRoute,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -41,13 +48,15 @@ export class PartnersComponent implements OnInit {
     };
 
     this.loading = true;
-    this.Sub = this.partners.fetch(params).subscribe((clients) => {
-      if (clients.length < STEP) {
+    this.Sub = this.partners.fetch(params).subscribe((partners) => {
+      this.store.dispatch(partnersAddAction({ partners: partners }));
+
+      if (partners.length < STEP) {
         this.noMoreCars = true;
       }
 
       this.loading = false;
-      this.xspartners = this.xspartners.concat(clients);
+      this.xspartners = this.xspartners.concat(partners);
     });
   }
 
@@ -59,9 +68,8 @@ export class PartnersComponent implements OnInit {
   }
 
   onDeleteCar(event: Event, xspartner: Partner): void {
-
     console.log(xspartner);
-    
+
     event.stopPropagation();
 
     const dicision = window.confirm(`Удалить партнера?`);
@@ -73,6 +81,7 @@ export class PartnersComponent implements OnInit {
             (p) => p._id === xspartner._id
           );
           this.xspartners.splice(idxPos, 1);
+          this.store.dispatch(partnersAddAction({ partners: this.xspartners }));
           MaterialService.toast(res.message);
         },
         (error) => {
