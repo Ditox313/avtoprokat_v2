@@ -21,6 +21,7 @@
                     <li class="tab col"><a href="#information" class="active">Информация</a></li>
                     <li class="tab col"><a href="#register_data">Регистрационные данные</a></li>
                     <li class="tab col"><a href="#to">Техобслуживание</a></li>
+                    <li class="tab col"><a href="#tariffs">Цены</a></li>
                 </ul>
             </div>
 
@@ -252,6 +253,100 @@
                         <label for="model">Телефон СТОА</label>
                     </div>
                 </div>
+            </div>
+            <div id="tariffs" class="col s12">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>1-2 дня</th>
+                            <th>3-7 дней</th>
+                            <th>8-14 дней</th>
+                            <th>15-30 дней</th>
+                            <th>31+</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;"> 
+                                Город
+                            </td>
+
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_1_2" class="validate" 
+                                formControlName="days_1_2" [ngClass]="{'invalid': form.controls['days_1_2'].invalid && form.controls['days_1_2'].touched}">
+                            </td>
+
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_3_7" class="validate" formControlName="days_3_7"
+                                    [ngClass]="{'invalid': form.controls['days_3_7'].invalid && form.controls['days_3_7'].touched}">
+                            </td>
+
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_8_14" class="validate" formControlName="days_8_14"
+                                    [ngClass]="{'invalid': form.controls['days_8_14'].invalid && form.controls['days_8_14'].touched}">
+                            </td>
+
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_15_30" class="validate" formControlName="days_15_30"
+                                    [ngClass]="{'invalid': form.controls['days_15_30'].invalid && form.controls['days_15_30'].touched}">
+                            </td>
+
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_31_more" class="validate" formControlName="days_31_more"
+                                    [ngClass]="{'invalid': form.controls['days_31_more'].invalid && form.controls['days_31_more'].touched}">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;">
+                                Межгород
+                            </td>
+                        
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="mezgorod" class="validate" formControlName="mezgorod"
+                                    [ngClass]="{'invalid': form.controls['mezgorod'].invalid && form.controls['mezgorod'].touched}">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;">
+                                Россия
+                            </td>
+                        
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="russia" class="validate" formControlName="russia"
+                                    [ngClass]="{'invalid': form.controls['russia'].invalid && form.controls['russia'].touched}">
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;">
+                                Цена за час (доп время)
+                            </td>
+                        
+                            <td>
+                                <input placeholder="Введите значение" id="price_dop_hour" type="text" class="validate" formControlName="price_dop_hour"
+                                    [ngClass]="{'invalid': form.controls['price_dop_hour'].invalid && form.controls['price_dop_hour'].touched}">
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;">
+                                Залог
+                            </td>
+                        
+                            <td>
+                                <input placeholder="Введите значение" id="zalog" type="text" class="validate"
+                                    formControlName="zalog"
+                                    [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>

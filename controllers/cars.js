@@ -40,6 +40,16 @@ module.exports.create = async function(req, res) {
             oil_name: req.body.oil_name,
             stoa_name: req.body.stoa_name,
             stoa_phone: req.body.stoa_phone,
+
+            days_1_2: req.body.days_1_2,
+            days_3_7: req.body.days_3_7,
+            days_8_14: req.body.days_8_14,
+            days_15_30: req.body.days_15_30,
+            days_31_more: req.body.days_31_more,
+            mezgorod: req.body.mezgorod,
+            russia: req.body.russia,
+            price_dop_hour: req.body.price_dop_hour,
+            zalog: req.body.zalog,
         }).save();
 
         // Возвращаем пользователю позицию которую создали 

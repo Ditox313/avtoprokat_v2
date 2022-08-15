@@ -238,6 +238,70 @@ const carSchema = new Schema({
         required: false,
     },
 
+    // Тариф (1-2 дня)
+    days_1_2: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Тариф (3-7 дня)
+    days_3_7: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Тариф (8-14 дня)
+    days_8_14: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+
+    // Тариф (15-30 дня)
+    days_15_30: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Тариф (31+)
+    days_31_more: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Тариф (Межгород)
+    mezgorod: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Тариф (Россия)
+    russia: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Тариф (Доп час)
+    price_dop_hour: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
+    // Тариф (Залог)
+    zalog: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
     // Пользователь который создал партнера
     user: {
         type: String,

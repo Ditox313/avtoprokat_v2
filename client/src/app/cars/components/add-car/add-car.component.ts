@@ -72,8 +72,8 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
       marka: new FormControl('', [Validators.required]),
       model: new FormControl('', [Validators.required]),
       number: new FormControl('', [Validators.required]),
-      probeg: new FormControl('',),
-      price: new FormControl('', ),
+      probeg: new FormControl(''),
+      price: new FormControl(''),
       start_arenda: new FormControl(''),
       end_arenda: new FormControl(''),
       vladelec: new FormControl('', [Validators.required]),
@@ -96,6 +96,15 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
       oil_name: new FormControl(''),
       stoa_name: new FormControl(''),
       stoa_phone: new FormControl(''),
+      days_1_2: new FormControl(''),
+      days_3_7: new FormControl(''),
+      days_8_14: new FormControl(''),
+      days_15_30: new FormControl(''),
+      days_31_more: new FormControl(''),
+      mezgorod: new FormControl(''),
+      russia: new FormControl(''),
+      price_dop_hour: new FormControl(''),
+      zalog: new FormControl(''),
     });
 
 
@@ -192,19 +201,32 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
       sts_date: new Date(this.sts_date_x.date).toLocaleDateString('ru-RU'),
       osago_seria: this.form.value.osago_seria,
       osago_number: this.form.value.osago_number,
-      osago_date_finish:  new Date(this.osago_date_finish_x.date).toLocaleDateString('ru-RU'),
+      osago_date_finish: new Date(
+        this.osago_date_finish_x.date
+      ).toLocaleDateString('ru-RU'),
       vin: this.form.value.vin,
       color: this.form.value.color,
       year_production: this.form.value.year_production,
       price_ocenka: this.form.value.price_ocenka,
-      to_date:  new Date(this.to_date_x.date).toLocaleDateString('ru-RU'),
+      to_date: new Date(this.to_date_x.date).toLocaleDateString('ru-RU'),
       to_probeg_prev: this.form.value.to_probeg_prev,
       to_probeg_next: this.form.value.to_probeg_next,
       to_interval: this.form.value.to_interval,
       oil_name: this.form.value.oil_name,
       stoa_name: this.form.value.stoa_name,
       stoa_phone: this.form.value.stoa_phone,
+      days_1_2: this.form.value.days_1_2,
+      days_3_7: this.form.value.days_3_7,
+      days_8_14: this.form.value.days_8_14,
+      days_15_30: this.form.value.days_15_30,
+      days_31_more: this.form.value.days_31_more,
+      mezgorod: this.form.value.mezgorod,
+      russia: this.form.value.russia,
+      price_dop_hour: this.form.value.price_dop_hour,
+      zalog: this.form.value.zalog,
     };
+
+    
 
     this.Sub = this.cars.create(car, this.image).subscribe((car) => {
       MaterialService.toast('Автомобиль добавлен');

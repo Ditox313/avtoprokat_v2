@@ -87,8 +87,8 @@ export class ShowCarComponent implements OnInit,OnDestroy {
       marka: new FormControl('', [Validators.required]),
       model: new FormControl('', [Validators.required]),
       number: new FormControl('', [Validators.required]),
-      probeg: new FormControl('',),
-      price: new FormControl('', ),
+      probeg: new FormControl(''),
+      price: new FormControl(''),
       start_arenda: new FormControl(''),
       end_arenda: new FormControl(''),
       vladelec: new FormControl('', [Validators.required]),
@@ -111,6 +111,15 @@ export class ShowCarComponent implements OnInit,OnDestroy {
       oil_name: new FormControl(''),
       stoa_name: new FormControl(''),
       stoa_phone: new FormControl(''),
+      days_1_2: new FormControl(''),
+      days_3_7: new FormControl(''),
+      days_8_14: new FormControl(''),
+      days_15_30: new FormControl(''),
+      days_31_more: new FormControl(''),
+      mezgorod: new FormControl(''),
+      russia: new FormControl(''),
+      price_dop_hour: new FormControl(''),
+      zalog: new FormControl(''),
     });
 
 
@@ -167,6 +176,15 @@ export class ShowCarComponent implements OnInit,OnDestroy {
         oil_name: res.oil_name,
         stoa_name: res.stoa_name,
         stoa_phone: res.stoa_phone,
+        days_1_2: res.days_1_2,
+        days_3_7: res.days_3_7,
+        days_8_14: res.days_8_14,
+        days_15_30: res.days_15_30,
+        days_31_more: res.days_31_more,
+        mezgorod: res.mezgorod,
+        russia: res.russia,
+        price_dop_hour: res.price_dop_hour,
+        zalog: res.zalog,
       });
 
 
@@ -280,6 +298,15 @@ export class ShowCarComponent implements OnInit,OnDestroy {
       oil_name: this.form.value.oil_name,
       stoa_name: this.form.value.stoa_name,
       stoa_phone: this.form.value.stoa_phone,
+      days_1_2: this.form.value.days_1_2,
+      days_3_7: this.form.value.days_3_7,
+      days_8_14: this.form.value.days_8_14,
+      days_15_30: this.form.value.days_15_30,
+      days_31_more: this.form.value.days_31_more,
+      mezgorod: this.form.value.mezgorod,
+      russia: this.form.value.russia,
+      price_dop_hour: this.form.value.price_dop_hour,
+      zalog: this.form.value.zalog,
     };
     
    this.cars.update(this.carId, car, this.image).subscribe((car) =>{

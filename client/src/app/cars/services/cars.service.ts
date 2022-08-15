@@ -46,6 +46,16 @@ export class CarsService {
       fd.append('stoa_name', car.stoa_name);
       fd.append('stoa_phone', car.stoa_phone);
 
+      fd.append('days_1_2', car.days_1_2);
+      fd.append('days_3_7', car.days_3_7);
+      fd.append('days_8_14', car.days_8_14);
+      fd.append('days_15_30', car.days_15_30);
+      fd.append('days_31_more', car.days_31_more);
+      fd.append('mezgorod', car.mezgorod);
+      fd.append('russia', car.russia);
+      fd.append('price_dop_hour', car.price_dop_hour);
+      fd.append('zalog', car.zalog);
+
       if(image)
       {
          fd.append('previewSrc', image, image.name);
@@ -97,6 +107,16 @@ export class CarsService {
       fd.append('oil_name', xscar.oil_name);
       fd.append('stoa_name', xscar.stoa_name);
       fd.append('stoa_phone', xscar.stoa_phone);
+
+      fd.append('days_1_2', xscar.days_1_2);
+      fd.append('days_3_7', xscar.days_3_7);
+      fd.append('days_8_14', xscar.days_8_14);
+      fd.append('days_15_30', xscar.days_15_30);
+      fd.append('days_31_more', xscar.days_31_more);
+      fd.append('mezgorod', xscar.mezgorod);
+      fd.append('russia', xscar.russia);
+      fd.append('price_dop_hour', xscar.price_dop_hour);
+      fd.append('zalog', xscar.zalog);
 
       if(image)
       {

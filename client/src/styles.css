@@ -553,3 +553,8 @@ img {
     font-size: 18px;
     color: #194A9E;
 }
+
+#tariffs td
+{
+    padding: 5px 15px !important;
+}
