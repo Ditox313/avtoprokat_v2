@@ -544,17 +544,37 @@ img {
 
 .xs_partners_tr td a
 {
-    font-size: 18px;
+    font-size: 15px;
     color: #194A9E;
 }
 
 .xs_partners_tr td
 {
-    font-size: 18px;
+    font-size: 15px;
     color: #194A9E;
 }
 
 #tariffs td
 {
     padding: 5px 15px !important;
+}
+
+.xs_form__item___mod .input-field
+{
+    margin-top: 0 !important;
+    margin-bottom: 10px;
+}
+
+.xs_textarea
+{
+    margin-top: 40px;
+}
+
+select {
+    background-color: rgba(255,255,255,0.9);
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #194A9E;
+    border-radius: 2px;
+    height: 3rem;
 }

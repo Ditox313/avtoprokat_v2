@@ -29,6 +29,10 @@ export class SiteLayoutComponent implements AfterViewInit {
       name: 'Автомобили',
     },
     {
+      url: '/bookings-page',
+      name: 'Брони',
+    },
+    {
       url: '/clients-page',
       name: 'Клиенты',
     },

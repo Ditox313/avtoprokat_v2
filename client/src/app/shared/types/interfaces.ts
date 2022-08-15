@@ -198,6 +198,25 @@ export interface CarsFetcRequest {
 
 
 
+// Интерфейс для брони
+export interface Booking {
+  car: any;
+  client: any;
+  place_start: any;
+  place_end: any;
+  tariff: any;
+  comment: any;
+  booking_start: any;
+  booking_end: any;
+  _id?: any;
+  car_meta?: any;
+  client_meta?: any;
+  date?: any;
+}
+
+
+
+
 
 
 
