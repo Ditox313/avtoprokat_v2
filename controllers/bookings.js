@@ -105,18 +105,18 @@ module.exports.getById = async function(req, res) {
 
 
 // Контроллер для remove
-// module.exports.remove = async function(req, res) {
-//     try {
-//         await Car.remove({
-//             _id: req.params.id
-//         });
+module.exports.remove = async function(req, res) {
+    try {
+        await Booking.remove({
+            _id: req.params.id
+        });
 
 
-//         // Возвращаем результат
-//         res.status(200).json({
-//             message: "Автомобиль удален"
-//         });
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+        // Возвращаем результат
+        res.status(200).json({
+            message: "Бронь удалена"
+        });
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};

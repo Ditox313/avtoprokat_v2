@@ -100,20 +100,19 @@ export class BookingsComponent implements OnInit {
 
     const dicision = window.confirm(`Удалить клиента?`);
 
-    // if (dicision) {
-    //   this.clients.delete(xsclient._id).subscribe(
-    //     (res) => {
-    //       const idxPos = this.xsclients.findIndex(
-    //         (p) => p._id === xsclient._id
-    //       );
-    //       this.xsclients.splice(idxPos, 1);
-    //       this.store.dispatch(clientsAddAction({ clients: this.xsclients }));
-    //       MaterialService.toast(res.message);
-    //     },
-    //     (error) => {
-    //       MaterialService.toast(error.error.message);
-    //     }
-    //   );
-    // }
+    if (dicision) {
+      this.bookings.delete(xsbooking._id).subscribe(
+        (res) => {
+          const idxPos = this.xsbookings.findIndex(
+            (p) => p._id === xsbooking._id
+          );
+          this.xsbookings.splice(idxPos, 1);
+          MaterialService.toast(res.message);
+        },
+        (error) => {
+          MaterialService.toast(error.error.message);
+        }
+      );
+    }
   }
 }

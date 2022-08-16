@@ -39,15 +39,12 @@ export class BookingsService {
     return this.http.patch<Booking>(`/api/bookings/${id}`, xsbooking);
   }
 
-  //   get_all(): Observable<Client[]>
-  //   {
-  //       return this.http.get<Client[]>('/api/clients/all');
-  //   }
 
   // Удаление
-  // delete(id: any): Observable<any>
-  // {
-  //    return this.http.delete<any>(`/api/clients/${id}`);
-  // }
+  delete(id: any): Observable<any>
+  {
+     return this.http.delete<any>(`/api/bookings/${id}`);
+  }
+
 
 }
