@@ -77,11 +77,25 @@ const bookingSchema = new Schema({
     },
 
 
+    // Сумма брони аренды
+    summa: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
+    // Сумма брони общая
+    summaFull: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
     // Комментарий
     comment: {
         type: String,
         default: '',
-        required: true,
+        required: false,
     },
     
 

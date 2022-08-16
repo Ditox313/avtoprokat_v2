@@ -28,6 +28,7 @@ const routes = [
       { path: 'add-client', component: AddClientComponent },
       { path: 'add-client/:id', component: AddClientComponent },
       { path: 'show-client/edit/:id', component: ShowClientComponent },
+      { path: 'show-client/edit/:id/:breadcrumbs', component: ShowClientComponent },
     ],
   },
 ];

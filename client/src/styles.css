@@ -590,3 +590,13 @@ select {
 {
     margin-left: 5px;
 }
+
+.xs_summa span
+{
+    border-bottom: 1px solid #194A9E;
+}
+
+.xs_summa span:last-child
+{
+    font-weight: 700;
+}

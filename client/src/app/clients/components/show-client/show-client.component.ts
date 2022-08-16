@@ -24,7 +24,6 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
   clientId!: string;
   xsActualClient!: Client;
   form: any;
-  // tabs: any;
 
   // Храним дату выдачи пасспорта
   passport__date__x: MaterialDatepicker | any;

@@ -19,12 +19,10 @@ module.exports.create = async function(req, res) {
             booking_start: req.body.booking_start,
             booking_end: req.body.booking_end,
             booking_days: req.body.booking_days,
+            summa: req.body.summa,
+            summaFull: req.body.summaFull,
             status: req.body.status,
             user: req.user._id,
-            // category: req.body.category,
-            // previewSrc: req.file ? req.file.path : '', //Если файл загружен то задаем путь до файла
-            
-
         }).save();
 
         // Возвращаем пользователю позицию которую создали 

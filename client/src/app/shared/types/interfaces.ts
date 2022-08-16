@@ -205,7 +205,7 @@ export interface Booking {
   place_start: any;
   place_end: any;
   tariff: any;
-  comment: any;
+  comment?: any;
   booking_start: any;
   booking_end: any;
   _id?: any;
@@ -213,8 +213,21 @@ export interface Booking {
   client_meta?: any;
   date?: any;
   booking_days?: any;
+  summa?: any
 }
 
+
+
+// Интерфейс для суммы брони
+export interface Summa {
+  car: any;
+  tariff: any;
+  booking_start: any;
+  booking_end: any;
+  summa: any;
+  booking_days: any;
+  summaFull: any
+}
 
 
 

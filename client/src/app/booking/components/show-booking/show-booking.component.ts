@@ -37,6 +37,8 @@ export class ShowBookingComponent implements OnInit, AfterViewInit {
 
   xsclients$!: any;
 
+  xsActualClient!: any;
+
   // Храним дату начала брони
   booking_start__x: MaterialDatepicker | any;
 
@@ -79,6 +81,9 @@ export class ShowBookingComponent implements OnInit, AfterViewInit {
         tariff: res.tariff,
         comment: res.comment,
       });
+
+      this.xsActualClient = res.client;
+      
     });
 
     this.xscars$ = this.cars.fetch();
@@ -142,7 +147,7 @@ export class ShowBookingComponent implements OnInit, AfterViewInit {
     
     this.bookings.update(this.bookingId, booking).subscribe((booking) => {
       MaterialService.toast('Бронь обновлена');
-      this.router.navigate(['/bookings-page']);
+      // this.router.navigate(['/bookings-page']);
     });
   }
 }
