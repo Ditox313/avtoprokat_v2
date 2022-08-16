@@ -26,6 +26,7 @@ const routes = [
     children: [
       { path: 'clients-page', component: ClientsComponent },
       { path: 'add-client', component: AddClientComponent },
+      { path: 'add-client/:id', component: AddClientComponent },
       { path: 'show-client/edit/:id', component: ShowClientComponent },
     ],
   },

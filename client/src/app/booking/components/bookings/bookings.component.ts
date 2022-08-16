@@ -98,7 +98,7 @@ export class BookingsComponent implements OnInit {
   onDeleteCar(event: Event, xsbooking: Booking): void {
     event.stopPropagation();
 
-    const dicision = window.confirm(`Удалить клиента?`);
+    const dicision = window.confirm(`Удалить бронь?`);
 
     if (dicision) {
       this.bookings.delete(xsbooking._id).subscribe(

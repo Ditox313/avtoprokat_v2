@@ -34,14 +34,30 @@
     
             <tbody *ngIf="xsbookings.length !== 0; else empty">
                 <tr *ngFor="let xsbooking of xsbookings; let i = index" class="xs_partners_tr xsbooking" >
-                    <td>{{xsbooking.date | date : 'd MMMM y, H:mm'}}</td>
-                    <td>{{xsbooking.car.marka}} {{xsbooking.car.model}} ({{xsbooking.car.number}})</td>
-                    <td>{{xsbooking.client.surname}} {{xsbooking.client.name}}</td>
-                    <td>{{xsbooking.booking_start}}</td>
-                    <td>{{ xsbooking.booking_end}}</td>
-                    <td>{{xsbooking.booking_days}}</td>
-                    <td>{{ xsbooking.place_start}}</td>
-                    <td>{{ xsbooking.place_end}}</td>
+                    <td>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.date | date : 'd MMMM y, H:mm'}}</a>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.car.marka}} {{xsbooking.car.model}} ({{xsbooking.car.number}})</a> 
+                    </td>
+                    <td>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.client.surname}} {{xsbooking.client.name}}</a> 
+                    </td>
+                    <td>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.booking_start}}</a>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{ xsbooking.booking_end}}</a>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.booking_days}}</a>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{ xsbooking.place_start}}</a>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{ xsbooking.place_end}}</a>
+                    </td>
                     <td class="xs_actions ">
                         <a [routerLink]="['/show-booking','edit',xsbooking._id]"><span class="material-icons ">mode_edit</span></a>
                         <a (click)="onDeleteCar($event, xsbooking)"><span class="material-icons ">delete</span></a>

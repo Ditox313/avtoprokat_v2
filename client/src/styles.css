@@ -578,3 +578,15 @@ select {
     border-radius: 2px;
     height: 3rem;
 }
+
+
+.xs_form__item___mod___client > .input-field
+{
+    display: flex;
+    align-items: center;
+}
+
+.xs_form__item___mod___client>.input-field div
+{
+    margin-left: 5px;
+}

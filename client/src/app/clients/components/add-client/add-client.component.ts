@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { MaterialDatepicker } from 'src/app/shared/types/interfaces';
 import { ClientsService } from '../../services/clients.service';
@@ -22,7 +22,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
   @ViewChild('input4') inputRef4!: ElementRef;
 
   form: any;
-  // tabs: any;
+  breadcrumbsId!: any;
 
   // Храним дату выдачи пасспорта
   passport__date__x: MaterialDatepicker | any;
@@ -42,7 +42,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
   prava_1_preview: any = '';
   prava_2_preview: any = '';
 
-  constructor(private clients: ClientsService, private router: Router) {}
+  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute,) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -68,6 +68,10 @@ export class AddClientComponent implements OnInit, AfterViewInit {
       phone_3_dop_number: new FormControl('', []),
       phone_4_dop_name: new FormControl('', []),
       phone_4_dop_number: new FormControl('', []),
+    });
+
+    this.rote.params.subscribe((params: any) => {
+        this.breadcrumbsId =  params['id']
     });
 
     MaterialService.updateTextInputs();
@@ -128,7 +132,16 @@ export class AddClientComponent implements OnInit, AfterViewInit {
       )
       .subscribe((client) => {
         MaterialService.toast('Клиент добавлен');
-        this.router.navigate(['/clients-page']);
+
+        if(this.breadcrumbsId)
+        {
+          this.router.navigate(['/add-booking']);
+        }
+        else
+        {
+          this.router.navigate(['/clients-page']);
+        }
+                
       });
   }
 

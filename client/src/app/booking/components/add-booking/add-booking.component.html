@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="xs_form__item">
-                        <div class="xs_form__item___mod">
+                        <div class="xs_form__item___mod xs_form__item___mod___client">
                             <label for="marka">Клиент<span class="xszv">*</span></label>
                             <div class="input-field col s12">
                                 <select id="client" formControlName="client"
@@ -83,7 +83,13 @@
                                     <option value="" disabled selected>Выберите клиента</option>
                                     <option *ngFor="let xsclient of xsclients$ | async" value="{{xsclient | json}}"> {{xsclient.surname}} {{xsclient.name}} {{xsclient.lastname}}</option>
                                 </select>
+                                <div class="add_cliet_for_booking">
+                                    <a [routerLink]="['/add-client', 'booking_add_client']">
+                                        <span class="material-icons">cloupe</span>
+                                    </a>
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="input-field col s12">

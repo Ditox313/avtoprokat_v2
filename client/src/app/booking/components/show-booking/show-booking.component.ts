@@ -16,7 +16,6 @@ import { MaterialDatepicker } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 
 import * as moment from 'moment';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-show-booking',
@@ -50,7 +49,6 @@ export class ShowBookingComponent implements OnInit, AfterViewInit {
     private cars: CarsService,
     private clients: ClientsService,
     private rote: ActivatedRoute,
-    public datepipe: DatePipe
   ) {}
 
   ngOnInit(): void {
