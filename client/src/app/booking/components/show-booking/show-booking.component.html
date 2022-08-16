@@ -29,7 +29,7 @@
                             <label for="marka">Автомобиль<span class="xszv">*</span></label>
                             <div class="input-field col s12">
                                 <select id="car" formControlName="car"
-                                    [ngClass]="{'invalid': form.controls['car'].invalid && form.controls['car'].touched}">
+                                    [ngClass]="{'invalid': form.controls['car'].invalid && form.controls['car'].touched}"  (ngModelChange)="onChangeCar($event)">
                                     <option value="" disabled selected>Выберите автомобиль</option>
                                     <option *ngFor="let xscar of xscars$ | async" value="{{xscar | json}}">
                                         {{xscar.marka}} {{xscar.model}} ({{xscar.number}})</option>
@@ -43,7 +43,7 @@
                             <input placeholder="Введите значение" id="booking_start" type="text" class="validate"
                                 formControlName="booking_start"
                                 [ngClass]="{'invalid': form.controls['booking_start'].invalid && form.controls['booking_start'].touched}"
-                                #booking_start>
+                                #booking_start (change)="bookingStartDate($event)">
                             <label for="marka">Дата начала брони<span class="xszv">*</span></label>
                         </div>
 
@@ -66,7 +66,7 @@
                             <label for="marka">Тариф<span class="xszv">*</span></label>
                             <div class="input-field col s12">
                                 <select id="tariff" formControlName="tariff"
-                                    [ngClass]="{'invalid': form.controls['tariff'].invalid && form.controls['tariff'].touched}">
+                                    [ngClass]="{'invalid': form.controls['tariff'].invalid && form.controls['tariff'].touched}" (ngModelChange)="onChangeTariff($event)">
                                     <option value="" disabled selected>Выберите тариф</option>
                                     <option value="Город">Город</option>
                                     <option value="Межгород">Межгород</option>
@@ -94,7 +94,7 @@
                             <input placeholder="Введите значение" id="booking_end" type="text" class="validate"
                                 formControlName="booking_end"
                                 [ngClass]="{'invalid': form.controls['booking_end'].invalid && form.controls['booking_end'].touched}"
-                                #booking_end>
+                                #booking_end (change)="bookingEndDate($event)">
                             <label for="marka">Дата окончания брони<span class="xszv">*</span></label>
                         </div>
 
@@ -129,6 +129,12 @@
             </div>
 
         </div>
+    </div>
+
+    <div class="xs_summa" *ngIf="this.summa.summa">
+        <span>Аренда {{this.summa.summa}} ₽</span> + <span>Залог {{this.summa.car.zalog}} ₽</span> + <span>Доп.час
+            {{this.summa.car.price_dop_hour}} ₽</span> =
+        <span>Итого {{summa.summaFull}} ₽</span>
     </div>
 
     <div class="xs_add__car___top">
