@@ -1,7 +1,7 @@
 <form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="xs_add__car___top">
         <h1>
-            <span class="material-icons">contact_mail</span> Обновить бронь
+            <span class="material-icons">contact_mail</span> Добавить бронь
         </h1>
 
         <div class="xs_add__car__top____actions">
@@ -31,8 +31,8 @@
                                 <select id="car" formControlName="car"
                                     [ngClass]="{'invalid': form.controls['car'].invalid && form.controls['car'].touched}">
                                     <option value="" disabled selected>Выберите автомобиль</option>
-                                    <option *ngFor="let xscars of xscars$ | async" value="{{xscars._id}}">
-                                        {{xscars.marka}} {{xscars.model}} ({{xscars.number}})</option>
+                                    <option *ngFor="let xscar of xscars$ | async" value="{{xscar | json}}">
+                                        {{xscar.marka}} {{xscar.model}} ({{xscar.number}})</option>
 
                                 </select>
                             </div>
@@ -84,7 +84,7 @@
                                 <select id="client" formControlName="client"
                                     [ngClass]="{'invalid': form.controls['client'].invalid && form.controls['client'].touched}">
                                     <option value="" disabled selected>Выберите клиента</option>
-                                    <option *ngFor="let xsclient of xsclients$ | async" value="{{xsclient._id}}">
+                                    <option *ngFor="let xsclient of xsclients$ | async" value="{{xsclient | json}}">
                                         {{xsclient.surname}} {{xsclient.name}} {{xsclient.lastname}}</option>
                                 </select>
                             </div>
@@ -123,6 +123,7 @@
                                 </p>
                             </span>
                         </div>
+
                     </div>
                 </div>
             </div>

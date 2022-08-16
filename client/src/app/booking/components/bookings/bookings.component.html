@@ -39,9 +39,13 @@
                     <td>{{xsbooking.client.surname}} {{xsbooking.client.name}}</td>
                     <td>{{xsbooking.booking_start}}</td>
                     <td>{{ xsbooking.booking_end}}</td>
-                    <td>{{ '111'}}</td>
+                    <td>{{xsbooking.booking_days}}</td>
                     <td>{{ xsbooking.place_start}}</td>
                     <td>{{ xsbooking.place_end}}</td>
+                    <td class="xs_actions ">
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]"><span class="material-icons ">mode_edit</span></a>
+                        <!-- <a (click)="onDeleteCar($event, car)"><span class="material-icons ">delete</span></a> -->
+                    </td>
                 </tr>
             </tbody>
     

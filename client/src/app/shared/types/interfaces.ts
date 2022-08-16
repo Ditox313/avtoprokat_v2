@@ -212,6 +212,7 @@ export interface Booking {
   car_meta?: any;
   client_meta?: any;
   date?: any;
+  booking_days?: any;
 }
 
 

@@ -18,6 +18,7 @@ module.exports.create = async function(req, res) {
             comment: req.body.comment,
             booking_start: req.body.booking_start,
             booking_end: req.body.booking_end,
+            booking_days: req.body.booking_days,
             status: req.body.status,
             user: req.user._id,
             // category: req.body.category,
@@ -64,33 +65,24 @@ module.exports.fetch = async function(req, res) {
 
 
 // Контроллер для update
-// module.exports.update = async function(req, res) {
-//     try {
+module.exports.update = async function(req, res) {
+    try {
 
-//         const updated = req.body;
-
-
-//         // Если объект file есть,то заполняем параметр путем фала
-//         if (req.file) {
-//             updated.previewSrc = req.file.path;
-//         }
+        const updated = req.body;
 
 
+        // Находим и обновляем позицию. 
+        const bookingUpdate = await Booking.findOneAndUpdate({ _id: updated._id }, //Ищем по id
+            { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
+            { new: true } //обновит позицию и верет нам уже обновленную
+        );
 
-
-
-//         // Находим и обновляем позицию. 
-//         const carUpdate = await Car.findOneAndUpdate({ _id: updated.carId }, //Ищем по id
-//             { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
-//             { new: true } //обновит позицию и верет нам уже обновленную
-//         );
-
-//         // Возвращаем пользователю обновленную позицию 
-//         res.status(200).json(req.body);
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(bookingUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
 
 
 
@@ -98,14 +90,14 @@ module.exports.fetch = async function(req, res) {
 
 
 // Контроллер для getById
-// module.exports.getById = async function(req, res) {
-//     try {
-//         const xscar = await Car.findById(req.params.id); //Ищем категорию по id из переданных параметров
-//         res.status(200).json(xscar);
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+module.exports.getById = async function(req, res) {
+    try {
+        const xsbooking = await Booking.findById(req.params.id); //Ищем категорию по id из переданных параметров
+        res.status(200).json(xsbooking);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
 
 
 

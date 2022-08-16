@@ -6,12 +6,17 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { MaterialDatepicker } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
+
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-show-booking',
@@ -23,9 +28,13 @@ export class ShowBookingComponent implements OnInit, AfterViewInit {
   @ViewChild('booking_start') booking_start__info!: ElementRef;
   @ViewChild('booking_end') booking_end__info!: ElementRef;
 
+  bookingId!: string;
+
   form: any;
 
   xscars$!: any;
+
+  booking_days_fin!: any
 
   xsclients$!: any;
 
@@ -39,7 +48,9 @@ export class ShowBookingComponent implements OnInit, AfterViewInit {
     private bookings: BookingsService,
     private router: Router,
     private cars: CarsService,
-    private clients: ClientsService
+    private clients: ClientsService,
+    private rote: ActivatedRoute,
+    public datepipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +65,24 @@ export class ShowBookingComponent implements OnInit, AfterViewInit {
       comment: new FormControl(''),
     });
 
+    // Достаем параметры
+    this.rote.params.subscribe((params: any) => {
+      this.bookingId = params['id'];
+    });
+
+    this.bookings.getById(this.bookingId).subscribe((res) => {
+      this.form.patchValue({
+        car: JSON.stringify(res.car, null, 2),
+        client:  JSON.stringify(res.client, null, 2),
+        booking_start: res.booking_start,
+        booking_end: res.booking_end,
+        place_start: res.place_start,
+        place_end: res.place_end,
+        tariff: res.tariff,
+        comment: res.comment,
+      });
+    });
+
     this.xscars$ = this.cars.fetch();
     this.xsclients$ = this.clients.fetch();
 
@@ -63,6 +92,7 @@ export class ShowBookingComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
+
     this.booking_start__x = MaterialService.initDatepicker(
       this.booking_start__info,
       this.validate.bind(this)
@@ -78,24 +108,42 @@ export class ShowBookingComponent implements OnInit, AfterViewInit {
 
   // Отправка формы
   onSubmit() {
-    // Создаем авто
+
+
+    if (this.booking_start__x.date === undefined && this.booking_end__x.date !== undefined) {
+      this.booking_days_fin = moment(this.booking_end__x.date, 'DD.MM.YYYY').diff(moment(this.form.value.booking_start, 'DD.MM.YYYY'), 'days')
+    } else if (this.booking_end__x.date === undefined && this.booking_start__x.date !== undefined) {
+      this.booking_days_fin = moment(this.form.value.booking_end, 'DD.MM.YYYY').diff(moment(this.booking_start__x.date, 'DD.MM.YYYY'), 'days')
+    } else if ((this.booking_end__x.date && this.booking_start__x.date) === undefined) {
+      this.booking_days_fin = moment(this.form.value.booking_end, 'DD.MM.YYYY').diff(moment(this.form.value.booking_start, 'DD.MM.YYYY'), 'days')
+    }
+    else if (this.booking_end__x.date !== undefined && this.booking_start__x.date !== undefined) {
+      this.booking_days_fin = (this.booking_end__x.date - this.booking_start__x.date) /(1000 * 60 * 60 * 24)
+    }
+
+
+
     const booking = {
-      car: this.form.value.car,
-      client: this.form.value.client,
+      car: JSON.parse(this.form.value.car) ,
+      client: JSON.parse(this.form.value.client),
       place_start: this.form.value.place_start,
       place_end: this.form.value.place_end,
       tariff: this.form.value.tariff,
       comment: this.form.value.comment,
-      booking_start: new Date(this.booking_start__x.date).toLocaleDateString(
-        'ru-RU'
-      ),
-      booking_end: new Date(this.booking_end__x.date).toLocaleDateString(
-        'ru-RU'
-      ),
-    };
+      booking_start:
+        this.booking_start__x.date === undefined
+          ? this.form.value.booking_start
+          : new Date(this.booking_start__x.date).toLocaleDateString('ru-RU'),
+      booking_end:
+        this.booking_end__x.date === undefined
+          ? this.form.value.booking_end
+          : new Date(this.booking_end__x.date).toLocaleDateString('ru-RU'),
+      booking_days: this.booking_days_fin
 
-    this.bookings.create(booking).subscribe((booking) => {
-      MaterialService.toast('Бронь добавлена');
+    };
+    
+    this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+      MaterialService.toast('Бронь обновлена');
       this.router.navigate(['/bookings-page']);
     });
   }

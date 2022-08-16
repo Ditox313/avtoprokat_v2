@@ -93,8 +93,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       booking_end: new Date(this.booking_end__x.date).toLocaleDateString(
         'ru-RU'
       ),
+      booking_days: (this.booking_end__x.date - this.booking_start__x.date) / (1000*60*60*24),
     };
-
+    
 
     this.bookings.create(booking).subscribe((booking) => {
       MaterialService.toast('Бронь добавлена');

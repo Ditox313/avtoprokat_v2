@@ -13,11 +13,11 @@ router.post('/', passport.authenticate('jwt', { session: false }), controller.cr
 router.get('/', passport.authenticate('jwt', { session: false }), controller.fetch);
 
 // Роут на update
-// router.patch('/update/:id', passport.authenticate('jwt', { session: false }), upload.single('previewSrc'), controller.update);
+router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update);
 
 
 // Роут на getById
-// router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getById);
+router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getById);
 
 
 // // Роут на remove

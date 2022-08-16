@@ -47,6 +47,13 @@ const bookingSchema = new Schema({
     },
 
 
+    booking_days: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
+
     // Место выдачи
     place_start: {
         type: String,
