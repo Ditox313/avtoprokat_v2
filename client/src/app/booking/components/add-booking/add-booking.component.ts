@@ -23,10 +23,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
   form: any;
 
+  // Храним все автомобили
   xscars$!: any;
 
+  // Храним всех клиентов
   xsclients$!: any;
 
+
+  // Храним объект суммы
   summa: Summa = {
     car: {},
     tariff: '',
@@ -39,6 +43,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
   // Храним дату начала брони
   booking_start__x: MaterialDatepicker | any;
+
 
   // Храним дату окончания брони
   booking_end__x: MaterialDatepicker | any;
@@ -63,19 +68,21 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       comment: new FormControl(''),
     });
 
+
     this.xscars$ = this.cars.fetch();
     this.xsclients$ = this.clients.fetch();
 
-
-
-   
 
     MaterialService.updateTextInputs();
   }
 
   ngAfterViewInit(): void {
+    // Инициализируем табы
     MaterialService.initTabs(this.tabs.nativeElement);
+    // Обновление инпутов формы
     MaterialService.updateTextInputs();
+
+    // Инициализация datepicker
     this.booking_start__x = MaterialService.initDatepicker(
       this.booking_start__info,
       this.validate.bind(this)
@@ -93,9 +100,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
   onChangeCar(e: any)
   {
+    // Получаем выбранный автомобиль
     this.summa.car = JSON.parse(e)
+
+    // Если все выбрано
     if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
     {
+      // Если выбран тариф город считаем суммы для тарифов
       if(this.summa.tariff === 'Город')
       {
         if(this.summa.booking_days <= 2)
@@ -141,8 +152,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
   bookingStartDate(e: any)
   {
+    // Получаем начало аренды
     this.summa.booking_start = e.target.value
+
+    // Назначаем переменную для колличества дней аренды
     this.summa.booking_days = (this.booking_end__x.date - this.booking_start__x.date) / (1000*60*60*24)
+
+    // Если все необходимое заполнено  то считаем суммы для тарифов
     if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
     {
       if(this.summa.tariff === 'Город')
@@ -190,8 +206,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
   bookingEndDate(e: any)
   {
+    // Получаем конец аренды
     this.summa.booking_end = e.target.value
+
+    // Назначаем переменную для колличества дней аренды
     this.summa.booking_days = (this.booking_end__x.date - this.booking_start__x.date) / (1000*60*60*24)
+
+    // Если все необходимое заполнено то считаем суммы для тарифов
     if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
     {
       if(this.summa.tariff === 'Город')
@@ -239,8 +260,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
    onChangeTariff(e: any)
   {
+    // Получаем тариф
     this.summa.tariff = e
     
+    // Если все необходимое заполнено то считаем суммы для тарифов
     if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
     {
       if(this.summa.tariff === 'Город')
@@ -290,6 +313,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
   onSubmit() {
+    // Формируем бронь
     const booking = {
       car: JSON.parse(this.form.value.car),
       client: JSON.parse(this.form.value.client),
@@ -309,6 +333,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     };
     
 
+    // Отправляем запрос
     this.bookings.create(booking).subscribe((booking) => {
       MaterialService.toast('Бронь добавлена');
       this.router.navigate(['/bookings-page']);
