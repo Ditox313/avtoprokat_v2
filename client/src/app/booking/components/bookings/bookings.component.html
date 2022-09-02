@@ -52,13 +52,13 @@
                         <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.client.surname}} {{xsbooking.client.name}}</a> 
                     </td>
                     <td>
-                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.booking_start}}</a>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.booking_start | date : 'd MMMM y, H:mm'}}</a>
                     </td>
                     <td>
-                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{ xsbooking.booking_end}}</a>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{ xsbooking.booking_end | date : 'd MMMM y, H:mm'}}</a>
                     </td>
                     <td>
-                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.booking_days}}</a>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.booking_days | number: '1.0-0'}}</a>
                     </td>
                     <td>
                         <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{ xsbooking.place_start}}</a>

@@ -13,7 +13,7 @@ import { BookingsService } from '../../services/bookings.service';
 
 
 // Шаг пагинации
-  const STEP = 2
+  const STEP = 20
 
 @Component({
   selector: 'app-bookings',

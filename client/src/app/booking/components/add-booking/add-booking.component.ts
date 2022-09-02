@@ -17,8 +17,7 @@ import { BookingsService } from '../../services/bookings.service';
 })
 export class AddBookingComponent implements OnInit, AfterViewInit {
   @ViewChild('tabs') tabs!: ElementRef;
-  @ViewChild('booking_start') booking_start__info!: ElementRef;
-  @ViewChild('booking_end') booking_end__info!: ElementRef;
+
 
 
   form: any;
@@ -41,12 +40,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     summaFull: ''
   }
 
-  // Храним дату начала брони
-  booking_start__x: MaterialDatepicker | any;
 
-
-  // Храним дату окончания брони
-  booking_end__x: MaterialDatepicker | any;
 
 
   constructor(
@@ -74,6 +68,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
     MaterialService.updateTextInputs();
+
+    // Задаем минимальный параметр даты
+    let booking_start: any = document.getElementById('booking_start');
+    booking_start.min = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
+
+    let booking_end: any = document.getElementById('booking_end');
+    booking_end.min = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
   }
 
   ngAfterViewInit(): void {
@@ -81,20 +82,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     MaterialService.initTabs(this.tabs.nativeElement);
     // Обновление инпутов формы
     MaterialService.updateTextInputs();
-
-    // Инициализация datepicker
-    this.booking_start__x = MaterialService.initDatepicker(
-      this.booking_start__info,
-      this.validate.bind(this)
-    );
-    this.booking_end__x = MaterialService.initDatepicker(
-      this.booking_end__info,
-      this.validate.bind(this)
-    );
   }
-
-  // Валидация
-  validate() {}
 
 
 
@@ -155,8 +143,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     // Получаем начало аренды
     this.summa.booking_start = e.target.value
 
+    // Получаем знапчения начала и конца аренды
+    const booking_start__x: any = new Date(this.form.value.booking_start);
+    const booking_end__x: any = new Date(this.form.value.booking_end);
+
     // Назначаем переменную для колличества дней аренды
-    this.summa.booking_days = (this.booking_end__x.date - this.booking_start__x.date) / (1000*60*60*24)
+    this.summa.booking_days = (booking_end__x - booking_start__x) / (1000*60*60*24)
 
     // Если все необходимое заполнено  то считаем суммы для тарифов
     if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
@@ -209,8 +201,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     // Получаем конец аренды
     this.summa.booking_end = e.target.value
 
+    // Получаем знапчения начала и конца аренды
+    const booking_start__x: any = new Date(this.form.value.booking_start);
+    const booking_end__x: any = new Date(this.form.value.booking_end);
+
+
     // Назначаем переменную для колличества дней аренды
-    this.summa.booking_days = (this.booking_end__x.date - this.booking_start__x.date) / (1000*60*60*24)
+    this.summa.booking_days = (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
 
     // Если все необходимое заполнено то считаем суммы для тарифов
     if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
@@ -313,7 +310,11 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
   onSubmit() {
-    // Формируем бронь
+    
+    // Получаем знапчения начала и конца аренды
+    const booking_start__x: any = new Date(this.form.value.booking_start);
+    const booking_end__x: any = new Date(this.form.value.booking_end);
+
     const booking = {
       car: JSON.parse(this.form.value.car),
       client: JSON.parse(this.form.value.client),
@@ -321,17 +322,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       place_end: this.form.value.place_end,
       tariff: this.form.value.tariff,
       comment: this.form.value.comment,
-      booking_start: new Date(this.booking_start__x.date).toLocaleDateString(
-        'ru-RU'
-      ),
-      booking_end: new Date(this.booking_end__x.date).toLocaleDateString(
-        'ru-RU'
-      ),
-      booking_days: (this.booking_end__x.date - this.booking_start__x.date) / (1000*60*60*24),
+      booking_start: this.form.value.booking_start,
+      booking_end: this.form.value.booking_end,
+      booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
       summaFull: this.summa.summaFull,
-      summa: this.summa.summa
+      summa: this.summa.summa,
     };
-    
 
     // Отправляем запрос
     this.bookings.create(booking).subscribe((booking) => {
