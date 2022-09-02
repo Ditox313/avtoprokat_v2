@@ -20,6 +20,8 @@
         <table class="striped" *ngIf="!loading">
             <thead>
                 <tr>
+                    <th>ID</th>
+                    <th>Статус</th>
                     <th>Создана</th>
                     <th>Авто</th>
                     <th>Клиент</th>
@@ -34,6 +36,12 @@
     
             <tbody *ngIf="xsbookings.length !== 0; else empty">
                 <tr *ngFor="let xsbooking of xsbookings; let i = index" class="xs_partners_tr xsbooking" >
+                    <td>
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.order}}</a>
+                    </td>
+                    <td >
+                        <a [routerLink]="['/show-booking','edit',xsbooking._id]" style="color: orange;">{{xsbooking.status}}</a>
+                    </td>
                     <td>
                         <a [routerLink]="['/show-booking','edit',xsbooking._id]">{{xsbooking.date | date : 'd MMMM y, H:mm'}}</a>
                     </td>

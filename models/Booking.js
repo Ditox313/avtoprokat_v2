@@ -97,6 +97,19 @@ const bookingSchema = new Schema({
         default: '',
         required: false,
     },
+
+    // Порядковый номер
+    order: {
+        type: Number,
+        required: true,
+    },
+
+    // Статус
+    status: {
+        type: String,
+        default: 'В ожидании',
+        required: true,
+    },
     
 
 });

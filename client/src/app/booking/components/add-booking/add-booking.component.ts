@@ -339,6 +339,4 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/bookings-page']);
     });
   }
-
-
 }

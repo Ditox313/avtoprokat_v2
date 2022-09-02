@@ -215,6 +215,8 @@ export interface Booking {
   booking_days?: any;
   summa?: any
   summaFull?: any
+  order?: any
+  status?: any
 }
 
 

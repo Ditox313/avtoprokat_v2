@@ -9,6 +9,18 @@ const errorHandler = require('../Utils/errorHendler');
 // Контроллер для create
 module.exports.create = async function(req, res) {
     try {
+
+        // Ищем номер последнего заказа глобального
+        const lastOrder = await Booking.findOne({
+            user: req.user.id
+        })
+        .sort({ date: -1 });
+
+
+        // Если мы нашли предполагаемы последнйи заказ, то устанвливает поле order
+        const maxOrder = lastOrder ? lastOrder.order : 0;
+
+
         const booking = await new Booking({
             car: req.body.car ,
             client: req.body.client,
@@ -23,6 +35,7 @@ module.exports.create = async function(req, res) {
             summaFull: req.body.summaFull,
             status: req.body.status,
             user: req.user._id,
+            order: maxOrder + 1
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
