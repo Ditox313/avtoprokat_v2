@@ -24,6 +24,7 @@ const routes = [
       { path: 'add-booking', component: AddBookingComponent },
       { path: 'view-booking/:id', component: ViewBookingComponent },
       { path: 'edit-booking/:id', component: EditBookingComponent },
+      { path: 'edit-booking/:id/:view', component: EditBookingComponent },
     ],
   },
 ];

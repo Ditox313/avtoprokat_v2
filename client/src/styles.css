@@ -604,7 +604,18 @@ select {
 .btn_waiting
 {
     background-color: orange;
-    color: #fff;
+    color: #fff !important;
+    font-size: 14px;
+    border-radius: 3px;
+    line-height: 14px;
+    display: inline-block;
+    padding: 3px 10px 6px 10px;
+}
+
+.btn_v_arende
+{
+    background-color: #194A9E;
+    color: #fff !important;
     font-size: 14px;
     border-radius: 3px;
     line-height: 14px;
@@ -617,16 +628,14 @@ select {
     font-size: 18px;
     margin-right: 15px;
 }
+
+
 .xs_booking_view_content
 {
     display: flex;
     justify-content: space-between;
 }
 
-.xs_booking_view_content hr
-{
-    background-color: #194A9E;
-}
 .view_rashet > div
 {
     display: flex;
@@ -711,4 +720,8 @@ select {
 {
     display: flex;
     justify-content: space-between;
+}
+
+.setting_view_info__box span {
+    margin: 0 !important;
 }

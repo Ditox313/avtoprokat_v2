@@ -1,6 +1,6 @@
-<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form class="xs_add__car" *ngIf="actualBooking">
     <div class="xs_add__car___top">
-        <h1>
+        <h1 >
             <span class="material-icons">contact_mail</span> Просмотр брони №{{actualBooking.order}} 
         </h1>
     </div>
@@ -21,8 +21,8 @@
                             <div>
                                 <span>Статус</span>
                                 <span>
-                                    <span *ngIf="actualBooking.status === 'В ожидании'" class="btn_waiting">В ожидании</span>
-                                    <span *ngIf="actualBooking.status === 'Активная'">Активная</span>
+                                    <span *ngIf="bookingStatus === 'В ожидании'" class="btn_waiting">В ожидании</span>
+                                    <span *ngIf="bookingStatus === 'В аренде'" class="btn_v_arende">В аренде</span>
                                 </span>
                             </div>
                             
@@ -100,17 +100,39 @@
                         <div class="setting_view_info">
                             <h5>Управление</h5>
 
-                            <div class="setting_view_info__box" *ngIf="actualBooking.status === 'В ожидании'">
-                                <span>
+                            <div class="setting_view_info__box" *ngIf="bookingStatus === 'В ожидании'">
+                                <span title="Выдать автомобиль" (click)="toggleStatus('В аренде')">
                                     <img src="../../../../assets/img/vidat_avto.png" alt="">
                                 </span>
 
-                                <span>
+                                <span title="Редактировать бронь" [routerLink]="['/edit-booking',actualBooking._id,'view']">
                                     <img src="../../../../assets/img/edit_avto.png" alt="">
                                 </span>
 
-                                <span>
+                                <span title="Сгенерировать документы">
                                     <img src="../../../../assets/img/docs.png" alt="">
+                                </span>
+                            </div>
+
+
+                            <div class="setting_view_info__box" *ngIf="bookingStatus=== 'В аренде'">
+                                <span title="Продлить бронь" (click)="toggleStatus('В ожидании')">
+                                    <img src="../../../../assets/img/vidat_avto.png" alt="">
+                                </span>
+                                <span title="Продлить бронь">
+                                    <img src="../../../../assets/img/prodlit.png">
+                                </span>
+
+                                <span title="Принять автомобиль">
+                                    <img src="../../../../assets/img/vernut.png">
+                                </span>
+                            
+                                <span title="Редактировать бронь" [routerLink]="['/edit-booking',actualBooking._id,'view']">
+                                    <img src="../../../../assets/img/edit_avto.png">
+                                </span>
+                            
+                                <span title="Сгенерировать документы">
+                                    <img src="../../../../assets/img/docs.png">
                                 </span>
                             </div>
                         </div>

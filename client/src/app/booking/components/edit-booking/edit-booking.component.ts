@@ -25,7 +25,6 @@ import * as moment from 'moment';
 export class EditBookingComponent implements OnInit, AfterViewInit {
   @ViewChild('tabs') tabs!: ElementRef;
 
-
   summa: Summa = {
     car: {},
     tariff: '',
@@ -33,16 +32,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
     booking_end: '',
     summa: '',
     booking_days: '',
-    summaFull: ''
-  }
+    summaFull: '',
+  };
 
   bookingId!: string;
+  bookingViewRef!: string;
 
   form: any;
 
   xscars$!: any;
 
-  booking_days_fin!: any
+  booking_days_fin!: any;
 
   xsclients$!: any;
 
@@ -53,7 +53,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
     private router: Router,
     private cars: CarsService,
     private clients: ClientsService,
-    private rote: ActivatedRoute,
+    private rote: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -71,12 +71,18 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
     // Достаем параметры
     this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
+      
+      if(params.view)
+      {
+        this.bookingViewRef = params.view;
+      }
+
     });
 
     this.bookings.getById(this.bookingId).subscribe((res) => {
       this.form.patchValue({
         car: JSON.stringify(res.car, null, 2),
-        client:  JSON.stringify(res.client, null, 2),
+        client: JSON.stringify(res.client, null, 2),
         booking_start: res.booking_start,
         booking_end: res.booking_end,
         place_start: res.place_start,
@@ -85,15 +91,13 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         comment: res.comment,
       });
 
-      this.summa.car = res.car
-      this.summa.tariff = res.tariff
-      this.summa.booking_start = res.booking_start
-      this.summa.booking_end = res.booking_end
-      this.summa.summa = res.summa
-      this.summa.summaFull = res.summaFull
-      this.summa.booking_days = res.booking_days
-
-      
+      this.summa.car = res.car;
+      this.summa.tariff = res.tariff;
+      this.summa.booking_start = res.booking_start;
+      this.summa.booking_end = res.booking_end;
+      this.summa.summa = res.summa;
+      this.summa.summaFull = res.summaFull;
+      this.summa.booking_days = res.booking_days;
 
       this.xsActualClient = res.client;
     });
@@ -103,267 +107,349 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
 
     MaterialService.updateTextInputs();
 
-
     // Задаем минимальный параметр даты
     let booking_start: any = document.getElementById('booking_start');
-    booking_start.min = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
+    booking_start.min = new Date()
+      .toISOString()
+      .slice(0, new Date().toISOString().lastIndexOf(':'));
 
     let booking_end: any = document.getElementById('booking_end');
-    booking_end.min = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
+    booking_end.min = new Date()
+      .toISOString()
+      .slice(0, new Date().toISOString().lastIndexOf(':'));
   }
 
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
-
   }
 
   // Валидация
   validate() {}
 
-
-
-  onChangeCar(e: any)
-  {
-    this.summa.car = JSON.parse(e)
-    if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
-    {
-      if(this.summa.tariff === 'Город')
-      {
-        if(this.summa.booking_days <= 2)
-        {
-          this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2 
-          this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
+  onChangeCar(e: any) {
+    this.summa.car = JSON.parse(e);
+    if (
+      this.summa.car !== {} &&
+      this.summa.tariff !== '' &&
+      this.summa.booking_start !== '' &&
+      this.summa.booking_end !== ''
+    ) {
+      if (this.summa.tariff === 'Город') {
+        if (this.summa.booking_days <= 2) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 2 &&
+          this.summa.booking_days <= 7
+        ) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 7 &&
+          this.summa.booking_days <= 14
+        ) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 14 &&
+          this.summa.booking_days <= 30
+        ) {
+          this.summa.summa =
+            this.summa.booking_days * this.summa.car.days_15_30;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (this.summa.booking_days > 30) {
+          this.summa.summa =
+            this.summa.booking_days * this.summa.car.days_31_more;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
         }
-        else if(this.summa.booking_days > 2 && this.summa.booking_days <=7)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 7 && this.summa.booking_days <=14)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 14 && this.summa.booking_days <=30)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 30)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
+      } else if (this.summa.tariff === 'Межгород') {
+        this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+        this.summa.summaFull =
+          +this.summa.summa +
+          +this.summa.car.zalog +
+          +this.summa.car.price_dop_hour;
+      } else if (this.summa.tariff === 'Россия') {
+        this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+        this.summa.summaFull =
+          +this.summa.summa +
+          +this.summa.car.zalog +
+          +this.summa.car.price_dop_hour;
       }
-      else if(this.summa.tariff === 'Межгород')
-      {
-          this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod
-          this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-      }
-      else if(this.summa.tariff === 'Россия')
-      {
-        this.summa.summa = this.summa.booking_days * this.summa.car.russia
-        this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-      }
-      
     }
   }
 
-
-
-  bookingStartDate(e: any)
-  {
-    this.summa.booking_start = e.target.value
-    
+  bookingStartDate(e: any) {
+    this.summa.booking_start = e.target.value;
 
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
 
     if (booking_end__x === undefined) {
-      this.summa.booking_days = moment(this.form.value.booking_end, 'DD.MM.YYYY').diff(moment(booking_start__x, 'DD.MM.YYYY'), 'days') 
-    }
-    else if((booking_start__x !== undefined && booking_end__x !== undefined))
-    {
-      this.summa.booking_days = (booking_end__x - booking_start__x.date) / (1000*60*60*24)
+      this.summa.booking_days = moment(
+        this.form.value.booking_end,
+        'DD.MM.YYYY'
+      ).diff(moment(booking_start__x, 'DD.MM.YYYY'), 'days');
+    } else if (booking_start__x !== undefined && booking_end__x !== undefined) {
+      this.summa.booking_days =
+        (booking_end__x - booking_start__x.date) / (1000 * 60 * 60 * 24);
     }
 
-    
-
-    if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
-    {
-      if(this.summa.tariff === 'Город')
-      {
-        if(this.summa.booking_days <= 2)
-        {
-          this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2 
-          this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
+    if (
+      this.summa.car !== {} &&
+      this.summa.tariff !== '' &&
+      this.summa.booking_start !== '' &&
+      this.summa.booking_end !== ''
+    ) {
+      if (this.summa.tariff === 'Город') {
+        if (this.summa.booking_days <= 2) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 2 &&
+          this.summa.booking_days <= 7
+        ) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 7 &&
+          this.summa.booking_days <= 14
+        ) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 14 &&
+          this.summa.booking_days <= 30
+        ) {
+          this.summa.summa =
+            this.summa.booking_days * this.summa.car.days_15_30;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (this.summa.booking_days > 30) {
+          this.summa.summa =
+            this.summa.booking_days * this.summa.car.days_31_more;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
         }
-        else if(this.summa.booking_days > 2 && this.summa.booking_days <=7)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 7 && this.summa.booking_days <=14)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 14 && this.summa.booking_days <=30)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 30)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
+      } else if (this.summa.tariff === 'Межгород') {
+        this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+        this.summa.summaFull =
+          +this.summa.summa +
+          +this.summa.car.zalog +
+          +this.summa.car.price_dop_hour;
+      } else if (this.summa.tariff === 'Россия') {
+        this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+        this.summa.summaFull =
+          +this.summa.summa +
+          +this.summa.car.zalog +
+          +this.summa.car.price_dop_hour;
       }
-      else if(this.summa.tariff === 'Межгород')
-      {
-          this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod
-          this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-      }
-      else if(this.summa.tariff === 'Россия')
-      {
-        this.summa.summa = this.summa.booking_days * this.summa.car.russia
-        this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-      }
-      
     }
   }
 
-
-  bookingEndDate(e: any)
-  {
-    this.summa.booking_end = e.target.value
+  bookingEndDate(e: any) {
+    this.summa.booking_end = e.target.value;
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
 
     if (booking_start__x === undefined) {
-      this.summa.booking_days = moment(booking_end__x, 'DD.MM.YYYY').diff(moment(this.form.value.booking_start, 'DD.MM.YYYY'), 'days')
-    } 
-    else if((booking_start__x !== undefined && booking_end__x !== undefined))
-    {
-      this.summa.booking_days = (booking_end__x - booking_start__x) / (1000*60*60*24)
+      this.summa.booking_days = moment(booking_end__x, 'DD.MM.YYYY').diff(
+        moment(this.form.value.booking_start, 'DD.MM.YYYY'),
+        'days'
+      );
+    } else if (booking_start__x !== undefined && booking_end__x !== undefined) {
+      this.summa.booking_days =
+        (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
     }
 
-    if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
-    {
-      if(this.summa.tariff === 'Город')
-      {
-        if(this.summa.booking_days <= 2)
-        {
-          this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2 
-          this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
+    if (
+      this.summa.car !== {} &&
+      this.summa.tariff !== '' &&
+      this.summa.booking_start !== '' &&
+      this.summa.booking_end !== ''
+    ) {
+      if (this.summa.tariff === 'Город') {
+        if (this.summa.booking_days <= 2) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 2 &&
+          this.summa.booking_days <= 7
+        ) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 7 &&
+          this.summa.booking_days <= 14
+        ) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 14 &&
+          this.summa.booking_days <= 30
+        ) {
+          this.summa.summa =
+            this.summa.booking_days * this.summa.car.days_15_30;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (this.summa.booking_days > 30) {
+          this.summa.summa =
+            this.summa.booking_days * this.summa.car.days_31_more;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
         }
-        else if(this.summa.booking_days > 2 && this.summa.booking_days <=7)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 7 && this.summa.booking_days <=14)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 14 && this.summa.booking_days <=30)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 30)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
+      } else if (this.summa.tariff === 'Межгород') {
+        this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+        this.summa.summaFull =
+          +this.summa.summa +
+          +this.summa.car.zalog +
+          +this.summa.car.price_dop_hour;
+      } else if (this.summa.tariff === 'Россия') {
+        this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+        this.summa.summaFull =
+          +this.summa.summa +
+          +this.summa.car.zalog +
+          +this.summa.car.price_dop_hour;
       }
-      else if(this.summa.tariff === 'Межгород')
-      {
-          this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod
-          this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-      }
-      else if(this.summa.tariff === 'Россия')
-      {
-        this.summa.summa = this.summa.booking_days * this.summa.car.russia
-        this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-      }
-      
-    }
-  }
-
-
-   onChangeTariff(e: any)
-  {
-    this.summa.tariff = e
-    
-    if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
-    {
-      if(this.summa.tariff === 'Город')
-      {
-        if(this.summa.booking_days <= 2)
-        {
-          this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2 
-          this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 2 && this.summa.booking_days <=7)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 7 && this.summa.booking_days <=14)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 14 && this.summa.booking_days <=30)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-        else if(this.summa.booking_days > 30)
-        {
-            this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-        }
-      } 
-      else if(this.summa.tariff === 'Межгород')
-      {
-          this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod
-          this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-      }
-      else if(this.summa.tariff === 'Россия')
-      {
-        this.summa.summa = this.summa.booking_days * this.summa.car.russia
-        this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour)
-      }
-      
     }
   }
 
+  onChangeTariff(e: any) {
+    this.summa.tariff = e;
+
+    if (
+      this.summa.car !== {} &&
+      this.summa.tariff !== '' &&
+      this.summa.booking_start !== '' &&
+      this.summa.booking_end !== ''
+    ) {
+      if (this.summa.tariff === 'Город') {
+        if (this.summa.booking_days <= 2) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 2 &&
+          this.summa.booking_days <= 7
+        ) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 7 &&
+          this.summa.booking_days <= 14
+        ) {
+          this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (
+          this.summa.booking_days > 14 &&
+          this.summa.booking_days <= 30
+        ) {
+          this.summa.summa =
+            this.summa.booking_days * this.summa.car.days_15_30;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        } else if (this.summa.booking_days > 30) {
+          this.summa.summa =
+            this.summa.booking_days * this.summa.car.days_31_more;
+          this.summa.summaFull =
+            +this.summa.summa +
+            +this.summa.car.zalog +
+            +this.summa.car.price_dop_hour;
+        }
+      } else if (this.summa.tariff === 'Межгород') {
+        this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+        this.summa.summaFull =
+          +this.summa.summa +
+          +this.summa.car.zalog +
+          +this.summa.car.price_dop_hour;
+      } else if (this.summa.tariff === 'Россия') {
+        this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+        this.summa.summaFull =
+          +this.summa.summa +
+          +this.summa.car.zalog +
+          +this.summa.car.price_dop_hour;
+      }
+    }
+  }
 
   // Отправка формы
   onSubmit() {
-
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
 
     if (booking_start__x === undefined && booking_end__x !== undefined) {
-      this.booking_days_fin = moment(booking_end__x, 'DD.MM.YYYY').diff(moment(this.form.value.booking_start, 'DD.MM.YYYY'), 'days')
-    } else if (booking_end__x === undefined && booking_start__x!== undefined) {
-      this.booking_days_fin = moment(this.form.value.booking_end, 'DD.MM.YYYY').diff(moment(booking_start__x, 'DD.MM.YYYY'), 'days')
+      this.booking_days_fin = moment(booking_end__x, 'DD.MM.YYYY').diff(
+        moment(this.form.value.booking_start, 'DD.MM.YYYY'),
+        'days'
+      );
+    } else if (booking_end__x === undefined && booking_start__x !== undefined) {
+      this.booking_days_fin = moment(
+        this.form.value.booking_end,
+        'DD.MM.YYYY'
+      ).diff(moment(booking_start__x, 'DD.MM.YYYY'), 'days');
     } else if ((booking_end__x && booking_start__x) === undefined) {
-      this.booking_days_fin = moment(this.form.value.booking_end, 'DD.MM.YYYY').diff(moment(this.form.value.booking_start, 'DD.MM.YYYY'), 'days')
+      this.booking_days_fin = moment(
+        this.form.value.booking_end,
+        'DD.MM.YYYY'
+      ).diff(moment(this.form.value.booking_start, 'DD.MM.YYYY'), 'days');
+    } else if (booking_end__x !== undefined && booking_start__x !== undefined) {
+      this.booking_days_fin =
+        (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
     }
-    else if (booking_end__x !== undefined && booking_start__x !== undefined) {
-      this.booking_days_fin = (booking_end__x - booking_start__x) /(1000 * 60 * 60 * 24)
-    }
-
-
 
     const booking = {
       car: JSON.parse(this.form.value.car),
@@ -378,7 +464,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
       summaFull: this.summa.summaFull,
       summa: this.summa.summa,
     };
-    
+
     this.bookings.update(this.bookingId, booking).subscribe((booking) => {
       MaterialService.toast('Бронь обновлена');
       // this.router.navigate(['/bookings-page']);

@@ -112,6 +112,18 @@ module.exports.getById = async function(req, res) {
 
 
 
+// Контроллер для getStatusBooking
+module.exports.getStatusBooking = async function (req, res) {
+    try {
+        const xsbooking = await Booking.findById(req.params.id); //Ищем категорию по id из переданных параметров
+        res.status(200).json(xsbooking);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
 
 
 
@@ -127,6 +139,28 @@ module.exports.remove = async function(req, res) {
         res.status(200).json({
             message: "Бронь удалена"
         });
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+// Контроллер для toggleStatus
+module.exports.toggleStatus = async function (req, res) {
+    try {
+        const updated = req.body;
+
+
+        // Находим и обновляем позицию. 
+        const bookingUpdate = await Booking.findOneAndUpdate({ _id: updated.bookingId }, //Ищем по id
+            { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
+            { new: true } //обновит позицию и верет нам уже обновленную
+        );
+
+
+        // Возвращаем пользователю позицию которую создали 
+        res.status(201).json(bookingUpdate);
     } catch (e) {
         errorHandler(res, e);
     }

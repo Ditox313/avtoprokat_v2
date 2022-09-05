@@ -31,20 +31,22 @@ export class BookingsService {
     return this.http.get<Booking>(`/api/bookings/${id}`);
   }
 
-
-
   update(id: string, xsbooking: Booking): Observable<Booking> {
     xsbooking._id = id;
 
     return this.http.patch<Booking>(`/api/bookings/${id}`, xsbooking);
   }
 
-
   // Удаление
-  delete(id: any): Observable<any>
-  {
-     return this.http.delete<any>(`/api/bookings/${id}`);
+  delete(id: any): Observable<any> {
+    return this.http.delete<any>(`/api/bookings/${id}`);
   }
 
-
+  toggleStatus(status: string, bookingId: string): Observable<Booking> {
+    const body = {
+      status: status,
+      bookingId: bookingId
+    };
+    return this.http.post<Booking>(`/api/bookings/toggleStatus`, body);
+  }
 }

@@ -39,8 +39,11 @@
                     <td>
                         <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.order}}</a>
                     </td>
-                    <td >
-                        <a [routerLink]="['/view-booking',xsbooking._id]" style="color: orange;">{{xsbooking.status}}</a>
+                    <td *ngIf="xsbooking.status === 'В ожидании'">
+                        <a [routerLink]="['/view-booking',xsbooking._id]" class="btn_waiting">{{xsbooking.status}}</a>
+                    </td>
+                    <td *ngIf="xsbooking.status === 'В аренде'">
+                        <a [routerLink]="['/view-booking',xsbooking._id]" class="btn_v_arende">{{xsbooking.status}}</a>
                     </td>
                     <td>
                         <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.date | date : 'd MMMM y, H:mm'}}</a>
