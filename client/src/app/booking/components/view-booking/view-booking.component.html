@@ -1,3 +1,4 @@
+
 <form class="xs_add__car" *ngIf="actualBooking">
     <div class="xs_add__car___top">
         <h1 >
@@ -69,6 +70,16 @@
                             <div>
                                 <span>Прием</span>
                                 <span>{{actualBooking.place_end}} </span>
+                            </div>
+
+                            <div>
+                                <span>Тариф</span>
+                                <span>{{actualBooking.tariff}} </span>
+                            </div>
+
+                            <div>
+                                <span>Цена</span>
+                                <span>{{ this.summa.summa / actualBooking.booking_days}} ₽</span>
                             </div>
 
                             <div>
@@ -264,3 +275,4 @@
         </div>
     </div> -->
 </form>
+<app-loader *ngIf="!actualBooking"></app-loader>
