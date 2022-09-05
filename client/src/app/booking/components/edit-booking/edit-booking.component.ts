@@ -18,11 +18,11 @@ import { BookingsService } from '../../services/bookings.service';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-show-booking',
-  templateUrl: './show-booking.component.html',
-  styleUrls: ['./show-booking.component.css'],
+  selector: 'app-edit-booking',
+  templateUrl: './edit-booking.component.html',
+  styleUrls: ['./edit-booking.component.css'],
 })
-export class ShowBookingComponent implements OnInit, AfterViewInit {
+export class EditBookingComponent implements OnInit, AfterViewInit {
   @ViewChild('tabs') tabs!: ElementRef;
 
 

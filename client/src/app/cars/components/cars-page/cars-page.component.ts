@@ -38,16 +38,18 @@ export class CarsPageComponent implements OnInit {
     this.fetch();
   }
 
-  public objFor(arr: Car[]) {
-    let storeCars = [];
-    for (var key in arr) {
-      if (key !== 'type') {
-        storeCars.push(arr[key]);
-      }
-    }
+  // public objFor(arr: Car[]) {
+  //   console.log('111', arr);
+    
+  //   let storeCars = [];
+  //   for (var key in arr) {
+  //     if (key !== 'type') {
+  //       storeCars.push(arr[key]);
+  //     }
+  //   }
 
-    return storeCars;
-  }
+  //   return storeCars;
+  // }
 
   // Получаем все кейсы
   public fetch() {

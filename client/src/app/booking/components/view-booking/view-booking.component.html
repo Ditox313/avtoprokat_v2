@@ -1,0 +1,244 @@
+<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="xs_add__car___top">
+        <h1>
+            <span class="material-icons">contact_mail</span> Просмотр брони №{{actualBooking.order}} 
+        </h1>
+    </div>
+
+    <div class="xs_add__car__content">
+        <div class="row">
+            <!-- <div class="col s12">
+                <ul class="tabs" #tabs>
+                    <li class="tab col"><a href="#information" class="active">Общая информация</a></li>
+                </ul>
+            </div> -->
+
+            <div id="information" class="col s12">
+                <div class="xs_booking_view_content">
+                    <div class="xs_booking_view_content___item">
+                        <div class="view_info">
+                            <h5>Информация</h5>
+                            <div>
+                                <span>Статус</span>
+                                <span>
+                                    <span *ngIf="actualBooking.status === 'В ожидании'" class="btn_waiting">В ожидании</span>
+                                    <span *ngIf="actualBooking.status === 'Активная'">Активная</span>
+                                </span>
+                            </div>
+                            
+                            <div>
+                                <span>Создана</span>
+                                <span>{{actualBooking.date | date : 'd MMMM y, H:mm'}}</span>
+                            </div>
+                            
+                            <div class="view_info_client">
+                                <span>Клиент</span>
+                                <span [routerLink]="['/show-client','edit',xsActualClient._id]">{{actualBooking.client.surname}} {{actualBooking.client.name}} {{actualBooking.client.lastname}}</span>
+                            </div>
+                            
+                            <div class="view_info_phone">
+                                <span>Телефон</span>
+                                <a href="tel:{{actualBooking.client.phone_main}}">{{actualBooking.client.phone_main}}</a>
+                            </div>
+                            
+                            <div>
+                                <span>Автомобиль</span>
+                                <span>{{actualBooking.car.marka}} {{actualBooking.car.model}} ({{actualBooking.car.number}})</span>
+                            </div>
+                            
+                            <div>
+                                <span>Время начала</span>
+                                <span>{{actualBooking.booking_start | date : 'd MMMM y, H:mm'}} </span>
+                            </div>
+                            
+                            <div>
+                                <span>Время окончания</span>
+                                <span>{{actualBooking.booking_end | date : 'd MMMM y, H:mm'}} </span>
+                            </div>
+                            
+                            <div>
+                                <span>Суток</span>
+                                <span>{{actualBooking.booking_days | number: '1.0-0'}} </span>
+                            </div>
+                            
+                            <div>
+                                <span>Выдача</span>
+                                <span>{{actualBooking.place_start}} </span>
+                            </div>
+                            
+                            <div>
+                                <span>Прием</span>
+                                <span>{{actualBooking.place_end}} </span>
+                            </div>
+
+                            <div>
+                                <span>Комментарий</span>
+                                <span>{{actualBooking.comment}} </span>
+                            </div>
+                        </div>
+                        
+
+                        <div class="view_rashet">
+                            <h5>Рассчет</h5>
+                            <div>
+                                <div> <span>Аренда</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
+                                <div> <span>Залог</span> <span>{{ this.summa.car.zalog}} ₽</span> </div>
+                                <div> <span>Доп.час</span> <span>{{ this.summa.car.price_dop_hour}} ₽</span> </div>
+                                <div> <span>Итого</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="xs_booking_view_content___item">
+                        <div class="pay_view_info">
+                            <h5>Платежи</h5>
+
+                        </div>
+                    </div>
+
+                    <div class="xs_booking_view_content___item">
+                        <div class="setting_view_info">
+                            <h5>Управление</h5>
+
+                            <div class="setting_view_info__box" *ngIf="actualBooking.status === 'В ожидании'">
+                                <span>
+                                    <img src="../../../../assets/img/vidat_avto.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="../../../../assets/img/edit_avto.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="../../../../assets/img/docs.png" alt="">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- <div class="xs_form">
+                    <div class="xs_form__item">
+                        <div class="xs_form__item___mod">
+                            <label for="marka">Автомобиль<span class="xszv">*</span></label>
+                            <div class="input-field col s12">
+                                <select id="car" formControlName="car"
+                                    [ngClass]="{'invalid': form.controls['car'].invalid && form.controls['car'].touched}"
+                                    (ngModelChange)="onChangeCar($event)">
+                                    <option value="" disabled selected>Выберите автомобиль</option>
+                                    <option *ngFor="let xscar of xscars$ | async" value="{{xscar | json}}">
+                                        {{xscar.marka}} {{xscar.model}} ({{xscar.number}})</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="input-field col s12">
+                            <div><label for="marka">Дата начала брони<span class="xszv">*</span></label></div>
+                            <input placeholder="Введите значение" id="booking_start" type="datetime-local"
+                                class="validate" formControlName="booking_start"
+                                [ngClass]="{'invalid': form.controls['booking_start'].invalid && form.controls['booking_start'].touched}"
+                                (change)="bookingStartDate($event)">
+                        </div>
+
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="place_start" type="text" class="validate"
+                                formControlName="place_start"
+                                [ngClass]="{'invalid': form.controls['place_start'].invalid && form.controls['place_start'].touched}">
+                            <label for="marka">Место выдачи<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['place_start'].invalid && form.controls['place_start'].touched">
+                                <p *ngIf="form.controls['place_start'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+
+                        <div>
+                            <label for="marka">Тариф<span class="xszv">*</span></label>
+                            <div class="input-field col s12">
+                                <select id="tariff" formControlName="tariff"
+                                    [ngClass]="{'invalid': form.controls['tariff'].invalid && form.controls['tariff'].touched}"
+                                    (ngModelChange)="onChangeTariff($event)">
+                                    <option value="" disabled selected>Выберите тариф</option>
+                                    <option value="Город">Город</option>
+                                    <option value="Межгород">Межгород</option>
+                                    <option value="Россия">Россия</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="xs_form__item">
+                        <div class="xs_form__item___mod xs_form__item___mod___client">
+                            <label for="marka">Клиент<span class="xszv">*</span></label>
+                            <div class="input-field col s12">
+                                <select id="client" formControlName="client"
+                                    [ngClass]="{'invalid': form.controls['client'].invalid && form.controls['client'].touched}">
+                                    <option value="" disabled selected>Выберите клиента</option>
+                                    <option *ngFor="let xsclient of xsclients$ | async" value="{{xsclient | json}}">
+                                        {{xsclient.surname}} {{xsclient.name}} {{xsclient.lastname}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <div><label for="marka">Дата окончания брони<span class="xszv">*</span></label></div>
+                            <input placeholder="Введите значение" id="booking_end" type="datetime-local"
+                                class="validate" formControlName="booking_end"
+                                [ngClass]="{'invalid': form.controls['booking_end'].invalid && form.controls['booking_end'].touched}"
+                                (change)="bookingEndDate($event)">
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="place_end" type="text" class="validate"
+                                formControlName="place_end"
+                                [ngClass]="{'invalid': form.controls['place_end'].invalid && form.controls['place_end'].touched}">
+                            <label for="marka">Место приема<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['place_end'].invalid && form.controls['place_end'].touched">
+                                <p *ngIf="form.controls['place_end'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12 xs_textarea">
+                            <textarea placeholder="Введите значение" id="comment" type="text"
+                                class="materialize-textarea" formControlName="comment"
+                                [ngClass]="{'invalid': form.controls['comment'].invalid && form.controls['comment'].touched}"> </textarea>
+                            <label for="marka">Комментарий</label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['comment'].invalid && form.controls['comment'].touched">
+                                <p *ngIf="form.controls['comment'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                    </div>
+                </div> -->
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <div class="xs_summa" *ngIf="this.summa.summa">
+        <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> + <span>Залог {{this.summa.car.zalog}} ₽</span> +
+        <span>Доп.час
+            {{this.summa.car.price_dop_hour}} ₽</span> =
+        <span>Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
+    </div> -->
+
+    <!-- <div class="xs_add__car___top">
+        <div class="xs_add__car__top____actions">
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div> -->
+</form>

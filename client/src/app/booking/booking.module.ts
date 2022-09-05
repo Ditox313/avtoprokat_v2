@@ -7,10 +7,11 @@ import { LoaderModule } from '../shared/loader/loader.module';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { AddBookingComponent } from './components/add-booking/add-booking.component';
-import { ShowBookingComponent } from './components/show-booking/show-booking.component';
+import { EditBookingComponent } from './components/edit-booking/edit-booking.component';
 import { BookingsService } from './services/bookings.service';
 import { SiteLayoutComponent } from '../shared/layouts/components/site-layout/site-layout.component';
 import { LayoutsModule } from '../shared/layouts/layouts.module';
+import { ViewBookingComponent } from './components/view-booking/view-booking.component';
 
 
 const routes = [
@@ -21,13 +22,14 @@ const routes = [
     children: [
       { path: 'bookings-page', component: BookingsComponent },
       { path: 'add-booking', component: AddBookingComponent },
-      { path: 'show-booking/edit/:id', component: ShowBookingComponent },
+      { path: 'view-booking/:id', component: ViewBookingComponent },
+      { path: 'edit-booking/:id', component: EditBookingComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [BookingsComponent, AddBookingComponent, ShowBookingComponent],
+  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, ViewBookingComponent],
   imports: [
     CommonModule,
     HttpClientModule,
