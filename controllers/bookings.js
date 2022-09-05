@@ -35,7 +35,8 @@ module.exports.create = async function(req, res) {
             summaFull: req.body.summaFull,
             status: req.body.status,
             user: req.user._id,
-            order: maxOrder + 1
+            order: maxOrder + 1,
+            dop_hours: req.body.dop_hours
         }).save();
 
         // Возвращаем пользователю позицию которую создали 

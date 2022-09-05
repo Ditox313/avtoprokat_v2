@@ -33,6 +33,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
     summa: '',
     booking_days: '',
     summaFull: '',
+    dop_hours: '',
   };
 
   bookingId!: string;
@@ -71,12 +72,10 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
     // Достаем параметры
     this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
-      
-      if(params.view)
-      {
+
+      if (params.view) {
         this.bookingViewRef = params.view;
       }
-
     });
 
     this.bookings.getById(this.bookingId).subscribe((res) => {

@@ -91,6 +91,14 @@ const bookingSchema = new Schema({
         required: true,
     },
 
+
+    // Сумма брони общая
+    dop_hours: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
+
     // Комментарий
     comment: {
         type: String,

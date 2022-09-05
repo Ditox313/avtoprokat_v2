@@ -229,7 +229,8 @@ export interface Summa {
   booking_end: any;
   summa: any;
   booking_days: any;
-  summaFull: any
+  summaFull: any,
+  dop_hours: any
 }
 
 

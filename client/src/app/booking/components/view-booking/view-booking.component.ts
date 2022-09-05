@@ -33,6 +33,7 @@ export class ViewBookingComponent implements OnInit {
     summa: '',
     booking_days: '',
     summaFull: '',
+    dop_hours: '',
   };
 
   actualBooking!: Booking;
@@ -52,7 +53,7 @@ export class ViewBookingComponent implements OnInit {
   constructor(
     private bookings: BookingsService,
     private router: Router,
-    private rote: ActivatedRoute,
+    private rote: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -71,17 +72,15 @@ export class ViewBookingComponent implements OnInit {
       this.summa.booking_days = res.booking_days;
       this.xsActualClient = res.client;
 
-
-      this.bookings.getById(this.bookingId).subscribe(res=>{
+      this.bookings.getById(this.bookingId).subscribe((res) => {
         this.bookingStatus = res.status;
-      })
+      });
     });
+
+    this;
 
     MaterialService.updateTextInputs();
   }
-
-
-
 
   toggleStatus(status: string) {
     this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
@@ -90,6 +89,4 @@ export class ViewBookingComponent implements OnInit {
       MaterialService.toast(`Новый статус брони -  ${status}`);
     });
   }
-
-
 }
