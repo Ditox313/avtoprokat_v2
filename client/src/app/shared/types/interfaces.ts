@@ -217,6 +217,7 @@ export interface Booking {
   summaFull?: any
   order?: any
   status?: any
+  dop_hours?: any
 }
 
 
