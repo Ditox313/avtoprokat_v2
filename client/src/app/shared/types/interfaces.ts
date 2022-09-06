@@ -232,6 +232,7 @@ export interface Summa {
   booking_days: any;
   summaFull: any,
   dop_hours: any
+  checkedTarif?: any
 }
 
 

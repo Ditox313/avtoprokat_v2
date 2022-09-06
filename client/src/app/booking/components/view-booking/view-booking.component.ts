@@ -34,6 +34,7 @@ export class ViewBookingComponent implements OnInit {
     booking_days: '',
     summaFull: '',
     dop_hours: '',
+    checkedTarif: ''
   };
 
   actualBooking!: Booking;
@@ -70,14 +71,16 @@ export class ViewBookingComponent implements OnInit {
       this.summa.summa = res.summa;
       this.summa.summaFull = res.summaFull;
       this.summa.booking_days = res.booking_days;
+      this.summa.dop_hours = res.dop_hours;
       this.xsActualClient = res.client;
 
       this.bookings.getById(this.bookingId).subscribe((res) => {
         this.bookingStatus = res.status;
       });
-    });
 
-    this;
+      // Высчитываем какой тариф выбран
+      this.checkedTarif(this.summa.booking_days)
+    });
 
     MaterialService.updateTextInputs();
   }
@@ -88,5 +91,25 @@ export class ViewBookingComponent implements OnInit {
       console.log('После клика', this.bookingStatus);
       MaterialService.toast(`Новый статус брони -  ${status}`);
     });
+  }
+
+  checkedTarif(countDay: any)
+  {
+    if (this.summa.booking_days < 3)
+    {
+      this.summa.checkedTarif = this.summa.car.days_1_2
+    }
+    if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+      this.summa.checkedTarif = this.summa.car.days_3_7
+    }
+    if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+      this.summa.checkedTarif = this.summa.car.days_8_14
+    }
+    if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+      this.summa.checkedTarif = this.summa.car.days_15_30
+    }
+    if (this.summa.booking_days >= 31) {
+      this.summa.checkedTarif = this.summa.car.days_31_more
+    }
   }
 }

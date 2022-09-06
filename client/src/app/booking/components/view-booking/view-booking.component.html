@@ -59,7 +59,12 @@
                             
                             <div>
                                 <span>Суток</span>
-                                <span>{{actualBooking.booking_days | number: '1.0-0'}} </span>
+                                <span>{{actualBooking.booking_days | number: '1.0-0'}} д</span>
+                            </div>
+
+                            <div *ngIf="summa.dop_hours > 0">
+                                <span>Доп часы</span>
+                                <span>{{summa.dop_hours}} ч</span>
                             </div>
                             
                             <div>
@@ -78,8 +83,13 @@
                             </div>
 
                             <div>
-                                <span>Цена</span>
-                                <span>{{ this.summa.summa / actualBooking.booking_days}} ₽</span>
+                                <span>Цена тарифа</span>
+                                <span>{{ this.summa.checkedTarif}} ₽</span>
+                            </div>
+
+                            <div *ngIf="summa.dop_hours > 0">
+                                <span>Цена за доп.час</span>
+                                <span>{{ actualBooking.car.price_dop_hour}} ₽</span>
                             </div>
 
                             <div>
@@ -94,7 +104,7 @@
                             <div>
                                 <div> <span>Аренда</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
                                 <div> <span>Залог</span> <span>{{ this.summa.car.zalog}} ₽</span> </div>
-                                <div> <span>Доп.час</span> <span>{{ this.summa.car.price_dop_hour}} ₽</span> </div>
+                                <div *ngIf="summa.dop_hours > 0"> <span>Доп.час</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
                                 <div> <span>Итого</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
                             </div>
                         </div>
