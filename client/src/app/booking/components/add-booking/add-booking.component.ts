@@ -87,6 +87,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
 
+  // При выборе атомобиля
   onChangeCar(e: any)
   {
     // Получаем выбранный автомобиль
@@ -97,7 +98,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     {
       if(this.summa.tariff === 'Город')
       {
-        if(this.summa.booking_days <= 2)
+        if(this.summa.booking_days <= 3)
         {
           if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
@@ -115,7 +116,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
           }
           
         }
-        else if(this.summa.booking_days > 2 && this.summa.booking_days <=7)
+        else if(this.summa.booking_days > 3 && this.summa.booking_days <=7)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -149,7 +150,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
         }
-        else if(this.summa.booking_days > 14 && this.summa.booking_days <=30)
+        else if(this.summa.booking_days > 14 && this.summa.booking_days <=31)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -166,7 +167,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
         }
-        else if(this.summa.booking_days > 30)
+        else if(this.summa.booking_days > 31)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -223,6 +224,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   }
 
 
+  // При выборе начала аренды
   bookingStartDate(e: any)
   {
     // Получаем начало аренды
@@ -255,8 +257,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     {
       if(this.summa.tariff === 'Город')
       {
-        if(this.summa.booking_days <= 2)
+        // Если дни аренды меньшке или равны 3
+        if(this.summa.booking_days <= 3)
         {
+          // Если есть дополнительные часы и они меньше 12
           if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2 
@@ -273,7 +277,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
           }
           
         }
-        else if(this.summa.booking_days > 2 && this.summa.booking_days <=7)
+        else if(this.summa.booking_days > 3 && this.summa.booking_days <=7)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -307,7 +311,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
         }
-        else if(this.summa.booking_days > 14 && this.summa.booking_days <=30)
+        else if(this.summa.booking_days > 14 && this.summa.booking_days <=31)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -324,7 +328,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
         }
-        else if(this.summa.booking_days > 30)
+        else if(this.summa.booking_days > 31)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -381,6 +385,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   }
 
 
+  // При выборе конца аренды
   bookingEndDate(e: any)
   {
     // Получаем конец аренды
@@ -413,7 +418,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     {
       if(this.summa.tariff === 'Город')
       {
-        if(this.summa.booking_days <= 2)
+        if(this.summa.booking_days <= 3)
         {
           if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
@@ -431,7 +436,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
           }
           
         }
-        else if(this.summa.booking_days > 2 && this.summa.booking_days <=7)
+        else if(this.summa.booking_days > 3 && this.summa.booking_days <=7)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -465,7 +470,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
         }
-        else if(this.summa.booking_days > 14 && this.summa.booking_days <=30)
+        else if(this.summa.booking_days > 14 && this.summa.booking_days <=31)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -482,7 +487,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
         }
-        else if(this.summa.booking_days > 30)
+        else if(this.summa.booking_days > 31)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -539,6 +544,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   }
 
 
+  // При ваыборе тарифа
   onChangeTariff(e: any)
   {
     // Получаем тариф
@@ -549,7 +555,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     {
       if(this.summa.tariff === 'Город')
       {
-        if(this.summa.booking_days <= 2)
+        if(this.summa.booking_days <= 3)
         {
           if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
@@ -567,7 +573,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
           }
           
         }
-        else if(this.summa.booking_days > 2 && this.summa.booking_days <=7)
+        else if(this.summa.booking_days > 3 && this.summa.booking_days <=7)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -601,7 +607,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
         }
-        else if(this.summa.booking_days > 14 && this.summa.booking_days <=30)
+        else if(this.summa.booking_days > 14 && this.summa.booking_days <=31)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
@@ -618,7 +624,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
         }
-        else if(this.summa.booking_days > 30)
+        else if(this.summa.booking_days > 31)
         {
             if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
             {
