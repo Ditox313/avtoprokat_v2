@@ -51,6 +51,8 @@ export class ViewBookingComponent implements OnInit {
 
   bookingStatus!: any;
 
+  pays!: any;
+
   constructor(
     private bookings: BookingsService,
     private router: Router,

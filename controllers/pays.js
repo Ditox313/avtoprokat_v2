@@ -9,38 +9,25 @@ const errorHandler = require('../Utils/errorHendler');
 // Контроллер для create
 module.exports.create = async function(req, res) {
     try {
-
-        // Ищем номер последнего заказа глобального
-        // const lastOrder = await Booking.findOne({
-        //     user: req.user.id
-        // })
-        // .sort({ date: -1 });
+        const lastOrder = await Pay.findOne({
+            userId: req.user._id
+        })
+        .sort({ date: -1 });
 
 
-        // Если мы нашли предполагаемы последнйи заказ, то устанвливает поле order
-        // const maxOrder = lastOrder ? lastOrder.order : 0;
+        const maxOrder = lastOrder ? lastOrder.order : 0;
 
 
-        // const booking = await new Booking({
-        //     car: req.body.car ,
-        //     client: req.body.client,
-        //     place_start: req.body.place_start,
-        //     place_end: req.body.place_end,
-        //     tariff: req.body.tariff,
-        //     comment: req.body.comment,
-        //     booking_start: req.body.booking_start,
-        //     booking_end: req.body.booking_end,
-        //     booking_days: req.body.booking_days,
-        //     summa: req.body.summa,
-        //     summaFull: req.body.summaFull,
-        //     status: req.body.status,
-        //     user: req.user._id,
-        //     order: maxOrder + 1,
-        //     dop_hours: req.body.dop_hours
-        // }).save();
+        const pay = await new Pay({
+            userId: req.user._id,
+            vidPay: req.body.vid,
+            typePay: req.body.typePay,
+            bookingId: req.body.bookingId,
+            pricePay: req.body.pricePay,
+            order: maxOrder + 1
+        }).save();
 
-        // Возвращаем пользователю позицию которую создали 
-        res.status(201).json({message: 'Ok'});
+        res.status(201).json({pay});
     } catch (e) {
         errorHandler(res, e);
     }

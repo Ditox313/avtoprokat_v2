@@ -81,7 +81,7 @@
                         <div class="input-field col s12">
                             <input placeholder="0" id="arenda" type="number" class="validate" formControlName="arenda"
                                 [ngClass]="{'invalid': form.controls['arenda'].invalid && form.controls['arenda'].touched}">
-                            <label for="marka">Аренда</label>
+                            <label for="arenda">Аренда</label>
                             <span class="helper-text red-text"
                                 *ngIf="form.controls['arenda'].invalid && form.controls['arenda'].touched">
                                 <p *ngIf="form.controls['arenda'].errors?.required">
@@ -93,12 +93,12 @@
                         <div class="xs_form_pay__item">
                             <label for="marka">Тип оплаты</label>
                             <div class="input-field col s12">
-                                <select id="car" formControlName="typeArenda" [(ngModel)]="defaultValue"
-                                    [ngClass]="{'invalid': form.controls['typeArenda'].invalid && form.controls['typeArenda'].touched}">
+                                <select id="typePayArenda" formControlName="typePayArenda" [(ngModel)]="defaultValueArenda"
+                                    [ngClass]="{'invalid': form.controls['typePayArenda'].invalid && form.controls['typePayArenda'].touched}">
                                     <option value="Наличные" selected>Наличные</option>
                                     
-                                    <option *ngFor="let arendaPayType of arendaPayTypes" value="{{arendaPayType.type}}">
-                                        {{arendaPayType.value}}</option>
+                                    <option *ngFor="let PayType of PayTypes" value="{{PayType.value}}">
+                                        {{PayType.value}}</option>
                                 </select>
                             </div>
                         </div>
@@ -117,11 +117,11 @@
                         <div class="xs_form_pay__item">
                             <label for="marka">Тип оплаты</label>
                             <div class="input-field col s12">
-                                <select id="car" formControlName="typeZalog" [(ngModel)]="defaultValue"
-                                    [ngClass]="{'invalid': form.controls['typeZalog'].invalid && form.controls['typeZalog'].touched}">
+                                <select id="typePayZalog" formControlName="typePayZalog" [(ngModel)]="defaultValueZalog"
+                                    [ngClass]="{'invalid': form.controls['typePayZalog'].invalid && form.controls['typePayZalog'].touched}">
                                     <option value="Наличные" selected>Наличные</option>
                         
-                                    <option *ngFor="let arendaPayType of arendaPayTypes" value="{{arendaPayType.type}}">
+                                    <option *ngFor="let arendaPayType of PayTypes" value="{{arendaPayType.value}}">
                                         {{arendaPayType.value}}</option>
                                 </select>
                             </div>

@@ -7,9 +7,9 @@ const Schema = mongoose.Schema;
 const paySchema = new Schema({
 
     // Юзер
-    user: {
-        ref: 'users',
-        type: Schema.Types.ObjectId
+    userId: {
+        type: String,
+        required: true,
     },
 
     // Дата создания
@@ -19,15 +19,22 @@ const paySchema = new Schema({
     },
 
 
-    // Сумма
-    summ: {
+
+    // Вид платежа
+    vidPay: {
         type: String,
         required: true,
     },
 
-    // Вид платежа(за что)
-    vid: {
-        type: Object,
+    // Тип платежа
+    typePay: {
+        type: String,
+        required: true,
+    },
+
+
+    pricePay: {
+        type: Number,
         required: true,
     },
 
@@ -35,6 +42,12 @@ const paySchema = new Schema({
     bookingId: {
         type: String,
         required: true,
+    },
+
+    order: {
+        type: Number,
+        required: true,
+        default: 1
     },
 
 

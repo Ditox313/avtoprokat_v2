@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BookingsService } from 'src/app/booking/services/bookings.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Booking, Summa } from 'src/app/shared/types/interfaces';
+import { PaysService } from '../../services/pays.service';
 
 @Component({
   selector: 'app-add-pay',
@@ -21,7 +22,8 @@ export class AddPayComponent implements OnInit {
   bookingId!: string;
   form!: FormGroup;
   actualBooking!: Booking;
-  defaultValue: string =  'Наличные'
+  defaultValueArenda: string =  'Наличные'
+  defaultValueZalog: string =  'Наличные'
 
   summa: Summa = {
     car: {},
@@ -35,11 +37,7 @@ export class AddPayComponent implements OnInit {
     checkedTarif: ''
   };
 
-  arendaPayTypes:Array<any> = [
-    // {
-    //   type: "nul",
-    //   value: "Наличные"
-    // },
+  PayTypes:Array<any> = [
     {
       type: "terminal",
       value: "Терминал"
@@ -54,21 +52,18 @@ export class AddPayComponent implements OnInit {
     },
   ]
 
-  constructor(private router: Router, private rote: ActivatedRoute, private bookings: BookingsService,) { }
+  
+
+  constructor(private router: Router, private rote: ActivatedRoute, private bookings: BookingsService, private pays: PaysService) { }
 
   ngOnInit(): void {
 
+
     this.form = new FormGroup({
-      arenda: new FormControl('', [Validators.required]),
-      typeArenda: new FormControl('', [Validators.required]),
-      zalog: new FormControl('', [Validators.required]),
-      typeZalog: new FormControl('', [Validators.required]),
-      // booking_start: new FormControl('', [Validators.required]),
-      // booking_end: new FormControl('', [Validators.required]),
-      // place_start: new FormControl('', [Validators.required]),
-      // place_end: new FormControl('', [Validators.required]),
-      // tariff: new FormControl('', [Validators.required]),
-      // comment: new FormControl(''),
+      arenda: new FormControl('',),
+      typePayArenda: new FormControl('',),
+      zalog: new FormControl('',),
+      typePayZalog: new FormControl('',),
     });
     
 
@@ -121,26 +116,39 @@ export class AddPayComponent implements OnInit {
 
   onSubmit() {
 
-    // const booking = {
-    //   car: JSON.parse(this.form.value.car),
-    //   client: JSON.parse(this.form.value.client),
-    //   place_start: this.form.value.place_start,
-    //   place_end: this.form.value.place_end,
-    //   tariff: this.form.value.tariff,
-    //   comment: this.form.value.comment,
-    //   booking_start: this.form.value.booking_start,
-    //   booking_end: this.form.value.booking_end,
-    //   booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-    //   summaFull: this.summa.summaFull,
-    //   summa: this.summa.summa,
-    //   dop_hours: this.summa.dop_hours,
-    // };
+    if (this.form.value.arenda)
+    {
+      const pay = {
+        vid: 'Аренда',
+        pricePay: this.form.value.arenda,
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId
+      };
 
-    // Отправляем запрос
-    // this.bookings.create(booking).subscribe((booking) => {
-    //   MaterialService.toast('Бронь добавлена');
-    //   this.router.navigate(['/bookings-page']);
-    // });
+      this.pays.create(pay).subscribe((pay) => {
+        MaterialService.toast('Платеж создан');
+        console.log(pay);
+
+        this.router.navigate(['/view-booking', this.bookingId]);
+      });
+    }
+
+    if (this.form.value.zalog) {
+      const pay = {
+        vid: 'Залог',
+        pricePay: this.form.value.zalog,
+        typePay: this.form.value.typePayZalog,
+        bookingId: this.bookingId
+      };
+
+      this.pays.create(pay).subscribe((pay) => {
+        MaterialService.toast('Платеж создан');
+        console.log(pay);
+
+        this.router.navigate(['/view-booking', this.bookingId]);
+      });
+    }
+    
   }
 
 }

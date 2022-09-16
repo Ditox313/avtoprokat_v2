@@ -236,6 +236,20 @@ export interface Summa {
 }
 
 
+// Интерфейс для платежа
+export interface Pay {
+  _id?: any;
+  userId?: any;
+  date?: any;
+  vidPay?: any;
+  pricePay?: any;
+  typePay?: any;
+  bookingId?: any;
+  order?: any;
+}
+
+
+
 
 
 
