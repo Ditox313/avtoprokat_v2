@@ -5,15 +5,9 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderModule } from '../shared/loader/loader.module';
 import { AuthGuard } from '../auth/guards/auth.guard';
-import { BookingsComponent } from './components/bookings/bookings.component';
-import { AddBookingComponent } from './components/add-booking/add-booking.component';
-import { EditBookingComponent } from './components/edit-booking/edit-booking.component';
-import { BookingsService } from './services/bookings.service';
 import { SiteLayoutComponent } from '../shared/layouts/components/site-layout/site-layout.component';
 import { LayoutsModule } from '../shared/layouts/layouts.module';
-import { ViewBookingComponent } from './components/view-booking/view-booking.component';
-import { PaysModule } from '../pays/pays.module';
-
+import { AddPayComponent } from './components/add-pay/add-pay.component';
 
 const routes = [
   {
@@ -21,17 +15,19 @@ const routes = [
     component: SiteLayoutComponent,
     canActivate: [AuthGuard], //Защищаем роуты которые относятся к самому приложению
     children: [
-      { path: 'bookings-page', component: BookingsComponent },
-      { path: 'add-booking', component: AddBookingComponent },
-      { path: 'view-booking/:id', component: ViewBookingComponent },
-      { path: 'edit-booking/:id', component: EditBookingComponent },
-      { path: 'edit-booking/:id/:view', component: EditBookingComponent },
+      { path: 'add-pay/:id', component: AddPayComponent },
+      // { path: 'add-booking', component: AddBookingComponent },
+      // { path: 'view-booking/:id', component: ViewBookingComponent },
+      // { path: 'edit-booking/:id', component: EditBookingComponent },
+      // { path: 'edit-booking/:id/:view', component: EditBookingComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, ViewBookingComponent],
+  declarations: [
+    AddPayComponent
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -41,8 +37,10 @@ const routes = [
     RouterModule.forChild(routes),
     LoaderModule,
     LayoutsModule,
-    PaysModule
   ],
-  providers: [BookingsService],
+  providers: [],
+  exports: [
+    AddPayComponent
+  ]
 })
-export class BookingModule {}
+export class PaysModule { }

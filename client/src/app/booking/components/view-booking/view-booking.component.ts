@@ -88,7 +88,6 @@ export class ViewBookingComponent implements OnInit {
   toggleStatus(status: string) {
     this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
       this.bookingStatus = res.status;
-      console.log('После клика', this.bookingStatus);
       MaterialService.toast(`Новый статус брони -  ${status}`);
     });
   }

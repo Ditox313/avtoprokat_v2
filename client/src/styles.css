@@ -725,3 +725,85 @@ select {
 .setting_view_info__box span {
     margin: 0 !important;
 }
+
+
+.to_pay a
+{
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+    padding: 7px 15px;
+    border-radius: 7px;
+    background-color: #194A9E;
+    color: #fff;
+    margin-bottom: 30px;
+    margin-right: 0 !important;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+}
+
+.xs_form_pay__information
+{
+    width: 32%;
+    background-color: #E2E2E2;
+    padding: 20px;
+    padding-bottom: 30px;
+}
+
+.pay_last_span
+{
+    color: #194A9E;
+    border-bottom:  1px solid #194A9E;
+}
+
+.xs_form_pay
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.xs_form_pay__pays
+{
+    width: 32%;
+    background-color: #E2E2E2;
+    padding: 20px;
+    padding-bottom: 30px;
+}
+
+.xs_form_pay__actions
+{
+    width: 32%;
+    background-color: #E2E2E2;
+    padding: 20px;
+    padding-bottom: 30px;
+}
+
+#arenda::placeholder
+{
+    color: inherit;
+}
+
+#zalog::placeholder
+{
+    color: inherit;
+}
+
+.xs_form_pay__item select
+{
+    background-color: #E2E2E2;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    outline: none;
+    padding-left: 0;
+}
+
+.xs_form_pay__item .input-field
+{
+    margin-top: 0 !important;
+}
+
+.pay_mod
+{
+    margin-top: 30px;
+}

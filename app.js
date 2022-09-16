@@ -4,6 +4,7 @@ const carsRoutes = require('./routes/cars.js');
 const clientsRoutes = require('./routes/clients.js');
 const partnersRoutes = require('./routes/partners.js');
 const bookingsRoutes = require('./routes/bookings.js');
+const paysRoutes = require('./routes/pays.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -64,6 +65,10 @@ app.use('/api/partners', partnersRoutes);
 
 // Регистрируем роут bookings
 app.use('/api/bookings', bookingsRoutes);
+
+
+// Регистрируем роут pays
+app.use('/api/pays', paysRoutes);
 
 
 
