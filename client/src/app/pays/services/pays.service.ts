@@ -12,9 +12,13 @@ import { Pay } from 'src/app/shared/types/interfaces';
 export class PaysService {
   constructor(private http: HttpClient) {}
 
-  // Создаем новую бронь
   create(pay: any): Observable<Pay> {
     return this.http.post<Pay>(`/api/pays`, pay);
+  }
+
+
+  getPaysByBookingId(id: string): Observable<Pay[]> {
+    return this.http.get<Pay[]>(`/api/pays/${id}`);
   }
 
   // Получаем список всех позиций

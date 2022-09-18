@@ -16,6 +16,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 import { Booking, MaterialDatepicker, Summa } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 import * as moment from 'moment';
+import { PaysService } from 'src/app/pays/services/pays.service';
 
 @Component({
   selector: 'app-view-booking',
@@ -34,7 +35,8 @@ export class ViewBookingComponent implements OnInit {
     booking_days: '',
     summaFull: '',
     dop_hours: '',
-    checkedTarif: ''
+    checkedTarif: '',
+    paidCount: 0
   };
 
   actualBooking!: Booking;
@@ -56,7 +58,8 @@ export class ViewBookingComponent implements OnInit {
   constructor(
     private bookings: BookingsService,
     private router: Router,
-    private rote: ActivatedRoute
+    private rote: ActivatedRoute,
+    private pay: PaysService
   ) {}
 
   ngOnInit(): void {
@@ -82,6 +85,10 @@ export class ViewBookingComponent implements OnInit {
 
       // Высчитываем какой тариф выбран
       this.checkedTarif(this.summa.booking_days)
+    });
+
+    this.pay.getPaysByBookingId(this.bookingId).subscribe((res) => {
+      this.pays = res;
     });
 
     MaterialService.updateTextInputs();

@@ -66,12 +66,55 @@
                                 <div> <span>Итого: </span> <span class="pay_last_span">{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
                             </div>
                         </div>
+
+                        <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)"
+                            [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)">
+                            <div>
+                                <span class="xs_paid_span_1">Оплачено </span>
+                                <span class="xs_paid_span_2">{{actualBooking.paidCount}} ₽</span>
+                            </div>
+                        
+                            <div>
+                                <span>Остаток</span> <span class="xs_paid_span_2">{{+summa.summaFull - (+actualBooking.paidCount)}} ₽</span>
+                            </div>
+                        </div>
                         
 
                     </div>
 
                     <div class="xs_form_pay__pays">
                         <h5>Платежи</h5>
+
+                        <div class="pay_view_info__contentt">
+                            <table class="striped" *ngIf="xspays">
+                                <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Сумма</th>
+                                        <th>Тип</th>
+                                        <th>Группа</th>
+                                    </tr>
+                        
+                                </thead>
+                        
+                                <tbody >
+                                    <tr *ngFor="let pay of xspays; let i = index" class="xs_partners_tr xsbooking">
+                                        <td>
+                                            <span>{{pay.date | date : 'd MMMM , H:mm'}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{pay.pricePay}} ₽</span>
+                                        </td>
+                                        <td>
+                                            <span>{{pay.typePay}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{pay.vidPay}}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
 

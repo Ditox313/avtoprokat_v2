@@ -118,6 +118,13 @@ const bookingSchema = new Schema({
         default: 'В ожидании',
         required: true,
     },
+
+    // Сколько оплачено
+    paidCount: {
+        type: Number,
+        default: 0,
+        required: false,
+    },
     
 
 });

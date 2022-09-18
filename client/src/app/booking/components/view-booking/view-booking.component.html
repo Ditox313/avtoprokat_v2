@@ -92,7 +92,7 @@
                                 <span>{{ actualBooking.car.price_dop_hour}} ₽</span>
                             </div>
 
-                            <div>
+                            <div *ngIf="actualBooking.comment">
                                 <span>Комментарий</span>
                                 <span>{{actualBooking.comment}} </span>
                             </div>
@@ -106,6 +106,18 @@
                                 <div> <span>Залог</span> <span>{{ this.summa.car.zalog}} ₽</span> </div>
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
                                 <div> <span>Итого</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
+
+                            </div>
+                        </div>
+                        
+                        <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)" [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)">
+                            <div>
+                                <span class="xs_paid_span_1">Оплачено </span>
+                                <span class="xs_paid_span_2">{{actualBooking.paidCount}} ₽</span>
+                            </div>
+                            
+                            <div> 
+                                <span>Остаток</span> <span class="xs_paid_span_2">{{+summa.summaFull - (+actualBooking.paidCount)}} ₽</span> 
                             </div>
                         </div>
                     </div>
@@ -113,14 +125,51 @@
                     <div class="xs_booking_view_content___item">
                         <div class="pay_view_info">
                             <h5>Платежи</h5>
-
+                            <div class="pay_view_info__content">
+                                 <table class="striped" *ngIf="pays">
+                                    <thead>
+                                        <tr>
+                                            <th>Дата</th>
+                                            <th>Сумма</th>
+                                            <th>Тип</th>
+                                            <th>Группа</th>
+                                        </tr>
+                            
+                                    </thead>
+                            
+                                    <tbody >
+                                        <tr *ngFor="let pay of pays; let i = index" class="xs_partners_tr xsbooking" >
+                                            <td>
+                                                <span>{{pay.date | date : 'd MMMM , H:mm'}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.pricePay}} ₽</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.typePay}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.vidPay}}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
                     <div class="xs_booking_view_content___item">
                         <div class="setting_view_info">
-                            <div class="to_pay">
-                                <a [routerLink]="['/add-pay', bookingId]">Оплатить</a>
+                            <div class="to_pay " *ngIf="+actualBooking.paidCount <= 0">
+                                <a [routerLink]="['/add-pay', bookingId]" class="to_pay_none">Оплатить</a>
+                            </div>
+
+                            <div class="to_pay " *ngIf="+actualBooking.paidCount > 0 && +actualBooking.paidCount < (+summa.summaFull)">
+                                <a [routerLink]="['/add-pay', bookingId]" class="to_pay_none">-{{+summa.summaFull - (+actualBooking.paidCount)}}</a>
+                            </div>
+
+                            <div class="to_pay" *ngIf="+actualBooking.paidCount >= (+summa.summaFull)">
+                                <a [routerLink]="['/add-pay', bookingId]" class="to_pay_ok">Оплачено</a>
                             </div>
 
                             <h5>Управление</h5>

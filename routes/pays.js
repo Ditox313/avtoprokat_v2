@@ -9,8 +9,8 @@ const upload = require('../middleware/upload');
 // Роут на create
 router.post('/', passport.authenticate('jwt', { session: false }), controller.create);
 
-// // Роут на fetch
-// router.get('/', passport.authenticate('jwt', { session: false }), controller.fetch);
+// // Роут на получение всех платежей для брони
+router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getPaysByBookingId);
 
 // Роут на update
 // router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update);

@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const Booking = require('../models/Booking');
+const Pays = require('../models/Pays');
 const errorHandler = require('../Utils/errorHendler');
 
 
@@ -133,6 +134,10 @@ module.exports.remove = async function(req, res) {
     try {
         await Booking.remove({
             _id: req.params.id
+        });
+
+        await Pays.remove({
+            bookingId: req.params.id
         });
 
 

@@ -218,6 +218,7 @@ export interface Booking {
   order?: any
   status?: any
   dop_hours?: any
+  paidCount?: any
 }
 
 
@@ -233,6 +234,7 @@ export interface Summa {
   summaFull: any,
   dop_hours: any
   checkedTarif?: any
+  paidCount?: any
 }
 
 

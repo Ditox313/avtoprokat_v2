@@ -24,6 +24,7 @@ export class AddPayComponent implements OnInit {
   actualBooking!: Booking;
   defaultValueArenda: string =  'Наличные'
   defaultValueZalog: string =  'Наличные'
+  xspays!: any;
 
   summa: Summa = {
     car: {},
@@ -84,9 +85,12 @@ export class AddPayComponent implements OnInit {
       this.summa.booking_days = res.booking_days;
       this.summa.dop_hours = res.dop_hours;
 
-
       // Высчитываем какой тариф выбран
       this.checkedTarif(this.summa.booking_days)
+
+      this.pays.getPaysByBookingId(this.bookingId).subscribe((res) => {
+        this.xspays = res;
+      });
     });
 
     MaterialService.updateTextInputs();
@@ -116,37 +120,66 @@ export class AddPayComponent implements OnInit {
 
   onSubmit() {
 
-    if (this.form.value.arenda)
+    if (this.form.value.arenda && !this.form.value.zalog)
     {
       const pay = {
         vid: 'Аренда',
         pricePay: this.form.value.arenda,
         typePay: this.form.value.typePayArenda,
-        bookingId: this.bookingId
+        bookingId: this.bookingId,
       };
+
+      
 
       this.pays.create(pay).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
-        console.log(pay);
-
         this.router.navigate(['/view-booking', this.bookingId]);
       });
     }
 
-    if (this.form.value.zalog) {
+    if (this.form.value.zalog && !this.form.value.arenda) {
       const pay = {
         vid: 'Залог',
         pricePay: this.form.value.zalog,
         typePay: this.form.value.typePayZalog,
-        bookingId: this.bookingId
+        bookingId: this.bookingId,
+      };
+
+
+      this.pays.create(pay).subscribe((pay) => {
+        MaterialService.toast('Платеж создан');
+        this.router.navigate(['/view-booking', this.bookingId]);
+      });
+    }
+
+
+    if (this.form.value.arenda && this.form.value.zalog)
+    {
+
+      const pay = {
+        vid: 'Аренда',
+        pricePay: this.form.value.arenda,
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId,
+      };
+
+      const pay_2 = {
+        vid: 'Залог',
+        pricePay: this.form.value.zalog,
+        typePay: this.form.value.typePayZalog,
+        bookingId: this.bookingId,
       };
 
       this.pays.create(pay).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
-        console.log(pay);
-
         this.router.navigate(['/view-booking', this.bookingId]);
       });
+
+      this.pays.create(pay_2).subscribe((pay) => {
+        MaterialService.toast('Платеж создан');
+        this.router.navigate(['/view-booking', this.bookingId]);
+      });
+      
     }
     
   }
