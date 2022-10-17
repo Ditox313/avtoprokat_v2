@@ -874,3 +874,21 @@ select {
     display: flex;
     justify-content: space-between;
 }
+
+.xs_generate_docs h1
+{
+    font-size: 33px;
+    line-height: 40px;
+    margin: 0;
+    color: #333;
+}
+
+.xs_generate_docs_back
+{
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+    border-radius: 7px;
+    background-color: #194A9E;
+    color: #fff;
+}

@@ -13,6 +13,7 @@ import { SiteLayoutComponent } from '../shared/layouts/components/site-layout/si
 import { LayoutsModule } from '../shared/layouts/layouts.module';
 import { ViewBookingComponent } from './components/view-booking/view-booking.component';
 import { PaysModule } from '../pays/pays.module';
+import { DocsComponent } from './components/docs/docs.component';
 
 
 const routes = [
@@ -26,12 +27,13 @@ const routes = [
       { path: 'view-booking/:id', component: ViewBookingComponent },
       { path: 'edit-booking/:id', component: EditBookingComponent },
       { path: 'edit-booking/:id/:view', component: EditBookingComponent },
+      { path: 'generate-docs/:id', component: DocsComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, ViewBookingComponent],
+  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, ViewBookingComponent, DocsComponent],
   imports: [
     CommonModule,
     HttpClientModule,
