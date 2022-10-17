@@ -63,6 +63,20 @@
                     </span>
                 </div>
             </div>
+
+            <div class="xs_account_box___item">
+                <label for="password">Дата доверенности:</label>
+                <div class="input-field">
+                    <input id="doverenostDate" type="date" formControlName="doverenostDate"
+                        [ngClass]="{'invalid': form.controls['doverenostDate'].invalid && form.controls['doverenostDate'].touched}">
+                    <span class="helper-text red-text"
+                        *ngIf="form.controls['doverenostDate'].invalid && form.controls['doverenost'].touched">
+                        <p *ngIf="form.controls['doverenostDate'].errors?.required">
+                            Поле не должно быть пустым
+                        </p>
+                    </span>
+                </div>
+            </div>
         </div>
 
         <div class="xs_account_box">

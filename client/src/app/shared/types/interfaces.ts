@@ -12,6 +12,7 @@ export interface User
     secondName?: string
     thirdName?: string
     doverenost?: string
+    doverenostDate?: string
     _id?: string
 }
 

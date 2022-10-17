@@ -24,6 +24,7 @@ export class AccountComponent implements OnInit {
       secondName: new FormControl(null, [Validators.required]),
       thirdName: new FormControl(null, [Validators.required]),
       doverenost: new FormControl(null, [Validators.required]),
+      doverenostDate: new FormControl(null, [Validators.required]),
     });
 
     
@@ -37,6 +38,7 @@ export class AccountComponent implements OnInit {
           secondName: user.secondName,
           thirdName: user.thirdName,
           doverenost: user.doverenost,
+          doverenostDate: user.doverenostDate,
       });
     })
 
@@ -54,6 +56,7 @@ export class AccountComponent implements OnInit {
       email: this.form.value.email,
       password: this.form.value.password,
       doverenost: this.form.value.doverenost,
+      doverenostDate: this.form.value.doverenostDate,
     };
 
     this.auth.update(user).subscribe((res) => {
@@ -61,6 +64,9 @@ export class AccountComponent implements OnInit {
           email: res.email,
           secondName: res.secondName,
           thirdName: res.thirdName,
+          doverenost: res.doverenost,
+          name: res.name,
+          doverenostDate: res.doverenostDate,
         });
 
         MaterialService.toast('Данные изменены');

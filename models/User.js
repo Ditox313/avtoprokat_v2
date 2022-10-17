@@ -38,6 +38,11 @@ const userSchema = new Schema({
         type: String,
         required: false,
     },
+
+    doverenostDate: {
+        type: String,
+        required: false,
+    },
 });
 
 
