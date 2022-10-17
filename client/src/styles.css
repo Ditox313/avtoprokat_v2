@@ -921,3 +921,32 @@ select {
     font-weight: 800;
     font-size: 14px;
 }
+
+.xs_account h1
+{
+    font-size: 33px;
+    line-height: 40px;
+    margin: 0;
+    color: #333;
+}
+
+.xs_account__content
+{
+    margin-top: 50px;
+}
+
+.xs_account_box
+{
+    width: 48%;
+}
+
+.xs_account__content
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.xs_account_box___item .input-field
+{
+    margin-top: -5px !important;
+}

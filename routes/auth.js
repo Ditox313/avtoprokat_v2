@@ -13,5 +13,12 @@ router.post('/login', controller.login);
 router.post('/register', controller.register);
 
 
+// Роут на get_user
+router.get('/user', passport.authenticate('jwt', { session: false }), controller.get_user);
+
+// Роут на update
+router.patch('/update', passport.authenticate('jwt', { session: false }), controller.update);
+
+
 
 module.exports = router;

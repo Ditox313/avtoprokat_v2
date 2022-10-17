@@ -54,4 +54,14 @@ export class AuthService {
     this.setToken('');
     localStorage.clear();
   }
+
+  // Делаем запрос на сервер, получаем  ответ типа User
+  get_user(): Observable<User > {
+    return this.http.get<User>('/api/auth/user')
+  }
+
+  // Редактируем позицию
+  update(user: User): Observable<User> {
+    return this.http.patch<any>('/api/auth/update/', user);
+  }
 }

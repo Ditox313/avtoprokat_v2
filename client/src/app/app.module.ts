@@ -19,6 +19,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { BookingModule } from './booking/booking.module';
 import '@angular/common/locales/global/ru'
 import { PaysModule } from './pays/pays.module';
+import { AccountModule } from './account/account.module';
 
 
 
@@ -43,7 +44,8 @@ import { PaysModule } from './pays/pays.module';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    PaysModule
+    PaysModule,
+    AccountModule
   ],
   providers: [
     {

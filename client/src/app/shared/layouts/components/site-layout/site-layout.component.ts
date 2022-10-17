@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
-import { AfterViewInit, ViewChild, Component, ElementRef} from '@angular/core';
+import { AfterViewInit, ViewChild, Component, ElementRef, OnInit} from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from 'src/app/shared/types/interfaces';
 
 
 @Component({
@@ -10,16 +11,35 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 })
 
 // AfterViewInit интерфейс реализующий AfterViewInit метод, который покажет когда DOM компонента будет полностью загружен
-export class SiteLayoutComponent implements AfterViewInit {
-  // Забираем дом элемент и ложим его в переменную floatingRef
+export class SiteLayoutComponent implements OnInit, AfterViewInit {
+  currentUser!: any;
+
   @ViewChild('floating') floatingRef!: ElementRef;
+
+
+  
+
+  // Инжектируем сервис авторизации и роутер
+  constructor(private auth: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.auth.get_user().subscribe(user => {
+      this.currentUser = user;
+      
+      this.links.push({
+        url: `/account/${this.currentUser._id}`,
+        name: 'Настройки',
+      })
+    })
+  }
+
   // Метод будет вызван когда загрузится все DOM дерево
   ngAfterViewInit(): void {
     // MaterialService.initializeFloatingButton(this.floatingRef);
   }
 
   // Массив с ссылками навигации сайдбара
-  links: Array<any> = [
+  links: any = [
     {
       url: '/overview-page',
       name: 'Обзор',
@@ -41,9 +61,6 @@ export class SiteLayoutComponent implements AfterViewInit {
       name: 'Партнеры',
     },
   ];
-
-  // Инжектируем сервис авторизации и роутер
-  constructor(private auth: AuthService, private router: Router) {}
 
   // Описываем метод выхода из системы
   logout(event: Event): void {

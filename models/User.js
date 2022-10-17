@@ -18,6 +18,26 @@ const userSchema = new Schema({
         required: true,
     },
 
+
+    name: {
+        type: String,
+        required: false,
+    },
+
+    secondName: {
+        type: String,
+        required: false,
+    },
+
+    thirdName: {
+        type: String,
+        required: false,
+    },
+
+    doverenost: {
+        type: String,
+        required: false,
+    },
 });
 
 
