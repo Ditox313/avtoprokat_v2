@@ -5,23 +5,641 @@
         </h1>
 
         <div class="xs_add__car__top____actions">
-            <!-- <a routerLink="/bookings-page">
-                <span class="material-icons">arrow_back_ios</span>Назад
-            </a> -->
-
             <a [routerLink]="['/view-booking',this.bookingId]" class="xs_generate_docs_back">
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
             
-            <button type="submit">
+            <button type="submit" (click)="generatePDF()">
                 <span class="material-icons">cloud_download</span>Скачать
             </button>
         </div>
     </div>
+    
 
-    <div class="xs_generate_docs__content">
+    <div class="xs_generate_docs__content" id="content" #content>
         <div class="row">
-            1
+            <div class="xs_doc_file" >
+                <p>
+                    <strong>
+                        <svg width="422" height="52" viewBox="0 0 422 52" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <rect width="422" height="52" fill="url(#pattern0)" />
+                            <defs>
+                                <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                    <use xlink:href="#image0_2293_239" transform="scale(0.00236967 0.0192308)" />
+                                </pattern>
+                                <image id="image0_2293_239" width="422" height="52"
+                                    xlink:href="data:image/png;base64,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" />
+                            </defs>
+                        </svg>
+
+                    </strong>
+                    
+                </p>
+                <div class="xs_doc_file_title" style="margin-top: 30px; font-size: 22px;">
+                    <strong>Договор проката транспортного средства без экипажа № 1710/СТС-1</strong>
+                    <strong>г. Тюмень , 17 октября 2022 </strong><br>
+                </div>
+                
+                <p>
+                    <a name="OLE_LINK5"></a>
+                    <a name="OLE_LINK6"></a>
+                    <br />
+                    Общество с ограниченной ответственностью <strong>ООО «ВВС-ВЕБ</strong>» в
+                    лице уполномоченного <strong>Ямова Александра Сергеевича</strong>
+                    действующего на основании Доверенности №<strong>1104</strong>от <strong>11.04.2022г</strong>., именуемое в
+                    дальнейшем «Арендодатель», и
+                    Гражданин(ка) РФ, <strong>Попов Евгений Михайлович</strong><strong>,</strong> дата рождения:
+                    <strong>25.04.2006</strong><strong>,</strong> паспорт: серия <strong>6505 №792413</strong> <strong>, </strong>выдан
+                    <strong>
+                        управлением внутренних дел октябрьского района города Екатеринбурга
+                    </strong>
+                    <strong> ,</strong>
+                    дата выдачи: <strong>25.04.2006</strong><strong>,</strong> регистрация:
+                    <strong>
+                        Республика Башкортостан ПВС октябрьского ГОВД ул. пр. Ленина д. 53 кв.
+                        10
+                    </strong>
+                    <strong>, </strong>
+                    водительское удостоверение: <strong>9928 № 017185</strong> <strong>, </strong>дата выдачи:
+                    <strong>12.07.2022г</strong> фактический
+                    адрес проживания (пребывания):<strong>гостиница славянка</strong><strong>,</strong> контактный номер
+                    телефона:<strong>+7 927 301-07-98</strong><strong>,</strong> доп.: <strong>сюда добавляются доп номера
+                        тел.</strong><strong>, </strong>
+                    именуемый в дальнейшем «Арендатор», с другой стороны, заключили настоящий
+                    Договор о нижеследующем:
+                </p>
+
+                <p>
+                    <strong>1. Предмет Договора</strong>
+                </p>
+                <p>
+                    1.1. В соответствии с условиями настоящего Договора, Арендодатель
+                    предоставляет Арендатору, во временное владение, пользование за плату
+                    автотранспортное средство, технические характеристики, комплектация и
+                    стоимость указаны в акте приема/передачи <strong>Приложение №1, </strong>
+                    являющимся неотъемлемой частью договора.
+                </p>
+                <p>
+                    1.2. Арендодатель подтверждает, что он имеет право передавать право
+                    владения и пользования третьим лицам, кроме этого гарантирует, что
+                    транспортное средство марки согласно свидетельству о регистрации <strong>см. (Приложение №1) </strong>на момент
+                    заключения Договора, не
+                    является предметом какого-либо спора, не находится в розыске.
+                </p>
+                <p>
+                    <strong>2. Условия и сроки</strong>
+                </p>
+                <p>
+                    2.1. Автотранспортное средство, предоставленное по договору проката,
+                    используется для потребительских целей Арендатора.
+                </p>
+                <p>
+                    <strong>
+                        Арендатор не вправе использовать и управлять Автомобилем в следующих
+                        случаях:
+                    </strong>
+                </p>
+                <p>
+                    2.1.1. Удаленностью расстояния более 100 км от г. Тюмени без уведомления
+                    Арендодателя по средствам СМС сообщения, письменного заявления, электронной
+                    почты на email info@autoprokat72.ru и получения согласия Арендодателя;
+                </p>
+                <p>
+                    2.1.2. При перевозке контрабандных товаров и в других противоречащих закону
+                    целях, для буксирования другого транспортного средства, легковых и грузовых
+                    автомобилей, как средство перевозки посылок и иных крупно- и малогабаритных
+                    грузов, как средство для <strong>работы в службах такси</strong>, для
+                    перевозки животных, в любых соревнованиях, <strong>для сдачи в субаренду</strong>, трансфере, в состоянии
+                    алкогольного, наркотического, токсического или иного опьянения, а также
+                    передавать (допускать) управления и сам Автомобиль лицам, находящемся в
+                    таком же состоянии, либо отказавшемся от прохождения освидетельствования на
+                    состояние опьянения, а равно передача (допущение) управления ТС лицу, не
+                    имевшему права на управление автомобиля, а также несоблюдение пункта 2.2 и
+                    п.2.6, недееспособному, имеющего медицинские противопоказания.
+                </p>
+                <p>
+                    2.1.7. Арендатор не вправе сдавать в субаренду имущество, предоставленное
+                    арендатору по настоящему договору, передавать свои права и обязанности по
+                    настоящему договору другому лицу, предоставлять имущество в безвозмездное
+                    пользование, в залог арендных прав и внесение их в качестве имущественного
+                    вклада в хозяйственные товарищества и общества или паевого взноса в
+                    производственные кооператив.
+                </p>
+                <p>
+                    2.2. Арендатор не вправе передавать право управления автомобилем третьим
+                    лицам, данное нарушение облагается штрафом в размере тройного суточного
+                    платежа указанного в <strong>Приложении №1</strong>. В указанном случае
+                    настоящий договор расторгается в одностороннем порядке, автомобиль
+                    изымается у Арендатора, залог и предоплата за остаток дней удерживается в
+                    полном размере.
+                </p>
+                <p>
+                    2.3. Арендатор своими силами осуществляет управление, заправку топливом,
+                    мойку автотранспортного средства переданного ему в аренду.
+                </p>
+                <p>
+                    2.4. . Настоящий Договор действует в течение срока аренды автомобиля, а в
+                    части исполнения сторонами своих обязательств – до полного их исполнения.
+                    Настоящий договор действует до <strong>31.12.2022</strong>г.
+                </p>
+                <p>
+                    2.5. Арендатор вносит залог на период аренды автомобиля, сумма которого
+                    указана в <strong>Приложении №1. </strong>Залог вносится на дополнительные
+                    расходы в виде комплексной мойки автомобиля, заправки топлива и иные
+                    денежные взыскания, связанные с несоответствием первоначального состояния
+                    автомобиля на момент его передачи Арендатору, состоянию автомобиля при
+                    возврате из аренды. Залог возвращается Арендатору наличными денежными
+                    средствами или на банковскую карту в сроки согласованные сторонами.
+                </p>
+                <p>
+                    <a name="OLE_LINK9"></a>
+                    <a name="OLE_LINK10"></a>
+                    <a name="dst100748"></a>
+                    2.6. Возраст Водителя должен составлять от <strong>23 </strong>(двадцати
+                    трех) лет и стаж управления ТС от <strong>2-х</strong> лет.
+                </p>
+                <p>
+                    2.7. Арендатор не имеет права на последующий выкуп автомобиля.
+                </p>
+                <p>
+                    2.8. Прием и передача автомобиля осуществляется по адресу г. Тюмень, ул.
+                    Дмитрия Менделеева, д.18 или в ином заранее оговоренном месте на основании
+                    акта приема/передачи транспортного средства <strong>(Приложение №1)</strong>.
+                </p>
+                <p>
+                    2.9. Арендатор имеет право использовать автомобиль только на территории <u>Российской Федерации.</u>
+                </p>
+                <p align="justify">
+                    <strong>3. Права и обязанности сторон</strong>
+                </p>
+                <p>
+                    3.1. Арендодатель обязуется:
+                </p>
+                <p>
+                    3.1.1. Передать Арендатору автомобиль в аренду в момент подписания акта
+                    приема/передачи (Приложение №1).
+                    <br />
+                    3.1.2. Нести расходы, связанные с содержанием транспортного средства,
+                    приобретением запчастей и расходных материалов, изнашивающихся в процессе
+                    его эксплуатации и требующих замены в соответствии с регламентом
+                    технического обслуживания.
+                </p>
+                <p>
+                    3.1.3. Арендодатель, заключающий настоящий договор, обязан в присутствии
+                    арендатора проверить исправность сдаваемого в аренду имущества, а также
+                    ознакомить арендатора с правилами эксплуатации имущества.
+                </p>
+                <p>
+                    3.2. Арендодатель имеет право:
+                </p>
+                <p>
+                    3.2.1. Потребовать предоставить автомобиль на проверку технического и
+                    внешнего состояния.
+                </p>
+                <p>
+                    3.2.2. Изъять по акту приема передачи автомобиль немедленно, принудительно
+                    у Арендатора без согласования с последним, если нарушен один из пунктов
+                    2.1.1.-2.1.6., п.2.3, п.5.2.1 – 5.2.4., при этом Арендатор обязан оплатить
+                    расходы по транспортировке автомобиля с места изъятия до стоянки
+                    Арендодателя, расположенной по адресу: <u>г. Тюмень, ул. Дмитрия Менделеева, д.18</u>, а так же уплатить штраф в
+                    размере тройного суточного платежа аренды автомобиля согласно Приложению
+                    №1.
+                </p>
+                <p>
+                    3.2.3. В случае фиксации нарушений ПДД системами фото/видео фиксации
+                    собственник или представитель собственника автомобиля в праве обратится в
+                    ГИБДД с целью обжалования постановления об административном правонарушении.
+                </p>
+                <p>
+                    3.2.4. Потребовать внесения арендной платы за все время просрочки, если
+                    арендатор не возвратил арендованное имущество либо возвратил его
+                    несвоевременно. В случае, когда указанная плата не покрывает причиненных
+                    арендодателю убытков, он может потребовать их возмещения.
+                </p>
+                <p>
+                    3.2.5. На свое усмотрение удержать залоговую сумму в полном размере, если
+                    Арендатор вернул автомобиль несоответствующим его первоначальному состоянию
+                    в момент передачи Арендатору или если имеются подозрения в наличии скрытых
+                    дефектов до момента выяснения указанного обстоятельства на срок до 3-х
+                    суток.
+                </p>
+                <p align="justify">
+                    3.2.6. На свое усмотрение удержать залоговую сумму в полном размере если
+                    Арендатор вернул автомобиль в несоответствии его первоначального состояния
+                    на момент передачи Арендатору или в подозрении скрытых дефектов до момента
+                    их выяснения на срок до 3-х суток.
+                </p>
+                <p align="justify">
+                    3.3. Арендатор обязуется:
+                </p>
+                <p align="justify">
+                    3.3.1. Соблюдать условия настоящего Договора и нести полную материальную и
+                    правовую ответственность за их нарушение и причиненный ущерб, в
+                    соответствии с законодательством РФ и настоящим Договором;
+                </p>
+                <p align="justify">
+                    3.3.2. Использовать Автомобиль исключительно по его прямому назначению, в
+                    соответствии с техническими характеристиками, условиями эксплуатации
+                    согласно пункту 2.1.; оставлять автомобиль закрытым, поставленным на
+                    сигнализацию; не оставлять в автомобиле документы (Свидетельство о
+                    регистрации ТС и др.) и ключи; соблюдать Правила дорожного движения
+                    установленные в Российской Федерации.
+                </p>
+                <p align="justify">
+                    3.3.3. Не производить переоснащения или переоборудования автомобиля;
+                </p>
+                <p align="justify">
+                    3.3.4. Арендатор обязуется вернуть автомобиль (имущество) в сроки,
+                    указанные в настоящем договоре, в том состоянии, в котором он его принял, с
+                    учетом нормального износа или в состоянии обусловленным акту
+                    приема/передачи Приложение №1, вовремя и в месте, указанном в настоящем
+                    договоре, согласно п.2.8.
+                </p>
+                <p>
+                    3.3.5. Арендатор обязуется оплатить административные штрафы за нарушения
+                    ПДД РФ, назначенные в период эксплуатации транспортного средства на
+                    основании настоящего договора и акта приема/передачи (Приложение №1) в
+                    течение 3 (трех) дней после даты вынесения постановления об
+                    административном правонарушении и уведомить Арендодателя об оплате
+                    предоставив квитанции.
+                </p>
+                <p>
+                    3.3.6. Если Арендатор в течение указанного пункте 3.3.5. срока не оплатил
+                    административные штрафы и не предоставил квитанции об оплате, Арендодатель
+                    имеет право удержать суммы штрафов из суммы внесенного Арендатором залога.
+                </p>
+                <p>
+                    3.3.7. Арендатор соглашается с тем, что в момент фиксации нарушения ПДД РФ
+                    транспортное средство марка, модель, государственный регистрационный номер
+                    которого указаны в Приложении №1, находилось под его управлением, в его
+                    пользовании и владении на основании настоящего договора и акта/приема
+                    передачи Приложение №1.
+                </p>
+                <p>
+                    3.3.8. Арендатор, подписывая настоящий договор и Приложение №1, соглашается
+                    с возможным допущением им административных правонарушений, возникших в
+                    период эксплуатации им автомобиля, признает свою вину и обязуется оплатить
+                    административные штрафы в срок, установленный настоящим договором.
+                </p>
+                <p>
+                    3.3.9. За нарушение условий эксплуатации автомобиля Арендатор обязуется
+                    уплатить штраф в следующих размерах и по следующим основаниям:
+                </p>
+                <p>
+                    - любые действия и бездействия Арендатора, приведшие к внеплановому ремонту
+                    или уменьшению товарной стоимости (УТС)
+                </p>
+                <p>
+                    Автомобиля - штраф в размере100% (сто процентов) от величины стоимости
+                    внепланового ремонта или УТС Автомобиля.
+                </p>
+                <p align="justify">
+                    - в случае ДТП, в результате которого Автомобилю были причинены повреждения
+                    по вине Арендатора, Арендатор обязуется уплатить расходы в размере 100 %
+                    (Сто процентов) от величины ущерба, причиненного Автомобилю при условии
+                    отсутствия дополнительной услуги КАСКО.
+                </p>
+                <p align="justify">
+                    - в случае выявления сильного загрязнения салона ТС или едкого запаха
+                    сигаретного/табачного дыма, пепла, окурков, алкоголя или прочих ядовитых и
+                    иных веществ , Арендатор оплачивает химчистку автомобиля, а также штраф в
+                    размере суточного платежа аренды, в соответствии Приложение №1.
+                </p>
+                <p align="justify">
+                    3.3.10. В случае возникновения простоя (по причине неисправности, ДТП,
+                    помещения на спец. автостоянку, административного, уголовного задержания
+                    ТС) по вине Арендатора, последний оплачивает каждые сутки простоя
+                    автомобиля Арендодателю по тарифу суточной стоимости проката ТС, указанной
+                    в Приложении №1, а также несет расходы на эвакуацию и прочее.
+                </p>
+                <p align="justify">
+                    3.3.11. В случае повреждения или ДТП Арендатор обязуется немедленно вызвать
+                    на место ДТП представителей ГИБДД и уведомить (письменно, по СМС
+                    сообщением) Арендодателя о происшествии, а также зафиксировать данные
+                    второго участника ДТП (ФИО, адрес, телефон, марку и гос. номер а/м),
+                    получить копию документа с подробным перечнем повреждений, получить справку
+                    о ДТП, проконтролировать полноту сведений в документах.
+                </p>
+                <p align="justify">
+                    3.3.12. В случае повреждений, вызванных стихийным бедствием, утраты
+                    автомобиля или действиями третьих лиц (ДТП, кража, хулиганство ит.п.)
+                    Арендатор обязуется немедленно обратиться в органы внутренних дел,
+                    составить документ с подробным списком повреждений, получить необходимые
+                    документы и уведомить Арендодателя о происшествии.
+                </p>
+                <p>
+                    3.3.13. В случае утраты, невозможной дальнейшей эксплуатации в результате
+                    ДТП по вине Арендатора, в результате передачи ТС в субаренду, передачи
+                    права управления третьим лицам, в результате чего произошла утрата
+                    автомобиля (ДТП, кража, хищение и т.п.), возместить Арендодателю стоимость
+                    автомобиля, указанную в Приложении№1 настоящего договора.
+                </p>
+                <p>
+                    3.3.14. В случае, если автомобиль попадает на спецавтостоянку в период
+                    действия договора, Арендатор несет расходы на эвакуацию, оплату стоянки все
+                    возможные затраты, а также принимает все возможные меры для скорейшего
+                    освобождения автомобиля.
+                </p>
+                <p>
+                    3.3.15. В случае уклонения от оплаты административных штрафов, вынесенных
+                    Арендатору, последний оплачивает штраф Арендодателю в размере одного
+                    суточного платежа аренды автомобиля.
+                </p>
+                <p>
+                    3.3.16. При утрате или повреждении указанных в акте приема/передачи
+                    Приложение №1 принадлежностей, комплектующих автомобиля в момент возврата
+                    его Арендодателю, Арендатор обязан доукомплектовать автомобиль утраченными
+                    принадлежностями, комплектующими по расценкам, указанным в Приложение №1.
+                    <br />
+                    3.3.17. В случае не установления лиц, причинивших повреждения автомобилю в
+                    результате ДТП, неосторожности, с целенаправленным умыслом причинения вреда
+                    автомобилю, утраты автомобиля, кражи, хищения, угона, мошенничества с
+                    правом присвоения собственности, в течение 7(семи) дней, с даты причинения
+                    вреда или утраты автомобиля, Арендатор обязуется возместить Арендодателю
+                    стоимость автомобиля, указанную в Приложении№1 настоящего договора при
+                    условии отсутствия покупки дополнительной услуги КАСКО.
+                </p>
+                <p>
+                    3.3.18. Если недостатки арендованного имущества явились следствием
+                    нарушения арендатором правил эксплуатации и содержания имущества, арендатор
+                    оплачивает арендодателю стоимость ремонта и транспортировки имущества.
+                </p>
+                <p align="justify">
+                    3.3.19. Во время эксплуатации ТС обеспечить целостность и сохранность
+                    пломбы-наклейки согласно Приложению №1.
+                </p>
+                <p align="justify">
+                    3.3.20. Арендатор обязуется немедленно информировать Арендодателя о
+                    повреждении или срабатывании пломбы-наклейки.
+                </p>
+                <p align="justify">
+                    3.3.21. Предоставить Арендодателю актуальные сведения о себе, а также
+                    сообщать об изменениях документов, сведений о себе на период действия
+                    текущего договора.
+                </p>
+                <p>
+                    <strong>3.4. Арендатор имеет право:</strong>
+                </p>
+                <p>
+                    3.4.1. Потребовать замену на свободный автомобиль идентичного класса из
+                    автопарка Арендодателя, если автомобиль, находящийся в аренде оказался
+                    технически неисправен, а так же потребовать возврата средств потраченных на
+                    заправку топливом автомобиля.
+                </p>
+                <p>
+                    3.4.2. На ограничение ответственности в случаях причинения ущерба
+                    автомобилю при любых обстоятельствах при условии покупки дополнительной
+                    услуги КАСКО на время проката ТС согласно Приложению №1. Подтверждением
+                    покупки дополнительно й услуги КАСКО является кассовый чек от Арендодателя.
+                    В случае происшествия и активации услуги КАСКО, Арендатор оплачивает сумму
+                    франшизы КАСКО которая составляет от 30000 рублей и зависит от модели ТС, а
+                    так же простой транспортного средства за 30 полных суток по тарифу
+                    указанному в Приложении №1.
+                </p>
+                <p>
+                    3.4.3. Вскрыть пломбу-наклейку строго после согласования с Арендодателем,
+                    если имеются основательные причины (требуется ремонт ТС если ТС находится
+                    более 50 км от г.Тюмень) для ее вскрытия. Перед вскрытием пломбы-наклейки
+                    предоставить доказательства (фото и др.) причин.
+                </p>
+                <p>
+                    <strong>4. Расчеты по Договору</strong>
+                </p>
+                <p>
+                    4.1. Оплата аренды автотранспортного средства установлена настоящим
+                    Договором в виде фиксированного <em><u>ежесуточного и почасового</u></em>
+                    платежа указанного в акте приема-передачи <strong>(Приложение №1).</strong>
+                </p>
+                <p>
+                    4.2. Оплата аренды автомобиля уплачивается Арендатором в начале срока
+                    проката (предоплата) и производится не менее чем за сутки вперед до
+                    подписания акта приема-передачи <strong>(Приложение №1)</strong>.
+                    <br />
+                    4.3. Арендатор оплачивает аренду автотранспортного средства на основании
+                    настоящего Договора.
+                    <br />
+                    4.4. В случае нарушения Арендатором сроков оплаты аренды, указанных в п.
+                    4.2 настоящего договора, Арендодатель оставляет за собой право начислить
+                    пени в размере 50% (пятьдесят) от <em><u>ежесуточного</u></em> платежа,
+                    указанного в <strong>Приложении №1 </strong>и потребовать оплаты денежной
+                    задолженности, а Арендатор обязуется оплатить Арендодателю на основании
+                    выставленного счета денежную задолженность в 100% (сто) с учетом пеней в
+                    течение 3-х рабочих дней. Арендодатель может по своему усмотрению:
+                </p>
+                <p>
+                    - использовать либо не использовать свое право на взыскание неустоек,
+                    предусмотренных договором и определить срок их предъявление;
+                </p>
+                <p>
+                    - установить период в течение, которого начисляются и (или) взыскиваются
+                    неустойки;
+                </p>
+                <p>
+                    - взыскать полностью или уменьшить размер неустоек, предусмотренных
+                    настоящим договором.
+                </p>
+                <p>
+                    4.5. Оплата аренды может быть изменена Арендодателем в одностороннем
+                    порядке в случае изменения согласованного маршрута Арендатором.
+                </p>
+                <p>
+                    <strong>5. Ответственность</strong>
+                </p>
+                <p align="justify">
+                    5.1. Арендатор несет полную материальную и правовую ответственность за
+                    автомобиль, а также за причиненный ему вред (как умышленно, так и по
+                    неосторожности) по своей вине и по вине третьих лиц.
+                </p>
+                <p>
+                    5.2. Арендатор несет ответственность за состояние лакокрасочного покрытия,
+                    комплектацию автомобиля указанную в акте приема/передачи <strong>Приложение №1</strong>, состояние салона, а так же
+                    за небрежную
+                    эксплуатацию агрегатов транспортного.
+                    <br />
+                    5.3. Арендатор несет ответственность за своевременную уплату аренды
+                    автомобиля, согласованную территорию эксплуатации, а так же допуск лиц к
+                    управлению автомобилем.
+                </p>
+                <p align="justify">
+                    5.4. Если нарушен один из п. 5.4.1 – 5.4.3 настоящего договора,
+                    Арендодатель рассматривает данные действия как завладение имуществом
+                    (автомобилем) путем обмана, злоупотребления доверием Арендодателя –
+                    мошенничество, в этом случае Арендатор обязуется уплатить штраф
+                    Арендодателю в тройном размере суточного платежа аренды автомобиля согласно <strong>Приложению №1</strong>;
+                </p>
+                <p align="justify">
+                    5.4.1. Если Арендатор использует автомобиль без оплаты, а так же по
+                    окончанию оплаты проката или в день возврата автомобиля, Арендатор не
+                    отвечает на оставленные в договоре номера телефонов или недоступен по
+                    дополнительным каналам связи Viber,WhatsApp,Telegram, email;
+                </p>
+                <p align="justify">
+                    5.4.2. Если Арендатор самовольно, без согласования с Арендодателем
+                    использует автомобиль за пределами г. Тюмень (на расстоянии свыше 100 км от
+                    г. Тюмень) а также за пределами территорию Российской Федерации.
+                </p>
+                <p align="justify">
+                    5.4.3. Если Арендатор препятствует Арендодателю изъятию автомобиля
+                    каким-либо способом, не возвращая ключи зажигания, документы на автомобиль,
+                    брелоки включения/отключения охранных систем, препятствует доступу к
+                    автомобилю физической и моральной силой;
+                </p>
+                <p align="justify">
+                    5.4.4. Если Арендатор самовольно оставляет автомобиль без согласования
+                    Арендодателя, без подписания акта приема/передачи, скрывается и уклоняется
+                    от звонков, личного контакта, а также отказывается от выполнения своих
+                    обязательств по настоящему договору.
+                </p>
+                <p align="justify">
+                    5.5. Арендатор не несет ответственность за повреждения, вызванные
+                    обстоятельствами, находящимися вне его контроля, такими как сколы и
+                    царапины от камней, возникающие в процессе целевого использования
+                    автомобиля.
+                </p>
+                <p align="justify">
+                    <strong>
+                        5.6. Арендатор несет ответственность за умышленное воздействие,
+                        приводящее к повреждению или срабатыванию пломбы-наклейки. Ее подмена,
+                        приведет к удержанию залоговой суммы, обязательной уплате диагностики
+                        автомобиля и в случае выявления стороннего вмешательства в техническое
+                        состояния ТС уплате расходных материалов, запасных частей. *
+                    </strong>
+                </p>
+                <p>
+                    5.6. Арендодатель не несет ответственности за материальные и прочие
+                    ценности, оставленные в салоне автомобиля Арендатором при принудительном
+                    изъятии, эвакуации и простое автомобиля. В данном случае удерживается
+                    предоплата в 100% объеме за аренду автомобиля в пользу Арендодателя.
+                </p>
+                <p>
+                    5.7. Все споры, возникающие в ходе, исполнения настоящего Договора,
+                    разрешаются путем ведения переговоров, при невозможности их разрешения
+                    рассматриваются в судебном порядке в Ленинском районном суде г. Тюмени.
+                    Срок рассмотрения и ответа на претензию составляет 10 дней с момента ее
+                    получения
+                </p>
+                <p>
+                    5.9. В случае нарушения пункта 3.3.21. Арендатор уплачивает штраф
+                    Арендодателю в тройном размере суточного платежа аренды автомобиля согласно <strong>Приложению №1</strong>;
+                </p>
+                <p>
+                    <strong>6. Дополнительные условия</strong>
+                </p>
+                <p>
+                    6.1. Любые изменения и дополнения к настоящему Договору имеют юридическую
+                    силу только в том случае, если выполнены в письменной форме и подписаны
+                    каждой из сторон по Договору.
+                </p>
+                <p>
+                    6.2. Стороны согласились с тем, что Договор, акт и дополнения к данному
+                    Договору, заключенные посредством факсимильной и/или электронной связи,
+                    имеют юридическую силу при условии последующего обмена оригиналами.
+                </p>
+                <p>
+                    6.3. Стоимость дополнительных услуг оплачивается отдельно по следующим
+                    тарифам: подача и прием ТС с 9:00-21:00 от 300 рублей с 21:00-9:00 от 450
+                    рублей в зависимости от удаленности стоянки Арендодателя а так же по адресу
+                    г. Тюмень, ул. Дмитрия Менделеева, д.18, мойка авто от 600р.
+                </p>
+                <p>
+                    6.4. Настоящий Договор составлен на русском языке в двух экземплярах для
+                    каждой из сторон и имеющих одинаковую юридическую силу.
+                </p>
+                <p>
+                    <a name="_GoBack"></a>
+                    <em><strong>*</strong></em>
+                    <em>
+                        <strong> Основные признаки воздействия на пломбу-наклейку:</strong>
+                    </em>
+                    <em>
+                        <br />
+                        Фактами воздействия на пломбу-наклейку (ее срабатывания) в зависимости
+                        от их типа являются: красный цвет пломбы-наклейки станет не однородным
+                        (изменит цвет) в месте воздействия, либо проявится индикаторная надпись
+                        «OPENED! ВСКРЫТО! СИЛтэк SILtech», либо проявится черная термохромная
+                        сетка, либо изменится структура, форма, целостность пломбы-наклейки.
+                    </em>
+                    <br />
+                    <strong>
+                        7. Юридические адреса, банковские реквизиты, подписи сторон
+                    </strong>
+                </p>
+                <table width="945" cellpadding="9" cellspacing="0">
+                    <colgroup>
+                        <col width="454" />
+                        <col width="454" />
+                    </colgroup>
+                    <tbody>
+                        <tr valign="top">
+                            <td width="454">
+                                <p align="left">
+                                    <strong>Арендодатель:</strong>
+                                    <strong> ООО «</strong>
+                                    <strong>BBC</strong>
+                                    <strong>-ВЕБ»</strong>
+                                </p>
+                                <p align="left">
+                                    ИНН 7203356189 КПП 720301001 ОГРН 1157232033716
+                                    <br />
+                                    Адрес регистрации/Почтовый адрес:
+                                </p>
+                                <p align="left">
+                                    625033, г. Тюмень, ул. Дмитрия Менделеева, д. 18, офис 304
+                                </p>
+                                <p align="left">
+                                    <a name="OLE_LINK1"></a>
+                                    Тел. +7 (3452) 388-311
+                                    <br />
+                                    email:
+                                    <u>
+                                        <a href="mailto:info@autoprokat72.ru">
+                                            info@autoprokat72.ru
+                                        </a>
+                                    </u>
+                                </p>
+                            </td>
+                            <td width="454">
+                                <p align="left">
+                                    <strong>Арендатор: Попов Евгений Михайлович</strong>
+                                </p>
+                                <p align="left">
+                                    дата рождения: <strong>25.04.2006</strong>
+                                </p>
+                                <p align="left">
+                                    паспорт: серия <strong>6505 №792413</strong>
+                                </p>
+                                <p align="left">
+                                    выдан
+                                    <strong>
+                                        управлением внутренних дел октябрьского района города
+                                        Екатеринбурга
+                                    </strong>
+                                    <strong> ,</strong>
+                                    дата выдачи: <strong>25.04.2006</strong>
+                                </p>
+                                <p align="left">
+                                    регистрация:
+                                    <strong>
+                                        Республика Башкортостан ПВС октябрьского ГОВД ул. пр.
+                                        Ленина д. 53 кв. 10
+                                    </strong>
+                                    <strong>, </strong>
+                                    водительское удостоверение: <strong>9928 № 017185</strong><strong>, </strong>дата выдачи:
+                                    <strong>12.07.2022г</strong>
+                                </p>
+                                <p align="left">
+                                    фактический адрес проживания (пребывания): <strong>гостиница славянка</strong>
+                                </p>
+                                <p align="left">
+                                    контактный номер телефона:<strong>+7 927 301-07-98</strong><strong>,</strong> доп.: <strong>сюда
+                                        добавляются доп номера тел.</strong>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

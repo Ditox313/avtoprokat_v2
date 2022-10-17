@@ -875,12 +875,10 @@ select {
     justify-content: space-between;
 }
 
-.xs_generate_docs h1
-{
-    font-size: 33px;
-    line-height: 40px;
+.xs_doc_file_title {
+    font-size: 30px !important;
+    line-height: 29px;
     margin: 0;
-    color: #333;
 }
 
 .xs_generate_docs_back
@@ -891,4 +889,35 @@ select {
     border-radius: 7px;
     background-color: #194A9E;
     color: #fff;
+}
+
+.xs_generate_docs__content
+{
+    margin-top: 50px;
+}
+
+.xs_doc_file__top
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.xs_doc_logo
+{
+    width: 20%;
+}
+
+.xs_doc_date
+{
+    text-align: right;
+    width: 12%;
+    font-weight: 700;
+}
+
+.xs_doc_title
+{
+    text-align: center;
+    width: 30%;
+    font-weight: 800;
+    font-size: 14px;
 }
