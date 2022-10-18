@@ -19,6 +19,7 @@ export class ClientsService {
       fd.append('name', client.name);
       fd.append('surname', client.surname);
       fd.append('lastname', client.lastname);
+      fd.append('makedate', client.makedate);
       fd.append('passport_seria', client.passport_seria);
       fd.append('passport_number', client.passport_number);
       fd.append('passport_date', client.passport_date);
@@ -92,6 +93,7 @@ export class ClientsService {
       fd.append('name', xsclient.name);
       fd.append('surname', xsclient.surname);
       fd.append('lastname', xsclient.lastname);
+      fd.append('makedate', xsclient.makedate);
       fd.append('passport_seria', xsclient.passport_seria);
       fd.append('passport_number', xsclient.passport_number);
       fd.append('passport_date', xsclient.passport_date);

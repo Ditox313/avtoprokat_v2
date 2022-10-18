@@ -98,6 +98,7 @@ export interface Client
     name: string
     surname: string
     lastname: string
+    makedate: string
     passport_seria: string
     passport_number: string
     passport_date: string

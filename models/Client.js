@@ -27,6 +27,13 @@ const clientSchema = new Schema({
         required: true,
     },
 
+    // Отчество
+    makedate: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
     // Серия паспорта
     passport_seria: {
         type: String,

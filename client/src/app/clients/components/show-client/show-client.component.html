@@ -66,6 +66,17 @@
                         </div>
 
                         <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="makedate" type="date" class="validate" formControlName="makedate"
+                                [ngClass]="{'invalid': form.controls['makedate'].invalid && form.controls['makedate'].touched}">
+                            <label for="marka">Дата рождения:<span class="xszv">*</span></label>
+                            <span class="helper-text red-text" *ngIf="form.controls['makedate'].invalid && form.controls['makedate'].touched">
+                                <p *ngIf="form.controls['makedate'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
                             <input placeholder="Введите значение" id="passport_seria" type="text" class="validate"
                                 formControlName="passport_seria"
                                 [ngClass]="{'invalid': form.controls['passport_seria'].invalid && form.controls['passport_seria'].touched}">

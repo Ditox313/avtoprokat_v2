@@ -13,6 +13,7 @@ module.exports.create = async function(req, res) {
             name: req.body.name,
             surname: req.body.surname,
             lastname: req.body.lastname,
+            makedate: req.body.makedate,
             passport_seria: req.body.passport_seria,
             passport_number: req.body.passport_number,
             passport_date: req.body.passport_date,
