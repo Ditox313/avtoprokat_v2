@@ -50,22 +50,26 @@
                     действующего на основании Доверенности №<strong>{{actualUser.doverenost}} </strong>от <strong>{{actualUser.doverenostDate | date : 'd MMMM y'}}г</strong>., именуемое в
                     дальнейшем «Арендодатель», и
                     Гражданин(ка) РФ, <strong>{{actualBooking.client.surname}} {{actualBooking.client.name}} {{actualBooking.client.lastname}}</strong><strong>,</strong> дата рождения:
-                    <strong>25.04.2006</strong><strong>,</strong> паспорт: серия <strong>6505 №792413</strong> <strong>, </strong>выдан
+                    <strong>{{actualBooking.client.makedate | date : 'dd.MM.yyyy'}}</strong><strong>,</strong> паспорт: серия <strong>{{actualBooking.client.passport_seria}} №{{actualBooking.client.passport_number}}</strong> <strong>, </strong>выдан
                     <strong>
-                        управлением внутренних дел октябрьского района города Екатеринбурга
+                        {{actualBooking.client.passport_who_take}}
                     </strong>
                     <strong> ,</strong>
-                    дата выдачи: <strong>25.04.2006</strong><strong>,</strong> регистрация:
+                    дата выдачи: <strong>{{actualBooking.client.passport_date | date : 'dd.MM.yyyy'}}</strong><strong>,</strong> регистрация:
                     <strong>
-                        Республика Башкортостан ПВС октябрьского ГОВД ул. пр. Ленина д. 53 кв.
-                        10
+                        {{actualBooking.client.passport_register}}
                     </strong>
                     <strong>, </strong>
-                    водительское удостоверение: <strong>9928 № 017185</strong> <strong>, </strong>дата выдачи:
-                    <strong>12.07.2022г</strong> фактический
-                    адрес проживания (пребывания):<strong>гостиница славянка</strong><strong>,</strong> контактный номер
-                    телефона:<strong>+7 927 301-07-98</strong><strong>,</strong> доп.: <strong>сюда добавляются доп номера
-                        тел.</strong><strong>, </strong>
+                    водительское удостоверение: <strong>{{actualBooking.client.prava_seria}} № {{actualBooking.client.prava_number}}</strong> <strong>, </strong>дата выдачи:
+                    <strong>{{actualBooking.client.prava_date}}г</strong> фактический
+                    адрес проживания (пребывания):<strong>{{actualBooking.client.passport_address_fact}}</strong><strong>,</strong> контактный номер
+                    телефона:<strong>{{actualBooking.client.phone_main}}</strong><strong>,</strong> доп.: <strong>сюда добавляются доп номера
+                        тел.</strong>{{actualBooking.client.phone_1_dop_number}}<strong>, 
+                        тел.</strong>{{actualBooking.client.phone_2_dop_number}}<strong>,
+                        тел.</strong>{{actualBooking.client.phone_3_dop_number}}<strong>,
+                        тел.</strong>{{actualBooking.client.phone_4_dop_number}}<strong>,
+
+                        </strong>
                     именуемый в дальнейшем «Арендатор», с другой стороны, заключили настоящий
                     Договор о нижеследующем:
                 </p>
@@ -601,39 +605,40 @@
                             </td>
                             <td width="454">
                                 <p align="left">
-                                    <strong>Арендатор: Попов Евгений Михайлович</strong>
+                                    <strong>Арендатор: {{actualBooking.client.surname}} {{actualBooking.client.name}} {{actualBooking.client.lastname}}</strong>
                                 </p>
                                 <p align="left">
-                                    дата рождения: <strong>25.04.2006</strong>
+                                    дата рождения: <strong>{{actualBooking.client.makedate | date : 'dd.MM.yyyy'}}</strong>
                                 </p>
                                 <p align="left">
-                                    паспорт: серия <strong>6505 №792413</strong>
+                                    паспорт: серия <strong>{{actualBooking.client.passport_seria}} №{{actualBooking.client.passport_number}}</strong>
                                 </p>
                                 <p align="left">
                                     выдан
                                     <strong>
-                                        управлением внутренних дел октябрьского района города
-                                        Екатеринбурга
+                                        {{actualBooking.client.passport_who_take}}
                                     </strong>
                                     <strong> ,</strong>
-                                    дата выдачи: <strong>25.04.2006</strong>
+                                    дата выдачи: <strong>{{actualBooking.client.passport_date | date : 'dd.MM.yyyy'}}</strong>
                                 </p>
                                 <p align="left">
                                     регистрация:
                                     <strong>
-                                        Республика Башкортостан ПВС октябрьского ГОВД ул. пр.
-                                        Ленина д. 53 кв. 10
+                                        {{actualBooking.client.passport_register}}
                                     </strong>
                                     <strong>, </strong>
-                                    водительское удостоверение: <strong>9928 № 017185</strong><strong>, </strong>дата выдачи:
-                                    <strong>12.07.2022г</strong>
+                                    водительское удостоверение: <strong>{{actualBooking.client.prava_seria}} № {{actualBooking.client.prava_number}}</strong><strong>, </strong>дата выдачи:
+                                    <strong>{{actualBooking.client.prava_date}}г</strong>
                                 </p>
                                 <p align="left">
-                                    фактический адрес проживания (пребывания): <strong>гостиница славянка</strong>
+                                    фактический адрес проживания (пребывания): <strong>{{actualBooking.client.passport_address_fact}}</strong>
                                 </p>
                                 <p align="left">
-                                    контактный номер телефона:<strong>+7 927 301-07-98</strong><strong>,</strong> доп.: <strong>сюда
-                                        добавляются доп номера тел.</strong>
+                                    контактный номер телефона:<strong>{{actualBooking.client.phone_main}}</strong><strong>,</strong> доп.: 
+                                        тел.<strong>{{actualBooking.client.phone_1_dop_number}}</strong>,
+                                        тел.<strong>{{actualBooking.client.phone_2_dop_number}}</strong>,
+                                        тел.<strong>{{actualBooking.client.phone_3_dop_number}}</strong>,
+                                        тел.<strong>{{actualBooking.client.phone_4_dop_number}}</strong>,
                                 </p>
                             </td>
                         </tr>
