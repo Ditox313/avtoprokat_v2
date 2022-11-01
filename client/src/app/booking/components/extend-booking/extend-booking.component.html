@@ -1,1 +1,98 @@
-<p>extend-booking works!</p>
+<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="xs_add__car___top">
+        <h1>
+            <span class="material-icons">contact_mail</span> Продлить бронь
+        </h1>
+
+        <div class="xs_add__car__top____actions">
+            
+
+            <a [routerLink]="['/view-booking',this.bookingId]">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a>
+
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+
+    <div class="xs_add__car__content">
+        <div class="row">
+            <div id="information" class="col s12">
+                <div class="xs_form">
+                    <div class="xs_form__item">
+                        <div class="input-field col s12">
+                            <div><label for="marka">Продлить до<span class="xszv">*</span></label></div>
+                            <input placeholder="Введите значение" id="booking_end" type="datetime-local" class="validate"
+                                formControlName="booking_end"
+                                [ngClass]="{'invalid': form.controls['booking_end'].invalid && form.controls['booking_end'].touched}"
+                                (change)="bookingEndDate($event)">
+                        </div>
+                    </div>
+
+                    <div class="xs_form__item">
+                        <div>
+                            <label for="marka">Тариф<span class="xszv">*</span></label>
+                            <div class="input-field col s12">
+                                <select id="tariff" formControlName="tariff"
+                                    [ngClass]="{'invalid': form.controls['tariff'].invalid && form.controls['tariff'].touched}"
+                                    (ngModelChange)="onChangeTariff($event)">
+                                    <option value="" disabled selected>Выберите тариф</option>
+                                    <option value="Город">Город</option>
+                                    <option value="Межгород">Межгород</option>
+                                    <option value="Россия">Россия</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)"
+        [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)" *ngIf="(+summa.summaFull - (+actualBooking.paidCount)) !== 0">
+
+        <div>
+            <span class="xs_paid_span_1">Общая сумма брони: </span>
+            <span class="xs_paid_span_2">{{summa.summaFull | number: '1.0-0'}} ₽</span>
+        </div>
+
+        <div *ngIf="(summa.summaFull- actualBooking.paidCount) !== 0">
+            <span class="xs_paid_span_1">Цена по тарифу: </span>
+            <span class="xs_paid_span_2">{{summa.summaFull- actualBooking.paidCount}} ₽</span>
+        </div>
+
+        <div *ngIf="extendDays">
+            <span class="xs_paid_span_1">Время продления: </span>
+            <span class="xs_paid_span_2">{{extendDays || 0}} д</span>
+        </div>
+
+        <div>
+            <span class="xs_paid_span_1">К оплате: </span>
+            <span class="xs_paid_span_2">{{+summa.summaFull - (+actualBooking.paidCount)}} ₽</span>
+        </div>
+    </div>
+
+
+
+    <!-- <div class="xs_summa" *ngIf="this.summa.summa" style="margin-top: 40px;">
+        <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> +
+        <span>Залог {{this.summa.car.zalog}} ₽</span> +
+        <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">Доп.час({{this.summa.dop_hours}} ч)
+            {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽</span> =
+        <span>Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
+    </div> -->
+
+    
+
+    <div class="xs_add__car___top">
+        <div class="xs_add__car__top____actions">
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+</form>
