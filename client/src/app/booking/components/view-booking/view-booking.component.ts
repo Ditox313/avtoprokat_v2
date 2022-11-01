@@ -95,10 +95,26 @@ export class ViewBookingComponent implements OnInit {
   }
 
   toggleStatus(status: string) {
-    this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
-      this.bookingStatus = res.status;
-      MaterialService.toast(`Новый статус брони -  ${status}`);
-    });
+    
+
+    if (+this.actualBooking.paidCount < (+this.summa.summaFull))
+    {
+      const dicision = window.confirm(`Бронь не оплачена! Вы уверены что хотите выдать автомобиль?`);
+
+      if (dicision)
+      {
+        this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
+          this.bookingStatus = res.status;
+          MaterialService.toast(`Новый статус брони -  ${status}`);
+        });
+      }
+    }
+    else{
+      this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
+        this.bookingStatus = res.status;
+        MaterialService.toast(`Новый статус брони -  ${status}`);
+      });
+    }
   }
 
   checkedTarif(countDay: any)
@@ -120,4 +136,5 @@ export class ViewBookingComponent implements OnInit {
       this.summa.checkedTarif = this.summa.car.days_31_more
     }
   }
+
 }

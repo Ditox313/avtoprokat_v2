@@ -20,7 +20,11 @@
                         <div class="view_info">
                             <h5>Информация</h5>
                             <div>
-                                <span>Статус</span>
+                                <span>Номер брони:</span>
+                                <span>  <strong>№{{actualBooking.order}}</strong> </span>
+                            </div>
+                            <div>
+                                <span>Статус:</span>
                                 <span>
                                     <span *ngIf="bookingStatus === 'В ожидании'" class="btn_waiting">В ожидании</span>
                                     <span *ngIf="bookingStatus === 'В аренде'" class="btn_v_arende">В аренде</span>
@@ -28,72 +32,72 @@
                             </div>
                             
                             <div>
-                                <span>Создана</span>
+                                <span>Создана:</span>
                                 <span>{{actualBooking.date | date : 'd MMMM y, H:mm'}}</span>
                             </div>
                             
                             <div class="view_info_client">
-                                <span>Клиент</span>
+                                <span>Клиент:</span>
                                 <span [routerLink]="['/show-client','edit',xsActualClient._id]">{{actualBooking.client.surname}} {{actualBooking.client.name}} {{actualBooking.client.lastname}}</span>
                             </div>
                             
                             <div class="view_info_phone">
-                                <span>Телефон</span>
+                                <span>Телефон:</span>
                                 <a href="tel:{{actualBooking.client.phone_main}}">{{actualBooking.client.phone_main}}</a>
                             </div>
                             
                             <div>
-                                <span>Автомобиль</span>
+                                <span>Автомобиль:</span>
                                 <span>{{actualBooking.car.marka}} {{actualBooking.car.model}} ({{actualBooking.car.number}})</span>
                             </div>
                             
                             <div>
-                                <span>Время начала</span>
+                                <span>Время начала:</span>
                                 <span>{{actualBooking.booking_start | date : 'd MMMM y, H:mm'}} </span>
                             </div>
                             
                             <div>
-                                <span>Время окончания</span>
+                                <span>Время окончания:</span>
                                 <span>{{actualBooking.booking_end | date : 'd MMMM y, H:mm'}} </span>
                             </div>
                             
                             <div>
-                                <span>Суток</span>
+                                <span>Суток:</span>
                                 <span>{{actualBooking.booking_days | number: '1.0-0'}} д</span>
                             </div>
 
                             <div *ngIf="summa.dop_hours > 0">
-                                <span>Доп часы</span>
+                                <span>Доп часы:</span>
                                 <span>{{summa.dop_hours}} ч</span>
                             </div>
                             
                             <div>
-                                <span>Выдача</span>
+                                <span>Выдача:</span>
                                 <span>{{actualBooking.place_start}} </span>
                             </div>
                             
                             <div>
-                                <span>Прием</span>
+                                <span>Прием:</span>
                                 <span>{{actualBooking.place_end}} </span>
                             </div>
 
                             <div>
-                                <span>Тариф</span>
+                                <span>Тариф:</span>
                                 <span>{{actualBooking.tariff}} </span>
                             </div>
 
                             <div>
-                                <span>Цена тарифа</span>
+                                <span>Цена тарифа:</span>
                                 <span>{{ this.summa.checkedTarif}} ₽</span>
                             </div>
 
                             <div *ngIf="summa.dop_hours > 0">
-                                <span>Цена за доп.час</span>
+                                <span>Цена за доп.час:</span>
                                 <span>{{ actualBooking.car.price_dop_hour}} ₽</span>
                             </div>
 
                             <div *ngIf="actualBooking.comment">
-                                <span>Комментарий</span>
+                                <span>Комментарий:</span>
                                 <span>{{actualBooking.comment}} </span>
                             </div>
                         </div>
@@ -102,22 +106,22 @@
                         <div class="view_rashet">
                             <h5>Рассчет</h5>
                             <div>
-                                <div> <span>Аренда</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
-                                <div> <span>Залог</span> <span>{{ this.summa.car.zalog}} ₽</span> </div>
-                                <div *ngIf="summa.dop_hours > 0"> <span>Доп.час</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
-                                <div> <span>Итого</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
+                                <div> <span>Аренда:</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
+                                <div> <span>Залог:</span> <span>{{ this.summa.car.zalog}} ₽</span> </div>
+                                <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
+                                <div> <span>Итого:</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
 
                             </div>
                         </div>
                         
                         <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)" [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)">
                             <div>
-                                <span class="xs_paid_span_1">Оплачено </span>
+                                <span class="xs_paid_span_1">Оплачено: </span>
                                 <span class="xs_paid_span_2">{{actualBooking.paidCount}} ₽</span>
                             </div>
                             
                             <div> 
-                                <span>Остаток</span> <span class="xs_paid_span_2">{{+summa.summaFull - (+actualBooking.paidCount)}} ₽</span> 
+                                <span>Остаток:</span> <span class="xs_paid_span_2">{{+summa.summaFull - (+actualBooking.paidCount)}} ₽</span> 
                             </div>
                         </div>
                     </div>
@@ -175,7 +179,7 @@
                             <h5>Управление</h5>
 
                             <div class="setting_view_info__box" *ngIf="bookingStatus === 'В ожидании'">
-                                <span title="Выдать автомобиль" (click)="toggleStatus('В аренде')">
+                                <span title="Выдать автомобиль"  (click)="toggleStatus('В аренде')">
                                     <img src="../../../../assets/img/vidat_avto.png" alt="">
                                 </span>
 
@@ -184,18 +188,16 @@
                                 </span>
 
                                 <span title="Сгенерировать документы">
-                                    
                                         <img src="../../../../assets/img/docs.png" alt="" [routerLink]="['/generate-docs', bookingId]">
-                                    
                                 </span>
                             </div>
 
 
                             <div class="setting_view_info__box" *ngIf="bookingStatus=== 'В аренде'">
-                                <span title="Продлить бронь" (click)="toggleStatus('В ожидании')">
+                                <!-- <span title="Продлить бронь" (click)="toggleStatus('В ожидании')">
                                     <img src="../../../../assets/img/vidat_avto.png" alt="">
-                                </span>
-                                <span title="Продлить бронь">
+                                </span> -->
+                                <span [routerLink]="['/extend-booking', bookingId]" title="Продлить бронь">
                                     <img src="../../../../assets/img/prodlit.png">
                                 </span>
 
