@@ -18,6 +18,7 @@ export class DocsComponent implements OnInit {
   bookingId!: string;
   actualBooking!: Booking;
   actualUser!: User;
+  yearDate: any;
   @ViewChild('content') content!: ElementRef;
 
   constructor(
@@ -35,23 +36,29 @@ export class DocsComponent implements OnInit {
 
     this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
+
+      this.yearDate = new Date(this.actualBooking.date);
+      this.yearDate.setDate(this.yearDate.getDate() + 365);
     });
 
 
     this.auth.get_user().subscribe(user=>{
       this.actualUser = user;
     })
+
+    
+    
   }
 
   generatePDF() {
-
     var html = htmlToPdfmake(this.content.nativeElement.innerHTML);
     
     let docDefinition = {
-      content: html
+      content: html,
+      pageSize: 'A4',
+      pageMargins: [20, 20, 20, 20],
     };
 
-    
     pdfMake.createPdf(docDefinition).open();
 
   } 
