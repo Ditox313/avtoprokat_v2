@@ -225,6 +225,7 @@ export interface Booking {
   status?: any
   dop_hours?: any
   paidCount?: any
+  extend?: any
 }
 
 

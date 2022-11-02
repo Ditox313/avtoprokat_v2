@@ -32,6 +32,12 @@ const bookingSchema = new Schema({
         required: true,
     },
 
+    // Продления
+    extend: {
+        type: Array,
+        required: false,
+    },
+
     // Начало брони
     booking_start: {
         type: String,

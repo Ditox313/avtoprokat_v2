@@ -33,8 +33,12 @@ export class BookingsService {
 
   update(id: string, xsbooking: Booking): Observable<Booking> {
     xsbooking._id = id;
-
     return this.http.patch<Booking>(`/api/bookings/${id}`, xsbooking);
+  }
+
+  extend(id: string, xsbooking: Booking): Observable<Booking> {
+    xsbooking._id = id;
+    return this.http.patch<Booking>(`/api/bookings/extend/${id}`, xsbooking);
   }
 
   // Удаление

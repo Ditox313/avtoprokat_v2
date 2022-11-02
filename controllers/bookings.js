@@ -98,6 +98,37 @@ module.exports.update = async function(req, res) {
 };
 
 
+module.exports.extend = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+        const update = {
+            $set: { 
+                booking_days: updated.booking_days,
+                tariff: updated.tariff,
+                booking_end: updated.booking_end,
+                summaFull: updated.summaFull,
+                summa: updated.summa
+            },
+            $push: { extend: updated.extend}
+        }
+
+
+
+        const bookingUpdate = await Booking.findOneAndUpdate({ _id: updated._id }, //Ищем по id
+            update, 
+            { new: true } 
+        );
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(bookingUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
 
 
 

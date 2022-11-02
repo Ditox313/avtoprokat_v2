@@ -16,6 +16,7 @@ import { Booking, MaterialDatepicker, Summa } from 'src/app/shared/types/interfa
 import { BookingsService } from '../../services/bookings.service';
 
 import * as moment from 'moment';
+import { PaysService } from 'src/app/pays/services/pays.service';
 
 @Component({
   selector: 'app-extend-booking',
@@ -43,7 +44,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
 
   bookingViewRef!: string;
 
-  form: any;
+  form!: FormGroup;
 
   xscars$!: any;
 
@@ -58,15 +59,36 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
   extendDays: any;
 
 
+  PayTypes: Array<any> = [
+    {
+      type: "terminal",
+      value: "Терминал"
+    },
+    {
+      type: "card",
+      value: "На карту"
+    },
+    {
+      type: "rs",
+      value: "Р/с"
+    },
+  ]
+
+  defaultValueArenda: string = 'Наличные'
+  defaultValueZalog: string = 'Наличные'
+
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
     private cars: CarsService,
     private clients: ClientsService,
-    private rote: ActivatedRoute
+    private rote: ActivatedRoute,
+    private pays: PaysService
   ) { }
 
   ngOnInit(): void {
+
     this.form = new FormGroup({
       car: new FormControl('', [Validators.required]),
       client: new FormControl('', [Validators.required]),
@@ -76,8 +98,11 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
       place_end: new FormControl('', [Validators.required]),
       tariff: new FormControl('', [Validators.required]),
       comment: new FormControl(''),
+      arenda: new FormControl('',),
+      typePayArenda: new FormControl('',),
     });
 
+    
     // Достаем параметры
     this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
@@ -111,7 +136,11 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
 
 
       this.xsActualClient = res.client;
+      MaterialService.updateTextInputs();
     });
+
+   
+
 
     this.xscars$ = this.cars.fetch();
     this.xsclients$ = this.clients.fetch();
@@ -131,7 +160,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
   }
 
@@ -659,6 +687,21 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
         (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
     }
 
+    
+    const pay = {
+      vid: 'Продление',
+      pricePay: this.form.value.arenda,
+      typePay: this.form.value.typePayArenda,
+      bookingId: this.bookingId,
+    };
+
+    this.pays.create(pay).subscribe((pay) => {
+      MaterialService.toast('Платеж создан');
+      this.router.navigate(['/view-booking', this.bookingId]);
+    });
+
+
+
     const booking = {
       car: JSON.parse(this.form.value.car),
       client: JSON.parse(this.form.value.client),
@@ -668,17 +711,26 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
       comment: this.form.value.comment,
       booking_start: this.form.value.booking_start,
       booking_end: this.form.value.booking_end,
-      booking_days: this.booking_days_fin,
+      booking_days: (+this.actualBooking.booking_days) + (+this.extendDays) ,
       summaFull: this.summa.summaFull,
       summa: this.summa.summa,
       dop_hours: this.summa.dop_hours,
+      extend: {
+        date: new Date(),
+        days: this.extendDays,
+        summ: this.form.value.arenda
+      }
     };
+    
+
+    this.bookings.extend(this.bookingId, booking).subscribe((booking) => {
+      MaterialService.toast('Бронь продлена');
+      this.router.navigate(['/view-booking', this.bookingId]);
+    });
+
 
     
-    this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-      MaterialService.toast('Бронь продлена');
-      this.router.navigate(['/view-booking' , this.bookingId]);
-    });
+    
   }
 
 }
