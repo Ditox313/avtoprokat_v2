@@ -694,6 +694,28 @@ select {
 .xs_booking_view_content___item
 {
     width: 32%;
+    max-height: 740px;
+}
+
+.extend_block__list
+{
+    overflow-y: auto;
+    max-height: 460px;
+}
+
+.extend_block
+{
+    margin-top: 40px;
+}
+
+.extend_list .pay_view_info__content
+{
+    overflow-y: auto;
+}
+
+.extend_block__list span {
+    color: #000;
+    font-size: 13px;
 }
 
 .pay_view_info
@@ -950,3 +972,15 @@ select {
 {
     margin-top: -5px !important;
 }
+
+/* .extend_list
+{
+    max-height: 300px;
+}
+
+
+.extend_list .pay_view_info__content
+{
+    overflow-y: auto;
+    max-height: 300px;
+} */

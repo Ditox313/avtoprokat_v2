@@ -126,8 +126,10 @@
                         </div>
                     </div>
 
+
+                    
                     <div class="xs_booking_view_content___item">
-                        <div class="pay_view_info">
+                        <div class="pay_view_info extend_list">
                             <h5>Платежи</h5>
                             <div class="pay_view_info__content">
                                  <table class="striped" *ngIf="pays">
@@ -160,7 +162,11 @@
                                 </table>
                             </div>
                         </div>
+
                     </div>
+
+
+
 
                     <div class="xs_booking_view_content___item">
                         <div class="setting_view_info">
@@ -213,9 +219,38 @@
                                     <img src="../../../../assets/img/docs.png" [routerLink]="['/generate-docs', bookingId]">
                                 </span>
                             </div>
+
+                            <div class="extend_block" *ngIf="actualBooking.extend.length > 0">
+                                <h5>Продления</h5>
+                                <div class="extend_block__list">
+                                    <table class="striped" *ngIf="pays">
+                                        <thead>
+                                            <tr>
+                                                <th>Дата</th>
+                                                <th>Дней</th>
+                                                <th>Сумма</th>
+                                            </tr>
+                            
+                                        </thead>
+                            
+                                        <tbody>
+                                            <tr *ngFor="let pay of actualBooking.extend.slice().reverse(); let i = index" class="xs_partners_tr xsbooking">
+                                                <td>
+                                                    <span>{{pay.date | date : 'd MMMM , H:mm'}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{pay.days}} д</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{pay.summ}} ₽</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
                 </div>
 
             </div>
