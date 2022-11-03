@@ -148,15 +148,15 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
     MaterialService.updateTextInputs();
 
     // Задаем минимальный параметр даты
-    let booking_start: any = document.getElementById('booking_start');
-    booking_start.min = new Date()
-      .toISOString()
-      .slice(0, new Date().toISOString().lastIndexOf(':'));
+    // let booking_start: any = document.getElementById('booking_start');
+    // booking_start.min = new Date()
+    //   .toISOString()
+    //   .slice(0, new Date().toISOString().lastIndexOf(':'));
 
-    let booking_end: any = document.getElementById('booking_end');
-    booking_end.min = new Date()
-      .toISOString()
-      .slice(0, new Date().toISOString().lastIndexOf(':'));
+    // let booking_end: any = document.getElementById('booking_end');
+    // booking_end.min = new Date()
+    //   .toISOString()
+    //   .slice(0, new Date().toISOString().lastIndexOf(':'));
   }
 
   ngAfterViewInit(): void {
@@ -695,12 +695,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
       bookingId: this.bookingId,
     };
 
-    this.pays.create(pay).subscribe((pay) => {
-      MaterialService.toast('Платеж создан');
-      this.router.navigate(['/view-booking', this.bookingId]);
-    });
-
-
 
     const booking = {
       car: JSON.parse(this.form.value.car),
@@ -721,12 +715,25 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
         summ: this.form.value.arenda
       }
     };
+
+
+    
     
 
-    this.bookings.extend(this.bookingId, booking).subscribe((booking) => {
+    this.bookings.extend(this.bookingId, booking).pipe(
+      map(res=>{
+        this.pays.create(pay).subscribe((pay) => {
+          MaterialService.toast('Платеж создан');
+          this.router.navigate(['/view-booking', this.bookingId]);
+        });
+        return res;
+      })
+    ).subscribe((booking) => {
       MaterialService.toast('Бронь продлена');
-      this.router.navigate(['/view-booking', this.bookingId]);
+      // this.router.navigate(['/view-booking', this.bookingId]);
     });
+
+    
 
 
     

@@ -69,8 +69,6 @@ export class ViewBookingComponent implements OnInit {
     });
     this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
-
-      console.log(this.actualBooking.extend.length);
       
       this.summa.car = res.car;
       this.summa.tariff = res.tariff;

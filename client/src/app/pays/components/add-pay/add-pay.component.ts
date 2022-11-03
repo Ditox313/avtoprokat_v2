@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { BookingsService } from 'src/app/booking/services/bookings.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Booking, Summa } from 'src/app/shared/types/interfaces';
@@ -170,14 +171,24 @@ export class AddPayComponent implements OnInit {
         bookingId: this.bookingId,
       };
 
-      this.pays.create(pay).subscribe((pay) => {
-        MaterialService.toast('Платеж создан');
-        this.router.navigate(['/view-booking', this.bookingId]);
-      });
+      // this.pays.create(pay).pipe().subscribe((pay) => {
+      //   MaterialService.toast('Платеж создан');
+      //   this.router.navigate(['/view-booking', this.bookingId]);
+      // });
 
-      this.pays.create(pay_2).subscribe((pay) => {
+      this.pays.create(pay).pipe(
+        map(
+          res => {
+            this.pays.create(pay_2).pipe().subscribe((pay) => {
+              MaterialService.toast('Платеж создан');
+              this.router.navigate(['/view-booking', this.bookingId]);
+            });
+            return res
+          }
+        )
+      ).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
-        this.router.navigate(['/view-booking', this.bookingId]);
+        
       });
       
     }
