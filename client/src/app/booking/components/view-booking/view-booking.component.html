@@ -108,7 +108,6 @@
                             <div>
                                 <div> <span>Аренда:</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
                                 <div> <span>Залог:</span> <span>{{ this.summa.car.zalog}} ₽</span> </div>
-                                <div> <span>Общая скидка:</span> <span>{{ this.summa.sale}} ₽</span> </div>
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
                                 <div> <span>Итого:</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
 
@@ -116,6 +115,7 @@
                         </div>
                         
                         <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)" [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)">
+                            <div> <span>Общая скидка:</span> <span class="xs_paid_span_2">{{ this.summa.sale}} ₽</span> </div>
                             <div>
                                 <span class="xs_paid_span_1">Оплачено: </span>
                                 <span class="xs_paid_span_2">{{actualBooking.paidCount}} ₽</span>
