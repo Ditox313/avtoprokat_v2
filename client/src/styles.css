@@ -8,6 +8,25 @@
     padding-top: 30px;
 }
 
+*
+{
+    cursor: pointer !important;
+}
+
+[type="checkbox"],
+[type="radio"] {
+    /* box-sizing: border-box; */
+    /* padding: 0; */
+}
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    position: static;
+    opacity: 1;
+    pointer-events: auto !important;
+}
+
+
 .xs_logo {
     margin-bottom: 40px;
 }
@@ -973,14 +992,23 @@ select {
     margin-top: -5px !important;
 }
 
-/* .extend_list
+.xs_paid_sale__wrap
 {
-    max-height: 300px;
+    display: flex;
+}
+
+.xs_paid_sale__wrap input
+{
+    margin-right: 7px;
 }
 
 
-.extend_list .pay_view_info__content
+.xs_paid_sale
 {
-    overflow-y: auto;
-    max-height: 300px;
-} */
+    margin-top: 25px;
+}
+
+.xs_paid_sale__hide input
+{
+    width: 14% !important;
+}

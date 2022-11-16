@@ -58,6 +58,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
 
   extendDays: any;
 
+  isSaleCheck: boolean = false; 
+
 
   PayTypes: Array<any> = [
     {
@@ -100,6 +102,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
       comment: new FormControl(''),
       arenda: new FormControl('',),
       typePayArenda: new FormControl('',),
+      isSaleCheckbox: new FormControl('',),
     });
 
     
@@ -147,18 +150,9 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
 
     MaterialService.updateTextInputs();
 
-    // Задаем минимальный параметр даты
-    // let booking_start: any = document.getElementById('booking_start');
-    // booking_start.min = new Date()
-    //   .toISOString()
-    //   .slice(0, new Date().toISOString().lastIndexOf(':'));
-
-    // let booking_end: any = document.getElementById('booking_end');
-    // booking_end.min = new Date()
-    //   .toISOString()
-    //   .slice(0, new Date().toISOString().lastIndexOf(':'));
   }
 
+  
   ngAfterViewInit(): void {
     MaterialService.updateTextInputs();
   }
@@ -661,8 +655,15 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // Проверяем нажат ли чекбокс для скидки
+  xs_isSaleCheck() {
+    this.isSaleCheck = !this.isSaleCheck;
+  }
+
   // Отправка формы
   onSubmit() {
+
+
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
@@ -688,56 +689,104 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
     }
 
     
-    const pay = {
-      vid: 'Продление',
-      pricePay: this.form.value.arenda,
-      typePay: this.form.value.typePayArenda,
-      bookingId: this.bookingId,
-    };
+  
+    const xs_sale = this.form.value.isSaleCheckbox;
+
+    if (xs_sale <= 0)
+    {
+
+      const pay = {
+        vid: 'Продление',
+        pricePay: this.form.value.arenda,
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId,
+      };
 
 
-    const booking = {
-      car: JSON.parse(this.form.value.car),
-      client: JSON.parse(this.form.value.client),
-      place_start: this.form.value.place_start,
-      place_end: this.form.value.place_end,
-      tariff: this.form.value.tariff,
-      comment: this.form.value.comment,
-      booking_start: this.form.value.booking_start,
-      booking_end: this.form.value.booking_end,
-      booking_days: (+this.actualBooking.booking_days) + (+this.extendDays) ,
-      summaFull: this.summa.summaFull,
-      summa: this.summa.summa,
-      dop_hours: this.summa.dop_hours,
-      extend: {
-        date: new Date(),
-        days: this.extendDays,
-        summ: this.form.value.arenda
-      }
-    };
+      const booking = {
+        car: JSON.parse(this.form.value.car),
+        client: JSON.parse(this.form.value.client),
+        place_start: this.form.value.place_start,
+        place_end: this.form.value.place_end,
+        tariff: this.form.value.tariff,
+        comment: this.form.value.comment,
+        booking_start: this.form.value.booking_start,
+        booking_end: this.form.value.booking_end,
+        booking_days: (+this.actualBooking.booking_days) + (+this.extendDays) ,
+        summaFull: this.summa.summaFull,
+        summa:this.summa.summa,
+        dop_hours: this.summa.dop_hours,
+        extend: {
+          date: new Date(),
+          days: this.extendDays,
+          summ: this.form.value.arenda,
+          sale: xs_sale || 0
+        }
+      };
+
+      this.bookings.extend(this.bookingId, booking).pipe(
+        map(res => {
+          this.pays.create(pay).subscribe((pay) => {
+            MaterialService.toast('Платеж создан');
+            this.router.navigate(['/view-booking', this.bookingId]);
+          });
+          return res;
+        })
+      ).subscribe((booking) => {
+        MaterialService.toast('Бронь продлена');
+      });
 
 
-    
-    
+    }
+    else
+    {
 
-    this.bookings.extend(this.bookingId, booking).pipe(
-      map(res=>{
-        this.pays.create(pay).subscribe((pay) => {
-          MaterialService.toast('Платеж создан');
-          this.router.navigate(['/view-booking', this.bookingId]);
-        });
-        return res;
-      })
-    ).subscribe((booking) => {
-      MaterialService.toast('Бронь продлена');
-      // this.router.navigate(['/view-booking', this.bookingId]);
-    });
-
-    
+      const pay = {
+        vid: 'Продление',
+        pricePay: (+this.form.value.arenda),
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId,
+      };
 
 
-    
-    
+      const booking = {
+        car: JSON.parse(this.form.value.car),
+        sale: (+this.actualBooking.sale) + (+xs_sale),
+        client: JSON.parse(this.form.value.client),
+        place_start: this.form.value.place_start,
+        place_end: this.form.value.place_end,
+        tariff: this.form.value.tariff,
+        comment: this.form.value.comment,
+        booking_start: this.form.value.booking_start,
+        booking_end: this.form.value.booking_end,
+        booking_days: (+this.actualBooking.booking_days) + (+this.extendDays),
+        summaFull: (+this.summa.summaFull) ,
+        summa: (+this.summa.summa) ,
+        dop_hours: this.summa.dop_hours,
+        extend: {
+          date: new Date(),
+          days: this.extendDays,
+          summ: (+this.form.value.arenda) -  (+this.form.value.isSaleCheckbox),
+          sale: xs_sale
+        }
+      };
+
+      this.bookings.extend(this.bookingId, booking).pipe(
+        map(res => {
+          this.pays.create(pay).subscribe((pay) => {
+            MaterialService.toast('Платеж создан');
+            this.router.navigate(['/view-booking', this.bookingId]);
+          });
+          return res;
+        })
+      ).subscribe((booking) => {
+        MaterialService.toast('Бронь продлена');
+      });
+    }
+
+
+
+
   }
 
 }

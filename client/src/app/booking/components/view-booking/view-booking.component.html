@@ -108,6 +108,7 @@
                             <div>
                                 <div> <span>Аренда:</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
                                 <div> <span>Залог:</span> <span>{{ this.summa.car.zalog}} ₽</span> </div>
+                                <div> <span>Общая скидка:</span> <span>{{ this.summa.sale}} ₽</span> </div>
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
                                 <div> <span>Итого:</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
 
@@ -229,6 +230,7 @@
                                                 <th>Дата</th>
                                                 <th>Дней</th>
                                                 <th>Сумма</th>
+                                                <th>Скидка</th>
                                             </tr>
                             
                                         </thead>
@@ -244,6 +246,12 @@
                                                 <td>
                                                     <span>{{pay.summ || 0}} ₽</span>
                                                 </td>
+
+                                                <td >
+                                                    <span *ngIf="pay.sale > 0">{{pay.sale}} ₽</span>
+                                                    <span *ngIf="!pay.sale">Нет</span>
+                                                </td>
+
                                             </tr>
                                         </tbody>
                                     </table>

@@ -21,29 +21,5 @@ export class PaysService {
     return this.http.get<Pay[]>(`/api/pays/${id}`);
   }
 
-  // Получаем список всех позиций
-  // fetch(params: any = {}): Observable<Booking[]> {
-  //   return this.http.get<Booking[]>('/api/bookings', {
-  //     params: new HttpParams({
-  //       fromObject: params,
-  //     }),
-  //   });
-  // }
-
-  // Получаем позицию по id
-  // getById(id: string): Observable<Booking> {
-  //   return this.http.get<Booking>(`/api/bookings/${id}`);
-  // }
-
-  // update(id: string, xsbooking: Booking): Observable<Booking> {
-  //   xsbooking._id = id;
-
-  //   return this.http.patch<Booking>(`/api/bookings/${id}`, xsbooking);
-  // }
-
-  // Удаление
-  // delete(id: any): Observable<any> {
-  //   return this.http.delete<any>(`/api/bookings/${id}`);
-  // }
 
 }

@@ -131,6 +131,13 @@ const bookingSchema = new Schema({
         default: 0,
         required: false,
     },
+
+    // Скидка
+    sale: {
+        type: Number,
+        default: 0,
+        required: false,
+    },
     
 
 });

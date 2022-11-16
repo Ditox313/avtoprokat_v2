@@ -71,6 +71,7 @@ export class ViewBookingComponent implements OnInit {
       this.actualBooking = res;
       
       this.summa.car = res.car;
+      this.summa.sale = res.sale;
       this.summa.tariff = res.tariff;
       this.summa.booking_start = res.booking_start;
       this.summa.booking_end = res.booking_end;

@@ -60,31 +60,30 @@
             <span class="xs_paid_span_2">{{extendDays || 0}} д</span>
         </div>
 
-        <!-- <div *ngIf="(summa.summaFull- actualBooking.paidCount) !== 0">
-            <span class="xs_paid_span_1">Цена по тарифу: </span>
-            <span class="xs_paid_span_2">{{summa.summaFull- actualBooking.paidCount}} ₽</span>
-        </div> -->
+
 
         <div>
-            <span class="xs_paid_span_1">К оплате: </span>
+            <span class="xs_paid_span_1">Сумма к оплате: </span>
             <span class="xs_paid_span_2">{{+summa.summaFull - (+actualBooking.paidCount)}} ₽</span>
         </div>
 
-        <div>
-            <span class="xs_paid_span_1">Общая сумма брони: </span>
-            <span class="xs_paid_span_2">{{summa.summaFull | number: '1.0-0'}} ₽</span>
-        </div>
+
     </div>
+    
+
+    <div class="xs_paid_sale">
+        <div  class="xs_paid_sale__wrap">
+            <input type="checkbox" (click)="xs_isSaleCheck()" >
+            <div>Сделать скидку</div>
+        </div>
+        
+        <div class="xs_paid_sale__hide" ng-model='checkStatus' *ngIf="isSaleCheck" >
+            <input type="text" placeholder="Введите сумму скидки" formControlName="isSaleCheckbox" id="isSaleCheckbox"> руб
+        </div>
+    </div>  
 
 
 
-    <!-- <div class="xs_summa" *ngIf="this.summa.summa" style="margin-top: 40px;">
-        <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> +
-        <span>Залог {{this.summa.car.zalog}} ₽</span> +
-        <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">Доп.час({{this.summa.dop_hours}} ч)
-            {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽</span> =
-        <span>Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
-    </div> -->
 
     <div class="xs_form_pay__actions" style="width: 100%; margin-top: 40px;" *ngIf="(summa.summaFull- actualBooking.paidCount) !== 0">
         <h5>Оплата</h5>

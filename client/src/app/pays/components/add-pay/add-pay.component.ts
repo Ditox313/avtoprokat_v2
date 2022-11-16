@@ -188,7 +188,6 @@ export class AddPayComponent implements OnInit {
         )
       ).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
-        
       });
       
     }

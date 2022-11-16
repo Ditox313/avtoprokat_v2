@@ -226,6 +226,7 @@ export interface Booking {
   dop_hours?: any
   paidCount?: any
   extend?: any
+  sale?: any
 }
 
 
@@ -242,6 +243,7 @@ export interface Summa {
   dop_hours: any
   checkedTarif?: any
   paidCount?: any
+  sale?: any
 }
 
 
