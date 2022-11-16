@@ -193,7 +193,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
           }
 
         }
-        else if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+        else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -207,7 +207,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+        else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -221,7 +221,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+        else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -235,7 +235,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 31) {
+        else if (this.summa.booking_days > 31) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -326,7 +326,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
           }
 
         }
-        else if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+        else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -340,7 +340,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+        else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -354,7 +354,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+        else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -368,7 +368,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 31) {
+        else if (this.summa.booking_days > 31) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -459,7 +459,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
           }
 
         }
-        else if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+        else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -473,7 +473,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+        else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -487,7 +487,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+        else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -501,7 +501,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 31) {
+        else if (this.summa.booking_days > 31) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -548,12 +548,10 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
     }
 
 
+
+    // Считаем дни продления брони
     let exD1 : any = new Date(this.form.value.booking_end);
     let exD2 : any = new Date(this.actualBooking.booking_end);
-    
-
-    
-
     this.extendDays = (exD1 - exD2) / (1000 * 60 * 60 * 24) ;
     this.extendSumm();
 
@@ -583,7 +581,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
           }
 
         }
-        else if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+        else if (this.summa.booking_days >= 3 && this.summa.booking_days <=7) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -597,7 +595,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+        else if (this.summa.booking_days > 7 && this.summa.booking_days <=14) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -611,7 +609,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
           }
         }
-        else if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+        else if (this.summa.booking_days > 14 && this.summa.booking_days <=31) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -678,6 +676,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
   }
 
 
+  // Считаем сумму продлени брони
   extendSumm()
   {
     
