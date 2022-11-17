@@ -72,7 +72,7 @@
     </div>
     
 
-    <div class="xs_paid_sale">
+    <div class="xs_paid_sale" *ngIf="actualBooking.paidCount && (+summa.summaFull - (+actualBooking.paidCount)) !== 0">
         <div  class="xs_paid_sale__wrap">
             <input type="checkbox" (click)="xs_isSaleCheck()" >
             <div>Сделать скидку</div>
