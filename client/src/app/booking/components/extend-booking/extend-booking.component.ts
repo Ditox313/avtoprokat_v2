@@ -668,6 +668,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
       }
 
     }
+
+    this.extendSumm();
   }
 
   // Проверяем нажат ли чекбокс для скидки
@@ -682,6 +684,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
     
     let alldays = this.summa.booking_days;
 
+    if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
+    {
       if (this.summa.tariff === 'Город') {
       if (alldays < 3) {
           
@@ -806,6 +810,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
           this.summa.summa = (+this.actualBooking.summa) + (+this.summa_extend.summa)
         }
       }
+    }
   }
 
   // Отправка формы
