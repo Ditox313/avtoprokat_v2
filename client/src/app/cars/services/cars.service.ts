@@ -55,6 +55,7 @@ export class CarsService {
       fd.append('russia', car.russia);
       fd.append('price_dop_hour', car.price_dop_hour);
       fd.append('zalog', car.zalog);
+      fd.append('moyka', car.moyka);
 
       if(image)
       {
@@ -117,6 +118,7 @@ export class CarsService {
       fd.append('russia', xscar.russia);
       fd.append('price_dop_hour', xscar.price_dop_hour);
       fd.append('zalog', xscar.zalog);
+      fd.append('moyka', xscar.moyka);
 
       if(image)
       {

@@ -302,6 +302,13 @@ const carSchema = new Schema({
         required: false,
     },
 
+    // Тариф (мойка)
+    moyka: {
+        type: Number,
+        default: 0,
+        required: false,
+    },
+
     // Пользователь который создал партнера
     user: {
         type: String,

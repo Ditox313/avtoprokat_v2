@@ -89,6 +89,7 @@ export interface Car {
   russia?: any;
   price_dop_hour?: any;
   zalog?: any;
+  moyka?: any;
 }
 
 

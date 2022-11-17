@@ -120,6 +120,7 @@ export class ShowCarComponent implements OnInit,OnDestroy {
       russia: new FormControl(''),
       price_dop_hour: new FormControl(''),
       zalog: new FormControl(''),
+      moyka: new FormControl(''),
     });
 
 
@@ -185,6 +186,7 @@ export class ShowCarComponent implements OnInit,OnDestroy {
         russia: res.russia,
         price_dop_hour: res.price_dop_hour,
         zalog: res.zalog,
+        moyka: res.moyka,
       });
 
 
@@ -307,6 +309,7 @@ export class ShowCarComponent implements OnInit,OnDestroy {
       russia: this.form.value.russia,
       price_dop_hour: this.form.value.price_dop_hour,
       zalog: this.form.value.zalog,
+      moyka: this.form.value.moyka,
     };
     
    this.cars.update(this.carId, car, this.image).subscribe((car) =>{

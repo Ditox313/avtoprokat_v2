@@ -50,6 +50,7 @@ module.exports.create = async function(req, res) {
             russia: req.body.russia,
             price_dop_hour: req.body.price_dop_hour,
             zalog: req.body.zalog,
+            moyka: req.body.moyka,
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
