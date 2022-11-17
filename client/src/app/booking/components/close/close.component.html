@@ -1,0 +1,68 @@
+<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="actualBooking">
+    <div class="xs_add__car___top">
+        <h1>
+            <span class="material-icons">check_box</span> Закрыть бронь № {{actualBooking.order}}
+        </h1>
+
+        <div class="xs_add__car__top____actions">
+
+
+            <a [routerLink]="['/view-booking',this.bookingId]">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a>
+
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+
+    
+
+    <div class="xs_close_booking__content">
+        <div class="xs_close_booking__content___item">
+            <div class="input-field col s12" >
+                <div><label for="booking_end">Дата и время окончания брони<span class="xszv">*</span></label></div>
+                <input  placeholder="Введите значение" id="booking_end" type="datetime-local" class="validate"
+                    formControlName="booking_end"
+                    [ngClass]="{'invalid': form.controls['booking_end'].invalid && form.controls['booking_end'].touched}">
+            </div>
+
+            <div class="input-field xs_close_input_wrap col s12">
+                <div><label>Предыдущий пробег</label></div>
+                <span>{{actualBooking.car.probeg}}</span>
+            </div>
+
+            <div class="input-field col s12">
+                <div><label>Новый пробег<span class="xszv">*</span></label></div>
+                <input placeholder="Введите значение" id="probeg_new" type="text" class="validate"
+                    formControlName="probeg_new"
+                    [ngClass]="{'invalid': form.controls['probeg_new'].invalid && form.controls['probeg_new'].touched}">
+            </div>
+            <div class="xs_close_probeg_warning" *ngIf="+this.actualBooking.car.to_probeg_next < this.form.value.probeg_new">
+                <div>
+                    <span>Пробег для следующего ТО:</span>
+                    <span>{{actualBooking.car.to_probeg_next}}</span>
+                </div>
+
+                <div>НЕОБХОДИМО СРОЧНОЕ ТО ДЛЯ АВТОМОБИЛЯ {{actualBooking.car.marka}} {{actualBooking.car.model}} {{actualBooking.car.number}}</div>
+            </div>
+        </div>
+
+        
+        
+    </div>
+
+
+
+    <div class="xs_add__car___top">
+        <div class="xs_add__car__top____actions">
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+</form>
+
+
+<app-loader *ngIf="!actualBooking"></app-loader>

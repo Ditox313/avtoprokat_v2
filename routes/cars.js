@@ -15,6 +15,9 @@ router.get('/', passport.authenticate('jwt', { session: false }), controller.fet
 // Роут на update
 router.patch('/update/:id', passport.authenticate('jwt', { session: false }), upload.single('previewSrc'), controller.update);
 
+// Роут на закрытие
+router.patch('/close/:id', passport.authenticate('jwt', { session: false }), controller.close);
+
 
 // Роут на getById
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getById);

@@ -15,6 +15,7 @@ import { ViewBookingComponent } from './components/view-booking/view-booking.com
 import { PaysModule } from '../pays/pays.module';
 import { DocsComponent } from './components/docs/docs.component';
 import { ExtendBookingComponent } from './components/extend-booking/extend-booking.component';
+import { CloseComponent } from './components/close/close.component';
 
 
 const routes = [
@@ -27,6 +28,7 @@ const routes = [
       { path: 'add-booking', component: AddBookingComponent },
       { path: 'view-booking/:id', component: ViewBookingComponent },
       { path: 'edit-booking/:id', component: EditBookingComponent },
+      { path: 'close-booking/:id', component: CloseComponent },
       { path: 'extend-booking/:id', component: ExtendBookingComponent },
       { path: 'edit-booking/:id/:view', component: EditBookingComponent },
       { path: 'generate-docs/:id', component: DocsComponent },
@@ -35,7 +37,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, ViewBookingComponent, DocsComponent, ExtendBookingComponent],
+  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, ViewBookingComponent, DocsComponent, ExtendBookingComponent, CloseComponent],
   imports: [
     CommonModule,
     HttpClientModule,

@@ -129,6 +129,11 @@ export class CarsService {
    }
 
 
+  close(id: string, xscar: any): Observable<Car> {
+     return this.http.patch<Car>(`/api/cars/close/${id}`, xscar);
+  }
+
+
   // Получаем позицию по id
   getById(id: string): Observable<Car>
    {

@@ -121,6 +121,32 @@ module.exports.update = async function(req, res) {
 
 
 
+// Контроллер для закрытия брони
+module.exports.close = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+        const update = {
+            $set: {
+                probeg: updated.probeg,
+            },
+        }
+
+        const carUpdate = await Car.findOneAndUpdate({ _id: req.params.id }, //Ищем по id
+            update,
+            { new: true }
+        );
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(carUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
 
 
 

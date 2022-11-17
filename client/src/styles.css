@@ -1012,3 +1012,58 @@ select {
 {
     width: 14% !important;
 }
+
+.xs_close_booking__content
+{
+    margin-top: 50px;
+    display: flex;
+}
+
+.xs_close_booking__content___item
+{
+    width: 48%;
+}
+
+
+.xs_close_input_wrap label
+{
+    margin-bottom: 12px;
+    display: block;
+}
+.xs_close_input_wrap
+{
+    padding-bottom: 7px;
+}
+.xs_close_input_wrap span:first-child
+{
+    margin-right: 15px;
+}
+
+
+.xs_close_input_wrap
+{
+    border-bottom: 1px solid #9e9e9e;
+}
+
+
+.xs_close_probeg_warning
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    background-color: #F76161;
+    padding: 0 25px;
+    font-size: 21px;
+    color: #fff;
+    margin-top: 25px;
+}
+
+.xs_close_probeg_warning > div span:last-child
+{
+    font-weight: 700;
+    margin-left: 10px;
+    border-bottom: 1px solid #fff;
+}
+
