@@ -18,6 +18,9 @@ router.patch('/:id', passport.authenticate('jwt', { session: false }), controlle
 // Роут на extend
 router.patch('/extend/:id', passport.authenticate('jwt', { session: false }), controller.extend);
 
+// Роут на close
+router.patch('/close/:id', passport.authenticate('jwt', { session: false }), controller.close);
+
 
 // Роут на getById
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getById);

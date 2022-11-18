@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { PaysService } from 'src/app/pays/services/pays.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Booking } from 'src/app/shared/types/interfaces';
+import { Booking, Summa } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 
 @Component({
@@ -17,6 +18,35 @@ export class CloseComponent implements OnInit {
   form!: FormGroup;
   bookingId!: string;
   actualBooking!: Booking;
+
+  PayTypes: Array<any> = [
+    {
+      type: "terminal",
+      value: "Терминал"
+    },
+    {
+      type: "card",
+      value: "На карту"
+    },
+    {
+      type: "rs",
+      value: "Р/с"
+    },
+  ]
+
+  summa: Summa = {
+    car: {},
+    tariff: '',
+    booking_start: '',
+    booking_end: '',
+    summa: '',
+    booking_days: '',
+    summaFull: '',
+    dop_hours: '',
+  };
+
+  defaultValueArenda: string = 'Наличные'
+  defaultValueZalog: string = 'Наличные'
 
   
 
@@ -33,6 +63,11 @@ export class CloseComponent implements OnInit {
     this.form = new FormGroup({
       booking_end: new FormControl('', [Validators.required]),
       probeg_new: new FormControl(''),
+      clear_auto: new FormControl(''),
+      full_tank: new FormControl(''),
+      return_part: new FormControl(''),
+      return_part_comment: new FormControl(''),
+      typePayArenda: new FormControl('',),
     });
 
     // Достаем параметры
@@ -49,24 +84,67 @@ export class CloseComponent implements OnInit {
       });
 
 
+      this.summa.car = res.car;
+      this.summa.tariff = res.tariff;
+      this.summa.booking_start = res.booking_start;
+      this.summa.booking_end = res.booking_end;
+      this.summa.summa = res.summa;
+      this.summa.summaFull = res.summaFull;
+      this.summa.booking_days = res.booking_days;
+      this.summa.dop_hours = res.dop_hours;
+
       MaterialService.updateTextInputs();
     });
   }
 
   onSubmit()
   {
-
-    
-    
-    // Создаем авто
     const car: any = {
       probeg: this.form.value.probeg_new,
     }
-    
-    this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
-      MaterialService.toast('Сохранено');
-      // this.router.navigate(['/cars-page']);
+
+    const booking: any = {
+      summaFull: (+this.summa.summaFull) - (+this.actualBooking.car.zalog),
+      car:{
+        zalog: (+this.actualBooking.car.zalog) - (+this.actualBooking.car.zalog),
+      },
+      paidCount: (+this.actualBooking.paidCount) - (+this.actualBooking.car.zalog),
+      status: 'Закрыта',
+      dop_info_close: {
+        clear_auto: this.form.value.clear_auto || false,
+        full_tank: this.form.value.full_tank || false,
+        // return_part: this.form.value.return_part || false,
+        // return_part_comment: this.form.value.return_part_comment,
+      }
+    }
+
+    const pay = {
+      vid: 'Возврат залога',
+      pricePay: this.actualBooking.car.zalog,
+      typePay: this.form.value.typePayArenda,
+      bookingId: this.bookingId,
+    };
+
+
+
+    this.bookings.close(this.bookingId, booking).pipe(
+      map(res => {
+        this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+        });
+        return res;
+      })
+    ).pipe(
+      map(res => {
+        this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+        });
+        return res;
+      })
+    ).subscribe((booking) => {
+      MaterialService.toast('Бронь закрыта');
+      this.router.navigate(['/bookings-page']);
     });
+
+   
 
 }
 

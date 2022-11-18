@@ -16,6 +16,10 @@ export class PaysService {
     return this.http.post<Pay>(`/api/pays`, pay);
   }
 
+  vozvrat_zaloga(pay: any): Observable<Pay> {
+    return this.http.post<Pay>(`/api/pays/vozvrat_zaloga`, pay);
+  }
+
 
   getPaysByBookingId(id: string): Observable<Pay[]> {
     return this.http.get<Pay[]>(`/api/pays/${id}`);

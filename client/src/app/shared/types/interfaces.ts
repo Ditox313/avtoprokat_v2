@@ -229,6 +229,7 @@ export interface Booking {
   extend?: any
   sale?: any
   dop_info_open?: any
+  dop_info_close?: any
 }
 
 

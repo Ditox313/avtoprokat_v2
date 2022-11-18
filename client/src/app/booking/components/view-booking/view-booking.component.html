@@ -28,6 +28,7 @@
                                 <span>
                                     <span *ngIf="bookingStatus === 'В ожидании'" class="btn_waiting">В ожидании</span>
                                     <span *ngIf="bookingStatus === 'В аренде'" class="btn_v_arende">В аренде</span>
+                                    <span *ngIf="bookingStatus === 'Закрыта'" class="btn_close">Закрыта</span>
                                 </span>
                             </div>
                             
@@ -100,6 +101,16 @@
                                 <span>Комментарий:</span>
                                 <span>{{actualBooking.comment}} </span>
                             </div>
+
+                            <div>
+                                <span>Выдан чистый авто:</span>
+                                <span>{{ this.clear_auto}}</span>
+                            </div>
+
+                            <div>
+                                <span>Выдан полный бак:</span>
+                                <span>{{ this.full_tank}}</span>
+                            </div>
                         </div>
                         
 
@@ -107,7 +118,7 @@
                             <h5>Рассчет</h5>
                             <div>
                                 <div> <span>Аренда:</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
-                                <div> <span>Залог:</span> <span>{{ this.summa.car.zalog}} ₽</span> </div>
+                                <div> <span *ngIf="this.summa.car.zalog > 0">Залог:</span> <span>{{ this.summa.car.zalog}} ₽</span> </div>
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
                                 <div> <span>Итого:</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
 

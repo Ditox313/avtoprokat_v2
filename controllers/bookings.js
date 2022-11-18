@@ -134,6 +134,44 @@ module.exports.extend = async function (req, res) {
 
 
 
+module.exports.close = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+        const update = {
+            $set: {
+                summaFull: updated.summaFull,
+                status: updated.status,
+                dop_info_close: {
+                    clear_auto: updated.dop_info_close.clear_auto,
+                    full_tank: updated.dop_info_close.full_tank,
+                    'car.zalog': updated.car.zalog,
+                    'car.probeg': updated.car.probeg,
+                    // return_part: this.form.value.return_part || false,
+                    // return_part_comment: this.form.value.return_part_comment,
+                }
+            },
+        }
+
+
+
+        const bookingUpdate = await Booking.findOneAndUpdate({ _id: updated._id }, //Ищем по id
+            update,
+            { new: true }
+        );
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(bookingUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
 
 // Контроллер для getById
 module.exports.getById = async function(req, res) {

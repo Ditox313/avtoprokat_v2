@@ -700,8 +700,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       booking_start: this.form.value.booking_start,
       booking_end: this.form.value.booking_end,
       booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-      summaFull: this.summa.summaFull,
-      summa: this.summa.summa,
+      summaFull: Math.round(this.summa.summaFull) ,
+      summa: Math.round(this.summa.summa),
       dop_hours: this.summa.dop_hours,
       dop_info_open: {
         clear_auto: this.form.value.clear_auto || false,

@@ -642,6 +642,16 @@ select {
     padding: 3px 10px 6px 10px;
 }
 
+.btn_close {
+    background-color: #F76161;
+    color: #fff !important;
+    font-size: 14px;
+    border-radius: 3px;
+    line-height: 14px;
+    display: inline-block;
+    padding: 3px 10px 6px 10px;
+}
+
 .xs_booking_view_content___item>div>div>span:first-child
 {
     font-size: 18px;
@@ -713,7 +723,7 @@ select {
 .xs_booking_view_content___item
 {
     width: 32%;
-    max-height: 740px;
+    max-height: 827px;
 }
 
 .extend_block__list
@@ -1017,11 +1027,12 @@ select {
 {
     margin-top: 50px;
     display: flex;
+    justify-content: space-between;
 }
 
 .xs_close_booking__content___item
 {
-    width: 48%;
+    width: 32%;
 }
 
 
@@ -1055,9 +1066,10 @@ select {
     height: 150px;
     background-color: #F76161;
     padding: 0 25px;
-    font-size: 21px;
+    font-size: 19px;
     color: #fff;
     margin-top: 25px;
+    text-align: center;
 }
 
 .xs_close_probeg_warning > div span:last-child
@@ -1092,3 +1104,47 @@ select {
     align-items: center;
     font-size: 18px;
 }   
+
+.close_dop_info input
+{
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+}
+
+.close_dop_info
+{
+    font-size: 18px;
+}
+
+.xs_close_booking__content___item___checkbox
+{
+    font-size: 18px;
+}
+
+.xs_close_booking__content___item___checkbox input
+{
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+}
+
+.xs_close_booking__content___item___checkbox textarea
+{
+    margin-top: 15px;
+    outline: none;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.2) !important;
+    padding: 10px 15px;
+    height: 100px;
+}
+
+.xs_close_booking__content___item .xs_form_pay__item
+{
+    margin-bottom: 20px;
+}
+
+.xs_close_booking__content .xs_form_pay__information
+{
+    width: 100%;
+}

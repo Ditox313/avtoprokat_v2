@@ -140,8 +140,14 @@ const bookingSchema = new Schema({
     },
 
 
-    // Дополнительная информация
+    // Дополнительная информация при открытии брони
     dop_info_open: {
+        type: Object,
+        required: false,
+    },
+
+    // Дополнительная информация при закрытии брони
+    dop_info_close: {
         type: Object,
         required: false,
     },

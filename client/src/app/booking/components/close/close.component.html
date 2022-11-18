@@ -17,9 +17,68 @@
         </div>
     </div>
 
-    
+
+
 
     <div class="xs_close_booking__content">
+        <div class="xs_close_booking__content___item">
+            <div class="xs_form_pay__information" *ngIf="actualBooking">
+                <h5>Информация</h5>
+                <div>
+                    <span>Номер брони: </span>
+                    <span class="pay_last_span">№{{actualBooking.order}}</span>
+                </div>
+                <div>
+                    <span>Создана: </span>
+                    <span class="pay_last_span">{{actualBooking.date | date : 'd MMMM y, H:mm'}}</span>
+                </div>
+        
+                <div>
+                    <span>Автомобиль: </span>
+                    <span class="pay_last_span">{{actualBooking.car.marka}} {{actualBooking.car.model}}
+                        ({{actualBooking.car.number}})</span>
+                </div>
+        
+        
+                <div>
+                    <span>Суток: </span>
+                    <span class="pay_last_span">{{actualBooking.booking_days | number: '1.0-0'}} д</span>
+                </div>
+
+        
+                <div class="pay_rashet">
+                    <div>
+                        <div> <span>Аренда: </span> <span class="pay_last_span">{{ this.summa.summa | number: '1.0-0'}} ₽</span>
+                        </div>
+                        <div> <span>Залог: </span> <span class="pay_last_span">{{ this.summa.car.zalog}} ₽</span> </div>
+                        <div *ngIf="summa.dop_hours > 0"> <span>Доп.час: </span> <span
+                                class="pay_last_span">({{summa.dop_hours}}ч)
+                                {{
+                                this.summa.car.price_dop_hour * summa.dop_hours}} ₽ </span> </div>
+                        <div> <span>Итого: </span> <span class="pay_last_span">{{ summa.summaFull | number: '1.0-0'}} ₽</span>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)"
+                    [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)">
+                    <div> <span class="xs_paid_span_1">Общая скидка:</span> <span class="xs_paid_span_1">{{this.actualBooking.sale}} ₽</span> </div>
+                    <div>
+                        <span class="xs_paid_span_1">Оплачено </span>
+                        <span class="xs_paid_span_1">{{actualBooking.paidCount}} ₽</span>
+                    </div>
+        
+                    <div>
+                        <span class="xs_paid_span_1">Остаток</span> <span class="xs_paid_span_1">{{+summa.summaFull - (+actualBooking.paidCount)}}
+                            ₽</span>
+                    </div>
+                </div>
+        
+        
+            </div>
+        </div>
+
+
         <div class="xs_close_booking__content___item">
             <div class="input-field col s12" >
                 <div><label for="booking_end">Дата и время окончания брони<span class="xszv">*</span></label></div>
@@ -47,10 +106,46 @@
 
                 <div>НЕОБХОДИМО СРОЧНОЕ ТО ДЛЯ АВТОМОБИЛЯ {{actualBooking.car.marka}} {{actualBooking.car.model}} {{actualBooking.car.number}}</div>
             </div>
+
+            <div class="close_dop_info">
+                <div class="input-field col s12">
+                    <span>Чистый автомобиль</span>
+                    <input type="checkbox" id="clear_auto" class="validate" formControlName="clear_auto">
+                </div>
+
+                <div class="input-field col s12">
+                    <span>Полный бак</span>
+                    <input type="checkbox" id="clear_auto" class="validate" formControlName="full_tank">
+                </div>
+            </div>
         </div>
 
-        
-        
+
+        <div class="xs_close_booking__content___item">
+            <h4>Вернуть залог: {{actualBooking.car.zalog}} руб</h4>
+
+            <div class="xs_form_pay__item">
+                <label for="marka">Тип возврата</label>
+                <div class="input-field col s12">
+                    <select id="typePayArenda" formControlName="typePayArenda" [(ngModel)]="defaultValueArenda"
+                        [ngClass]="{'invalid': form.controls['typePayArenda'].invalid && form.controls['typePayArenda'].touched}">
+                        <option value="Наличные" selected>Наличные</option>
+            
+                        <option *ngFor="let PayType of PayTypes" value="{{PayType.value}}">
+                            {{PayType.value}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="xs_close_booking__content___item___checkbox">
+                <span>Вернуть частично</span>
+                <input type="checkbox" id="return_part" class="validate" formControlName="return_part">
+
+                <div *ngIf="this.form.value.return_part === true">
+                    <textarea placeholder="Введите комментарий" formControlName="return_part_comment" id="return_part_comment" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+        </div>
     </div>
 
 

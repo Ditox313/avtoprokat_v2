@@ -41,6 +41,11 @@ export class BookingsService {
     return this.http.patch<Booking>(`/api/bookings/extend/${id}`, xsbooking);
   }
 
+  close(id: string, xsbooking: Booking): Observable<Booking> {
+    xsbooking._id = id;
+    return this.http.patch<Booking>(`/api/bookings/close/${id}`, xsbooking);
+  }
+
   // Удаление
   delete(id: any): Observable<any> {
     return this.http.delete<any>(`/api/bookings/${id}`);

@@ -45,6 +45,9 @@
                     <td *ngIf="xsbooking.status === 'В аренде'">
                         <a [routerLink]="['/view-booking',xsbooking._id]" class="btn_v_arende">{{xsbooking.status}}</a>
                     </td>
+                    <td *ngIf="xsbooking.status === 'Закрыта'">
+                        <a [routerLink]="['/view-booking',xsbooking._id]" class="btn_close">{{xsbooking.status}}</a>
+                    </td>
                     <td>
                         <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.date | date : 'd MMMM y, H:mm'}}</a>
                     </td>
