@@ -1067,3 +1067,27 @@ select {
     border-bottom: 1px solid #fff;
 }
 
+
+.xs_add_booking_dop_info input
+{
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+}
+
+.xs_add_booking_dop_info
+{
+    margin-top: 30px;
+}
+
+.xs_add_booking_dop_info h4
+{
+    font-size: 21px;
+}
+
+.xs_add_booking_dop_info___wrap > div
+{
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}   

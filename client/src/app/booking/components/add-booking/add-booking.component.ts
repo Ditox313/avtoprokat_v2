@@ -61,6 +61,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       place_end: new FormControl('', [Validators.required]),
       tariff: new FormControl('', [Validators.required]),
       comment: new FormControl(''),
+      clear_auto: new FormControl(''),
+      full_tank: new FormControl(''),
     });
 
 
@@ -701,7 +703,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       summaFull: this.summa.summaFull,
       summa: this.summa.summa,
       dop_hours: this.summa.dop_hours,
+      dop_info_open: {
+        clear_auto: this.form.value.clear_auto || false,
+        full_tank: this.form.value.clear_auto || false
+      }
     };
+
+    
 
     // Отправляем запрос
     this.bookings.create(booking).subscribe((booking) => {

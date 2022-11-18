@@ -138,6 +138,13 @@ const bookingSchema = new Schema({
         default: 0,
         required: false,
     },
+
+
+    // Дополнительная информация
+    dop_info_open: {
+        type: Object,
+        required: false,
+    },
     
 
 });

@@ -228,6 +228,7 @@ export interface Booking {
   paidCount?: any
   extend?: any
   sale?: any
+  dop_info_open?: any
 }
 
 
@@ -259,6 +260,10 @@ export interface Pay {
   bookingId?: any;
   order?: any;
 }
+
+
+
+
 
 
 
