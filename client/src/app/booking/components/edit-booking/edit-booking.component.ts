@@ -67,6 +67,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
       place_end: new FormControl('', [Validators.required]),
       tariff: new FormControl('', [Validators.required]),
       comment: new FormControl(''),
+      clear_auto: new FormControl(''),
+      full_tank: new FormControl(''),
     });
 
     // Достаем параметры
@@ -88,6 +90,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         place_end: res.place_end,
         tariff: res.tariff,
         comment: res.comment,
+        clear_auto: res.dop_info_open.clear_auto,
+        full_tank: res.dop_info_open.full_tank,
       });
 
       this.summa.car = res.car;
@@ -755,6 +759,10 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
       summaFull: this.summa.summaFull,
       summa: this.summa.summa,
       dop_hours: this.summa.dop_hours,
+      dop_info_open: {
+        clear_auto: this.form.value.clear_auto,
+        full_tank: this.form.value.full_tank
+      }
     };
 
     this.bookings.update(this.bookingId, booking).subscribe((booking) => {

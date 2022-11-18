@@ -705,7 +705,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       dop_hours: this.summa.dop_hours,
       dop_info_open: {
         clear_auto: this.form.value.clear_auto || false,
-        full_tank: this.form.value.clear_auto || false
+        full_tank: this.form.value.full_tank || false
       }
     };
 
