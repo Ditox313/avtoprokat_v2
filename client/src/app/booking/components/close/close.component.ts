@@ -99,53 +99,112 @@ export class CloseComponent implements OnInit {
 
   onSubmit()
   {
-    const car: any = {
-      probeg: this.form.value.probeg_new,
-    }
-
-    const booking: any = {
-      summaFull: (+this.summa.summaFull) - (+this.actualBooking.car.zalog),
-      car:{
-        zalog: (+this.actualBooking.car.zalog) - (+this.actualBooking.car.zalog),
-      },
-      paidCount: (+this.actualBooking.paidCount) - (+this.actualBooking.car.zalog),
-      status: 'Закрыта',
-      dop_info_close: {
-        clear_auto: this.form.value.clear_auto || false,
-        full_tank: this.form.value.full_tank || false,
-        // return_part: this.form.value.return_part || false,
-        // return_part_comment: this.form.value.return_part_comment,
+    if (!this.form.value.clear_auto)
+    {
+      const car: any = {
+        probeg: this.form.value.probeg_new,
       }
+
+      const pay = {
+        vid: 'Возврат залога',
+        pricePay: this.actualBooking.car.zalog,
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId,
+      };
+
+      const pay2 = {
+        vid: 'Мойка',
+        pricePay: this.actualBooking.car.moyka,
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId,
+      };
+
+
+      const booking: any = {
+        summaFull: (+this.summa.summaFull) - (+this.actualBooking.car.zalog) + (+this.actualBooking.car.moyka),
+        car: {
+          zalog: (+this.actualBooking.car.zalog) - (+this.actualBooking.car.zalog),
+        },
+        // paidCount: ((+this.actualBooking.paidCount) - (+this.actualBooking.car.zalog)) + (+this.actualBooking.car.moyka),
+        status: 'Закрыта',
+        dop_info_close: {
+          clear_auto: this.form.value.clear_auto || false,
+          full_tank: this.form.value.full_tank || false,
+          probeg_new: this.form.value.probeg_new,
+        }
+      }
+
+
+      this.bookings.close(this.bookingId, booking).pipe(
+        map(res => {
+          this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+            MaterialService.toast('Возврат залога проведен');
+
+            this.pays.create(pay2).subscribe((pay) => {
+              MaterialService.toast('Оплата мойки');
+            });
+          });
+          return res;
+        })
+      ).pipe(
+        map(res => {
+          this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+          });
+          return res;
+        })
+      ).subscribe((booking) => {
+        MaterialService.toast('Бронь закрыта');
+        this.router.navigate(['/bookings-page']);
+      });
+
+    }else
+    {
+      const car: any = {
+        probeg: this.form.value.probeg_new,
+      }
+
+      const pay = {
+        vid: 'Возврат залога',
+        pricePay: this.actualBooking.car.zalog,
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId,
+      };
+
+
+      const booking: any = {
+        summaFull: (+this.summa.summaFull) - (+this.actualBooking.car.zalog),
+        car: {
+          zalog: (+this.actualBooking.car.zalog) - (+this.actualBooking.car.zalog),
+        },
+        //paidCount: ((+this.actualBooking.paidCount) - (+this.actualBooking.car.zalog)),
+        status: 'Закрыта',
+        dop_info_close: {
+          clear_auto: this.form.value.clear_auto || false,
+          full_tank: this.form.value.full_tank || false,
+          probeg_new: this.form.value.probeg_new,
+        }
+      }
+
+
+      this.bookings.close(this.bookingId, booking).pipe(
+        map(res => {
+          this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+          });
+          return res;
+        })
+      ).pipe(
+        map(res => {
+          this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+          });
+          return res;
+        })
+      ).subscribe((booking) => {
+        MaterialService.toast('Бронь закрыта');
+        this.router.navigate(['/bookings-page']);
+      });
     }
-
-    const pay = {
-      vid: 'Возврат залога',
-      pricePay: this.actualBooking.car.zalog,
-      typePay: this.form.value.typePayArenda,
-      bookingId: this.bookingId,
-    };
-
-
-
-    this.bookings.close(this.bookingId, booking).pipe(
-      map(res => {
-        this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
-        });
-        return res;
-      })
-    ).pipe(
-      map(res => {
-        this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
-        });
-        return res;
-      })
-    ).subscribe((booking) => {
-      MaterialService.toast('Бронь закрыта');
-      this.router.navigate(['/bookings-page']);
-    });
-
+    
    
-
 }
 
 
