@@ -11,7 +11,7 @@
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
 
-            <button type="submit">
+            <button type="submit" [disabled]="this.form.value.return_part && (this.form.value.return_part_comment.length === 0)">
                 <span class="material-icons">beenhere</span>Сохранить
             </button>
         </div>
@@ -145,7 +145,19 @@
                 <input *ngIf="this.form.value.return_part === true" type="text" id="return_part_price" placeholder="Введите сумму для возврата" class="validate" formControlName="return_part_price">
 
                 <div *ngIf="this.form.value.return_part === true">
-                    <textarea placeholder="Введите комментарий" formControlName="return_part_comment" id="return_part_comment" cols="30" rows="10"></textarea>
+                    <label for="">Комментарий <span class="xszv">*</span></label>
+                    <textarea placeholder="Введите комментарий" formControlName="return_part_comment" id="return_part_comment" cols="30" rows="10"
+                    [ngClass]="{'invalid': form.controls['return_part_comment'].invalid && form.controls['return_part_comment'].touched}"></textarea>
+
+                    <span class="helper-text red-text" *ngIf="form.controls['return_part_comment'].invalid && form.controls['return_part_comment'].touched">
+                        <p *ngIf="form.controls['return_part_comment'].errors?.required">
+                            Комментарий не должен быть пустым
+                        </p>
+                    
+                        <p *ngIf="form.controls['return_part_comment'].errors?.return_part_comment">
+                            Введите корректный комментарий
+                        </p>
+                    </span>
                 </div>
             </div>
         </div>
@@ -155,7 +167,7 @@
 
     <div class="xs_add__car___top">
         <div class="xs_add__car__top____actions">
-            <button type="submit">
+            <button type="submit"  [disabled]="this.form.value.return_part && (this.form.value.return_part_comment.length === 0)">
                 <span class="material-icons">beenhere</span>Сохранить
             </button>
         </div>

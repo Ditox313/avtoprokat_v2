@@ -101,6 +101,16 @@ export class CloseComponent implements OnInit {
   onSubmit()
   {
     
+    if (this.form.value.return_part)
+    {
+      this.form.disable
+      console.log('NO');
+    }
+    else
+    {
+      console.log('OK');
+      
+    }
 
     if (!this.form.value.clear_auto && !this.form.value.return_part)
     {
