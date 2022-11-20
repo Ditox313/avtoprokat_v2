@@ -139,7 +139,10 @@
 
             <div class="xs_close_booking__content___item___checkbox">
                 <span>Вернуть частично</span>
+
                 <input type="checkbox" id="return_part" class="validate" formControlName="return_part">
+
+                <input *ngIf="this.form.value.return_part === true" type="text" id="return_part_price" placeholder="Введите сумму для возврата" class="validate" formControlName="return_part_price">
 
                 <div *ngIf="this.form.value.return_part === true">
                     <textarea placeholder="Введите комментарий" formControlName="return_part_comment" id="return_part_comment" cols="30" rows="10"></textarea>
