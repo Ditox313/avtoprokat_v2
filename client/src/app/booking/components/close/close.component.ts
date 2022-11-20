@@ -178,7 +178,6 @@ export class CloseComponent implements OnInit {
         car: {
           zalog: (+this.actualBooking.car.zalog) - (+this.form.value.return_part_price),
         },
-        //paidCount: ((+this.actualBooking.paidCount) - (+this.actualBooking.car.zalog)),
         status: 'Закрыта',
         dop_info_close: {
           clear_auto: this.form.value.clear_auto || false,

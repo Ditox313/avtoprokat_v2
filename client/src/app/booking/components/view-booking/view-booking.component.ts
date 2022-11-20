@@ -92,21 +92,7 @@ export class ViewBookingComponent implements OnInit {
       // Высчитываем какой тариф выбран
       this.checkedTarif(this.summa.booking_days)
 
-      if (this.actualBooking.dop_info_open.clear_auto === true)
-      {
-        this.clear_auto = 'Да';
-      }
-      else
-      {
-        this.clear_auto = 'Нет';
-      }
 
-      if (this.actualBooking.dop_info_open.full_tank === true) {
-        this.full_tank = 'Да';
-      }
-      else {
-        this.full_tank = 'Нет';
-      }
     });
 
     this.pay.getPaysByBookingId(this.bookingId).subscribe((res) => {

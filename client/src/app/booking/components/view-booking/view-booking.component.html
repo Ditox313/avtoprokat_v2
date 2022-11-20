@@ -104,13 +104,15 @@
 
                             <div>
                                 <span>Выдан чистый авто:</span>
-                                <span>{{ this.clear_auto}}</span>
+                                <span>{{this.actualBooking.dop_info_open.clear_auto ? 'Да' : 'Нет'}}</span>
                             </div>
-
+                            
                             <div>
                                 <span>Выдан полный бак:</span>
-                                <span>{{ this.full_tank}}</span>
+                                <span>{{this.actualBooking.dop_info_open.full_tank ? 'Да' : 'Нет'}}</span>
                             </div>
+
+                            
                         </div>
                         
 
@@ -248,6 +250,46 @@
                                 <span title="Сгенерировать документы">
                                     <img src="../../../../assets/img/docs.png" [routerLink]="['/generate-docs', bookingId]">
                                 </span>
+                            </div>
+
+
+                            <div class="xs_booking_close_info" *ngIf="this.actualBooking.dop_info_close">
+                                <h5>Дополнительная информация</h5>
+                                
+                                <div>
+                                    <span>Сдан чистый авто:</span>
+                                    <span>{{this.actualBooking.dop_info_close.clear_auto ? 'Да' : 'Нет'}}</span>
+                                </div>
+                                
+                                <div>
+                                    <span>Сдан полный бак:</span>
+                                    <span>{{this.actualBooking.dop_info_close.full_tank ? 'Да' : 'Нет'}}</span>
+                                </div>
+
+                                <div>
+                                    <span>Пробег на начало аренды:</span>
+                                    <span>{{this.actualBooking.car.probeg}}</span>
+                                </div>
+
+                                <div>
+                                    <span>Пробег на конец аренды:</span>
+                                    <span>{{this.actualBooking.dop_info_close.probeg_new}}</span>
+                                </div>
+
+                                <div>
+                                    <span>Требуется ТО:</span>
+                                    <span>{{(+this.actualBooking.dop_info_close.probeg_new) > (+this.actualBooking.car.to_probeg_next) ? 'Да' : 'Нет'}}</span>
+                                </div>
+
+                                <div>
+                                    <span>Частичный возврат залога:</span>
+                                    <span>{{this.actualBooking.dop_info_close.return_part_price.length > 0 ? 'Да' : 'Нет'}}</span>
+                                </div>
+
+                                <div *ngIf="this.actualBooking.dop_info_close.return_part_comment">
+                                    <span>Комментарий:</span>
+                                    <span>{{this.actualBooking.dop_info_close.return_part_comment}}</span>
+                                </div>
                             </div>
 
                             <div class="extend_block" *ngIf="actualBooking.extend.length > 0">

@@ -143,14 +143,13 @@ module.exports.close = async function (req, res) {
             $set: {
                 summaFull: updated.summaFull,
                 status: updated.status,
-                // paidCount: updated.paidCount,
                 dop_info_close: {
                     clear_auto: updated.dop_info_close.clear_auto,
                     full_tank: updated.dop_info_close.full_tank,
-                    'dop_info_close.probeg_new': updated.dop_info_close.probeg_new,
+                    probeg_new: updated.dop_info_close.probeg_new,
                     zalog: updated.car.zalog,
-                    // return_part: this.form.value.return_part || false,
-                    // return_part_comment: this.form.value.return_part_comment,
+                    return_part_price: updated.dop_info_close.return_part_price || false,
+                    return_part_comment: updated.dop_info_close.return_part_comment || false,
                 }
             },
         }
