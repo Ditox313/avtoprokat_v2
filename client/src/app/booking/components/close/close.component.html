@@ -98,6 +98,7 @@
                     formControlName="probeg_new"
                     [ngClass]="{'invalid': form.controls['probeg_new'].invalid && form.controls['probeg_new'].touched}">
             </div>
+
             <div class="xs_close_probeg_warning" *ngIf="+this.actualBooking.car.to_probeg_next < this.form.value.probeg_new">
                 <div>
                     <span>Пробег для следующего ТО:</span>
@@ -167,9 +168,24 @@
 
     <div class="xs_add__car___top">
         <div class="xs_add__car__top____actions">
-            <button type="submit"  [disabled]="this.form.value.return_part && (this.form.value.return_part_comment.length === 0)">
+            <button type="submit"  
+            [disabled]="(this.form.value.return_part && (this.form.value.return_part_comment.length === 0)) || (this.form.value.probeg_new.length === 0)">
                 <span class="material-icons">beenhere</span>Сохранить
             </button>
+        </div>
+    </div>
+
+
+    <div class="xs_warning__close" *ngIf="this.form.value.return_part && (this.form.value.return_part_comment.length === 0)">
+        <div>
+            Не заполнен комментарий для возврата залога
+        </div>
+    </div>
+
+
+    <div class="xs_warning__close" *ngIf="this.form.value.probeg_new.length === 0">
+        <div>
+            Не заполнен новый пробег автомобиля
         </div>
     </div>
 </form>

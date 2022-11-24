@@ -169,7 +169,7 @@
                                     </thead>
                             
                                     <tbody >
-                                        <tr *ngFor="let pay of pays; let i = index" class="xs_partners_tr xsbooking" >
+                                        <tr *ngFor="let pay of pays; let i = index" class="xs_partners_tr xsbooking" [class.xs_paid_zalog]="pay.vidPay === 'Залог'">
                                             <td>
                                                 <span>{{pay.date | date : 'd MMMM , H:mm'}}</span>
                                             </td>

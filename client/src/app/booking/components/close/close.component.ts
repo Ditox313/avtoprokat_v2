@@ -62,7 +62,7 @@ export class CloseComponent implements OnInit {
 
     this.form = new FormGroup({
       booking_end: new FormControl('', [Validators.required]),
-      probeg_new: new FormControl(''),
+      probeg_new: new FormControl('', [Validators.required]),
       clear_auto: new FormControl(''),
       full_tank: new FormControl(''),
       return_part: new FormControl(''),
@@ -101,16 +101,6 @@ export class CloseComponent implements OnInit {
   onSubmit()
   {
     
-    if (this.form.value.return_part)
-    {
-      this.form.disable
-      console.log('NO');
-    }
-    else
-    {
-      console.log('OK');
-      
-    }
 
     if (!this.form.value.clear_auto && !this.form.value.return_part)
     {
