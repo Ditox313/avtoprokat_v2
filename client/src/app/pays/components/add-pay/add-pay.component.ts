@@ -36,7 +36,7 @@ export class AddPayComponent implements OnInit {
     booking_days: '',
     summaFull: '',
     dop_hours: '',
-    checkedTarif: ''
+    checkedTarif: '',
   };
 
   PayTypes:Array<any> = [
@@ -92,7 +92,18 @@ export class AddPayComponent implements OnInit {
       this.pays.getPaysByBookingId(this.bookingId).subscribe((res) => {
         this.xspays = res;
       });
+
+
+
+      // Подружаем сумму залога и аренды в поля
+      this.form.patchValue({
+        arenda: res.summa,
+        zalog: res.car.zalog
+      });
     });
+
+
+    
 
     MaterialService.updateTextInputs();
   }
@@ -171,10 +182,6 @@ export class AddPayComponent implements OnInit {
         bookingId: this.bookingId,
       };
 
-      // this.pays.create(pay).pipe().subscribe((pay) => {
-      //   MaterialService.toast('Платеж создан');
-      //   this.router.navigate(['/view-booking', this.bookingId]);
-      // });
 
       this.pays.create(pay).pipe(
         map(

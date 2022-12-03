@@ -124,7 +124,7 @@
 
                         <div class="input-field col s12">
                             <input placeholder="0" id="arenda" type="number" class="validate" formControlName="arenda"
-                                [ngClass]="{'invalid': form.controls['arenda'].invalid && form.controls['arenda'].touched}">
+                                [ngClass]="{'invalid': form.controls['arenda'].invalid && form.controls['arenda'].touched}" >
                             <label for="arenda">Аренда</label>
                             <span class="helper-text red-text"
                                 *ngIf="form.controls['arenda'].invalid && form.controls['arenda'].touched">
@@ -147,15 +147,18 @@
                             </div>
                         </div>
 
-                        <div class="input-field pay_mod col s12">
-                            <input placeholder="0" id="zalog" type="number" class="validate" formControlName="zalog"
-                                [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
-                            <label for="marka">Залог</label>
-                            <span class="helper-text red-text" *ngIf="form.controls['zalog'].invalid && form.controls['zalog'].touched">
-                                <p *ngIf="form.controls['zalog'].errors?.required">
-                                    Поле не должно быть пустым
-                                </p>
-                            </span>
+                        <div class="xs_input_wrap">
+                            <label for="zalog">Залог</label>
+                            <div class="input-field pay_mod col s12">
+                                <input placeholder="0"  id="zalog" type="number" class="validate" formControlName="zalog"
+                                    [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
+                                
+                                <span class="helper-text red-text" *ngIf="form.controls['zalog'].invalid && form.controls['zalog'].touched">
+                                    <p *ngIf="form.controls['zalog'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
                         </div>
                         
                         <div class="xs_form_pay__item">
