@@ -19,7 +19,10 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 })
 export class ShowPartnerComponent implements OnInit, AfterViewInit {
   @ViewChild('tabs') tabs!: ElementRef;
-  @ViewChild('passport__date') passport__date__info!: ElementRef;
+
+
+
+
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
   @ViewChild('input2') inputRef2!: ElementRef;
@@ -27,10 +30,9 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
   partnerId!: string;
   xsActualPartner!: Partner;
   form: any;
-  // tabs: any;
 
-  // Храним дату выдачи пасспорта
-  passport__date__x: MaterialDatepicker | any;
+
+
 
 
   // Храним фалы загруженных документов
@@ -41,9 +43,7 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
   passport_1_preview: any = '';
   passport_2_preview: any = '';
 
-  // Храним  даты из ответа для форматирования
-  passport__date_responce!: any;
-  prava__date_responce!: any;
+
 
   constructor(
     private partners: PartnersService,
@@ -113,10 +113,6 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
 
-    this.passport__date__x = MaterialService.initDatepicker(
-      this.passport__date__info,
-      this.validate.bind(this)
-    );
   }
   // Валидация
   validate() {}
@@ -130,10 +126,7 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
       lastname: this.form.value.lastname,
       passport_seria: this.form.value.passport_seria,
       passport_number: this.form.value.passport_number,
-      passport_date:
-        this.passport__date__x.date === undefined
-          ? this.xsActualPartner.passport_date
-          : new Date(this.passport__date__x.date).toLocaleDateString('ru-RU'),
+      passport_date: this.form.value.passport_date,
       passport_who_take: this.form.value.passport_who_take,
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
       passport_register: this.form.value.passport_register,

@@ -25,11 +25,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
   xsActualClient!: Client;
   form: any;
 
-  // Храним дату выдачи пасспорта
-  passport__date__x: MaterialDatepicker | any;
 
-  // Храним дату выдачи прав
-  prava__date__x: MaterialDatepicker | any;
 
   // Храним фалы загруженных документов
   passport__1!: File;
@@ -43,9 +39,6 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
   prava_1_preview: any = '';
   prava_2_preview: any = '';
 
-  // Храним  даты из ответа для форматирования
-  passport__date_responce!: any;
-  prava__date_responce!: any;
 
   constructor(
     private clients: ClientsService,
@@ -139,14 +132,6 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
 
-    this.passport__date__x = MaterialService.initDatepicker(
-      this.passport__date__info,
-      this.validate.bind(this)
-    );
-    this.prava__date__x = MaterialService.initDatepicker(
-      this.prava__date__info,
-      this.validate.bind(this)
-    );
   }
   // Валидация
   validate() {}
@@ -161,14 +146,14 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
       makedate: this.form.value.makedate,
       passport_seria: this.form.value.passport_seria,
       passport_number: this.form.value.passport_number,
-      passport_date:  this.passport__date__x.date === undefined ? this.xsActualClient.passport_date: new Date(this.passport__date__x.date).toLocaleDateString('ru-RU'),
+      passport_date: this.form.value.passport_date,
       passport_who_take: this.form.value.passport_who_take,
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
       passport_register: this.form.value.passport_register,
       passport_address_fact: this.form.value.passport_address_fact,
       prava_seria: this.form.value.prava_seria,
       prava_number: this.form.value.prava_number,
-      prava_date: this.prava__date__x.date === undefined ? this.xsActualClient.prava_date: new Date(this.prava__date__x.date).toLocaleDateString('ru-RU'),
+      prava_date: this.form.value.prava_date,
       phone_main: this.form.value.phone_main,
       phone_1_dop_name: this.form.value.phone_1_dop_name,
       phone_1_dop_number: this.form.value.phone_1_dop_number,

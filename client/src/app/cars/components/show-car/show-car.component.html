@@ -14,8 +14,10 @@
         </div>
     </div>
 
-    <div class="xs_close_probeg_warning" *ngIf="+xsActualCar.probeg > +xsActualCar.to_probeg_next">
-        <div>НЕОБХОДИМО СРОЧНОЕ ТО ДЛЯ АВТОМОБИЛЯ</div>
+    <div *ngIf="xsActualCar">
+        <div class="xs_close_probeg_warning" *ngIf="+xsActualCar.probeg > +xsActualCar.to_probeg_next">
+            <div>НЕОБХОДИМО СРОЧНОЕ ТО ДЛЯ АВТОМОБИЛЯ</div>
+        </div>
     </div>
 
     <div class="xs_add__car__content">
@@ -86,15 +88,26 @@
                         </div>
 
 
-                        <div class="input-field col s12">
-                            <input placeholder="Введите значение" id="start_arenda" type="text" class="validate" formControlName="start_arenda" [ngClass]="{'invalid': form.controls['start_arenda'].invalid && form.controls['start_arenda'].touched}" #start_arenda ngModel="{{start_date_responce}}">
+
+                        <div class="xs_input_wrap">
                             <label for="start_arenda">Дата заезда авто в парк</label>
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="start_arenda" type="datetime-local" class="validate"
+                                    formControlName="start_arenda"
+                                    [ngClass]="{'invalid': form.controls['start_arenda'].invalid && form.controls['start_arenda'].touched}">
+                        
+                            </div>
                         </div>
 
 
-                        <div class="input-field col s12">
-                            <input placeholder="Введите значение" id="end_arenda" type="text" class="validate" formControlName="end_arenda" [ngClass]="{'invalid': form.controls['end_arenda'].invalid && form.controls['end_arenda'].touched}" #end_arenda ngModel="{{end_date_responce}}">
-                            <label for="end_arenda">Дата выезда авто из парка</label>
+                        <div class="xs_input_wrap">
+                            <label for="end_arenda">Конец аренды</label>
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="end_arenda" type="datetime-local" class="validate"
+                                    formControlName="end_arenda"
+                                    [ngClass]="{'invalid': form.controls['end_arenda'].invalid && form.controls['end_arenda'].touched}">
+                        
+                            </div>
                         </div>
 
 
@@ -165,11 +178,17 @@
                             [ngClass]="{'invalid': form.controls['sts_number'].invalid && form.controls['sts_number'].touched}">
                         <label for="model">Номер СТС</label>
                     </div>
-            
-                    <div class="input-field col s12">
-                        <input placeholder="Введите значение" id="sts_date" type="text" class="validate" formControlName="sts_date"
-                            [ngClass]="{'invalid': form.controls['sts_date'].invalid && form.controls['sts_date'].touched}" #sts_date_info ngModel="{{sts_date_date_responce}}">
-                        <label for="model">Дата выдачи СТС</label>
+
+
+
+                    <div class="xs_input_wrap">
+                        <label for="sts_date">Дата выдачи СТС</label>
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="sts_date" type="datetime-local" class="validate"
+                                formControlName="sts_date"
+                                [ngClass]="{'invalid': form.controls['sts_date'].invalid && form.controls['sts_date'].touched}">
+                    
+                        </div>
                     </div>
             
                     <div class="input-field col s12">
@@ -185,12 +204,16 @@
                             [ngClass]="{'invalid': form.controls['osago_number'].invalid && form.controls['osago_number'].touched}">
                         <label for="model">Номер ОСАГО</label>
                     </div>
-            
-                    <div class="input-field col s12">
-                        <input placeholder="Введите значение" id="osago_date_finish" type="text" class="validate"
-                            formControlName="osago_date_finish"
-                            [ngClass]="{'invalid': form.controls['osago_date_finish'].invalid && form.controls['osago_date_finish'].touched}" #osago_date_finish_info ngModel="{{osago_date_finish_responce}}">
-                        <label for="model">Дата окончания полиса ОСАГО</label>
+
+
+                    <div class="xs_input_wrap">
+                        <label for="osago_date_finish">Дата окончания полиса ОСАГО</label>
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="osago_date_finish" type="datetime-local" class="validate"
+                                formControlName="osago_date_finish"
+                                [ngClass]="{'invalid': form.controls['osago_date_finish'].invalid && form.controls['osago_date_finish'].touched}">
+                    
+                        </div>
                     </div>
             
                     <div class="input-field col s12">
@@ -223,10 +246,16 @@
 
             <div id="to" class="col s12">
                 <div class="xs_form__item">
-                    <div class="input-field col s12">
-                        <input placeholder="Введите значение" id="to_date" type="text" class="validate" formControlName="to_date"
-                            [ngClass]="{'invalid': form.controls['to_date'].invalid && form.controls['to_date'].touched}" #to_date_info ngModel="{{to_date_responce}}">
-                        <label for="model">Дата последнего ТО</label>
+
+
+                    <div class="xs_input_wrap">
+                        <label for="to_date">Дата последнего ТО</label>
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="to_date" type="datetime-local" class="validate"
+                                formControlName="to_date"
+                                [ngClass]="{'invalid': form.controls['to_date'].invalid && form.controls['to_date'].touched}">
+                    
+                        </div>
                     </div>
             
                     <div class="input-field col s12">

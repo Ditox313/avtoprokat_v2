@@ -13,7 +13,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
   templateUrl: './add-car.component.html',
   styleUrls: ['./add-car.component.css']
 })
-export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
+export class AddCarComponent implements OnInit,AfterViewInit {
 
   @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('start_arenda') start_arenda_avto!: ElementRef;
@@ -35,21 +35,6 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
   //Инициализируем нашу форму
   form!: FormGroup; 
 
-
-   // Храним дату начала
-  start: MaterialDatepicker | any;
-
-  // Храним дату конца
-  end: MaterialDatepicker | any;
-
-  // Храним дату выдачи СТС
-  sts_date_x: MaterialDatepicker | any;
-
-  // Храним дату окончания полиса осаго
-  osago_date_finish_x: MaterialDatepicker | any;
-
-  // Храним дату последнего ТО
-  to_date_x: MaterialDatepicker | any;
 
   // Задаем переменную для хранения картинки после пото как загрузили с устройтста
   image!: File
@@ -115,20 +100,10 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
 
 
 
-  ngOnDestroy(): void {
-    this.start.destroy()
-  }
-
   
 
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement)
-    this.start = MaterialService.initDatepicker(this.start_arenda_avto, this.validate.bind(this));
-    this.end = MaterialService.initDatepicker(this.end_arenda_avto, this.validate.bind(this));
-
-    this.sts_date_x = MaterialService.initDatepicker(this.sts_date_info_avto, this.validate.bind(this));
-    this.osago_date_finish_x = MaterialService.initDatepicker(this.osago_date_finish_info_avto, this.validate.bind(this));
-    this.to_date_x = MaterialService.initDatepicker(this.to_date_info_avto, this.validate.bind(this));
     MaterialService.updateTextInputs();
   }
 
@@ -136,13 +111,7 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
 
   // Валидация
   validate() {
-    if(!this.start.date || !this.end.date)
-    {  
-      this.isValid = true;
-      return;
-    }
-
-    this.isValid = this.start.date < this.end.date;
+    
   }
 
 
@@ -186,30 +155,30 @@ export class AddCarComponent implements OnInit,AfterViewInit,OnDestroy  {
     // this.form.disable();
 
     // Создаем авто
+
+
     const car = {
       marka: this.form.value.marka,
       model: this.form.value.model,
       number: this.form.value.number,
       probeg: this.form.value.probeg,
       price: this.form.value.price,
-      start_arenda: new Date(this.start.date).toLocaleDateString('ru-RU'),
-      end_arenda: new Date(this.end.date).toLocaleDateString('ru-RU'),
+      start_arenda: this.form.value.start_arenda,
+      end_arenda: this.form.value.end_arenda,
       vladelec: this.form.value.vladelec,
       category: this.form.value.category,
       status: this.form.value.status,
       sts_seria: this.form.value.sts_seria,
       sts_number: this.form.value.sts_number,
-      sts_date: new Date(this.sts_date_x.date).toLocaleDateString('ru-RU'),
+      sts_date: this.form.value.sts_date,
       osago_seria: this.form.value.osago_seria,
       osago_number: this.form.value.osago_number,
-      osago_date_finish: new Date(
-        this.osago_date_finish_x.date
-      ).toLocaleDateString('ru-RU'),
+      osago_date_finish: this.form.value.osago_date_finish,
       vin: this.form.value.vin,
       color: this.form.value.color,
       year_production: this.form.value.year_production,
       price_ocenka: this.form.value.price_ocenka,
-      to_date: new Date(this.to_date_x.date).toLocaleDateString('ru-RU'),
+      to_date: this.form.value.to_date,
       to_probeg_prev: this.form.value.to_probeg_prev,
       to_probeg_next: this.form.value.to_probeg_next,
       to_interval: this.form.value.to_interval,

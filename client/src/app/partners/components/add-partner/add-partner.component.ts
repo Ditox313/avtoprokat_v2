@@ -19,10 +19,7 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
 
 
   form: any;
-  // tabs: any;
 
-  // Храним дату выдачи пасспорта
-  passport__date__x: MaterialDatepicker | any;
 
 
 
@@ -36,7 +33,7 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
   passport_2_preview: any = '';
 
 
-  constructor(private partners: PartnersService, private router: Router) {}
+  constructor(private partners: PartnersService, private router: Router) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -63,27 +60,21 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
 
-    this.passport__date__x = MaterialService.initDatepicker(
-      this.passport__date__info,
-      this.validate.bind(this)
-    );
   }
   // Валидация
-  validate() {}
+  validate() { }
 
   // Отправка формы
   onSubmit() {
-    // this.form.disable();
-    // Создаем авто
+
+    // Создаем DHNYTHF
     const partner = {
       name: this.form.value.name,
       surname: this.form.value.surname,
       lastname: this.form.value.lastname,
       passport_seria: this.form.value.passport_seria,
       passport_number: this.form.value.passport_number,
-      passport_date: new Date(this.passport__date__x.date).toLocaleDateString(
-        'ru-RU'
-      ),
+      passport_date: this.form.value.passport_date,
       passport_who_take: this.form.value.passport_who_take,
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
       passport_register: this.form.value.passport_register,
@@ -95,7 +86,7 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
     };
 
 
-    
+
 
     this.partners
       .create(partner, this.passport__1, this.passport__2)
