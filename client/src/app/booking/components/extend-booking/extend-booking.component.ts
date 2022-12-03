@@ -104,6 +104,9 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
+    // console.log('111', +this.summa.summaFull - (+this.actualBooking.paidCount));
+    
+
     this.form = new FormGroup({
       car: new FormControl('', [Validators.required]),
       client: new FormControl('', [Validators.required]),

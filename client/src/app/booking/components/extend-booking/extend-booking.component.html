@@ -64,8 +64,17 @@
 
         <div>
             <span class="xs_paid_span_1">Сумма к оплате: </span>
-            <!-- <span class="xs_paid_span_2">{{(+summa.summaFull - (+actualBooking.paidCount))  }} ₽</span> -->
             <span class="xs_paid_span_2">{{summa_extend.summa || 0}} ₽</span>
+        </div>
+
+        <div *ngIf="(+actualBooking.summaFull - (+actualBooking.paidCount)) > 0 ">
+            <span class="xs_paid_span_1">Долг на момент продления: </span>
+            <span class="xs_paid_span_2">{{+actualBooking.summaFull - (+actualBooking.paidCount)}} ₽</span>
+        </div>
+
+        <div *ngIf="(+actualBooking.summaFull - (+actualBooking.paidCount)) > 0 ">
+            <span class="xs_paid_span_1">Итого к оплате(с учетом долга): </span>
+            <span class="xs_paid_span_2">{{+summa_extend.summa + (+actualBooking.summaFull - (+actualBooking.paidCount))}} ₽</span>
         </div>
 
 
