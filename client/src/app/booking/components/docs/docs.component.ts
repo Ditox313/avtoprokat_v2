@@ -54,9 +54,17 @@ export class DocsComponent implements OnInit {
     var html = htmlToPdfmake(this.content.nativeElement.innerHTML);
     
     let docDefinition = {
-      content: html,
+      content: [html],
       pageSize: 'A4',
       pageMargins: [20, 20, 20, 20],
+      styles: {
+        fsz: { // we define the class called "red"
+          fontSize: 7
+        },
+        fsz_b: { // we define the class called "red"
+          fontSize: 11
+        }
+      }
     };
 
     pdfMake.createPdf(docDefinition).open();

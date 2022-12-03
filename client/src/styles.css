@@ -1196,3 +1196,13 @@ select {
 {
     margin-top: 0 !important;
 }
+
+.xs_generate_docs__content
+{
+    font-size: 11px !important;
+}
+
+.xs_generate_docs__content p
+{
+    margin: 0 !important;
+}
