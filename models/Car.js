@@ -51,6 +51,13 @@ const carSchema = new Schema({
         required: false,
     },
 
+    // Трансмиссия
+    transmission: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
 
 
     // Стоимость

@@ -16,12 +16,12 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 export class AddCarComponent implements OnInit,AfterViewInit {
 
   @ViewChild('tabs') tabs!: ElementRef;
-  @ViewChild('start_arenda') start_arenda_avto!: ElementRef;
-  @ViewChild('end_arenda') end_arenda_avto!: ElementRef;
+  // @ViewChild('start_arenda') start_arenda_avto!: ElementRef;
+  // @ViewChild('end_arenda') end_arenda_avto!: ElementRef;
 
-  @ViewChild('sts_date_info') sts_date_info_avto!: ElementRef;
-  @ViewChild('osago_date_finish_info') osago_date_finish_info_avto!: ElementRef;
-  @ViewChild('to_date_info') to_date_info_avto!: ElementRef;
+  // @ViewChild('sts_date_info') sts_date_info_avto!: ElementRef;
+  // @ViewChild('osago_date_finish_info') osago_date_finish_info_avto!: ElementRef;
+  // @ViewChild('to_date_info') to_date_info_avto!: ElementRef;
 
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
@@ -58,6 +58,7 @@ export class AddCarComponent implements OnInit,AfterViewInit {
       model: new FormControl('', [Validators.required]),
       number: new FormControl('', [Validators.required]),
       probeg: new FormControl(''),
+      transmission: new FormControl(''),
       price: new FormControl(''),
       start_arenda: new FormControl(''),
       end_arenda: new FormControl(''),
@@ -162,6 +163,7 @@ export class AddCarComponent implements OnInit,AfterViewInit {
       model: this.form.value.model,
       number: this.form.value.number,
       probeg: this.form.value.probeg,
+      transmission: this.form.value.transmission,
       price: this.form.value.price,
       start_arenda: this.form.value.start_arenda,
       end_arenda: this.form.value.end_arenda,

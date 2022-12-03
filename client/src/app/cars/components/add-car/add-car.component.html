@@ -70,6 +70,17 @@
                         </div>
 
                         <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="transmission" type="text" class="validate" formControlName="transmission"
+                                [ngClass]="{'invalid': form.controls['transmission'].invalid && form.controls['transmission'].touched}">
+                            <label for="transmission">Трансмиссия</label>
+                            <span class="helper-text red-text" *ngIf="form.controls['transmission'].invalid && form.controls['transmission'].touched">
+                                <p *ngIf="form.controls['transmission'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
                             <input placeholder="Введите значение" id="price" type="text" class="validate" formControlName="price" [ngClass]="{'invalid': form.controls['price'].invalid && form.controls['price'].touched}">
                             <label for="price">Цена</label>
                             <span class="helper-text red-text" *ngIf="form.controls['price'].invalid && form.controls['price'].touched">

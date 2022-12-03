@@ -14,6 +14,7 @@ module.exports.create = async function(req, res) {
             model: req.body.model,
             number: req.body.number,
             probeg: req.body.probeg,
+            transmission: req.body.transmission,
             price: req.body.price,
             start_arenda: req.body.start_arenda,
             end_arenda: req.body.end_arenda,

@@ -54,6 +54,7 @@ export interface Car {
   marka: string;
   model: string;
   probeg: string;
+  transmission: string;
   start_arenda: any;
   end_arenda: any;
   vladelec: string;

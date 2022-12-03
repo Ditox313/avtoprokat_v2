@@ -20,6 +20,7 @@ export class CarsService {
       fd.append('marka', car.marka);
       fd.append('model', car.model);
       fd.append('probeg', car.probeg);
+      fd.append('transmission', car.transmission);
       fd.append('price', car.price);
       fd.append('start_arenda', car.start_arenda);
       fd.append('end_arenda', car.end_arenda);
@@ -82,6 +83,7 @@ export class CarsService {
       fd.append('marka', xscar.marka);
       fd.append('model', xscar.model);
       fd.append('probeg', xscar.probeg);
+      fd.append('transmission', xscar.transmission);
       fd.append('price', xscar.price);
       fd.append('start_arenda', xscar.start_arenda);
       fd.append('end_arenda', xscar.end_arenda);
