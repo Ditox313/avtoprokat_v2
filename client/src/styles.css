@@ -1197,12 +1197,21 @@ select {
     margin-top: 0 !important;
 }
 
-.xs_generate_docs__content
-{
-    font-size: 11px !important;
-}
+
 
 .xs_generate_docs__content p
 {
     margin: 0 !important;
+}
+
+.xs_custome_zalog::placeholder
+{
+    color: rgba(158,158,158, 0.5);
+    color: #fff;
+}
+.xs_custome_zalog
+{
+    background-color: #008000 !important;
+    color: #fff;
+    padding-left: 10px !important;
 }

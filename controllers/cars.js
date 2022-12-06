@@ -51,6 +51,8 @@ module.exports.create = async function(req, res) {
             russia: req.body.russia,
             price_dop_hour: req.body.price_dop_hour,
             zalog: req.body.zalog,
+            zalog_mej: req.body.zalog_mej,
+            zalog_rus: req.body.zalog_rus,
             moyka: req.body.moyka,
         }).save();
 

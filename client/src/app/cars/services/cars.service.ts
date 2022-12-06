@@ -14,7 +14,6 @@ export class CarsService {
   constructor(private http: HttpClient) {}
 
 
-  // Создаем новую позицию
   create(car: Car, image?: File): Observable<Car> {
     const fd = new FormData(); 
       fd.append('marka', car.marka);
@@ -55,6 +54,8 @@ export class CarsService {
       fd.append('mezgorod', car.mezgorod);
       fd.append('russia', car.russia);
       fd.append('price_dop_hour', car.price_dop_hour);
+      fd.append('zalog_mej', car.zalog_mej);
+      fd.append('zalog_rus', car.zalog_rus);
       fd.append('zalog', car.zalog);
       fd.append('moyka', car.moyka);
 
@@ -120,6 +121,8 @@ export class CarsService {
       fd.append('russia', xscar.russia);
       fd.append('price_dop_hour', xscar.price_dop_hour);
       fd.append('zalog', xscar.zalog);
+      fd.append('zalog_mej', xscar.zalog_mej);
+      fd.append('zalog_rus', xscar.zalog_rus);
       fd.append('moyka', xscar.moyka);
 
       if(image)

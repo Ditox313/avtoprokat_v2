@@ -324,6 +324,7 @@
                             <th>8-14 дней</th>
                             <th>15-30 дней</th>
                             <th>31+</th>
+                            <th>Залог</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -361,6 +362,13 @@
                                     formControlName="days_31_more"
                                     [ngClass]="{'invalid': form.controls['days_31_more'].invalid && form.controls['days_31_more'].touched}">
                             </td>
+            
+                            <td>
+                                <input placeholder="Введите значение" id="zalog" type="text" class="validate xs_custome_zalog"
+                                    formControlName="zalog"
+                                    [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
+                            </td>
+            
                         </tr>
             
                         <tr>
@@ -373,6 +381,17 @@
                                     formControlName="mezgorod"
                                     [ngClass]="{'invalid': form.controls['mezgorod'].invalid && form.controls['mezgorod'].touched}">
                             </td>
+            
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+            
+                            <td>
+                                <input placeholder="Введите значение" id="zalog_mej" type="text" class="validate xs_custome_zalog"
+                                    formControlName="zalog_mej"
+                                    [ngClass]="{'invalid': form.controls['zalog_mej'].invalid && form.controls['zalog_mej'].touched}">
+                            </td>
                         </tr>
             
                         <tr>
@@ -384,6 +403,17 @@
                                 <input type="text" placeholder="Введите значение" id="russia" class="validate"
                                     formControlName="russia"
                                     [ngClass]="{'invalid': form.controls['russia'].invalid && form.controls['russia'].touched}">
+                            </td>
+            
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+            
+                            <td>
+                                <input placeholder="Введите значение" id="zalog_rus" type="text" class="validate xs_custome_zalog"
+                                    formControlName="zalog_rus"
+                                    [ngClass]="{'invalid': form.controls['zalog_rus'].invalid && form.controls['zalog_rus'].touched}">
                             </td>
                         </tr>
             
@@ -401,30 +431,32 @@
                         </tr>
             
             
-                        <tr>
-                            <td style="color: #194A9E; font-weight: 600;">
-                                Залог
-                            </td>
+                        <!-- <tr>
+                                        <td style="color: #194A9E; font-weight: 600;">
+                                           свободный Залог
+                                        </td>
+                                    
+                                        <td>
+                                            <input placeholder="Введите значение" id="zalog" type="text" class="validate"
+                                                formControlName="zalog"
+                                                [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
+                                        </td>
+                                    </tr> -->
             
-                            <td>
-                                <input placeholder="Введите значение" id="zalog" type="text" class="validate"
-                                    formControlName="zalog"
-                                    [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
-                            </td>
-                        </tr>
-
                         <tr>
                             <td style="color: #194A9E; font-weight: 600;">
                                 Мойка
                             </td>
-                        
+            
                             <td>
-                                <input placeholder="Введите значение" id="moyka" type="text" class="validate" formControlName="moyka"
+                                <input placeholder="Введите значение" id="moyka" type="text" class="validate"
+                                    formControlName="moyka"
                                     [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
                             </td>
                         </tr>
                     </tbody>
                 </table>
+            
             </div>
         </div>
     </div>

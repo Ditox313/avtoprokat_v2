@@ -95,6 +95,8 @@ export class ShowCarComponent implements OnInit {
       russia: new FormControl(''),
       price_dop_hour: new FormControl(''),
       zalog: new FormControl(''),
+      zalog_mej: new FormControl(''),
+      zalog_rus: new FormControl(''),
       moyka: new FormControl(''),
     });
 
@@ -153,6 +155,8 @@ export class ShowCarComponent implements OnInit {
         russia: res.russia,
         price_dop_hour: res.price_dop_hour,
         zalog: res.zalog,
+        zalog_mej: res.zalog_mej,
+        zalog_rus: res.zalog_rus,
         moyka: res.moyka,
       });
 
@@ -261,6 +265,8 @@ export class ShowCarComponent implements OnInit {
       russia: this.form.value.russia,
       price_dop_hour: this.form.value.price_dop_hour,
       zalog: this.form.value.zalog,
+      zalog_mej: this.form.value.zalog_mej,
+      zalog_rus: this.form.value.zalog_rus,
       moyka: this.form.value.moyka,
     };
     

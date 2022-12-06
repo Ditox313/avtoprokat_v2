@@ -16,12 +16,6 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 export class AddCarComponent implements OnInit,AfterViewInit {
 
   @ViewChild('tabs') tabs!: ElementRef;
-  // @ViewChild('start_arenda') start_arenda_avto!: ElementRef;
-  // @ViewChild('end_arenda') end_arenda_avto!: ElementRef;
-
-  // @ViewChild('sts_date_info') sts_date_info_avto!: ElementRef;
-  // @ViewChild('osago_date_finish_info') osago_date_finish_info_avto!: ElementRef;
-  // @ViewChild('to_date_info') to_date_info_avto!: ElementRef;
 
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
@@ -91,6 +85,8 @@ export class AddCarComponent implements OnInit,AfterViewInit {
       russia: new FormControl(''),
       price_dop_hour: new FormControl(''),
       zalog: new FormControl(''),
+      zalog_mej: new FormControl(''),
+      zalog_rus: new FormControl(''),
       moyka: new FormControl(''),
     });
 
@@ -151,13 +147,9 @@ export class AddCarComponent implements OnInit,AfterViewInit {
 
 
 
-  // Отправка формы
+
   onSubmit(){
-    // this.form.disable();
-
     // Создаем авто
-
-
     const car = {
       marka: this.form.value.marka,
       model: this.form.value.model,
@@ -196,10 +188,13 @@ export class AddCarComponent implements OnInit,AfterViewInit {
       russia: this.form.value.russia,
       price_dop_hour: this.form.value.price_dop_hour,
       zalog: this.form.value.zalog,
+      zalog_mej: this.form.value.zalog_mej,
+      zalog_rus: this.form.value.zalog_rus,
       moyka: this.form.value.moyka,
     };
 
     
+
 
     this.Sub = this.cars.create(car, this.image).subscribe((car) => {
       MaterialService.toast('Автомобиль добавлен');
