@@ -151,6 +151,14 @@ const bookingSchema = new Schema({
         type: Object,
         required: false,
     },
+
+
+    // Залог для брони
+    booking_zalog: {
+        type: Number,
+        default: 0,
+        required: false,
+    },
     
 
 });

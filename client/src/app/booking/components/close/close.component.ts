@@ -110,7 +110,7 @@ export class CloseComponent implements OnInit {
 
       const pay = {
         vid: 'Возврат залога',
-        pricePay: this.actualBooking.car.zalog,
+        pricePay: this.actualBooking.booking_zalog,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
@@ -124,10 +124,8 @@ export class CloseComponent implements OnInit {
 
 
       const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.actualBooking.car.zalog) + (+this.actualBooking.car.moyka),
-        car: {
-          zalog: (+this.actualBooking.car.zalog) - (+this.actualBooking.car.zalog),
-        },
+        summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog) + (+this.actualBooking.car.moyka),
+        booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
         status: 'Закрыта',
         dop_info_close: {
           clear_auto: this.form.value.clear_auto || false,
@@ -159,7 +157,8 @@ export class CloseComponent implements OnInit {
         this.router.navigate(['/bookings-page']);
       });
 
-    } else if(this.form.value.clear_auto && this.form.value.return_part)
+    } 
+    else if(this.form.value.clear_auto && this.form.value.return_part)
     {
       const car: any = {
         probeg: this.form.value.probeg_new,
@@ -175,9 +174,7 @@ export class CloseComponent implements OnInit {
 
       const booking: any = {
         summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price),
-        car: {
-          zalog: (+this.actualBooking.car.zalog) - (+this.form.value.return_part_price),
-        },
+        booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
         status: 'Закрыта',
         dop_info_close: {
           clear_auto: this.form.value.clear_auto || false,
@@ -205,7 +202,8 @@ export class CloseComponent implements OnInit {
         MaterialService.toast('Бронь закрыта');
         this.router.navigate(['/bookings-page']);
       });
-    } else if (!this.form.value.clear_auto && this.form.value.return_part) {
+    } 
+    else if (!this.form.value.clear_auto && this.form.value.return_part) {
       const car: any = {
         probeg: this.form.value.probeg_new,
       }
@@ -227,9 +225,7 @@ export class CloseComponent implements OnInit {
 
       const booking: any = {
         summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price) + (+this.actualBooking.car.moyka),
-        car: {
-          zalog: (+this.actualBooking.car.zalog) - (+this.form.value.return_part_price),
-        },
+        booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
         status: 'Закрыта',
         dop_info_close: {
           clear_auto: this.form.value.clear_auto || false,
@@ -262,23 +258,22 @@ export class CloseComponent implements OnInit {
         MaterialService.toast('Бронь закрыта');
         this.router.navigate(['/bookings-page']);
       });
-    } else if (this.form.value.clear_auto && !this.form.value.return_part) {
+    } 
+    else if (this.form.value.clear_auto && !this.form.value.return_part) {
       const car: any = {
         probeg: this.form.value.probeg_new,
       }
 
       const pay = {
         vid: 'Возврат залога',
-        pricePay: this.actualBooking.car.zalog,
+        pricePay: this.actualBooking.booking_zalog,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
 
       const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.actualBooking.car.zalog),
-        car: {
-          zalog: (+this.actualBooking.car.zalog) - (+this.actualBooking.car.zalog),
-        },
+        summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog),
+        booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
         status: 'Закрыта',
         dop_info_close: {
           clear_auto: this.form.value.clear_auto || false,

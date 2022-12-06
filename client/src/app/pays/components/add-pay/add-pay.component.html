@@ -61,7 +61,7 @@
                         <div class="pay_rashet">
                             <div>
                                 <div> <span>Аренда: </span> <span class="pay_last_span">{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
-                                <div> <span>Залог: </span> <span class="pay_last_span">{{ this.summa.car.zalog}} ₽</span> </div>
+                                <div> <span>Залог: </span> <span class="pay_last_span">{{ this.actualBooking.booking_zalog}} ₽</span> </div>
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час: </span> <span class="pay_last_span">({{summa.dop_hours}}ч) {{
                                         this.summa.car.price_dop_hour * summa.dop_hours}} ₽ </span> </div>
                                 <div> <span>Итого: </span> <span class="pay_last_span">{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>

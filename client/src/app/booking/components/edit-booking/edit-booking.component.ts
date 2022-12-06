@@ -232,16 +232,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
           if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if( this.summa.dop_hours >= 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
           }
           if (this.summa.dop_hours === 0 ) {
             this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
           }
       }
       else if(this.summa.tariff === 'Россия')
@@ -249,16 +249,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if( this.summa.dop_hours >= 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
           }
           if (this.summa.dop_hours === 0 ) {
             this.summa.summa = this.summa.booking_days * this.summa.car.russia;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
           }
       }
       
@@ -391,16 +391,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
           if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if( this.summa.dop_hours >= 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
           }
           if (this.summa.dop_hours === 0 ) {
             this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
           }
       }
       else if(this.summa.tariff === 'Россия')
@@ -408,16 +408,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if( this.summa.dop_hours >= 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
           }
           if (this.summa.dop_hours === 0 ) {
             this.summa.summa = this.summa.booking_days * this.summa.car.russia;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
           }
       }
       
@@ -550,16 +550,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
           if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if( this.summa.dop_hours >= 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
           }
           if (this.summa.dop_hours === 0 ) {
             this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
           }
       }
       else if(this.summa.tariff === 'Россия')
@@ -567,16 +567,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if( this.summa.dop_hours >= 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
           }
           if (this.summa.dop_hours === 0 ) {
             this.summa.summa = this.summa.booking_days * this.summa.car.russia;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
           }
       }
       
@@ -687,16 +687,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
           if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if( this.summa.dop_hours >= 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
           }
           if (this.summa.dop_hours === 0 ) {
             this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
           }
       }
       else if(this.summa.tariff === 'Россия')
@@ -704,16 +704,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         if(this.summa.dop_hours > 0 && this.summa.dop_hours < 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if( this.summa.dop_hours >= 12 )
           {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia 
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
           }
           if (this.summa.dop_hours === 0 ) {
             this.summa.summa = this.summa.booking_days * this.summa.car.russia;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
           }
       }
       
@@ -746,28 +746,87 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
     }
 
-    const booking = {
-      car: JSON.parse(this.form.value.car),
-      client: JSON.parse(this.form.value.client),
-      place_start: this.form.value.place_start,
-      place_end: this.form.value.place_end,
-      tariff: this.form.value.tariff,
-      comment: this.form.value.comment,
-      booking_start: this.form.value.booking_start,
-      booking_end: this.form.value.booking_end,
-      booking_days: this.booking_days_fin,
-      summaFull: this.summa.summaFull,
-      summa: this.summa.summa,
-      dop_hours: this.summa.dop_hours,
-      dop_info_open: {
-        clear_auto: this.form.value.clear_auto,
-        full_tank: this.form.value.full_tank
-      }
-    };
 
-    this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-      MaterialService.toast('Бронь обновлена');
-      // this.router.navigate(['/bookings-page']);
-    });
+    if (this.form.value.tariff === 'Город')
+    {
+      const booking = {
+        car: JSON.parse(this.form.value.car),
+        client: JSON.parse(this.form.value.client),
+        place_start: this.form.value.place_start,
+        place_end: this.form.value.place_end,
+        tariff: this.form.value.tariff,
+        comment: this.form.value.comment,
+        booking_start: this.form.value.booking_start,
+        booking_end: this.form.value.booking_end,
+        booking_days: this.booking_days_fin,
+        summaFull: this.summa.summaFull,
+        summa: this.summa.summa,
+        dop_hours: this.summa.dop_hours,
+        dop_info_open: {
+          clear_auto: this.form.value.clear_auto,
+          full_tank: this.form.value.full_tank
+        },
+        booking_zalog: this.summa.car.zalog
+      };
+
+      this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+        MaterialService.toast('Бронь обновлена');
+      });
+    }
+
+
+    if (this.form.value.tariff === 'Межгород') {
+      const booking = {
+        car: JSON.parse(this.form.value.car),
+        client: JSON.parse(this.form.value.client),
+        place_start: this.form.value.place_start,
+        place_end: this.form.value.place_end,
+        tariff: this.form.value.tariff,
+        comment: this.form.value.comment,
+        booking_start: this.form.value.booking_start,
+        booking_end: this.form.value.booking_end,
+        booking_days: this.booking_days_fin,
+        summaFull: this.summa.summaFull,
+        summa: this.summa.summa,
+        dop_hours: this.summa.dop_hours,
+        dop_info_open: {
+          clear_auto: this.form.value.clear_auto,
+          full_tank: this.form.value.full_tank
+        },
+        booking_zalog: this.summa.car.zalog_mej
+      };
+
+      this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+        MaterialService.toast('Бронь обновлена');
+      });
+    }
+
+
+    if (this.form.value.tariff === 'Россия') {
+      const booking = {
+        car: JSON.parse(this.form.value.car),
+        client: JSON.parse(this.form.value.client),
+        place_start: this.form.value.place_start,
+        place_end: this.form.value.place_end,
+        tariff: this.form.value.tariff,
+        comment: this.form.value.comment,
+        booking_start: this.form.value.booking_start,
+        booking_end: this.form.value.booking_end,
+        booking_days: this.booking_days_fin,
+        summaFull: this.summa.summaFull,
+        summa: this.summa.summa,
+        dop_hours: this.summa.dop_hours,
+        dop_info_open: {
+          clear_auto: this.form.value.clear_auto,
+          full_tank: this.form.value.full_tank
+        },
+        booking_zalog: this.summa.car.zalog_rus
+      };
+
+      this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+        MaterialService.toast('Бронь обновлена');
+      });
+    }
+    
   }
 }

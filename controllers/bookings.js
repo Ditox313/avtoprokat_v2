@@ -38,7 +38,8 @@ module.exports.create = async function(req, res) {
             user: req.user._id,
             order: maxOrder + 1,
             dop_hours: req.body.dop_hours,
-            dop_info_open: req.body.dop_info_open
+            dop_info_open: req.body.dop_info_open,
+            booking_zalog: req.body.booking_zalog
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
@@ -147,7 +148,7 @@ module.exports.close = async function (req, res) {
                     clear_auto: updated.dop_info_close.clear_auto,
                     full_tank: updated.dop_info_close.full_tank,
                     probeg_new: updated.dop_info_close.probeg_new,
-                    zalog: updated.car.zalog,
+                    zalog: updated.booking_zalog,
                     return_part_price: updated.dop_info_close.return_part_price || false,
                     return_part_comment: updated.dop_info_close.return_part_comment || false,
                 }

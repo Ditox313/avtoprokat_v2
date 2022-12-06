@@ -152,8 +152,12 @@
     </div>
 
     <div class="xs_summa" *ngIf="this.summa.summa"> 
-        <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> + 
-        <span>Залог {{this.summa.car.zalog}} ₽</span> + 
+        <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> 
+        + 
+        <span *ngIf="this.summa.tariff === 'Город'">Залог {{this.summa.car.zalog}} ₽</span>
+        <span *ngIf="this.summa.tariff === 'Межгород'">Залог {{this.summa.car.zalog_mej}} ₽</span>
+        <span *ngIf="this.summa.tariff === 'Россия'">Залог {{this.summa.car.zalog_rus}} ₽</span>
+        + 
         <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽</span> =
         <span>Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
     </div>

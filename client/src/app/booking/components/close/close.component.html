@@ -50,7 +50,7 @@
                     <div>
                         <div> <span>Аренда: </span> <span class="pay_last_span">{{ this.summa.summa | number: '1.0-0'}} ₽</span>
                         </div>
-                        <div> <span>Залог: </span> <span class="pay_last_span">{{ this.summa.car.zalog}} ₽</span> </div>
+                        <div> <span>Залог: </span> <span class="pay_last_span">{{ this.actualBooking.booking_zalog}} ₽</span> </div>
                         <div *ngIf="summa.dop_hours > 0"> <span>Доп.час: </span> <span
                                 class="pay_last_span">({{summa.dop_hours}}ч)
                                 {{
@@ -123,7 +123,7 @@
 
 
         <div class="xs_close_booking__content___item">
-            <h4>Вернуть залог: {{actualBooking.car.zalog}} руб</h4>
+            <h4>Вернуть залог: {{actualBooking.booking_zalog}} руб</h4>
 
             <div class="xs_form_pay__item">
                 <label for="marka">Тип возврата</label>
