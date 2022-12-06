@@ -144,6 +144,7 @@ module.exports.close = async function (req, res) {
             $set: {
                 summaFull: updated.summaFull,
                 status: updated.status,
+                booking_zalog: updated.booking_zalog,
                 dop_info_close: {
                     clear_auto: updated.dop_info_close.clear_auto,
                     full_tank: updated.dop_info_close.full_tank,
