@@ -130,6 +130,18 @@
             </div>
         </div>
 
+        <div class="xs_custome__zalog">
+            <div class="xs_paid_sale__wrap">
+                <input type="checkbox" (click)="xs_isCustomeZalogCheck()">
+                <div>Произвольный залог</div>
+            </div>
+        
+            <div class="xs_paid_sale__hide" ng-model='xs_isCustomeZalogCheck' *ngIf="isCustomeZalog">
+                <input type="text" placeholder="Введите сумму залога" formControlName="isCustomeZalogControl" id="isCustomeZalogControl"
+                (change)="onCustomeZalogValue($event)" (blur)="onBlurMethod($event)"> руб
+            </div>
+        </div>
+
         <div class="xs_add_booking_dop_info">
             <h4>Дополнительная информация:</h4>
             <div class="xs_add_booking_dop_info___wrap">
@@ -147,17 +159,35 @@
     </div>
 
     <div class="xs_summa" *ngIf="this.summa.summa"> 
-        <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> 
-        + 
-        <span *ngIf="this.summa.tariff === 'Город'">Залог {{this.summa.car.zalog}} ₽</span> 
-        <span *ngIf="this.summa.tariff === 'Межгород'">Залог {{this.summa.car.zalog_mej}} ₽</span>
-        <span *ngIf="this.summa.tariff === 'Россия'">Залог {{this.summa.car.zalog_rus}} ₽</span>
-        + 
-        <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
-            Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
-        </span> =
-        <span>Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
+        <div *ngIf="!isCustomeZalog">
+            <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> 
+            + 
+            <span *ngIf="!isCustomeZalog">
+                <span *ngIf="this.summa.tariff === 'Город'">Залог {{this.summa.car.zalog}} ₽</span> 
+                <span *ngIf="this.summa.tariff === 'Межгород'">Залог {{this.summa.car.zalog_mej}} ₽</span>
+                <span *ngIf="this.summa.tariff === 'Россия'">Залог {{this.summa.car.zalog_rus}} ₽</span>
+            </span>
+            + 
+            <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
+                Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
+            </span> =
+            <span>Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
+        </div>
+
+        <div *ngIf="isCustomeZalog"> 
+            <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span>
+            +
+            <span *ngIf="isCustomeZalog">
+                <span>Залог {{+this.form.value.isCustomeZalogControl}} ₽</span>
+            </span>
+            +
+            <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
+                Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
+            </span> =
+            <span *ngIf="this.isCustomeZalogCheck === true">Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
+        </div>
     </div>
+
     
     <div class="xs_add__car___top">
         <div class="xs_add__car__top____actions">
@@ -167,3 +197,6 @@
         </div>
     </div>
 </form>
+
+
+

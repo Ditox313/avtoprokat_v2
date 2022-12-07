@@ -95,11 +95,24 @@ export class AddPayComponent implements OnInit {
 
 
 
-      // Подружаем сумму залога и аренды в поля
-      this.form.patchValue({
-        arenda: res.summa,
-        zalog: res.booking_zalog
-      });
+      
+
+      if (+this.summa.dop_hours > 0)
+      {
+        // Подружаем сумму залога и аренды в поля
+        this.form.patchValue({
+          arenda: +res.summa + (+this.summa.car.price_dop_hour * (+this.summa.dop_hours)),
+          zalog: res.booking_zalog
+        });
+      }
+      else
+      {
+        // Подружаем сумму залога и аренды в поля
+        this.form.patchValue({
+          arenda: res.summa,
+          zalog: res.booking_zalog
+        });
+      }
     });
 
 
