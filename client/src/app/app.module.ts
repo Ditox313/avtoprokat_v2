@@ -20,6 +20,7 @@ import { BookingModule } from './booking/booking.module';
 import '@angular/common/locales/global/ru'
 import { PaysModule } from './pays/pays.module';
 import { AccountModule } from './account/account.module';
+import { DocumentsModule } from './documents/documents.module';
 
 
 
@@ -45,7 +46,8 @@ import { AccountModule } from './account/account.module';
       logOnly: environment.production,
     }),
     PaysModule,
-    AccountModule
+    AccountModule,
+    DocumentsModule
   ],
   providers: [
     {

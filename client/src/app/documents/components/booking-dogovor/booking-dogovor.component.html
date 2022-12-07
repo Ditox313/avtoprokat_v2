@@ -1,5 +1,5 @@
 <form class="xs_generate_docs" *ngIf="actualBooking && actualUser">
-     <div class="xs_add__car___top">
+    <div class="xs_add__car___top">
         <h1>
             <span class="material-icons">library_books</span> Документы для брони №{{actualBooking.order}}
         </h1>
@@ -8,13 +8,13 @@
             <a [routerLink]="['/view-booking',this.bookingId]" class="xs_generate_docs_back">
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
-            
+
             <button type="submit" (click)="generatePDF()">
                 <span class="material-icons">cloud_download</span>Скачать
             </button>
         </div>
     </div>
-    
+
 
     <div class="xs_generate_docs__content" id="content" #content>
         <div class="row">
@@ -31,30 +31,39 @@
                     <a name="OLE_LINK6"></a>
                     <br />
                     Общество с ограниченной ответственностью <strong>ООО «ВВС-ВЕБ</strong>» в
-                    лице уполномоченного <strong>{{actualUser.secondName}} {{actualUser.name}} {{actualUser.thirdName}}</strong>
-                    действующего на основании Доверенности №<strong>{{actualUser.doverenost}} </strong>от <strong>{{actualUser.doverenostDate | date : 'd MMMM y'}}г</strong>., именуемое в
+                    лице уполномоченного <strong>{{actualUser.secondName}} {{actualUser.name}}
+                        {{actualUser.thirdName}}</strong>
+                    действующего на основании Доверенности №<strong>{{actualUser.doverenost}} </strong>от
+                    <strong>{{actualUser.doverenostDate | date : 'd MMMM y'}}г</strong>., именуемое в
                     дальнейшем «Арендодатель», и
-                    Гражданин(ка) РФ, <strong>{{actualBooking.client.surname}} {{actualBooking.client.name}} {{actualBooking.client.lastname}}</strong><strong>,</strong> дата рождения:
-                    <strong>{{actualBooking.client.makedate | date : 'dd.MM.yyyy'}}</strong><strong>,</strong> паспорт: серия <strong>{{actualBooking.client.passport_seria}} №{{actualBooking.client.passport_number}}</strong> <strong>, </strong>выдан
+                    Гражданин(ка) РФ, <strong>{{actualBooking.client.surname}} {{actualBooking.client.name}}
+                        {{actualBooking.client.lastname}}</strong><strong>,</strong> дата рождения:
+                    <strong>{{actualBooking.client.makedate | date : 'dd.MM.yyyy'}}</strong><strong>,</strong> паспорт:
+                    серия <strong>{{actualBooking.client.passport_seria}}
+                        №{{actualBooking.client.passport_number}}</strong> <strong>, </strong>выдан
                     <strong>
                         {{actualBooking.client.passport_who_take}}
                     </strong>
                     <strong> ,</strong>
-                    дата выдачи: <strong >{{actualBooking.client.passport_date | date : 'dd.MM.yyyy'}}</strong><strong>,</strong> регистрация:
+                    дата выдачи: <strong>{{actualBooking.client.passport_date | date :
+                        'dd.MM.yyyy'}}</strong><strong>,</strong> регистрация:
                     <strong>
                         {{actualBooking.client.passport_register}}
                     </strong>
                     <strong>, </strong>
-                    водительское удостоверение: <strong>{{actualBooking.client.prava_seria}} № {{actualBooking.client.prava_number}}</strong> <strong>, </strong>дата выдачи:
+                    водительское удостоверение: <strong>{{actualBooking.client.prava_seria}} №
+                        {{actualBooking.client.prava_number}}</strong> <strong>, </strong>дата выдачи:
                     <strong>{{actualBooking.client.prava_date}}г</strong> фактический
-                    адрес проживания (пребывания):<strong>{{actualBooking.client.passport_address_fact}}</strong><strong>,</strong> контактный номер
+                    адрес проживания
+                    (пребывания):<strong>{{actualBooking.client.passport_address_fact}}</strong><strong>,</strong>
+                    контактный номер
                     телефона:<strong>{{actualBooking.client.phone_main}}</strong><strong>,</strong> доп.: <strong>
-                        тел.</strong>{{actualBooking.client.phone_1_dop_number}}<strong>, 
+                        тел.</strong>{{actualBooking.client.phone_1_dop_number}}<strong>,
                         тел.</strong>{{actualBooking.client.phone_2_dop_number}}<strong>,
                         тел.</strong>{{actualBooking.client.phone_3_dop_number}}<strong>,
                         тел.</strong>{{actualBooking.client.phone_4_dop_number}}<strong>,
 
-                        </strong>
+                    </strong>
                     именуемый в дальнейшем «Арендатор», с другой стороны, заключили настоящий
                     Договор о нижеследующем:
                 </p>
@@ -72,7 +81,8 @@
                 <p>
                     1.2. Арендодатель подтверждает, что он имеет право передавать право
                     владения и пользования третьим лицам, кроме этого гарантирует, что
-                    транспортное средство марки согласно свидетельству о регистрации <strong>см. (Приложение №1) </strong>на момент
+                    транспортное средство марки согласно свидетельству о регистрации <strong>см. (Приложение №1)
+                    </strong>на момент
                     заключения Договора, не
                     является предметом какого-либо спора, не находится в розыске.
                 </p>
@@ -99,7 +109,8 @@
                     целях, для буксирования другого транспортного средства, легковых и грузовых
                     автомобилей, как средство перевозки посылок и иных крупно- и малогабаритных
                     грузов, как средство для <strong>работы в службах такси</strong>, для
-                    перевозки животных, в любых соревнованиях, <strong>для сдачи в субаренду</strong>, трансфере, в состоянии
+                    перевозки животных, в любых соревнованиях, <strong>для сдачи в субаренду</strong>, трансфере, в
+                    состоянии
                     алкогольного, наркотического, токсического или иного опьянения, а также
                     передавать (допускать) управления и сам Автомобиль лицам, находящемся в
                     таком же состоянии, либо отказавшемся от прохождения освидетельствования на
@@ -130,7 +141,7 @@
                 <p>
                     2.4. . Настоящий Договор действует в течение срока аренды автомобиля, а в
                     части исполнения сторонами своих обязательств – до полного их исполнения.
-                    Настоящий договор действует до <strong>{{yearDate  | date : 'd MMMM y'}}</strong>г.
+                    Настоящий договор действует до <strong>{{yearDate | date : 'd MMMM y'}}</strong>г.
                 </p>
                 <p>
                     2.5. Арендатор вносит залог на период аренды автомобиля, сумма которого
@@ -191,7 +202,8 @@
                     у Арендатора без согласования с последним, если нарушен один из пунктов
                     2.1.1.-2.1.6., п.2.3, п.5.2.1 – 5.2.4., при этом Арендатор обязан оплатить
                     расходы по транспортировке автомобиля с места изъятия до стоянки
-                    Арендодателя, расположенной по адресу: <u>г. Тюмень, ул. Дмитрия Менделеева, д.18</u>, а так же уплатить штраф в
+                    Арендодателя, расположенной по адресу: <u>г. Тюмень, ул. Дмитрия Менделеева, д.18</u>, а так же
+                    уплатить штраф в
                     размере тройного суточного платежа аренды автомобиля согласно Приложению
                     №1.
                 </p>
@@ -442,7 +454,8 @@
                 </p>
                 <p>
                     5.2. Арендатор несет ответственность за состояние лакокрасочного покрытия,
-                    комплектацию автомобиля указанную в акте приема/передачи <strong>Приложение №1</strong>, состояние салона, а так же
+                    комплектацию автомобиля указанную в акте приема/передачи <strong>Приложение №1</strong>, состояние
+                    салона, а так же
                     за небрежную
                     эксплуатацию агрегатов транспортного.
                     <br />
@@ -455,7 +468,8 @@
                     Арендодатель рассматривает данные действия как завладение имуществом
                     (автомобилем) путем обмана, злоупотребления доверием Арендодателя –
                     мошенничество, в этом случае Арендатор обязуется уплатить штраф
-                    Арендодателю в тройном размере суточного платежа аренды автомобиля согласно <strong>Приложению №1</strong>;
+                    Арендодателю в тройном размере суточного платежа аренды автомобиля согласно <strong>Приложению
+                        №1</strong>;
                 </p>
                 <p align="justify">
                     5.4.1. Если Арендатор использует автомобиль без оплаты, а так же по
@@ -510,7 +524,8 @@
                 </p>
                 <p>
                     5.9. В случае нарушения пункта 3.3.21. Арендатор уплачивает штраф
-                    Арендодателю в тройном размере суточного платежа аренды автомобиля согласно <strong>Приложению №1</strong>;
+                    Арендодателю в тройном размере суточного платежа аренды автомобиля согласно <strong>Приложению
+                        №1</strong>;
                 </p>
                 <p>
                     <strong>6. Дополнительные условия</strong>
@@ -590,13 +605,16 @@
                             </td>
                             <td width="454">
                                 <p align="left">
-                                    <strong>Арендатор: {{actualBooking.client.surname}} {{actualBooking.client.name}} {{actualBooking.client.lastname}}</strong>
+                                    <strong>Арендатор: {{actualBooking.client.surname}} {{actualBooking.client.name}}
+                                        {{actualBooking.client.lastname}}</strong>
                                 </p>
                                 <p align="left">
-                                    дата рождения: <strong>{{actualBooking.client.makedate | date : 'dd.MM.yyyy'}}</strong>
+                                    дата рождения: <strong>{{actualBooking.client.makedate | date :
+                                        'dd.MM.yyyy'}}</strong>
                                 </p>
                                 <p align="left">
-                                    паспорт: серия <strong>{{actualBooking.client.passport_seria}} №{{actualBooking.client.passport_number}}</strong>
+                                    паспорт: серия <strong>{{actualBooking.client.passport_seria}}
+                                        №{{actualBooking.client.passport_number}}</strong>
                                 </p>
                                 <p align="left">
                                     выдан
@@ -604,7 +622,8 @@
                                         {{actualBooking.client.passport_who_take}}
                                     </strong>
                                     <strong> ,</strong>
-                                    дата выдачи: <strong>{{actualBooking.client.passport_date | date : 'dd.MM.yyyy'}}</strong>
+                                    дата выдачи: <strong>{{actualBooking.client.passport_date | date :
+                                        'dd.MM.yyyy'}}</strong>
                                 </p>
                                 <p align="left">
                                     регистрация:
@@ -612,18 +631,22 @@
                                         {{actualBooking.client.passport_register}}
                                     </strong>
                                     <strong>, </strong>
-                                    водительское удостоверение: <strong>{{actualBooking.client.prava_seria}} № {{actualBooking.client.prava_number}}</strong><strong>, </strong>дата выдачи:
+                                    водительское удостоверение: <strong>{{actualBooking.client.prava_seria}} №
+                                        {{actualBooking.client.prava_number}}</strong><strong>, </strong>дата выдачи:
                                     <strong>{{actualBooking.client.prava_date}}г</strong>
                                 </p>
                                 <p align="left">
-                                    фактический адрес проживания (пребывания): <strong>{{actualBooking.client.passport_address_fact}}</strong>
+                                    фактический адрес проживания (пребывания):
+                                    <strong>{{actualBooking.client.passport_address_fact}}</strong>
                                 </p>
                                 <p align="left">
-                                    контактный номер телефона:<strong>{{actualBooking.client.phone_main}}</strong><strong>,</strong> доп.: 
-                                        тел.<strong>{{actualBooking.client.phone_1_dop_number}}</strong>,
-                                        тел.<strong>{{actualBooking.client.phone_2_dop_number}}</strong>,
-                                        тел.<strong>{{actualBooking.client.phone_3_dop_number}}</strong>,
-                                        тел.<strong>{{actualBooking.client.phone_4_dop_number}}</strong>,
+                                    контактный номер
+                                    телефона:<strong>{{actualBooking.client.phone_main}}</strong><strong>,</strong>
+                                    доп.:
+                                    тел.<strong>{{actualBooking.client.phone_1_dop_number}}</strong>,
+                                    тел.<strong>{{actualBooking.client.phone_2_dop_number}}</strong>,
+                                    тел.<strong>{{actualBooking.client.phone_3_dop_number}}</strong>,
+                                    тел.<strong>{{actualBooking.client.phone_4_dop_number}}</strong>,
                                 </p>
                             </td>
                         </tr>

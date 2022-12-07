@@ -13,9 +13,9 @@ import { SiteLayoutComponent } from '../shared/layouts/components/site-layout/si
 import { LayoutsModule } from '../shared/layouts/layouts.module';
 import { ViewBookingComponent } from './components/view-booking/view-booking.component';
 import { PaysModule } from '../pays/pays.module';
-import { DocsComponent } from './components/docs/docs.component';
 import { ExtendBookingComponent } from './components/extend-booking/extend-booking.component';
 import { CloseComponent } from './components/close/close.component';
+import { DocumentsModule } from '../documents/documents.module';
 
 
 const routes = [
@@ -31,13 +31,12 @@ const routes = [
       { path: 'close-booking/:id', component: CloseComponent },
       { path: 'extend-booking/:id', component: ExtendBookingComponent },
       { path: 'edit-booking/:id/:view', component: EditBookingComponent },
-      { path: 'generate-docs/:id', component: DocsComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, ViewBookingComponent, DocsComponent, ExtendBookingComponent, CloseComponent],
+  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, ViewBookingComponent, ExtendBookingComponent, CloseComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -47,7 +46,8 @@ const routes = [
     RouterModule.forChild(routes),
     LoaderModule,
     LayoutsModule,
-    PaysModule
+    PaysModule,
+    DocumentsModule
   ],
   providers: [BookingsService],
 })
