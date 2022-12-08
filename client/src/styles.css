@@ -909,6 +909,11 @@ select {
     background-color: green !important;
 }
 
+.to_pay_act {
+    background-color: #FFA500 !important;
+    margin-left: 15px;
+}
+
 .xs_paid_span_1
 {
     font-size: 18px;
@@ -1215,3 +1220,5 @@ select {
     color: #fff;
     padding-left: 10px !important;
 }
+
+

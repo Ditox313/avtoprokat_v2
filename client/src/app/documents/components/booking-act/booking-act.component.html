@@ -1,0 +1,1363 @@
+<form class="xs_generate_docs" *ngIf="actualBooking && actualUser">
+    <div class="xs_add__car___top">
+        <h1>
+            <span class="material-icons">library_books</span> Документы для брони №{{actualBooking.order}}
+        </h1>
+
+        <div class="xs_add__car__top____actions">
+            <a [routerLink]="['/view-booking',this.bookingId]" class="xs_generate_docs_back">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a>
+
+            <button type="submit" (click)="generatePDF()">
+                <span class="material-icons">cloud_download</span>Скачать
+            </button>
+        </div>
+    </div>
+
+
+    <div class="xs_generate_docs__content" id="content" #content>
+        <div class="row">
+
+            <div class="xs_doc_file fsz">
+                <p>
+                    <strong> </strong>
+                </p>
+                <p align="right">
+                    <strong>Приложение №1 </strong>
+                    к Договору проката транспортного
+                    <br />
+                    средства без экипажа
+                </p>
+                <p align="right">
+                    №<strong>{{actualBooking.date | date:
+                    'ddMM'}}/СТС-{{actualBooking.order}} от {{actualBooking.date | date : 'd MMMM y'}}</strong>
+                </p>
+                <p align="center">
+                    <strong>АКТ</strong>
+                </p>
+                <p align="center">
+                    <strong>приема/передачи транспортного средства без экипажа</strong>
+                </p>
+                <p align="justify">
+                    <strong>г. Тюмень </strong>
+                </p>
+                <table width="942" cellpadding="9" cellspacing="0">
+                    <colgroup>
+                        <col width="6" />
+                        <col width="190" />
+                        <col width="6" />
+                        <col width="195" />
+                        <col width="5452" />
+                        <col width="5458" />
+                        <col width="198" />
+                        <col width="6" />
+                        <col width="191" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td colspan="5" width="459">
+                                <p align="left">
+                                    <strong>Марка/Модель: </strong>
+                                    {{actualBooking.car.marka}} {{actualBooking.car.model}}
+                                </p>
+                            </td>
+                            <td colspan="4" width="445">
+                                <p align="left">
+                                    <strong>VIN</strong>
+                                    <strong>: </strong>
+                                    {{actualBooking.car.vin}}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" width="459">
+                                <p align="left">
+                                    <strong>Цвет: </strong>
+                                    {{actualBooking.car.color}}
+                                </p>
+                            </td>
+                            <td colspan="4" width="445">
+                                <p align="left">
+                                    <strong>Год выпуска: </strong>
+                                    2014
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!-- <td colspan="5" width="459">
+                                <p align="left">
+                                    <strong>Тип ТС: </strong>
+                                    «B»
+                                </p>
+                            </td> -->
+                            <td colspan="4" width="445">
+                                <p align="left">
+                                    <strong>Номер кузова: </strong>
+                                    X4X5A79470D364168
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" width="459">
+                                <p align="left">
+                                    <a name="_GoBack"></a>
+                                    <strong>Гос. Номер: </strong>
+                                    Р179АЕ774
+                                </p>
+                            </td>
+                            <td colspan="4" width="445">
+                                <p align="left">
+                                    <strong>Трансмиссия: </strong>
+                                    АКПП
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" width="459">
+                                <p align="left">
+                                    <strong>Свидетельство: </strong>
+                                    9933 №263965 от 17 февраля 2021г
+                                </p>
+                            </td>
+                            <td colspan="4" width="445">
+                                <p align="left">
+                                    <strong>Стоимость ТС: </strong>
+                                    <u>2 200 000 (два миллиона двести тысяч) рублей.</u>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="9" width="922" height="203">
+                                <div width="944" cellpadding="9" cellspacing="0">
+                                    <div>
+                                        <div>
+                                            <div valign="top">
+                                                <div colspan="2" width="369" height="1">
+                                                    <p align="left">
+                                                        <strong>
+                                                            Город (удаленность от города до 100км):
+                                                        </strong>
+                                                    </p>
+                                                </div>
+                                                <!-- <div colspan="2" width="225">
+                                                    <p align="center">
+                                                        <strong>Тарифы на доп. услуги</strong>
+                                                    </p>
+                                                </div> -->
+                                                <div rowspan="8" width="296">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div valign="top">
+                                                <div width="6">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        5 600 рублей <strong>(1-2 суток)</strong>
+                                                    </p>
+                                                </div>
+                                                <div colspan="2" width="225">
+                                                </div>
+                                            </div>
+                                            <div valign="top">
+                                                <div width="6" height="1">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        5 400 рублей <strong>(3-7 суток)</strong>
+                                                    </p>
+                                                </div>
+                                                <div width="4">
+                                                </div>
+                                            </div>
+
+                                            
+                                        </div>
+
+                                        <div>
+                                            <div valign="top">
+                                                <div width="6">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        5 200 рублей <strong>(8-14 суток)</strong>
+                                                    </p>
+                                                </div>
+                                                <div width="4">
+                                                </div>
+                                                <div width="203">
+                                                </div>
+                                            </div>
+                                            <div valign="top">
+                                                <div width="6" height="1">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        5 000 рублей <strong>(15-30 суток)</strong>
+                                                    </p>
+                                                </div>
+                                                <div width="4">
+                                                </div>
+                                                <!-- <div width="203">
+                                                    <p align="left">
+                                                        <strong>р. подача авто</strong>
+                                                    </p>
+                                                </div> -->
+                                            </div>
+
+                                            <div valign="top">
+                                                <div width="6">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        Залог <strong> 900 руб</strong>
+                                                    </p>
+                                                </div>
+                                                <div colspan="2" width="225">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><br>
+
+                                    <div>
+                                        <div>
+                                            <div valign="top">
+                                                <div colspan="2" width="369">
+                                                    <p align="left">
+                                                        <strong>
+                                                            Межгород (удаленность от города до
+                                                            350км):
+                                                        </strong>
+                                                    </p>
+                                                </div>
+                                                <div width="4">
+                                                </div>
+                                                <div width="203">
+                                                </div>
+                                            </div>
+                                            <div valign="top">
+                                                <div width="6" height="1">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        6 200 рублей
+                                                    </p>
+                                                </div>
+                                                <div width="4">
+                                                </div>
+                                                <!-- <div width="203">
+                                                    <p align="left">
+                                                        <strong>р. подача авто</strong>
+                                                    </p>
+                                                </div> -->
+                                            </div>
+
+                                            <div valign="top">
+                                                <div width="6">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        Залог <strong> 1000 руб</strong>
+                                                    </p>
+                                                </div>
+                                                <div colspan="2" width="225">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><br>
+                                    
+                                    <div>
+                                        <div>
+                                            <div valign="top">
+                                                <div colspan="2" width="369">
+                                                    <p align="left">
+                                                        <strong>
+                                                            Россия (цена/удаленность по
+                                                            согласованию):
+                                                        </strong>
+                                                    </p>
+                                                </div>
+                                                <div width="4">
+                                                </div>
+                                                <div width="203">
+                                                </div>
+                                            </div>
+                                            <div valign="top">
+                                                <div width="6">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        7 000 рублей
+                                                    </p>
+                                                </div>
+                                                <div width="4">
+                                                </div>
+                                                <div width="203">
+                                                </div>
+                                                <div width="296">
+                                                </div>
+                                            </div>
+
+                                            <div valign="top">
+                                                <div width="6">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        Залог <strong> 2000 руб</strong>
+                                                    </p>
+                                                </div>
+                                                <div colspan="2" width="225">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><br>
+
+                                    <div>
+                                        <div valign="top">
+                                            <div colspan="2" width="369">
+                                                <p align="left">
+                                                    <strong>
+                                                        Цена мойки
+                                                    </strong>
+                                                </p>
+                                            </div>
+                                            <div width="4">
+                                            </div>
+                                            <div width="203">
+                                            </div>
+                                        </div>
+                                        <div valign="top">
+                                            <div width="6">
+                                            </div>
+                                            <div width="344">
+                                                <p align="left">
+                                                    555 рублей
+                                                </p>
+                                            </div>
+                                            <div width="4">
+                                            </div>
+                                            <div width="203">
+                                            </div>
+                                            <div width="296">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <td width="6">
+                            </td>
+                            <td width="190">
+                                <p align="left">
+                                    денежный залог 7 000 рублей
+                                </p>
+                            </td>
+                            <td width="6">
+                            </td>
+                            <td width="195">
+                                <p align="left">
+                                    денежный залог 10 000 рублей
+                                </p>
+                            </td>
+                            <td colspan="2" width="6">
+                            </td>
+                            <td width="198">
+                                <p align="left">
+                                    денежный залог 15 000 рублей
+                                </p>
+                            </td>
+                            <td width="6">
+                            </td>
+                            <td width="191">
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <td colspan="9" width="922">
+                                <p align="left">
+                                    * Почасовой прокат оплачивается по тарифу <u><strong>500 рублей</strong></u> за каждый час после
+                                    расчетного времени до <strong>20:00</strong>. После <strong>20:00</strong> оплата проката взимается
+                                    за одни
+                                    полные сутки.
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p align="justify">
+                    Настоящий акт составлен в двух экземплярах, по одному для каждой стороны,
+                    при передаче автомобиля по договору проката между: ООО «ВВС-ВЕБ» в лице
+                    уполномоченного Ямова Александра Сергеевича, далее «Арендодатель»
+                    действующий на основании доверенности №1104 от 11.04.2022г., и гражданин
+                    РФ, Халиков Ильдар Талгатович, далее «Арендатор».
+                </p>
+                <p align="center">
+                    <strong>Автомобиль:</strong>
+                </p>
+                <p align="center">
+                    <a name="OLE_LINK15"></a>
+                    <u>
+                        <strong>
+                            Передача и возврат автомобиля производится только при условии
+                            чистого кузова.
+                        </strong>
+                    </u>
+                </p>
+                <p align="center">
+                    <strong>Арендодатель</strong>
+                    передал, а <strong>Арендатор</strong> принял автомобиль: <strong>Арендатор </strong>вернул, а
+                    <strong>Арендодатель</strong> принял
+                    автомобиль:
+                </p>
+                <table width="1332" cellpadding="9" cellspacing="0">
+                    <colgroup>
+                        <col width="28" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="76" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="3" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="8" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="21" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="4" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="16" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="5455" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="6" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="65" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="53" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="6" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="100" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="6" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="41" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="6" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="5455" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="6" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="5455" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="29" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="29" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="65" />
+                    </colgroup>
+                    <colgroup>
+                        <col width="180" />
+                        <col width="171" />
+                    </colgroup>
+                    <tbody>
+                        <tr valign="top">
+                            <td colspan="11" width="454" height="14">
+                                <p align="left">
+                                    <strong>
+                                        <br />
+                                        Дата передачи: <u>29 октября 2022г</u>. Расчетное
+                                        время: _______:________
+                                        <br />
+                                    </strong>
+                                    <br />
+                                </p>
+                            </td>
+                            <td colspan="11" width="454">
+                                <p align="left">
+                                    <strong>
+                                        Дата возврата: <u>____ __________</u>2022г. Время
+                                        возврата: ______: ______
+                                    </strong>
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" width="123">
+                                <p align="left">
+                                    <strong>Состояние салона:</strong>
+                                </p>
+                            </td>
+                            <td width="3">
+                            </td>
+                            <td colspan="2" width="47">
+                                <p align="left">
+                                    чистый
+                                </p>
+                            </td>
+                            <td width="4">
+                            </td>
+                            <td colspan="5" width="205">
+                                <p align="left">
+                                    грязный
+                                </p>
+                            </td>
+                            <td colspan="2" width="124">
+                                <p align="left">
+                                    <strong>Состояние салона:</strong>
+                                </p>
+                            </td>
+                            <td width="6">
+                            </td>
+                            <td width="41">
+                                <p align="left">
+                                    чистый
+                                </p>
+                            </td>
+                            <td width="6">
+                            </td>
+                            <td colspan="6" width="206">
+                                <p align="left">
+                                    грязный
+                                </p>
+                            </td>
+                            <td width="180" valign="top">
+                            </td>
+                            <td width="171" valign="top">
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr valign="top">
+                            <td colspan="8" width="276">
+                                <p align="left">
+                                    <strong>Наличие едкого/сигаретного/иного запаха:</strong>
+                                </p>
+                            </td>
+                            <td width="6">
+                            </td>
+                            <td colspan="2" width="136">
+                                <p align="left">
+                                    без замечаний
+                                </p>
+                            </td>
+                            <td colspan="6" width="242">
+                                <p align="left">
+                                    Наличие едкого/сигаретного/иного запаха:
+                                </p>
+                            </td>
+                            <td width="6">
+                            </td>
+                            <td colspan="4" width="171">
+                                <p align="left">
+                                    без замечаний
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                                <p align="left">
+                                    без замечаний
+                                </p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="11" width="454">
+                            </td>
+                            <td colspan="11" width="454">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="11" width="454" height="4">
+                                <p align="left">
+                                    <strong>Кузов ТС: </strong>
+                                    чистый грязный <u><strong>ПРОБЕГ</strong></u>
+                                    ______________
+                                </p>
+                            </td>
+                            <td colspan="11" width="454">
+                                <p align="left">
+                                    <strong>Кузов ТС: </strong>
+                                    чистый грязный <u><strong>ПРОБЕГ</strong></u>
+                                    ______________
+                                </p>
+                            </td>
+                            <td width="180" valign="top">
+                            </td>
+                            <td width="171" valign="top">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="11" width="454" height="16">
+                                <p align="left">
+                                    <strong>Уровень топлива: </strong>
+                                    полный бак уровень топлива в баке зафиксирован на
+                                    фото/видео
+                                </p>
+                            </td>
+                            <td colspan="11" width="454">
+                                <p align="left">
+                                    <strong>Уровень топлива: </strong>
+                                    полный бак уровень топлива в баке зафиксирован на
+                                    фото/видео
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="22" width="926">
+                                <p align="center">
+                                    <strong>Сверка пломб-наклеек</strong>
+                                </p>
+                            </td>
+                            <td width="180" valign="top">
+                            </td>
+                            <td width="171" valign="top">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="7" width="265">
+                                <p align="center">
+                                    <strong>Наличие </strong>
+                                    (обвести)
+                                </p>
+                            </td>
+                            <td colspan="4" width="171">
+                                <p align="center">
+                                    <strong>Целостность</strong>
+                                    (обвести)
+                                </p>
+                            </td>
+                            <td colspan="7" width="265">
+                                <p align="center">
+                                    <strong>Наличие</strong>
+                                    (обвести)
+                                </p>
+                            </td>
+                            <td colspan="4" width="171">
+                                <p align="center">
+                                    <strong>Целостность</strong>
+                                    (обвести)
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="7" width="265">
+                                <p align="center">
+                                    ДА НЕТ
+                                </p>
+                            </td>
+                            <td colspan="4" width="171">
+                                <p align="center">
+                                    ДА НЕТ
+                                </p>
+                            </td>
+                            <td colspan="7" width="265">
+                                <p align="center">
+                                    ДА НЕТ
+                                </p>
+                            </td>
+                            <td colspan="4" width="171">
+                                <p align="center">
+                                    ДА НЕТ
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="22" width="926">
+                                <p align="center">
+                                    <strong>Лица допущенные к управлению (таблица №1)</strong>
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="28">
+                                <p align="center">
+                                    №
+                                </p>
+                            </td>
+                            <td colspan="6" width="218">
+                                <p align="center">
+                                    <strong>ФИО</strong>
+                                </p>
+                            </td>
+                            <td colspan="5" width="195">
+                                <p align="center">
+                                    <strong>Серия и № вод. удостоверения</strong>
+                                </p>
+                            </td>
+                            <td colspan="3" width="183">
+                                <p align="center">
+                                    <strong>Кем выдано</strong>
+                                </p>
+                            </td>
+                            <td colspan="5" width="100">
+                                <p align="center">
+                                    <strong>Дата выдачи</strong>
+                                </p>
+                            </td>
+                            <td colspan="2" width="112">
+                                <p align="center">
+                                    <strong>Действительна до</strong>
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="28">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td colspan="6" width="218">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td colspan="5" width="195">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td colspan="3" width="183">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td colspan="5" width="100">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td colspan="2" width="112">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="28">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td colspan="6" width="218">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td colspan="5" width="195">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td colspan="3" width="183">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td colspan="5" width="100">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td colspan="2" width="112">
+                                <p align="center">
+                                    -
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="22" width="926">
+                                <p align="center">
+                                    <strong>Комплектация автомобиля</strong>
+                                </p>
+                            </td>
+                            <td width="180" valign="top">
+                            </td>
+                            <td width="171" valign="top">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="center">
+                                    <strong>Наименование</strong>
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p align="center">
+                                    <strong>Кол-во (шт.)</strong>
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p align="center">
+                                    <strong>Стоимость шт. (руб.)</strong>
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    <strong>Наличие</strong>
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="center">
+                                    <strong>Наименование</strong>
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p align="center">
+                                    <strong>Кол-во (шт.)</strong>
+                                </p>
+                            </td>
+                            <td width="65">
+                                <p align="center">
+                                    <strong>Наличие</strong>
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="left">
+                                    Полис ОСАГО
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p align="center">
+                                    500
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    ДА
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="left">
+                                    Полис ОСАГО
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td width="65">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="left">
+                                    Запасное колесо
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p align="center">
+                                    15000
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    ДА
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="left">
+                                    Запасное колесо
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td width="65">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="left">
+                                    Домкрат
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p align="center">
+                                    3500
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    ДА
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="left">
+                                    Домкрат
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td width="65">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="left">
+                                    Баллонный ключ
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p align="center">
+                                    450
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    ДА
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="left">
+                                    Баллонный ключ
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td width="65">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="left">
+                                    Щетка для чистки кузова
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p align="center">
+                                    350
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    ДА
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="left">
+                                    Щетка для чистки кузова
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td width="65">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="left">
+                                    Ключ замка зажигания
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p align="center">
+                                    16000
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    ДА
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="left">
+                                    Ключ замка зажигания
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td width="65">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="left">
+                                    Брелок сигн. StarLine
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p lang="en-US" align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p lang="en-US" align="center">
+                                    5000
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    ДА
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="left">
+                                    Брелок сигн. StarLine
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p lang="en-US" align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td width="65">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="left">
+                                    Свидетельство регистрации
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p align="center">
+                                    2000
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    ДА
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="left">
+                                    Свидетельство регистрации
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p align="center">
+                                    1
+                                </p>
+                            </td>
+                            <td width="65">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="4" width="170">
+                                <p align="left">
+                                    Салонный коврик
+                                </p>
+                            </td>
+                            <td colspan="3" width="77">
+                                <p align="center">
+                                    4
+                                </p>
+                            </td>
+                            <td colspan="3" width="100">
+                                <p lang="en-US" align="center">
+                                    2000
+                                </p>
+                            </td>
+                            <td width="53">
+                                <p align="center">
+                                    ДА
+                                </p>
+                            </td>
+                            <td colspan="8" width="277">
+                                <p align="left">
+                                    Салонный коврик
+                                </p>
+                            </td>
+                            <td colspan="2" width="76">
+                                <p align="center">
+                                    4
+                                </p>
+                            </td>
+                            <td width="65">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="11" width="454" height="12">
+                                <p align="center">
+                                    <strong>Дополнительные примечания по автомобилю:</strong>
+                                </p>
+                            </td>
+                            <td colspan="11" width="454">
+                                <p align="center">
+                                    <strong>Дополнительные примечания по автомобилю:</strong>
+                                </p>
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td colspan="11" width="454" height="5">
+                            </td>
+                            <td colspan="11" width="454">
+                            </td>
+                            <td width="180">
+                            </td>
+                            <td width="171">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="11" width="454" height="12">
+                                <p align="left">
+                                    <em>
+                                        Выявленные замечания согласованы и зафиксированы на
+                                        фото/видео камеру в присутствии обеих сторон.
+                                    </em>
+                                </p>
+                            </td>
+                            <td colspan="11" width="454">
+                                <p align="left">
+                                    <em>
+                                        Выявленные замечания согласованы и зафиксированы на
+                                        фото/видео камеру в присутствии обеих сторон.
+                                    </em>
+                                </p>
+                            </td>
+                            <td width="180" valign="top">
+                            </td>
+                            <td width="171" valign="top">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="22" width="926">
+                                <p align="justify">
+                                    <em>
+                                        В случае возврата автомобиля не прошедшего
+                                        предварительную мойку, Арендодатель вправе предъявить
+                                        требования о возмещении ущерба Арендатору в течение 48
+                                        часов при наличии скрытых повреждений лакокрасочного
+                                        покрытия автомобиля, загрязнения салона, неисправности
+                                        агрегатов, обнаруженных Арендодателем в процессе
+                                        дополнительного осмотра с составлением соответствующего
+                                        акта.
+                                    </em>
+                                </p>
+                            </td>
+                            <td width="180" valign="top">
+                            </td>
+                            <td width="171" valign="top">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p align="center">
+                    <strong>Подписи сторон: </strong>
+                </p>
+                <table width="947" cellpadding="9" cellspacing="0">
+                    <colgroup>
+                        <col width="450" />
+                        <col width="459" />
+                    </colgroup>
+                    <tbody>
+                        <tr valign="top">
+                            <td width="450">
+                                <p align="left">
+                                    <strong>
+                                        <br />
+                                    </strong>
+                                    <br />
+                                </p>
+                                <p align="left">
+                                    <strong>
+                                        Арендодатель автомобиль передал: _______________
+                                    </strong>
+                                    /А.С. Ямов/
+                                    <br />
+                                    М.П. (подпись) (ФИО)
+                                </p>
+                            </td>
+                            <td width="459">
+                                <p align="left">
+                                    <strong>
+                                        Арендодатель автомобиль принял: _____________
+                                    </strong>
+                                    /____________/
+                                    <br />
+                                    М.П. (подпись) (ФИО)
+                                </p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="450">
+                                <p align="left">
+                                    <strong>
+                                        <br />
+                                    </strong>
+                                    <br />
+                                </p>
+                                <p align="left">
+                                    <strong>
+                                        Арендатор автомобиль принял: ________________
+                                    </strong>
+                                    / И.Т. Халиков /
+                                    <br />
+                                    (подпись) (ФИО)
+                                </p>
+                            </td>
+                            <td width="459">
+                                <p align="left">
+                                    <strong>
+                                        Арендатор автомобиль передал: ________________
+                                    </strong>
+                                    / И.Т. Халиков /
+                                    <br />
+                                    (подпись) (ФИО)
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</form>
+<app-loader *ngIf="!actualBooking"></app-loader>

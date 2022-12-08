@@ -36,7 +36,8 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, ViewBookingComponent, ExtendBookingComponent, CloseComponent],
+  declarations: [BookingsComponent, AddBookingComponent, EditBookingComponent, 
+  ViewBookingComponent, ExtendBookingComponent, CloseComponent],
   imports: [
     CommonModule,
     HttpClientModule,

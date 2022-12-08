@@ -199,6 +199,7 @@
                         <div class="setting_view_info">
                             <div class="to_pay " *ngIf="+actualBooking.paidCount <= 0">
                                 <a [routerLink]="['/add-pay', bookingId]" class="to_pay_none">Оплатить</a>
+                                <a [routerLink]="['/booking-act', bookingId]" class="to_pay_act">Акт приема/передачи</a>
                             </div>
 
                             <div class="to_pay " *ngIf="+actualBooking.paidCount > 0 && +actualBooking.paidCount < (+summa.summaFull)">
@@ -221,7 +222,7 @@
                                 </span>
 
                                 <span title="Сгенерировать документы">
-                                        <img src="../../../../assets/img/docs.png" alt="" [routerLink]="['/booking-dogovor', bookingId]">
+                                    <img src="../../../../assets/img/docs.png" alt="" [routerLink]="['/booking-dogovor', bookingId]">
                                 </span>
                             </div>
 
