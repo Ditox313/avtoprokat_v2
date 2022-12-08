@@ -159,9 +159,10 @@ export class ViewBookingComponent implements OnInit {
     };
 
     this.bookings.updateAct(this.bookingId, booking).subscribe((booking) => {
-      MaterialService.toast('Теперь можете выдать авто');
       this.router.navigate(['/booking-act', this.bookingId]);
+      // MaterialService.toast('Теперь можете выдать авто');
     });
+
     
     
   }

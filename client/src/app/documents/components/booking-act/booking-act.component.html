@@ -642,15 +642,17 @@
                             <td colspan="11" width="454" height="16">
                                 <p align="left">
                                     <strong>Уровень топлива: </strong>
-                                    полный бак уровень топлива в баке зафиксирован на
-                                    фото/видео
+                                    <span *ngIf="actualBooking.dop_info_open && actualBooking.dop_info_open.full_tank === true">полный бак</span><br>
+                                    <span *ngIf="actualBooking.dop_info_open && actualBooking.dop_info_open.full_tank === false">уровень топлива в баке зафиксирован на
+                                    фото/видео</span>
                                 </p>
                             </td>
                             <td colspan="11" width="454">
                                 <p align="left">
-                                    <strong>Уровень топлива: </strong>
-                                    полный бак уровень топлива в баке зафиксирован на
-                                    фото/видео
+                                    <strong>Уровень топлива: </strong><br>
+                                     <span>полный бак</span><br>
+                                    <span>уровень топлива в баке зафиксирован на
+                                    фото/видео</span>
                                 </p>
                             </td>
                             <td width="180">
