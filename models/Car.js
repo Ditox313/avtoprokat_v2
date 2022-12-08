@@ -37,6 +37,13 @@ const carSchema = new Schema({
         required: false,
     },
 
+    // Номер кузова
+    kuzov_number: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
     // Год выпуска
     year_production: {
         type: String,

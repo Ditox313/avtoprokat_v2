@@ -234,6 +234,12 @@
                             [ngClass]="{'invalid': form.controls['vin'].invalid && form.controls['vin'].touched}">
                         <label for="model">VIN автомобиля</label>
                     </div>
+
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="kuzov_number" type="text" class="validate" formControlName="kuzov_number"
+                            [ngClass]="{'invalid': form.controls['kuzov_number'].invalid && form.controls['kuzov_number'].touched}">
+                        <label for="model">Номер кузова</label>
+                    </div>
             
                     <div class="input-field col s12">
                         <input placeholder="Введите значение" id="color" type="text" class="validate" formControlName="color"

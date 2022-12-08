@@ -71,6 +71,7 @@ export interface Car {
   osago_number?: any;
   osago_date_finish?: any;
   vin?: any;
+  kuzov_number?: any;
   color?: any;
   year_production?: any;
   price_ocenka?: any;

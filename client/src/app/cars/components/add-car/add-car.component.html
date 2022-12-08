@@ -223,6 +223,12 @@
                     </div>
 
                     <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="kuzov_number" type="text" class="validate" formControlName="kuzov_number"
+                            [ngClass]="{'invalid': form.controls['kuzov_number'].invalid && form.controls['kuzov_number'].touched}">
+                        <label for="model">Номер кузова</label>
+                    </div>
+
+                    <div class="input-field col s12">
                         <input placeholder="Введите значение" id="color" type="text" class="validate" formControlName="color"
                             [ngClass]="{'invalid': form.controls['color'].invalid && form.controls['color'].touched}">
                         <label for="model">Цвет автомобиля</label>

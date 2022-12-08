@@ -35,6 +35,7 @@ export class CarsService {
       fd.append('osago_number', car.osago_number);
       fd.append('osago_date_finish', car.osago_date_finish);
       fd.append('vin', car.vin);
+      fd.append('kuzov_number', car.kuzov_number);
       fd.append('color', car.color);
       fd.append('year_production', car.year_production);
       fd.append('price_ocenka', car.price_ocenka);
@@ -101,6 +102,7 @@ export class CarsService {
       fd.append('osago_number', xscar.osago_number);
       fd.append('osago_date_finish', xscar.osago_date_finish);
       fd.append('vin', xscar.vin);
+      fd.append('kuzov_number', xscar.kuzov_number);
       fd.append('color', xscar.color);
       fd.append('year_production', xscar.year_production);
       fd.append('price_ocenka', xscar.price_ocenka);

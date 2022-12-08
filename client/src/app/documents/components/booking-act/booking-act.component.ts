@@ -7,6 +7,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import htmlToPdfmake from 'html-to-pdfmake';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { BookingsService } from 'src/app/booking/services/bookings.service';
+import { convert as convertNumberToWordsRu } from 'number-to-words-ru'
 
 @Component({
   selector: 'app-booking-act',
@@ -20,6 +21,7 @@ export class BookingActComponent implements OnInit {
   actualUser!: User;
   yearDate: any;
   @ViewChild('content') content!: ElementRef;
+  xsNumberSummAuto: string = '';
 
   constructor(
     private bookings: BookingsService,
@@ -29,6 +31,7 @@ export class BookingActComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     // Достаем параметры
     this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
@@ -36,6 +39,7 @@ export class BookingActComponent implements OnInit {
 
     this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
+      this.xsNumberSummAuto = convertNumberToWordsRu(this.actualBooking.car.price_ocenka)
 
       this.yearDate = new Date(this.actualBooking.date);
       this.yearDate.setDate(this.yearDate.getDate() + 365);
@@ -46,7 +50,9 @@ export class BookingActComponent implements OnInit {
       this.actualUser = user;
     })
 
-
+    
+   
+    
 
   }
 

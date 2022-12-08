@@ -31,6 +31,7 @@ module.exports.create = async function(req, res) {
             osago_number: req.body.osago_number,
             osago_date_finish: req.body.osago_date_finish,
             vin: req.body.vin,
+            kuzov_number: req.body.kuzov_number,
             color: req.body.color,
             year_production: req.body.year_production,
             price_ocenka: req.body.price_ocenka,

@@ -1,7 +1,7 @@
 <form class="xs_generate_docs" *ngIf="actualBooking && actualUser">
     <div class="xs_add__car___top">
         <h1>
-            <span class="material-icons">library_books</span> Документы для брони №{{actualBooking.order}}
+            <span class="material-icons">library_books</span> Акт приема/передачи для брони №{{actualBooking.order}}
         </h1>
 
         <div class="xs_add__car__top____actions">
@@ -17,9 +17,10 @@
 
 
     <div class="xs_generate_docs__content" id="content" #content>
+        <div class="container"></div>
         <div class="row">
 
-            <div class="xs_doc_file fsz">
+            <div class="xs_doc_file xs_doc_file__act fsz">
                 <p>
                     <strong> </strong>
                 </p>
@@ -85,16 +86,20 @@
                             </td>
                         </tr>
                         <tr>
-                            <!-- <td colspan="5" width="459">
-                                <p align="left">
+                            <td colspan="5" width="459">
+                                <!-- <p align="left">
                                     <strong>Тип ТС: </strong>
                                     «B»
+                                </p> -->
+                                <p align="left">
+                                    <strong>Стоимость ТС: </strong>
+                                    <u>{{actualBooking.car.price_ocenka}} ( {{xsNumberSummAuto}} ) рублей.</u>
                                 </p>
-                            </td> -->
+                            </td>
                             <td colspan="4" width="445">
                                 <p align="left">
                                     <strong>Номер кузова: </strong>
-                                    X4X5A79470D364168
+                                    {{actualBooking.car.kuzov_number}}
                                 </p>
                             </td>
                         </tr>
@@ -103,13 +108,13 @@
                                 <p align="left">
                                     <a name="_GoBack"></a>
                                     <strong>Гос. Номер: </strong>
-                                    Р179АЕ774
+                                    {{actualBooking.car.number}}
                                 </p>
                             </td>
                             <td colspan="4" width="445">
                                 <p align="left">
                                     <strong>Трансмиссия: </strong>
-                                    АКПП
+                                    {{actualBooking.car.transmission}}
                                 </p>
                             </td>
                         </tr>
@@ -117,14 +122,14 @@
                             <td colspan="5" width="459">
                                 <p align="left">
                                     <strong>Свидетельство: </strong>
-                                    9933 №263965 от 17 февраля 2021г
+                                    {{actualBooking.car.sts_seria}} № {{actualBooking.car.sts_number}} от {{actualBooking.car.sts_date | date : 'd MMMM y'}}
                                 </p>
                             </td>
                             <td colspan="4" width="445">
-                                <p align="left">
+                                <!-- <p align="left">
                                     <strong>Стоимость ТС: </strong>
-                                    <u>2 200 000 (два миллиона двести тысяч) рублей.</u>
-                                </p>
+                                    <u>{{actualBooking.car.price_ocenka}} ( {{xsNumberSummAuto}} ) рублей.</u>
+                                </p> -->
                             </td>
                         </tr>
                         <tr>
@@ -156,7 +161,7 @@
                                                 </div>
                                                 <div width="344">
                                                     <p align="left">
-                                                        5 600 рублей <strong>(1-2 суток)</strong>
+                                                        {{actualBooking.car.days_1_2}} рублей <strong>(1-2 суток)</strong>
                                                     </p>
                                                 </div>
                                                 <div colspan="2" width="225">
@@ -167,7 +172,7 @@
                                                 </div>
                                                 <div width="344">
                                                     <p align="left">
-                                                        5 400 рублей <strong>(3-7 суток)</strong>
+                                                        {{actualBooking.car.days_3_7}} рублей <strong>(3-7 суток)</strong>
                                                     </p>
                                                 </div>
                                                 <div width="4">
@@ -183,7 +188,7 @@
                                                 </div>
                                                 <div width="344">
                                                     <p align="left">
-                                                        5 200 рублей <strong>(8-14 суток)</strong>
+                                                        {{actualBooking.car.days_8_14}} рублей <strong>(8-14 суток)</strong>
                                                     </p>
                                                 </div>
                                                 <div width="4">
@@ -196,24 +201,36 @@
                                                 </div>
                                                 <div width="344">
                                                     <p align="left">
-                                                        5 000 рублей <strong>(15-30 суток)</strong>
+                                                        {{actualBooking.car.days_15_30}} рублей <strong>(15-30 суток)</strong>
                                                     </p>
                                                 </div>
                                                 <div width="4">
                                                 </div>
-                                                <!-- <div width="203">
-                                                    <p align="left">
-                                                        <strong>р. подача авто</strong>
-                                                    </p>
-                                                </div> -->
+
                                             </div>
+
+
+                                            <div valign="top">
+                                                <div width="6" height="1">
+                                                </div>
+                                                <div width="344">
+                                                    <p align="left">
+                                                        {{actualBooking.car.days_31_more}} рублей <strong>(31+ суток)</strong>
+                                                    </p>
+                                                </div>
+                                                <div width="4">
+                                                </div>
+
+                                            </div>
+
+
 
                                             <div valign="top">
                                                 <div width="6">
                                                 </div>
                                                 <div width="344">
                                                     <p align="left">
-                                                        Залог <strong> 900 руб</strong>
+                                                        Залог <strong> {{actualBooking.car.zalog}} руб</strong>
                                                     </p>
                                                 </div>
                                                 <div colspan="2" width="225">
@@ -243,16 +260,12 @@
                                                 </div>
                                                 <div width="344">
                                                     <p align="left">
-                                                        6 200 рублей
+                                                        {{actualBooking.car.mezgorod}} рублей
                                                     </p>
                                                 </div>
                                                 <div width="4">
                                                 </div>
-                                                <!-- <div width="203">
-                                                    <p align="left">
-                                                        <strong>р. подача авто</strong>
-                                                    </p>
-                                                </div> -->
+    
                                             </div>
 
                                             <div valign="top">
@@ -260,7 +273,7 @@
                                                 </div>
                                                 <div width="344">
                                                     <p align="left">
-                                                        Залог <strong> 1000 руб</strong>
+                                                        Залог <strong> {{actualBooking.car.zalog_mej}}руб</strong>
                                                     </p>
                                                 </div>
                                                 <div colspan="2" width="225">
@@ -290,7 +303,7 @@
                                                 </div>
                                                 <div width="344">
                                                     <p align="left">
-                                                        7 000 рублей
+                                                        {{actualBooking.car.russia}} рублей
                                                     </p>
                                                 </div>
                                                 <div width="4">
@@ -306,7 +319,7 @@
                                                 </div>
                                                 <div width="344">
                                                     <p align="left">
-                                                        Залог <strong> 2000 руб</strong>
+                                                        Залог <strong> {{actualBooking.car.zalog_rus}}руб</strong>
                                                     </p>
                                                 </div>
                                                 <div colspan="2" width="225">
@@ -334,7 +347,7 @@
                                             </div>
                                             <div width="344">
                                                 <p align="left">
-                                                    555 рублей
+                                                    {{actualBooking.car.moyka}} рублей
                                                 </p>
                                             </div>
                                             <div width="4">
@@ -378,7 +391,7 @@
                         <tr>
                             <td colspan="9" width="922">
                                 <p align="left">
-                                    * Почасовой прокат оплачивается по тарифу <u><strong>500 рублей</strong></u> за каждый час после
+                                    * Почасовой прокат оплачивается по тарифу <u><strong>{{actualBooking.car.price_dop_hour}} рублей</strong></u> за каждый час после
                                     расчетного времени до <strong>20:00</strong>. После <strong>20:00</strong> оплата проката взимается
                                     за одни
                                     полные сутки.
@@ -390,9 +403,12 @@
                 <p align="justify">
                     Настоящий акт составлен в двух экземплярах, по одному для каждой стороны,
                     при передаче автомобиля по договору проката между: ООО «ВВС-ВЕБ» в лице
-                    уполномоченного Ямова Александра Сергеевича, далее «Арендодатель»
-                    действующий на основании доверенности №1104 от 11.04.2022г., и гражданин
-                    РФ, Халиков Ильдар Талгатович, далее «Арендатор».
+                    уполномоченного {{actualUser.secondName}} {{actualUser.name}}
+                    {{actualUser.thirdName}}, далее «Арендодатель»
+                    действующий на основании доверенности №<strong>{{actualUser.doverenost}} </strong>от
+                    <strong>{{actualUser.doverenostDate | date : 'd MMMM y'}}г</strong>., и гражданин
+                    РФ, {{actualBooking.client.surname}} {{actualBooking.client.name}}
+                    {{actualBooking.client.lastname}}, далее «Арендатор».
                 </p>
                 <p align="center">
                     <strong>Автомобиль:</strong>
@@ -489,18 +505,17 @@
                                 <p align="left">
                                     <strong>
                                         <br />
-                                        Дата передачи: <u>29 октября 2022г</u>. Расчетное
-                                        время: _______:________
+                                        Дата передачи: <u>{{actualBooking.booking_start | date:'d MMMM y H:mm'}}</u>.
                                         <br />
                                     </strong>
                                     <br />
                                 </p>
+                
                             </td>
                             <td colspan="11" width="454">
                                 <p align="left">
                                     <strong>
-                                        Дата возврата: <u>____ __________</u>2022г. Время
-                                        возврата: ______: ______
+                                        Дата возврата: <u>{{actualBooking.booking_end | date:'d MMMM y H:mm'}}</u>.
                                     </strong>
                                 </p>
                             </td>
@@ -602,14 +617,19 @@
                             <td colspan="11" width="454" height="4">
                                 <p align="left">
                                     <strong>Кузов ТС: </strong>
-                                    чистый грязный <u><strong>ПРОБЕГ</strong></u>
-                                    ______________
+                                    <span *ngIf="actualBooking.dop_info_open && actualBooking.dop_info_open.clear_auto === true">чистый</span><br>
+                                    <span *ngIf="actualBooking.dop_info_open && actualBooking.dop_info_open.clear_auto === false">грязный</span>
+                                    <u><strong>ПРОБЕГ</strong></u>
+                                    {{actualBooking.car.probeg}} км
                                 </p>
                             </td>
                             <td colspan="11" width="454">
                                 <p align="left">
                                     <strong>Кузов ТС: </strong>
-                                    чистый грязный <u><strong>ПРОБЕГ</strong></u>
+                                    <span>чистый </span>
+                                    <span> грязный</span><br>
+                                      
+                                    <u><strong>ПРОБЕГ</strong></u>
                                     ______________
                                 </p>
                             </td>
@@ -1309,7 +1329,8 @@
                                     <strong>
                                         Арендодатель автомобиль передал: _______________
                                     </strong>
-                                    /А.С. Ямов/
+                                    /{{actualBooking.client.surname}} {{actualBooking.client.name}}
+                                    {{actualBooking.client.lastname}}/
                                     <br />
                                     М.П. (подпись) (ФИО)
                                 </p>
@@ -1337,7 +1358,8 @@
                                     <strong>
                                         Арендатор автомобиль принял: ________________
                                     </strong>
-                                    / И.Т. Халиков /
+                                    / {{actualUser.secondName}} {{actualUser.name}}
+                                    {{actualUser.thirdName}} /
                                     <br />
                                     (подпись) (ФИО)
                                 </p>
@@ -1347,7 +1369,8 @@
                                     <strong>
                                         Арендатор автомобиль передал: ________________
                                     </strong>
-                                    / И.Т. Халиков /
+                                    / {{actualUser.secondName}} {{actualUser.name}}
+                                    {{actualUser.thirdName}} /
                                     <br />
                                     (подпись) (ФИО)
                                 </p>
