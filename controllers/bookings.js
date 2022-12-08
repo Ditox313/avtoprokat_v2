@@ -100,6 +100,37 @@ module.exports.update = async function(req, res) {
 };
 
 
+// Контроллер для updateActClicked
+module.exports.updateActClicked = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+        const update = {
+            $set: {
+                dop_info_open: {
+                    clickedAct: true,
+                    clear_auto: updated.dop_info_open.clear_auto,
+                    full_tank: updated.dop_info_open.full_tank
+                }
+            },
+        }
+
+
+
+        const bookingUpdate = await Booking.findOneAndUpdate({ _id: updated._id }, //Ищем по id
+            update,
+            { new: true }
+        );
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(bookingUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
 module.exports.extend = async function (req, res) {
     try {
 

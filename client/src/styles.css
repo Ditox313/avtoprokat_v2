@@ -1222,7 +1222,7 @@ select {
 }
 
 
-.xs_doc_file__act
+.xs_doc_file__act, .xs_doc_file_row
 {
     padding: 0 40px;
 }

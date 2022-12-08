@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
@@ -58,6 +58,8 @@ export class ViewBookingComponent implements OnInit {
   clear_auto!: any;
 
   full_tank!: any;
+
+  clickedAct: boolean = false
 
   constructor(
     private bookings: BookingsService,
@@ -143,6 +145,25 @@ export class ViewBookingComponent implements OnInit {
     if (this.summa.booking_days >= 31) {
       this.summa.checkedTarif = this.summa.car.days_31_more
     }
+  }
+
+  clickAct(e)
+  {
+    this.clickedAct = true
+    const booking : any = {
+      dop_info_open: {
+        clickedAct: true,
+        clear_auto: this.actualBooking.dop_info_open.clear_auto,
+        full_tank: this.actualBooking.dop_info_open.full_tank
+      },
+    };
+
+    this.bookings.updateAct(this.bookingId, booking).subscribe((booking) => {
+      MaterialService.toast('Теперь можете выдать авто');
+      this.router.navigate(['/booking-act', this.bookingId]);
+    });
+    
+    
   }
 
 }

@@ -36,6 +36,11 @@ export class BookingsService {
     return this.http.patch<Booking>(`/api/bookings/${id}`, xsbooking);
   }
 
+  updateAct(id: string, xsbooking: any): Observable<Booking> {
+    xsbooking._id = id;
+    return this.http.patch<Booking>(`/api/bookings/updateActClicked/${id}`, xsbooking);
+  }
+
   extend(id: string, xsbooking: Booking): Observable<Booking> {
     xsbooking._id = id;
     return this.http.patch<Booking>(`/api/bookings/extend/${id}`, xsbooking);

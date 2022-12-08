@@ -199,21 +199,23 @@
                         <div class="setting_view_info">
                             <div class="to_pay " *ngIf="+actualBooking.paidCount <= 0">
                                 <a [routerLink]="['/add-pay', bookingId]" class="to_pay_none">Оплатить</a>
-                                <a [routerLink]="['/booking-act', bookingId]" class="to_pay_act">Акт приема/передачи</a>
+                                <a  class="to_pay_act" (click)="clickAct($event)">Акт приема/передачи</a>
                             </div>
 
                             <div class="to_pay " *ngIf="+actualBooking.paidCount > 0 && +actualBooking.paidCount < (+summa.summaFull)">
                                 <a [routerLink]="['/add-pay', bookingId]" class="to_pay_none">-{{+summa.summaFull - (+actualBooking.paidCount)}}</a>
+                                <a [routerLink]="['/booking-act', bookingId]" class="to_pay_act">Акт приема/передачи</a>
                             </div>
 
                             <div class="to_pay" *ngIf="+actualBooking.paidCount >= (+summa.summaFull)">
                                 <a [routerLink]="['/add-pay', bookingId]" class="to_pay_ok">Оплачено</a>
+                                <a [routerLink]="['/booking-act', bookingId]" class="to_pay_act">Акт приема/передачи</a>
                             </div>
 
                             <h5>Управление</h5>
 
                             <div class="setting_view_info__box" *ngIf="bookingStatus === 'В ожидании'">
-                                <span title="Выдать автомобиль"  (click)="toggleStatus('В аренде')">
+                                <span *ngIf="actualBooking.dop_info_open.clickedAct"  title="Выдать автомобиль"  (click)="toggleStatus('В аренде')">
                                     <img src="../../../../assets/img/vidat_avto.png" alt="">
                                 </span>
 

@@ -15,6 +15,10 @@ router.get('/', passport.authenticate('jwt', { session: false }), controller.fet
 // Роут на update
 router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update);
 
+
+// Роут на updateActClick
+router.patch('/updateActClicked/:id', passport.authenticate('jwt', { session: false }), controller.updateActClicked);
+
 // Роут на extend
 router.patch('/extend/:id', passport.authenticate('jwt', { session: false }), controller.extend);
 
