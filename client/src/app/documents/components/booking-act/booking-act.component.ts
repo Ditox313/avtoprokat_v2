@@ -65,11 +65,11 @@ export class BookingActComponent implements OnInit {
       pageMargins: [20, 20, 20, 20],
       styles: {
         fsz: { // we define the class called "red"
-          fontSize: 7
+          fontSize: 6
         },
         fsz_b: { // we define the class called "red"
-          fontSize: 11
-        }
+          fontSize: 10
+        },
       }
     };
 

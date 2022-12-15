@@ -60,6 +60,7 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit {
       url: '/partners-page',
       name: 'Партнеры',
     },
+
   ];
 
   // Описываем метод выхода из системы

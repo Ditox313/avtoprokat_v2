@@ -1226,3 +1226,9 @@ select {
 {
     padding: 0 40px;
 }
+
+.xs_booking_btn
+{
+    width: 98px;
+    text-align: center;
+}

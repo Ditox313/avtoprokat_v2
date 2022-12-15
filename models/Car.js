@@ -68,11 +68,11 @@ const carSchema = new Schema({
 
 
     // Стоимость
-    price: {
-        type: String,
-        default: '',
-        required: false,
-    },
+    // price: {
+    //     type: String,
+    //     default: '',
+    //     required: false,
+    // },
 
 
 
