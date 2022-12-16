@@ -47,7 +47,7 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
       kpp: new FormControl('', [Validators.required]),
       ogrn: new FormControl('', ),
       ogrn_ip: new FormControl('', ),
-      svidetelstvo_ip: new FormControl('', [Validators.required]),
+      svidetelstvo_ip: new FormControl('',),
       law_address: new FormControl('', [Validators.required]),
       fact_address: new FormControl('', [Validators.required]),
       mail_address: new FormControl('', [Validators.required]),
@@ -106,12 +106,6 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
       name_bank: this.form.value.name_bank,
     };
 
-    // console.log('111', client);
-    // console.log('222', this.doc_1_img);
-    // console.log('333', this.doc_2_img);
-    // console.log('444', this.doc_3_img);
-    // console.log('555', this.doc_4_img);
-    
     
 
     this.clients

@@ -145,7 +145,7 @@ export class ClientsService {
    }
 
 
-   // Обновление
+   // Обновление для физ/лиц
    update(id:string, xsclient: Client,  passport__1?: File,passport__2?: File,prava__1?: File, prava__2?: File): Observable<Client> {
       const fd = new FormData(); 
       fd.append('name', xsclient.name);
@@ -198,10 +198,67 @@ export class ClientsService {
    }
 
 
-   // Получаем позицию по id
+
+
+   // Обновление для юр/лиц
+   update_lawfase(id: string, xsclient: Client_Law_Fase, doc_1_img?: File, doc_2_img?: File, doc_3_img?: File, doc_4_img?: File): Observable<Client_Law_Fase> {
+      const fd = new FormData(); 
+      fd.append('name', xsclient.name);
+      fd.append('short_name', xsclient.short_name);
+      fd.append('inn', xsclient.inn);
+      fd.append('kpp', xsclient.kpp);
+      fd.append('ogrn', xsclient.ogrn);
+      fd.append('ogrn_ip', xsclient.ogrn_ip);
+      fd.append('svidetelstvo_ip', xsclient.svidetelstvo_ip);
+      fd.append('law_address', xsclient.law_address);
+      fd.append('fact_address', xsclient.fact_address);
+      fd.append('mail_address', xsclient.mail_address);
+      fd.append('boss_role', xsclient.boss_role);
+      fd.append('osnovanie_boss_role', xsclient.osnovanie_boss_role);
+      fd.append('number_1', xsclient.number_1);
+      fd.append('number_2', xsclient.number_2);
+      fd.append('email', xsclient.email);
+      fd.append('rc_number', xsclient.rc_number);
+      fd.append('kor_rc_number', xsclient.kor_rc_number);
+      fd.append('bik_number', xsclient.bik_number);
+      fd.append('name_bank', xsclient.name_bank);
+      fd.append('clientId', id);
+
+      if (doc_1_img)
+      {
+         fd.append('doc_1_img', doc_1_img, doc_1_img.name);
+      }
+
+
+      if (doc_2_img)
+      {
+         fd.append('doc_2_img', doc_2_img, doc_2_img.name);
+      }
+
+      if (doc_3_img)
+      {
+         fd.append('doc_3_img', doc_3_img, doc_3_img.name);
+      }
+
+      if (doc_4_img)
+      {
+         fd.append('doc_4_img', doc_4_img, doc_4_img.name);
+      }
+
+      return this.http.patch<Client_Law_Fase>(`/api/clients/update_lawfase/${id}`, fd);
+   }
+
+
+   // Получаем позицию по id для физ/лиц
    getById(id: string): Observable<Client>
    {
       return this.http.get<Client>(`/api/clients/${id}`);
+   }
+
+   // Получаем позицию по id для Юр/лиц
+   getByIdLawfase(id: string): Observable<Client_Law_Fase>
+   {
+      return this.http.get<Client_Law_Fase>(`/api/clients/lawfase_by_id/${id}`);
    }
 
 

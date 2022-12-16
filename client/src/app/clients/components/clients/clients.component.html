@@ -80,13 +80,13 @@
                 <tbody *ngIf="xsclients_lawfase.length !== 0; else empty">
                     <tr *ngFor="let xsclient_lawfase of xsclients_lawfase" class="xs_partners_tr">
                         <td>
-                            <a [routerLink]="['/show-client','edit',xsclient_lawfase._id]">
+                            <a [routerLink]="['/show-client-lawfase','edit',xsclient_lawfase._id]">
                                 {{xsclient_lawfase.short_name}} {{xsclient_lawfase.name}} 
                             </a>
                         </td>
                         <td>{{xsclient_lawfase.number_1}}</td>
                         <td class="xs_actions ">
-                            <a [routerLink]="['/show-client','edit',xsclient_lawfase._id]"><span
+                            <a [routerLink]="['/show-client-lawfase','edit',xsclient_lawfase._id]"><span
                                     class="material-icons ">mode_edit</span></a>
                             <a (click)="onDeleteClientLawfase($event, xsclient_lawfase)"><span class="material-icons ">delete</span></a>
                         </td>

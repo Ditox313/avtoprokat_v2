@@ -158,7 +158,7 @@ module.exports.get_all = async function(req, res) {
 
 
 
-// Контроллер для update
+// Контроллер для update для физ/лиц
 module.exports.update = async function(req, res) {
     try {
 
@@ -204,10 +204,70 @@ module.exports.update = async function(req, res) {
 
 
 
-// Контроллер для getById
+
+// Контроллер для update для юр/лиц
+module.exports.update_lawfase = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+        // // Если объект file есть,то заполняем параметр путем фала
+        if (req.files.doc_1_img) {
+            updated.doc_1_img = req.files.doc_1_img[0].path;
+        }
+
+        if (req.files.doc_2_img) {
+            updated.doc_2_img = req.files.doc_2_img[0].path;
+        }
+
+        if (req.files.doc_3_img) {
+            updated.doc_3_img = req.files.doc_3_img[0].path;
+        }
+
+        if (req.files.doc_4_img) {
+            updated.doc_4_img = req.files.doc_4_img[0].path;
+        }
+
+
+
+
+
+        // Находим и обновляем позицию. 
+        const clientUpdate = await Client_Law_Face.findOneAndUpdate({ _id: updated.clientId }, //Ищем по id
+            { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
+            { new: true } //обновит позицию и верет нам уже обновленную
+        );
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(clientUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+
+// Контроллер для getById для Физ/лиц
 module.exports.getById = async function(req, res) {
     try {
         const xsclient = await Client.findById(req.params.id); //Ищем категорию по id из переданных параметров
+        res.status(200).json(xsclient);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+// Контроллер для getById для Юр/лиц
+module.exports.getById_lawfase = async function (req, res) {
+    try {
+        const xsclient = await Client_Law_Face.findById(req.params.id); //Ищем категорию по id из переданных параметров
         res.status(200).json(xsclient);
     } catch (e) {
         errorHandler(res, e);

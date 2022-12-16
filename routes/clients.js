@@ -21,12 +21,18 @@ router.get('/law_fase_clients/', passport.authenticate('jwt', { session: false }
 // get_all
 router.get('/all', passport.authenticate('jwt', { session: false }), controller.get_all);
 
-// // Роут на update
+// // Роут на update физ/лиц
 router.patch('/update/:id',passport.authenticate('jwt', { session: false }), upload_2.fields([{name: 'passport_1_img'},{name: 'passport_2_img'},{name: 'prava_1_img'},{name: 'prava_2_img'}]), controller.update);
 
 
-// // Роут на getById
+// // Роут на update юр/лиц
+router.patch('/update_lawfase/:id', passport.authenticate('jwt', { session: false }), upload_2.fields([{ name: 'doc_1_img' }, { name: 'doc_2_img' }, { name: 'doc_3_img' }, { name: 'doc_4_img' }]), controller.update_lawfase);
+
+// // Роут на getById для Физ/лиц
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getById);
+
+// // Роут на getById для Юр/лиц
+router.get('/lawfase_by_id/:id', passport.authenticate('jwt', { session: false }), controller.getById_lawfase);
 
 
 // // Роут на remove

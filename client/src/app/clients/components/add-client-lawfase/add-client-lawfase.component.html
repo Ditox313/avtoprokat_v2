@@ -121,7 +121,7 @@
                             <input placeholder="Введите значение" id="law_address" type="text" class="validate"
                                 formControlName="law_address"
                                 [ngClass]="{'invalid': form.controls['law_address'].invalid && form.controls['law_address'].touched}">
-                            <label for="marka">Юридический адрес</label>
+                            <label for="marka">Юридический адрес<span class="xszv">*</span></label>
                             <span class="helper-text red-text"
                                 *ngIf="form.controls['law_address'].invalid && form.controls['law_address'].touched">
                                 <p *ngIf="form.controls['law_address'].errors?.required">
@@ -134,7 +134,7 @@
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="fact_address" type="text" class="validate" formControlName="fact_address"
                                 [ngClass]="{'invalid': form.controls['fact_address'].invalid && form.controls['fact_address'].touched}">
-                            <label for="marka">Фактический адрес</label>
+                            <label for="marka">Фактический адрес<span class="xszv">*</span></label>
                             <span class="helper-text red-text"
                                 *ngIf="form.controls['fact_address'].invalid && form.controls['fact_address'].touched">
                                 <p *ngIf="form.controls['fact_address'].errors?.required">
@@ -148,7 +148,7 @@
                             <input placeholder="Введите значение" id="mail_address" type="text" class="validate"
                                 formControlName="mail_address"
                                 [ngClass]="{'invalid': form.controls['mail_address'].invalid && form.controls['mail_address'].touched}">
-                            <label for="marka">Почтовый адрес<span class="xszv">*</span></label>
+                            <label for="marka">Почтовый адрес<span class="xszv">*</span><span class="xszv">*</span></label>
                             <span class="helper-text red-text"
                                 *ngIf="form.controls['mail_address'].invalid && form.controls['mail_address'].touched">
                                 <p *ngIf="form.controls['mail_address'].errors?.required">
