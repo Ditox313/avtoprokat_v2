@@ -1249,6 +1249,19 @@ select {
     top: -50px;
 }
 
+.xs_create_dog
+{
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+    border-radius: 7px;
+    background-color: #194A9E !important;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
 #docs
 {
     position: relative;

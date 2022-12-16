@@ -10,6 +10,7 @@ import { LayoutsModule } from '../shared/layouts/layouts.module';
 import { BookingDogovorComponent } from './components/booking-dogovor/booking-dogovor.component';
 import { BookingActComponent } from './components/booking-act/booking-act.component';
 import { AddClientDogovorComponent } from './components/add-client-dogovor/add-client-dogovor.component';
+import { DocumentsService } from './services/documents.service';
 
 
 const routes = [
@@ -42,6 +43,7 @@ const routes = [
     RouterModule.forChild(routes),
     LoaderModule,
     LayoutsModule,
-  ]
+  ],
+  providers: [DocumentsService],
 })
 export class DocumentsModule { }

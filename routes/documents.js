@@ -7,7 +7,7 @@ const upload = require('../middleware/upload');
 
 
 // Роут на create dogovor
-router.post('/', passport.authenticate('jwt', { session: false }), controller.create);
+router.post('/create_dogovor', passport.authenticate('jwt', { session: false }), controller.create_dogovor);
 
 // Роут на create
 //router.post('/', passport.authenticate('jwt', { session: false }), controller.create);

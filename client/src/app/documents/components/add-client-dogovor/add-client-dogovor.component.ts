@@ -8,6 +8,9 @@ import htmlToPdfmake from 'html-to-pdfmake';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { BookingsService } from 'src/app/booking/services/bookings.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
+import { DocumentsService } from '../../services/documents.service';
+import { DatePipe } from '@angular/common';
+import { MaterialService } from 'src/app/shared/services/material.service';
 
 @Component({
   selector: 'app-add-client-dogovor',
@@ -15,19 +18,21 @@ import { ClientsService } from 'src/app/clients/services/clients.service';
   styleUrls: ['./add-client-dogovor.component.css']
 })
 export class AddClientDogovorComponent implements OnInit {
-
+  datePipeString: string;
   ClientId!: string;
   actualClient!: Client;
   actualUser!: User;
   yearDate: any;
-  xs_actual_date: any = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+  xs_actual_date: any;
   @ViewChild('content') content!: ElementRef;
 
   constructor(
     private clients: ClientsService,
+    private documentsServices: DocumentsService,
     private router: Router,
     private rote: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -38,10 +43,6 @@ export class AddClientDogovorComponent implements OnInit {
 
     this.clients.getById(this.ClientId).subscribe((res) => {
       this.actualClient = res;
-
-      console.log(this.actualClient);
-      
-      
       this.yearDate = new Date(this.xs_actual_date);
       this.yearDate.setDate(this.yearDate.getDate() + 365);
     });
@@ -51,6 +52,7 @@ export class AddClientDogovorComponent implements OnInit {
       this.actualUser = user;
     })
 
+    this.xs_actual_date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
 
 
   }
@@ -75,5 +77,36 @@ export class AddClientDogovorComponent implements OnInit {
     pdfMake.createPdf(docDefinition).open();
 
   } 
+
+
+
+
+  createDogovor()
+  {
+    let administrator = this.actualUser;
+    delete administrator.password;
+    
+    const dogovor = {
+      date_start: this.xs_actual_date,
+      dogovor_number: this.xs_actual_date + '/СТС-' + this.actualClient.order,
+      date_end: this.datePipe.transform(this.yearDate, 'yyyy-MM-dd'),
+      client: this.actualClient,
+      administrator: administrator,
+      content: this.content.nativeElement.innerHTML,
+      clientId: this.actualClient._id,
+      state: 'active'
+    }
+
+    this.documentsServices.create_dogovor(dogovor).subscribe((dogovor) => {
+      MaterialService.toast('Договор создан');
+      this.router.navigate(['/clients-page']);
+    });
+
+    console.log(dogovor);
+    
+  }
+
+
+
 
 }

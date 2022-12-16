@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser');
-const Document = require('../models/Document');
+const Dogovor = require('../models/Dogovor');
 const errorHandler = require('../Utils/errorHendler');
 
 
@@ -7,42 +7,21 @@ const errorHandler = require('../Utils/errorHendler');
 
 
 // Контроллер для create
-module.exports.create = async function(req, res) {
+module.exports.create_dogovor = async function(req, res) {
     try {
-
-        // Ищем номер последнего заказа глобального
-        const lastOrder = await Booking.findOne({
-            user: req.user.id
-        })
-        .sort({ date: -1 });
-
-
-        // Если мы нашли предполагаемы последнйи заказ, то устанвливает поле order
-        const maxOrder = lastOrder ? lastOrder.order : 0;
-
-
-        const booking = await new Booking({
-            car: req.body.car ,
+        const dogovor = await new Dogovor({
+            date_start: req.body.date_start ,
+            dogovor_number: req.body.dogovor_number,
+            date_end: req.body.date_end,
             client: req.body.client,
-            place_start: req.body.place_start,
-            place_end: req.body.place_end,
-            tariff: req.body.tariff,
-            comment: req.body.comment,
-            booking_start: req.body.booking_start,
-            booking_end: req.body.booking_end,
-            booking_days: req.body.booking_days,
-            summa: req.body.summa,
-            summaFull: req.body.summaFull,
-            status: req.body.status,
-            user: req.user._id,
-            order: maxOrder + 1,
-            dop_hours: req.body.dop_hours,
-            dop_info_open: req.body.dop_info_open,
-            booking_zalog: req.body.booking_zalog
+            administrator: req.body.administrator,
+            content: req.body.content,
+            clientId: req.body.clientId,
+            state: req.body.state,
         }).save();
 
-        // Возвращаем пользователю позицию которую создали 
-        res.status(201).json(booking);
+
+        res.status(201).json(dogovor);
     } catch (e) {
         errorHandler(res, e);
     }

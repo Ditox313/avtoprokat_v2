@@ -307,6 +307,22 @@ export interface Pay {
 
 
 
+// Интерфейс для договора
+export interface Dogovor {
+  _id?: any;
+  date_start?: any;
+  dogovor_number?: any;
+  date_end?: any;
+  client?: any;
+  administrator?: any;
+  content?: any;
+  clientId?: any;
+  state?: any;
+}
+
+
+
+
 
 
 

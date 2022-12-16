@@ -11,8 +11,12 @@
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
     
-            <button type="submit" (click)="generatePDF()">
+            <!-- <button type="submit" (click)="generatePDF()">
                 <span class="material-icons">cloud_download</span>Скачать
+            </button> -->
+
+            <button type="submit" (click)="createDogovor()">
+                <span class="material-icons">cloud_download</span>Сохранить договор
             </button>
         </div>
     </div>
@@ -22,8 +26,7 @@
         <div class="row xs_doc_file_row">
 
             <div class="xs_doc_file_title" style="margin-top: 30px; font-size: 20px;">
-                <strong>Договор проката транспортного средства без экипажа № {{xs_actual_date | date:
-                    'ddMM'}}/СТС-{{actualClient.order}}</strong><br>
+                <strong>Договор проката транспортного средства без экипажа № {{xs_actual_date}}/СТС-{{actualClient.order}}</strong><br>
                 <strong>г. Тюмень , от {{xs_actual_date | date : 'd MMMM y'}} </strong><br>
             </div>
 
@@ -658,5 +661,10 @@
         </div>
     </div>
 
+
+
+    <button type="submit" class="xs_create_dog" (click)="createDogovor()">
+        <span class="material-icons" style="margin-right: 10px;">cloud_download</span>  <span>Сохранить договор</span> 
+    </button>
 </form>
 <app-loader *ngIf="!actualClient"></app-loader>
