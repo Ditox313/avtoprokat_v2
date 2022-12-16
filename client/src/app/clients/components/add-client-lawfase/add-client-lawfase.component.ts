@@ -2,16 +2,15 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { MaterialDatepicker } from 'src/app/shared/types/interfaces';
 import { ClientsService } from '../../services/clients.service';
 
-
 @Component({
-  selector: 'app-add-client',
-  templateUrl: './add-client.component.html',
-  styleUrls: ['./add-client.component.css'],
+  selector: 'app-add-client-lawfase',
+  templateUrl: './add-client-lawfase.component.html',
+  styleUrls: ['./add-client-lawfase.component.css']
 })
-export class AddClientComponent implements OnInit, AfterViewInit {
+export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
+
   @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
@@ -27,48 +26,45 @@ export class AddClientComponent implements OnInit, AfterViewInit {
 
 
   // Храним фалы загруженных документов
-  passport__1!: File;
-  passport__2!: File;
-  prava__1!: File;
-  prava__2!: File;
+  doc_1_img!: File;
+  doc_2_img!: File;
+  doc_3_img!: File;
+  doc_4_img!: File;
 
   // Превью загруженных документов
-  passport_1_preview: any = '';
-  passport_2_preview: any = '';
-  prava_1_preview: any = '';
-  prava_2_preview: any = '';
+  doc_1_img_preview: any = '';
+  doc_2_img_preview: any = '';
+  doc_3_img_preview: any = '';
+  doc_4_img_preview: any = '';
 
-  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute,) {}
+  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute,) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      surname: new FormControl('', [Validators.required]),
-      lastname: new FormControl('', [Validators.required]),
-      makedate: new FormControl('', [Validators.required]),
-      passport_seria: new FormControl('', [Validators.required]),
-      passport_number: new FormControl('', [Validators.required]),
-      passport_date: new FormControl(''),
-      passport_who_take: new FormControl('', [Validators.required]),
-      code_podrazdeleniya: new FormControl('', [Validators.required]),
-      passport_register: new FormControl('', [Validators.required]),
-      passport_address_fact: new FormControl('', [Validators.required]),
-      prava_seria: new FormControl('', [Validators.required]),
-      prava_number: new FormControl('', [Validators.required]),
-      prava_date: new FormControl(''),
-      phone_main: new FormControl('', [Validators.required]),
-      phone_1_dop_name: new FormControl('', [Validators.required]),
-      phone_1_dop_number: new FormControl('', [Validators.required]),
-      phone_2_dop_name: new FormControl('', [Validators.required]),
-      phone_2_dop_number: new FormControl('', [Validators.required]),
-      phone_3_dop_name: new FormControl('', []),
-      phone_3_dop_number: new FormControl('', []),
-      phone_4_dop_name: new FormControl('', []),
-      phone_4_dop_number: new FormControl('', []),
+      short_name: new FormControl('', [Validators.required]),
+      inn: new FormControl('', [Validators.required]),
+      kpp: new FormControl('', [Validators.required]),
+      ogrn: new FormControl('', ),
+      ogrn_ip: new FormControl('', ),
+      svidetelstvo_ip: new FormControl('', [Validators.required]),
+      law_address: new FormControl('', [Validators.required]),
+      fact_address: new FormControl('', [Validators.required]),
+      mail_address: new FormControl('', [Validators.required]),
+      boss_role: new FormControl('', [Validators.required]),
+      osnovanie_boss_role: new FormControl('', [Validators.required]),
+      number_1: new FormControl('', [Validators.required]),
+      number_2: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      rc_number: new FormControl('', [Validators.required]),
+      kor_rc_number: new FormControl('', [Validators.required]),
+      bik_number: new FormControl('', [Validators.required]),
+      name_bank: new FormControl('', [Validators.required]),
+      
     });
 
     this.rote.params.subscribe((params: any) => {
-        this.breadcrumbsId =  params['id']
+      this.breadcrumbsId = params['id']
     });
 
     MaterialService.updateTextInputs();
@@ -81,65 +77,68 @@ export class AddClientComponent implements OnInit, AfterViewInit {
 
   }
   // Валидация
-  validate() {}
+  validate() { }
 
-  // Отправка формы
+
   onSubmit() {
-    // this.form.disable();
-    // Создаем авто
+
+
+
     const client = {
       name: this.form.value.name,
-      surname: this.form.value.surname,
-      lastname: this.form.value.lastname,
-      makedate: this.form.value.makedate,
-      passport_seria: this.form.value.passport_seria,
-      passport_number: this.form.value.passport_number,
-      passport_date: this.form.value.passport_date,
-      passport_who_take: this.form.value.passport_who_take,
-      code_podrazdeleniya: this.form.value.code_podrazdeleniya,
-      passport_register: this.form.value.passport_register,
-      passport_address_fact: this.form.value.passport_address_fact,
-      prava_seria: this.form.value.prava_seria,
-      prava_number: this.form.value.prava_number,
-      prava_date: this.form.value.prava_date,
-      phone_main: this.form.value.phone_main,
-      phone_1_dop_name: this.form.value.phone_1_dop_name,
-      phone_1_dop_number: this.form.value.phone_1_dop_number,
-      phone_2_dop_name: this.form.value.phone_2_dop_name,
-      phone_2_dop_number: this.form.value.phone_2_dop_number,
-      phone_3_dop_name: this.form.value.phone_3_dop_name,
-      phone_3_dop_number: this.form.value.phone_3_dop_number,
-      phone_4_dop_name: this.form.value.phone_4_dop_name,
-      phone_4_dop_number: this.form.value.phone_4_dop_number,
+      short_name: this.form.value.short_name,
+      inn: this.form.value.inn,
+      kpp: this.form.value.kpp,
+      ogrn: this.form.value.ogrn,
+      ogrn_ip: this.form.value.ogrn_ip,
+      svidetelstvo_ip: this.form.value.svidetelstvo_ip,
+      law_address: this.form.value.law_address,
+      fact_address: this.form.value.fact_address,
+      mail_address: this.form.value.mail_address,
+      boss_role: this.form.value.boss_role,
+      osnovanie_boss_role: this.form.value.osnovanie_boss_role,
+      number_1: this.form.value.number_1,
+      number_2: this.form.value.number_2,
+      email: this.form.value.email,
+      rc_number: this.form.value.rc_number,
+      kor_rc_number: this.form.value.kor_rc_number,
+      bik_number: this.form.value.bik_number,
+      name_bank: this.form.value.name_bank,
     };
 
+    // console.log('111', client);
+    // console.log('222', this.doc_1_img);
+    // console.log('333', this.doc_2_img);
+    // console.log('444', this.doc_3_img);
+    // console.log('555', this.doc_4_img);
+    
+    
+
     this.clients
-      .create(
+      .create_lawfase(
         client,
-        this.passport__1,
-        this.passport__2,
-        this.prava__1,
-        this.prava__2
+        this.doc_1_img,
+        this.doc_2_img,
+        this.doc_3_img,
+        this.doc_4_img
       )
       .subscribe((client) => {
-        MaterialService.toast('Клиент физ/лицо добавлен');
+        MaterialService.toast('Клиент юр/лицо добавлен');
 
-        if(this.breadcrumbsId)
-        {
+        if (this.breadcrumbsId) {
           this.router.navigate(['/add-booking']);
         }
-        else
-        {
+        else {
           this.router.navigate(['/clients-page']);
         }
-                
+
       });
   }
 
   // Обрабатываем загрузку картинок
   onFileUpload(event: any) {
     const file = event.target.files['0'];
-    this.passport__1 = file;
+    this.doc_1_img = file;
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
@@ -147,7 +146,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
       // Переменная для хранения информации об изображении
-      this.passport_1_preview = reader.result;
+      this.doc_1_img_preview = reader.result;
     };
 
     // Читаем нужный нам файл
@@ -155,7 +154,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
   }
   onFileUpload2(event: any) {
     const file = event.target.files['0'];
-    this.passport__2 = file;
+    this.doc_2_img = file;
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
@@ -163,7 +162,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
       // Переменная для хранения информации об изображении
-      this.passport_2_preview = reader.result;
+      this.doc_2_img_preview = reader.result;
     };
 
     // Читаем нужный нам файл
@@ -171,7 +170,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
   }
   onFileUpload3(event: any) {
     const file = event.target.files['0'];
-    this.prava__1 = file;
+    this.doc_3_img = file;
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
@@ -179,7 +178,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
       // Переменная для хранения информации об изображении
-      this.prava_1_preview = reader.result;
+      this.doc_3_img_preview = reader.result;
     };
 
     // Читаем нужный нам файл
@@ -187,7 +186,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
   }
   onFileUpload4(event: any) {
     const file = event.target.files['0'];
-    this.prava__2 = file;
+    this.doc_4_img = file;
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
@@ -195,7 +194,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
       // Переменная для хранения информации об изображении
-      this.prava_2_preview = reader.result;
+      this.doc_4_img_preview = reader.result;
     };
 
     // Читаем нужный нам файл
@@ -215,4 +214,5 @@ export class AddClientComponent implements OnInit, AfterViewInit {
   triggerClick4() {
     this.inputRef4.nativeElement.click();
   }
+
 }

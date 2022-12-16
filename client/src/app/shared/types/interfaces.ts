@@ -97,9 +97,10 @@ export interface Car {
 }
 
 
-//Интерфейс для клиента
+//Интерфейс для клиента физ/лицо
 export interface Client
 {
+    type?: string,
     name: string
     surname: string
     lastname: string
@@ -127,6 +128,39 @@ export interface Client
     passport_2_img?: any
     prava_1_img?: any
     prava_2_img?: any
+    _id?: any
+}
+
+
+
+
+//Интерфейс для клиента Юр/лицо
+export interface Client_Law_Fase
+{
+    type?: string,
+    name: string
+    short_name: string
+    inn: string
+    kpp: string
+    ogrn?: string
+    ogrn_ip?: string
+    svidetelstvo_ip?: string
+    law_address: string
+    fact_address: string
+    mail_address: string
+    boss_role: string
+    osnovanie_boss_role: string
+    number_1: string
+    number_2: string
+    email: string
+    rc_number: string
+    kor_rc_number: string
+    bik_number: string
+    name_bank: string
+    doc_1_img?: any
+    doc_2_img?: any
+    doc_3_img?: any
+    doc_4_img?: any
     _id?: any
 }
 

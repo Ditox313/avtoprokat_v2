@@ -1,12 +1,13 @@
 const bodyParser = require('body-parser');
-const Client = require('../models/Client');
+const Client = require('../models/Clients/Client');
+const Client_Law_Face = require('../models/Clients/Client_Law_Fase');
 const errorHandler = require('../Utils/errorHendler');
 
 
 
 
 
-// Контроллер для create
+// Контроллер для create физ/лица
 module.exports.create = async function(req, res) {
     try {
         const partner = await new Client({
@@ -42,7 +43,45 @@ module.exports.create = async function(req, res) {
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
-        res.status(201).json(Client);
+        res.status(201).json(partner);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+// Контроллер для create юр/лица
+module.exports.create_law_fase = async function (req, res) {
+    try {
+        const client = await new Client_Law_Face({
+            name: req.body.name,
+            short_name: req.body.short_name,
+            inn: req.body.inn,
+            kpp: req.body.kpp,
+            ogrn: req.body.ogrn,
+            ogrn_ip: req.body.ogrn_ip,
+            svidetelstvo_ip: req.body.svidetelstvo_ip,
+            law_address: req.body.law_address,
+            fact_address: req.body.fact_address,
+            mail_address: req.body.mail_address,
+            boss_role: req.body.boss_role,
+            osnovanie_boss_role: req.body.osnovanie_boss_role,
+            number_1: req.body.number_1,
+            number_2: req.body.number_2,
+            email: req.body.email,
+            rc_number: req.body.rc_number,
+            kor_rc_number: req.body.kor_rc_number,
+            bik_number: req.body.bik_number,
+            name_bank: req.body.name_bank,
+            user: req.user._id,
+            doc_1_img: req.files.doc_1_img[0].path, 
+            doc_2_img: req.files.doc_2_img[0].path,
+            doc_3_img: req.files.doc_3_img[0].path,
+            doc_4_img: req.files.doc_4_img[0].path,
+
+        }).save();
+
+        // Возвращаем пользователю позицию которую создали 
+        res.status(201).json(client);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -52,7 +91,8 @@ module.exports.create = async function(req, res) {
 
 
 
-// Контроллер для fetch
+
+// Контроллер для fetch физ/лица
 module.exports.fetch = async function(req, res) {
     try {
         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
@@ -68,6 +108,29 @@ module.exports.fetch = async function(req, res) {
         errorHandler(res, e);
     }
 };
+
+
+
+
+
+// Контроллер для fetch юр/лица
+module.exports.fetch_lawfase = async function (req, res) {
+    try {
+        // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
+        const clients = await Client_Law_Face.find({
+            user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+        }).sort({ date: -1 })
+            .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
+            .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
+
+        // Возвращаем пользователю позиции 
+        res.status(200).json(clients);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
 
 
 

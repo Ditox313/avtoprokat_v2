@@ -6,11 +6,17 @@ const upload_2 = require('../middleware/upload_2');
 
 
 
-// Роут на create
+// Роут на create физ/лицо
 router.post('/', passport.authenticate('jwt', { session: false }), upload_2.fields([{name: 'passport_1_img'},{name: 'passport_2_img'},{name: 'prava_1_img'},{name: 'prava_2_img'}]), controller.create);
+
+// Роут на create юр/лицо
+router.post('/create_law_fase/', passport.authenticate('jwt', { session: false }), upload_2.fields([{ name: 'doc_1_img' }, { name: 'doc_2_img' }, { name: 'doc_3_img' }, { name: 'doc_4_img' }]), controller.create_law_fase);
 
 // Роут на fetch
 router.get('/', passport.authenticate('jwt', { session: false }), controller.fetch);
+
+// Роут на fetch law_fase clients
+router.get('/law_fase_clients/', passport.authenticate('jwt', { session: false }), controller.fetch_lawfase);
 
 // get_all
 router.get('/all', passport.authenticate('jwt', { session: false }), controller.get_all);

@@ -2,7 +2,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { Client } from 'src/app/shared/types/interfaces';
+import { Client, Client_Law_Fase } from 'src/app/shared/types/interfaces';
 
 
 // Даем возможность инжектировать сервисы в класс
@@ -13,7 +13,7 @@ export class ClientsService {
   constructor(private http: HttpClient) {}
 
 
-  // Создаем нового партнера
+  // Создаем нового физ/лица
   create(client: Client, passport__1?: File,passport__2?: File,prava__1?: File, prava__2?: File): Observable<Client> {
     const fd = new FormData(); 
       fd.append('name', client.name);
@@ -65,9 +65,67 @@ export class ClientsService {
     return this.http.post<Client>(`/api/clients`, fd);
   }
 
-  // Получаем список всех позиций
+  // Создаем нового физ/лица
+   create_lawfase(client: Client_Law_Fase, doc_1_img?: File, doc_2_img?: File, doc_3_img?: File, doc_4_img?: File): Observable<Client_Law_Fase> {
+    const fd = new FormData(); 
+      fd.append('name', client.name);
+      fd.append('short_name', client.short_name);
+      fd.append('inn', client.inn);
+      fd.append('kpp', client.kpp);
+      fd.append('ogrn', client.ogrn);
+      fd.append('ogrn_ip', client.ogrn_ip);
+      fd.append('svidetelstvo_ip', client.svidetelstvo_ip);
+      fd.append('law_address', client.law_address);
+      fd.append('fact_address', client.fact_address);
+      fd.append('mail_address', client.mail_address);
+      fd.append('boss_role', client.boss_role);
+      fd.append('osnovanie_boss_role', client.osnovanie_boss_role);
+      fd.append('number_1', client.number_1);
+      fd.append('number_2', client.number_2);
+      fd.append('email', client.email);
+      fd.append('rc_number', client.rc_number);
+      fd.append('kor_rc_number', client.kor_rc_number);
+      fd.append('bik_number', client.bik_number);
+      fd.append('name_bank', client.name_bank);
+
+
+      if (doc_1_img)
+      {
+         fd.append('doc_1_img', doc_1_img, doc_1_img.name);
+      }
+
+
+      if (doc_2_img)
+      {
+         fd.append('doc_2_img', doc_2_img, doc_2_img.name);
+      }
+
+      if (doc_3_img)
+      {
+         fd.append('doc_3_img', doc_3_img, doc_3_img.name);
+      }
+
+      if (doc_4_img)
+      {
+         fd.append('doc_4_img', doc_4_img, doc_4_img.name);
+      }
+      
+
+      return this.http.post<Client_Law_Fase>(`/api/clients/create_law_fase`, fd);
+  }
+
+  // Получаем физ/лиц
   fetch(params: any = {}): Observable<Client[]> {
     return this.http.get<Client[]>('/api/clients', {
+       params: new HttpParams({
+          fromObject: params
+       })
+    });
+  }
+
+  // Получаем юр/лиц
+   fetch_lawfase(params: any = {}): Observable<Client_Law_Fase[]> {
+      return this.http.get<Client_Law_Fase[]>('/api/clients/law_fase_clients', {
        params: new HttpParams({
           fromObject: params
        })

@@ -17,6 +17,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from 'src/app/clients/store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { ClientsEffect } from './store/effects/clients.effect';
+import { AddClientLawfaseComponent } from './components/add-client-lawfase/add-client-lawfase.component';
+import { ShowClientLawfaseComponent } from './components/show-client-lawfase/show-client-lawfase.component';
 
 const routes = [
   {
@@ -26,6 +28,7 @@ const routes = [
     children: [
       { path: 'clients-page', component: ClientsComponent },
       { path: 'add-client', component: AddClientComponent },
+      { path: 'add-client-lawfase', component: AddClientLawfaseComponent },
       { path: 'add-client/:id', component: AddClientComponent },
       { path: 'show-client/edit/:id', component: ShowClientComponent },
       { path: 'show-client/edit/:id/:breadcrumbs', component: ShowClientComponent },
@@ -34,7 +37,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [ClientsComponent, AddClientComponent, ShowClientComponent],
+  declarations: [ClientsComponent, AddClientComponent, ShowClientComponent, AddClientLawfaseComponent, ShowClientLawfaseComponent],
   imports: [
     CommonModule,
     HttpClientModule,
