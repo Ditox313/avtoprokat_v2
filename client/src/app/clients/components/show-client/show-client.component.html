@@ -14,12 +14,12 @@
         </div>
     </div>
 
-    <div class="xs_add__car__content">
+    <div class="xs_add__car__content add_client_fiz">
         <div class="row">
             <div class="col s12">
                 <ul class="tabs" #tabs>
                     <li class="tab col"><a href="#information" class="active">Общая информация</a></li>
-                    <li class="tab col"><a href="#dogovor">Договор</a></li>
+                    <li class="tab col"><a href="#docs">Документы</a></li>
                 </ul>
             </div>
 
@@ -395,18 +395,25 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="dogovor" class="col s12">
-                Договор клиента
-            </div>
-        </div>
-    </div>
 
-    <div class="xs_add__car___top">
-        <div class="xs_add__car__top____actions">
-            <button type="submit">
-                <span class="material-icons">beenhere</span>Сохранить
-            </button>
+                <div class="xs_add__car___top">
+                    <div class="xs_add__car__top____actions">
+                        <button type="submit" >
+                            <span class="material-icons">beenhere</span>Сохранить
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="docs" class="col s12" >
+                <button class="xs_create_dogovor" [routerLink]="['/add-client-dogovor', xsActualClient._id]">
+                    <span class="material-icons">add_to_photos</span>
+                </button>
+
+                <div>Список документов</div>
+            </div>
         </div>
     </div>
 </form>

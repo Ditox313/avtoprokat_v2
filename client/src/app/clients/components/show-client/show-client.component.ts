@@ -48,6 +48,8 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+
+    
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       surname: new FormControl('', [Validators.required]),
@@ -81,6 +83,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
 
     this.clients.getById(this.clientId).subscribe((res) => {
       this.xsActualClient = res;
+      
 
       if (res.passport_1_img) {
         this.passport_1_preview = res.passport_1_img;

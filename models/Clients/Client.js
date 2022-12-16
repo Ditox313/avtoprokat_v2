@@ -211,6 +211,12 @@ const clientSchema = new Schema({
         required: true,
     },
 
+    order: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
+
     
 
     // Пользователь который создал партнера

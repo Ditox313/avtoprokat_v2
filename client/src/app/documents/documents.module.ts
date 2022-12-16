@@ -9,6 +9,7 @@ import { SiteLayoutComponent } from '../shared/layouts/components/site-layout/si
 import { LayoutsModule } from '../shared/layouts/layouts.module';
 import { BookingDogovorComponent } from './components/booking-dogovor/booking-dogovor.component';
 import { BookingActComponent } from './components/booking-act/booking-act.component';
+import { AddClientDogovorComponent } from './components/add-client-dogovor/add-client-dogovor.component';
 
 
 const routes = [
@@ -18,6 +19,7 @@ const routes = [
     canActivate: [AuthGuard], //Защищаем роуты которые относятся к самому приложению
     children: [
       { path: 'booking-dogovor/:id', component: BookingDogovorComponent },
+      { path: 'add-client-dogovor/:id', component: AddClientDogovorComponent },
       { path: 'booking-act/:id', component: BookingActComponent },
     ],
   },
@@ -28,7 +30,8 @@ const routes = [
 @NgModule({
   declarations: [
     BookingDogovorComponent,
-    BookingActComponent
+    BookingActComponent,
+    AddClientDogovorComponent
   ],
   imports: [
     CommonModule,

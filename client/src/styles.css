@@ -1232,3 +1232,39 @@ select {
     width: 98px;
     text-align: center;
 }
+
+.xs_create_dogovor
+{
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+    border-radius: 7px;
+    background-color: #194A9E;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: -50px;
+}
+
+#docs
+{
+    position: relative;
+}
+.add_client_fiz
+{
+    margin-top: 10px;
+}
+
+.add_client_fiz ul
+{
+    margin-top: 0;
+}
+
+.xs_client_dogovor_title_name
+{
+    display: inline-block;
+    border-bottom: 2px solid #194A9E;
+}

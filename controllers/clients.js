@@ -10,6 +10,16 @@ const errorHandler = require('../Utils/errorHendler');
 // Контроллер для create физ/лица
 module.exports.create = async function(req, res) {
     try {
+
+        // Ищем номер последнего заказа глобального
+        const lastOrder = await Client.findOne({
+            user: req.user.id
+        }).sort({ date: -1 });
+
+
+        // Если мы нашли предполагаемы последнйи заказ, то устанвливает поле order
+        const maxOrder = lastOrder ? lastOrder.order : 0;
+
         const partner = await new Client({
             name: req.body.name,
             surname: req.body.surname,
@@ -38,7 +48,8 @@ module.exports.create = async function(req, res) {
             passport_1_img: req.files.passport_1_img[0].path, //Если файл загружен то задаем путь до файла
             passport_2_img: req.files.passport_2_img[0].path, 
             prava_1_img: req.files.prava_1_img[0].path, 
-            prava_2_img: req.files.prava_2_img[0].path, 
+            prava_2_img: req.files.prava_2_img[0].path,
+            order: maxOrder + 1
             
         }).save();
 
@@ -73,10 +84,10 @@ module.exports.create_law_fase = async function (req, res) {
             bik_number: req.body.bik_number,
             name_bank: req.body.name_bank,
             user: req.user._id,
-            doc_1_img: req.files.doc_1_img[0].path, 
-            doc_2_img: req.files.doc_2_img[0].path,
-            doc_3_img: req.files.doc_3_img[0].path,
-            doc_4_img: req.files.doc_4_img[0].path,
+            doc_1_img: req.files.doc_1_img[0].path ? req.files.doc_1_img[0].path : '', 
+            doc_2_img: req.files.doc_2_img[0].path ? req.files.doc_2_img[0].path : '',
+            doc_3_img: req.files.doc_3_img[0].path ? req.files.doc_3_img[0].path : '',
+            doc_4_img: req.files.doc_4_img[0].path ? req.files.doc_4_img[0].path : '',
 
         }).save();
 

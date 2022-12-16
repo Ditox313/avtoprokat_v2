@@ -176,7 +176,7 @@ const clientLawFaseSchema = new Schema({
     doc_3_img: {
         type: String,
         default: '',
-        required: true,
+        required: false,
     },
 
 
@@ -184,7 +184,7 @@ const clientLawFaseSchema = new Schema({
     doc_4_img: {
         type: String,
         default: '',
-        required: true,
+        required: false,
     },
 
     

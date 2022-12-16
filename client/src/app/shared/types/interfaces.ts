@@ -128,7 +128,9 @@ export interface Client
     passport_2_img?: any
     prava_1_img?: any
     prava_2_img?: any
-    _id?: any
+    _id?: any,
+    date?: any,
+    order?: any
 }
 
 
@@ -161,7 +163,8 @@ export interface Client_Law_Fase
     doc_2_img?: any
     doc_3_img?: any
     doc_4_img?: any
-    _id?: any
+    _id?: any,
+    date?: any
 }
 
 
