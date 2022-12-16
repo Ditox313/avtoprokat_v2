@@ -138,10 +138,16 @@ export class ClientsService {
   }
 
 
-  // Удаление
+   // Удаление для физ/лиц
    delete(id: any): Observable<any>
    {
       return this.http.delete<any>(`/api/clients/${id}`);
+   }
+
+
+   // Удаление для физ/лиц
+   delete_lawfase(id: any): Observable<any> {
+      return this.http.delete<any>(`/api/clients/delete_lawfase/${id}`);
    }
 
 

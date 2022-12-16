@@ -279,10 +279,30 @@ module.exports.getById_lawfase = async function (req, res) {
 
 
 
-// Контроллер для remove
+// Контроллер для remove для физ/лиц
 module.exports.remove = async function(req, res) {
     try {
         await Client.remove({
+            _id: req.params.id
+        });
+
+
+        // Возвращаем результат
+        res.status(200).json({
+            message: "Клиент удален"
+        });
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+// Контроллер для remove для юр/лиц
+module.exports.remove_lawwfase = async function (req, res) {
+    try {
+        await Client_Law_Face.remove({
             _id: req.params.id
         });
 

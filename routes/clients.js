@@ -34,8 +34,11 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), controller.
 // // Роут на getById для Юр/лиц
 router.get('/lawfase_by_id/:id', passport.authenticate('jwt', { session: false }), controller.getById_lawfase);
 
-
-// // Роут на remove
+// Роут на remove для физ/лиц
 router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.remove);
+
+
+// Роут на remove для Юр/лиц
+router.delete('/delete_lawfase/:id', passport.authenticate('jwt', { session: false }), controller.remove_lawwfase);
 
 module.exports = router;

@@ -130,7 +130,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
       this.clients.delete(xsclient._id).subscribe(res => {
         const idxPos = this.xsclients.findIndex((p) => p._id === xsclient._id);
         this.xsclients.splice(idxPos, 1);
-        this.store.dispatch(clientsAddAction({ clients: this.xsclients }));
+        // this.store.dispatch(clientsAddAction({ clients: this.xsclients }));
         MaterialService.toast(res.message)
         
       }, error => {
@@ -149,10 +149,10 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     const dicision = window.confirm(`Удалить клиента?`);
 
     if (dicision) {
-      this.clients.delete(xsclient._id).subscribe(res => {
-        const idxPos = this.xsclients.findIndex((p) => p._id === xsclient._id);
-        this.xsclients.splice(idxPos, 1);
-        this.store.dispatch(clientsAddAction({ clients: this.xsclients }));
+      this.clients.delete_lawfase(xsclient._id).subscribe(res => {
+        const idxPos = this.xsclients_lawfase.findIndex((p) => p._id === xsclient._id);
+        this.xsclients_lawfase.splice(idxPos, 1);
+        // this.store.dispatch(clientsAddAction({ clients: this.xsclients_lawfase }));
         MaterialService.toast(res.message)
         
       }, error => {

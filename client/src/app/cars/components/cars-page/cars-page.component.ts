@@ -38,18 +38,7 @@ export class CarsPageComponent implements OnInit {
     this.fetch();
   }
 
-  // public objFor(arr: Car[]) {
-  //   console.log('111', arr);
-    
-  //   let storeCars = [];
-  //   for (var key in arr) {
-  //     if (key !== 'type') {
-  //       storeCars.push(arr[key]);
-  //     }
-  //   }
 
-  //   return storeCars;
-  // }
 
   // Получаем все кейсы
   public fetch() {
@@ -92,7 +81,7 @@ export class CarsPageComponent implements OnInit {
           const idxPos = this.xscars.findIndex((p) => p._id === xscar._id);
           this.xscars.splice(idxPos, 1);
 
-          this.store.dispatch(carsDeleteAction({ cars: this.xscars }));
+          // this.store.dispatch(carsDeleteAction({ cars: this.xscars }));
 
           MaterialService.toast(res.message);
         },
