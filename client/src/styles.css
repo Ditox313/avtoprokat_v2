@@ -1265,6 +1265,7 @@ select {
 #docs
 {
     position: relative;
+    display: none;
 }
 .add_client_fiz
 {

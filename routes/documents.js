@@ -9,6 +9,13 @@ const upload = require('../middleware/upload');
 // Роут на create dogovor
 router.post('/create_dogovor', passport.authenticate('jwt', { session: false }), controller.create_dogovor);
 
+// Роут на getDogovorsById
+router.get('/dogovors_list/:id', passport.authenticate('jwt', { session: false }), controller.getDogovorsById);
+
+
+// Роут на изменение state все договоров клиента при создании нового
+// router.patch('/clear_state', passport.authenticate('jwt', { session: false }), controller.update_state);
+
 // Роут на create
 //router.post('/', passport.authenticate('jwt', { session: false }), controller.create);
 
@@ -17,11 +24,6 @@ router.post('/create_dogovor', passport.authenticate('jwt', { session: false }),
 
 // Роут на update
 //router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update);
-
-
-// Роут на getById
-//router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getById);
-
 
 
 // // Роут на remove

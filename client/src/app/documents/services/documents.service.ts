@@ -2,7 +2,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { Booking, Dogovor } from 'src/app/shared/types/interfaces';
+import { Dogovor } from 'src/app/shared/types/interfaces';
 
 
 // Даем возможность инжектировать сервисы в класс
@@ -17,6 +17,15 @@ export class DocumentsService {
     return this.http.post<Dogovor>(`/api/documents/create_dogovor`, dogovor);
   }
 
+
+  // Обновим свойство state у всех старых договоров при создании нового
+  // update_state(clientId: string): Observable<any> {
+  //   const xs_data = {
+  //     clientId: clientId
+  //   }
+  //   return this.http.patch<any>(`/api/documents/clear_state`, xs_data);
+  // }
+
   // Получаем список всех позиций
   // fetch(params: any = {}): Observable<Booking[]> {
   //   return this.http.get<Booking[]>('/api/bookings', {
@@ -26,10 +35,10 @@ export class DocumentsService {
   //   });
   // }
 
-  // Получаем позицию по id
-  // getById(id: string): Observable<Booking> {
-  //   return this.http.get<Booking>(`/api/bookings/${id}`);
-  // }
+  //  Получаем список договоров по id клиента
+  getDogovorsById(id: string): Observable<Dogovor[]> {
+    return this.http.get<Dogovor[]>(`/api/documents/dogovors_list/${id}`);
+  }
 
   // update(id: string, xsbooking: Booking): Observable<Booking> {
   //   xsbooking._id = id;

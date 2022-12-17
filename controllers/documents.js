@@ -9,6 +9,15 @@ const errorHandler = require('../Utils/errorHendler');
 // Контроллер для create
 module.exports.create_dogovor = async function(req, res) {
     try {
+
+        const updated = req.body;
+
+        const dogovorsUpdateState = await Dogovor.updateMany(
+            { clientId: updated.clientId },
+            { state: 'no_active' }
+        );
+
+
         const dogovor = await new Dogovor({
             date_start: req.body.date_start ,
             dogovor_number: req.body.dogovor_number,
@@ -26,6 +35,48 @@ module.exports.create_dogovor = async function(req, res) {
         errorHandler(res, e);
     }
 };
+
+
+
+
+
+// Получаем список договоров для клиента
+module.exports.getDogovorsById = async function(req, res) {
+    try {
+
+        const dogovors = await Dogovor.find({
+            clientId: req.params.id
+        })
+            
+
+        res.status(200).json(dogovors);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+// Контроллер для изменения state для всех договоров клиента при создании нового
+module.exports.update_state = async function(req, res) {
+    try {
+
+        const updated = req.body;
+
+        const dogovorsUpdateState = await Dogovor.updateMany(
+            { clientId: updated.clientId },
+            { state: 'no_active' }
+        );
+
+
+        res.status(200).json(dogovorsUpdateState);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
 
 
 

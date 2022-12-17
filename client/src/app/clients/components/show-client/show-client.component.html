@@ -407,7 +407,7 @@
 
 
 
-            <div id="docs" class="col s12" >
+            <div id="docs" class="col s12" *ngIf="xsActualClient">
                 <button class="xs_create_dogovor" [routerLink]="['/add-client-dogovor', xsActualClient._id]">
                     <span class="material-icons">add_to_photos</span>
                 </button>

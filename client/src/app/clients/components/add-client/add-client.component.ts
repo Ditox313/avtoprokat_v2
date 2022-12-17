@@ -72,6 +72,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
     });
 
     MaterialService.updateTextInputs();
+    
   }
 
   ngAfterViewInit(): void {

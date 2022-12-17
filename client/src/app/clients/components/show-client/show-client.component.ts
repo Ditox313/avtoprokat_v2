@@ -129,12 +129,11 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
     });
 
     MaterialService.updateTextInputs();
+    
   }
 
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement);
-    MaterialService.updateTextInputs();
-
   }
   // Валидация
   validate() {}

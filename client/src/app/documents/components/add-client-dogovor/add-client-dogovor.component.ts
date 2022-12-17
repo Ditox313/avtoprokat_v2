@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Booking, Client, User } from 'src/app/shared/types/interfaces';
+import { Booking, Client, Dogovor, User } from 'src/app/shared/types/interfaces';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -11,6 +11,7 @@ import { ClientsService } from 'src/app/clients/services/clients.service';
 import { DocumentsService } from '../../services/documents.service';
 import { DatePipe } from '@angular/common';
 import { MaterialService } from 'src/app/shared/services/material.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-client-dogovor',
@@ -22,6 +23,7 @@ export class AddClientDogovorComponent implements OnInit {
   ClientId!: string;
   actualClient!: Client;
   actualUser!: User;
+  clientDogovors!: Dogovor[];
   yearDate: any;
   xs_actual_date: any;
   @ViewChild('content') content!: ElementRef;
@@ -36,7 +38,6 @@ export class AddClientDogovorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Достаем параметры
     this.rote.params.subscribe((params: any) => {
       this.ClientId = params['id'];
     });
@@ -54,7 +55,9 @@ export class AddClientDogovorComponent implements OnInit {
 
     this.xs_actual_date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
 
-
+    this.documentsServices.getDogovorsById(this.ClientId).subscribe((res) => {
+      this.clientDogovors = res;
+    });
   }
 
   generatePDF() {
@@ -65,10 +68,10 @@ export class AddClientDogovorComponent implements OnInit {
       pageSize: 'A4',
       pageMargins: [20, 20, 20, 20],
       styles: {
-        fsz: { // we define the class called "red"
+        fsz: { 
           fontSize: 6
         },
-        fsz_b: { // we define the class called "red"
+        fsz_b: { 
           fontSize: 10
         }
       }
@@ -83,6 +86,7 @@ export class AddClientDogovorComponent implements OnInit {
 
   createDogovor()
   {
+
     let administrator = this.actualUser;
     delete administrator.password;
     
@@ -101,12 +105,5 @@ export class AddClientDogovorComponent implements OnInit {
       MaterialService.toast('Договор создан');
       this.router.navigate(['/clients-page']);
     });
-
-    console.log(dogovor);
-    
   }
-
-
-
-
 }
