@@ -34,8 +34,6 @@ export class ShowClientDogovorComponent implements OnInit {
 
       this.documentsServices.getDogovorById(params['id']).subscribe(res => {
         this.xs_actual_dogovor = res;
-        console.log('111', this.xs_actual_dogovor);
-        
       })
     });
 

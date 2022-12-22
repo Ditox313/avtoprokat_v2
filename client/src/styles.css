@@ -1260,6 +1260,7 @@ select {
     border: none;
     outline: none;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 #docs
@@ -1300,6 +1301,7 @@ select {
 .xs_generate_docs___bottom
 {
     padding: 0 40px;
+    margin-top: 30px;
 }
 .xs_download
 {
@@ -1310,7 +1312,10 @@ select {
     border-radius: 7px;
     background-color: #194A9E;
     color: #fff;
+    /* margin-top: 30px; */
 }
+
+
 
 .xs_download:focus {
     margin-left: 10px;
@@ -1335,4 +1340,9 @@ select {
 .xs_actions__dogovors a:first-child
 {
     margin-right: 5px;
+}
+
+.xs_dogovor_show
+{
+    padding: 0 40px;
 }

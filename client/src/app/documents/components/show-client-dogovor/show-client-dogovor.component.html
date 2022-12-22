@@ -2,7 +2,12 @@
     <div class="xs_generate_docs___top">
 
         <div class="xs_generate_docs__top____actions">
-            <a [routerLink]="['/show-client/edit',xs_actual_dogovor.client._id]" class="xs_generate_docs_back">
+            <a *ngIf="xs_actual_dogovor.client.type === 'fiz'" [routerLink]="['/show-client/edit',xs_actual_dogovor.client._id]" class="xs_generate_docs_back">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a>
+
+            <a *ngIf="xs_actual_dogovor.client.type === 'law'" [routerLink]="['/show-client-lawfase/edit',xs_actual_dogovor.client._id]"
+                class="xs_generate_docs_back">
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
 
@@ -15,7 +20,10 @@
     </div>
 
 
-    <div [innerHTML]="xs_actual_dogovor.content"  class="xs_generate_docs__content" id="content" #content></div>
+    <div class="xs_dogovor_show">
+        <div [innerHTML]="xs_actual_dogovor.content" class="xs_generate_docs__content" id="content" #content></div>
+    </div>
+    
 
 
 

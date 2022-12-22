@@ -31,9 +31,7 @@ export class DogovorListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.documentsServices.getDogovorsById(this.clientId).subscribe((res) => {
-    //   this.xs_dogovors = res;
-    // });
+
     this.fetch()
   }
 
