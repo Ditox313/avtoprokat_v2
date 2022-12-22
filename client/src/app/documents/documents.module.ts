@@ -11,6 +11,8 @@ import { BookingDogovorComponent } from './components/booking-dogovor/booking-do
 import { BookingActComponent } from './components/booking-act/booking-act.component';
 import { AddClientDogovorComponent } from './components/add-client-dogovor/add-client-dogovor.component';
 import { DocumentsService } from './services/documents.service';
+import { DogovorListComponent } from './components/dogovor-list/dogovor-list.component';
+import { ShowClientDogovorComponent } from './components/show-client-dogovor/show-client-dogovor.component';
 
 
 const routes = [
@@ -22,6 +24,8 @@ const routes = [
       { path: 'booking-dogovor/:id', component: BookingDogovorComponent },
       { path: 'add-client-dogovor/:id', component: AddClientDogovorComponent },
       { path: 'booking-act/:id', component: BookingActComponent },
+      { path: 'show-client-dogovor/:id', component: ShowClientDogovorComponent },
+      { path: 'dogovors-client/:id', component: DogovorListComponent },
     ],
   },
 ];
@@ -32,7 +36,9 @@ const routes = [
   declarations: [
     BookingDogovorComponent,
     BookingActComponent,
-    AddClientDogovorComponent
+    AddClientDogovorComponent,
+    DogovorListComponent,
+    ShowClientDogovorComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +49,9 @@ const routes = [
     RouterModule.forChild(routes),
     LoaderModule,
     LayoutsModule,
+  ],
+  exports: [
+    DogovorListComponent
   ],
   providers: [DocumentsService],
 })

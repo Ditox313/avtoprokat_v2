@@ -1,0 +1,29 @@
+<form class="xs_generate_docs" *ngIf="xs_actual_dogovor">
+    <div class="xs_generate_docs___top">
+
+        <div class="xs_generate_docs__top____actions">
+            <a [routerLink]="['/show-client/edit',xs_actual_dogovor.client._id]" class="xs_generate_docs_back">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a>
+
+            <button type="submit" (click)="generatePDF()" class="xs_download">
+                <span class="material-icons">cloud_download</span>Скачать
+            </button>
+        </div>
+
+        
+    </div>
+
+
+    <div [innerHTML]="xs_actual_dogovor.content"  class="xs_generate_docs__content" id="content" #content></div>
+
+
+
+    <div class="xs_generate_docs___bottom">
+        <button type="submit" (click)="generatePDF()" class="xs_download">
+            <span class="material-icons">cloud_download</span>Скачать
+        </button>
+    </div>
+    
+</form>
+<app-loader *ngIf="!xs_actual_dogovor"></app-loader>

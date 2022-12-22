@@ -46,10 +46,28 @@ module.exports.getDogovorsById = async function(req, res) {
 
         const dogovors = await Dogovor.find({
             clientId: req.params.id
-        })
+        }).sort({ date: -1 })
             
 
         res.status(200).json(dogovors);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+// Получаем договор по id
+module.exports.getDogovorById = async function (req, res) {
+    try {
+
+        const dogovor = await Dogovor.findOne({
+            _id: req.params.id
+        })
+
+
+        res.status(200).json(dogovor);
     } catch (e) {
         errorHandler(res, e);
     }

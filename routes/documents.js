@@ -12,6 +12,9 @@ router.post('/create_dogovor', passport.authenticate('jwt', { session: false }),
 // Роут на getDogovorsById
 router.get('/dogovors_list/:id', passport.authenticate('jwt', { session: false }), controller.getDogovorsById);
 
+// Роут на getDogovorById
+router.get('/dogovor/:id', passport.authenticate('jwt', { session: false }), controller.getDogovorById);
+
 
 // Роут на изменение state все договоров клиента при создании нового
 // router.patch('/clear_state', passport.authenticate('jwt', { session: false }), controller.update_state);

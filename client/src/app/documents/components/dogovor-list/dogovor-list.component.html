@@ -1,0 +1,44 @@
+<div>
+    <table class="striped" >
+        <thead>
+            <tr>
+                <th>Номер договора</th>
+                <th>Дата начала</th>
+                <th>Дата окончания</th>
+                <th>Статус</th>
+            </tr>
+    
+        </thead>
+    
+        <tbody *ngIf="xs_dogovors; else empty">
+            <tr *ngFor="let xs_dogovor of xs_dogovors"  [class.xs_dogovor__active] = "xs_dogovor.state === 'active'">
+                <!-- <td>
+                    <a [routerLink]="['/show-client','edit',xsclient._id]">
+                        {{xsclient.surname}} {{xsclient.name}} {{xsclient.lastname}}
+                    </a>
+                </td> -->
+                <td>
+                    <span [routerLink]="['/show-client-dogovor',xs_dogovor._id]">
+                        {{xs_dogovor.dogovor_number}}
+                    </span>
+                </td>
+                <td>{{xs_dogovor.date_start | date : 'd MMMM y'}}</td>
+                <td>{{xs_dogovor.date_end | date : 'd MMMM y'}}</td>
+                <td *ngIf="xs_dogovor.state === 'active'">Активный</td>
+                <td *ngIf="xs_dogovor.state !== 'active'">Истек</td>
+                <!-- <td class="xs_actions ">
+                    <a [routerLink]="['/show-client','edit',xsclient._id]"><span
+                            class="material-icons ">mode_edit</span></a>
+                    <a (click)="onDeleteCar($event, xsclient)"><span class="material-icons ">delete</span></a>
+                </td> -->
+            </tr>
+        </tbody>
+    
+        <ng-template #empty>
+            <div style="font-size: 20px; " class="xs_empty ">
+                Нет клиентов...
+            </div>
+        </ng-template>
+    </table>
+    
+</div>

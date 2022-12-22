@@ -17,6 +17,16 @@ export class DocumentsService {
     return this.http.post<Dogovor>(`/api/documents/create_dogovor`, dogovor);
   }
 
+  //  Получаем список договоров по id клиента
+  getDogovorsById(id: string): Observable<Dogovor[]> {
+    return this.http.get<Dogovor[]>(`/api/documents/dogovors_list/${id}`);
+  }
+
+  //  Получаем договор по id 
+  getDogovorById(id: string): Observable<Dogovor> {
+    return this.http.get<Dogovor>(`/api/documents/dogovor/${id}`);
+  }
+
 
   // Обновим свойство state у всех старых договоров при создании нового
   // update_state(clientId: string): Observable<any> {
@@ -35,10 +45,7 @@ export class DocumentsService {
   //   });
   // }
 
-  //  Получаем список договоров по id клиента
-  getDogovorsById(id: string): Observable<Dogovor[]> {
-    return this.http.get<Dogovor[]>(`/api/documents/dogovors_list/${id}`);
-  }
+  
 
   // update(id: string, xsbooking: Booking): Observable<Booking> {
   //   xsbooking._id = id;

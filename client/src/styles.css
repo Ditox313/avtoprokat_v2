@@ -1282,3 +1282,47 @@ select {
     display: inline-block;
     border-bottom: 2px solid #194A9E;
 }
+
+.xs_dogovor__active
+{
+    background-color: green !important;
+    color: #fff !important;
+}
+
+.xs_generate_docs__top____actions
+{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 40px;
+    padding:  0 40px;
+}
+
+.xs_generate_docs___bottom
+{
+    padding: 0 40px;
+}
+.xs_download
+{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+    border-radius: 7px;
+    background-color: #194A9E;
+    color: #fff;
+}
+
+.xs_download:focus {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+    border-radius: 7px;
+    background-color: #194A9E;
+    color: #fff;
+}
+
+.xs_download span
+{
+    margin-right: 5px;
+}

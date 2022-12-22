@@ -65,7 +65,7 @@ export class ClientsService {
     return this.http.post<Client>(`/api/clients`, fd);
   }
 
-  // Создаем нового физ/лица
+  // Создаем нового юр/лица
    create_lawfase(client: Client_Law_Fase, doc_1_img?: File, doc_2_img?: File, doc_3_img?: File, doc_4_img?: File): Observable<Client_Law_Fase> {
     const fd = new FormData(); 
       fd.append('name', client.name);

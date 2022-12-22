@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { ClientsService } from '../../services/clients.service';
 import { Client, MaterialDatepicker } from 'src/app/shared/types/interfaces';
 import { MaterialService } from 'src/app/shared/services/material.service';
+import { DogovorListComponent } from '../../../documents/components/dogovor-list/dogovor-list.component'
 
 @Component({
   selector: 'app-show-client',
@@ -20,6 +21,8 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
   @ViewChild('input2') inputRef2!: ElementRef;
   @ViewChild('input3') inputRef3!: ElementRef;
   @ViewChild('input4') inputRef4!: ElementRef;
+  
+  
 
   clientId!: string;
   xsActualClient!: Client;

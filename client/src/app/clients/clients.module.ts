@@ -19,6 +19,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { ClientsEffect } from './store/effects/clients.effect';
 import { AddClientLawfaseComponent } from './components/add-client-lawfase/add-client-lawfase.component';
 import { ShowClientLawfaseComponent } from './components/show-client-lawfase/show-client-lawfase.component';
+import { DocumentsModule } from '../documents/documents.module';
+
 
 const routes = [
   {
@@ -50,6 +52,10 @@ const routes = [
     LayoutsModule,
     StoreModule.forFeature('clients', reducers),
     EffectsModule.forFeature([ClientsEffect]),
+    DocumentsModule
+  ],
+  exports: [
+    DocumentsModule
   ],
   providers: [ClientsService],
 })
