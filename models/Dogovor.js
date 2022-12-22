@@ -66,6 +66,14 @@ const dogovorSchema = new Schema({
         required: true,
     },
 
+
+    // Дата создания
+    date: {
+        type: Date,
+        default: Date.now,
+        required: false,
+    },
+
     
 
 });

@@ -34,6 +34,16 @@ export class DocumentsService {
   }
 
 
+  // Получаем список всех договоров
+  fetch(params: any = {}): Observable<Dogovor[]> {
+    return this.http.get<Dogovor[]>('/api/documents', {
+      params: new HttpParams({
+        fromObject: params,
+      }),
+    });
+  }
+
+
   // Обновим свойство state у всех старых договоров при создании нового
   // update_state(clientId: string): Observable<any> {
   //   const xs_data = {

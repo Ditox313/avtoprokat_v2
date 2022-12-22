@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="xs_dogovors">
     <table class="striped" >
         <thead>
             <tr>
@@ -32,9 +32,16 @@
     
         <ng-template #empty>
             <div style="font-size: 20px; " class="xs_empty ">
-                Нет клиентов...
+                Нет договоров...
             </div>
         </ng-template>
     </table>
+
+    <div class="xs_cars__more" *ngIf="!noMoreDogovors">
+        <span (click)="loadmore()">Загрузить еще...</span>
+    </div>
     
 </div>
+
+
+<app-loader *ngIf="!xs_dogovors"></app-loader>

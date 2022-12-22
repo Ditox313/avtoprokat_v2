@@ -318,6 +318,7 @@ export interface Dogovor {
   content?: any;
   clientId?: any;
   state?: any;
+  date?: any;
 }
 
 

@@ -120,21 +120,20 @@ module.exports.remove_dogovor = async function(req, res) {
 
 
 // Контроллер для fetch
-// module.exports.fetch = async function(req, res) {
-//     try {
-//         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
-//         const bookings = await Booking.find({
-//                 user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
-//             }).sort({ date: -1 })
-//             .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
-//             .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
+module.exports.fetch = async function(req, res) {
+    try {
+        const dogovors = await Dogovor.find({
+                clientId: req.query.clientId 
+            }).sort({ date: -1 })
+            .skip(+req.query.offset) 
+            .limit(+req.query.limit); 
 
-//         // Возвращаем пользователю позиции 
-//         res.status(200).json(bookings);
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
+        // Возвращаем пользователю позиции 
+        res.status(200).json(dogovors);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
 
 
 

@@ -103,7 +103,7 @@ export class AddClientDogovorComponent implements OnInit {
 
     this.documentsServices.create_dogovor(dogovor).subscribe((dogovor) => {
       MaterialService.toast('Договор создан');
-      this.router.navigate(['/clients-page']);
+      this.router.navigate(['/show-client/edit/', this.actualClient._id]);
     });
   }
 }
