@@ -28,6 +28,12 @@ export class DocumentsService {
   }
 
 
+  // Удалить договор
+  delete_dogovor(id: any): Observable<any> {
+    return this.http.delete<any>(`/api/documents/dogovor-delete/${id}`);
+  }
+
+
   // Обновим свойство state у всех старых договоров при создании нового
   // update_state(clientId: string): Observable<any> {
   //   const xs_data = {

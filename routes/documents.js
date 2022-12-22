@@ -16,6 +16,10 @@ router.get('/dogovors_list/:id', passport.authenticate('jwt', { session: false }
 router.get('/dogovor/:id', passport.authenticate('jwt', { session: false }), controller.getDogovorById);
 
 
+// // Роут на remove dogovor
+router.delete('/dogovor-delete/:id', passport.authenticate('jwt', { session: false }), controller.remove_dogovor);
+
+
 // Роут на изменение state все договоров клиента при создании нового
 // router.patch('/clear_state', passport.authenticate('jwt', { session: false }), controller.update_state);
 
@@ -29,8 +33,7 @@ router.get('/dogovor/:id', passport.authenticate('jwt', { session: false }), con
 //router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update);
 
 
-// // Роут на remove
-//router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.remove);
+
 
 
 module.exports = router;

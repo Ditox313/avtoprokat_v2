@@ -1326,3 +1326,13 @@ select {
 {
     margin-right: 5px;
 }
+
+.xs_actions__dogovors
+{
+    display: flex;
+}
+
+.xs_actions__dogovors a:first-child
+{
+    margin-right: 5px;
+}

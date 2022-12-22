@@ -99,6 +99,25 @@ module.exports.update_state = async function(req, res) {
 
 
 
+// Контроллер для remove
+module.exports.remove_dogovor = async function(req, res) {
+    try {
+        await Dogovor.remove({
+            _id: req.params.id
+        });
+
+        // Возвращаем результат
+        res.status(200).json({
+            message: "Догоров удален"
+        });
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
 
 // Контроллер для fetch
 // module.exports.fetch = async function(req, res) {
@@ -165,26 +184,7 @@ module.exports.update_state = async function(req, res) {
 
 
 
-// Контроллер для remove
-// module.exports.remove = async function(req, res) {
-//     try {
-//         await Booking.remove({
-//             _id: req.params.id
-//         });
 
-//         await Pays.remove({
-//             bookingId: req.params.id
-//         });
-
-
-//         // Возвращаем результат
-//         res.status(200).json({
-//             message: "Бронь удалена"
-//         });
-//     } catch (e) {
-//         errorHandler(res, e);
-//     }
-// };
 
 
 
