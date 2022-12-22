@@ -65,6 +65,9 @@ const clientLawFaseSchema = new Schema({
     },
 
 
+    
+
+
     // Юридический адрес
     law_address: {
         type: String,
@@ -90,6 +93,29 @@ const clientLawFaseSchema = new Schema({
 
     // Должность рукводителя
     boss_role: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
+
+    // Имя руководителя
+    boss_name: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
+
+    // Фамилия руководителя
+    boss_surname: {
+        type: String,
+        default: '',
+        required: true,
+    },
+
+    // Отчество руководителя
+    boss_lastname: {
         type: String,
         default: '',
         required: true,
@@ -168,6 +194,12 @@ const clientLawFaseSchema = new Schema({
     doc_2_img: {
         type: String,
         default: '',
+        required: true,
+    },
+
+    order: {
+        type: Number,
+        default: 0,
         required: true,
     },
 

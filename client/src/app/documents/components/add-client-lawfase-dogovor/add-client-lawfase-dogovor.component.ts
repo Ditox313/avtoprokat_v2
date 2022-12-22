@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Client, Dogovor, User } from 'src/app/shared/types/interfaces';
+import { Client, Client_Law_Fase, Dogovor, User } from 'src/app/shared/types/interfaces';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -12,14 +12,15 @@ import { DatePipe } from '@angular/common';
 import { MaterialService } from 'src/app/shared/services/material.service';
 
 @Component({
-  selector: 'app-add-client-dogovor',
-  templateUrl: './add-client-dogovor.component.html',
-  styleUrls: ['./add-client-dogovor.component.css']
+  selector: 'app-add-client-lawfase-dogovor',
+  templateUrl: './add-client-lawfase-dogovor.component.html',
+  styleUrls: ['./add-client-lawfase-dogovor.component.css']
 })
-export class AddClientDogovorComponent implements OnInit {
+export class AddClientLawfaseDogovorComponent implements OnInit {
+
   datePipeString: string;
   ClientId!: string;
-  actualClient!: Client;
+  actualClient!: Client_Law_Fase;
   actualUser!: User;
   clientDogovors!: Dogovor[];
   yearDate: any;
@@ -40,10 +41,11 @@ export class AddClientDogovorComponent implements OnInit {
       this.ClientId = params['id'];
     });
 
-    this.clients.getById(this.ClientId).subscribe((res) => {
+    this.clients.getByIdLawfase(this.ClientId).subscribe((res) => {
       this.actualClient = res;
+      
       this.yearDate = new Date(this.xs_actual_date);
-      this.yearDate.setDate(this.yearDate.getDate() + 365);
+      this.yearDate.setDate(this.yearDate.getDate() + (365*3));
     });
 
 
@@ -66,10 +68,10 @@ export class AddClientDogovorComponent implements OnInit {
       pageSize: 'A4',
       pageMargins: [20, 20, 20, 20],
       styles: {
-        fsz: { 
+        fsz: {
           fontSize: 6
         },
-        fsz_b: { 
+        fsz_b: {
           fontSize: 10
         }
       }
@@ -77,18 +79,16 @@ export class AddClientDogovorComponent implements OnInit {
 
     pdfMake.createPdf(docDefinition).open();
 
-  } 
+  }
 
 
 
 
-  createDogovor()
-  {
+  createDogovor() {
 
-  
     let administrator = this.actualUser;
     delete administrator.password;
-    
+
     const dogovor = {
       date_start: this.xs_actual_date,
       dogovor_number: this.xs_actual_date + '/СТС-' + this.actualClient.order,
@@ -102,7 +102,8 @@ export class AddClientDogovorComponent implements OnInit {
 
     this.documentsServices.create_dogovor(dogovor).subscribe((dogovor) => {
       MaterialService.toast('Договор создан');
-      this.router.navigate(['/show-client/edit/', this.actualClient._id]);
+      this.router.navigate(['/show-client-lawfase//edit/', this.actualClient._id]);
     });
   }
+
 }

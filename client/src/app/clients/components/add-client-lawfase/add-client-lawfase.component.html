@@ -177,6 +177,44 @@
 
 
                             <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="boss_name" type="text" class="validate" formControlName="boss_name"
+                                    [ngClass]="{'invalid': form.controls['boss_name'].invalid && form.controls['boss_name'].touched}">
+                                <label for="boss_name">Имя руководителя<span class="xszv">*</span></label>
+                                <span class="helper-text red-text" *ngIf="form.controls['boss_name'].invalid && form.controls['boss_name'].touched">
+                                    <p *ngIf="form.controls['boss_name'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+
+
+
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="boss_surname" type="text" class="validate" formControlName="boss_surname"
+                                    [ngClass]="{'invalid': form.controls['boss_surname'].invalid && form.controls['boss_surname'].touched}">
+                                <label for="boss_surname">Фамилия руководителя<span class="xszv">*</span></label>
+                                <span class="helper-text red-text" *ngIf="form.controls['boss_surname'].invalid && form.controls['boss_surname'].touched">
+                                    <p *ngIf="form.controls['boss_surname'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+
+
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="boss_lastname" type="text" class="validate" formControlName="boss_lastname"
+                                    [ngClass]="{'invalid': form.controls['boss_lastname'].invalid && form.controls['boss_lastname'].touched}">
+                                <label for="boss_lastname">Фамилия руководителя<span class="xszv">*</span></label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['boss_lastname'].invalid && form.controls['boss_lastname'].touched">
+                                    <p *ngIf="form.controls['boss_lastname'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+
+
+                            <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="osnovanie_boss_role" type="text" class="validate"
                                     formControlName="osnovanie_boss_role"
                                     [ngClass]="{'invalid': form.controls['osnovanie_boss_role'].invalid && form.controls['osnovanie_boss_role'].touched}">

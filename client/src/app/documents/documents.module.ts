@@ -13,6 +13,7 @@ import { AddClientDogovorComponent } from './components/add-client-dogovor/add-c
 import { DocumentsService } from './services/documents.service';
 import { DogovorListComponent } from './components/dogovor-list/dogovor-list.component';
 import { ShowClientDogovorComponent } from './components/show-client-dogovor/show-client-dogovor.component';
+import { AddClientLawfaseDogovorComponent } from './components/add-client-lawfase-dogovor/add-client-lawfase-dogovor.component';
 
 
 const routes = [
@@ -23,6 +24,7 @@ const routes = [
     children: [
       { path: 'booking-dogovor/:id', component: BookingDogovorComponent },
       { path: 'add-client-dogovor/:id', component: AddClientDogovorComponent },
+      { path: 'add-client-lawfase-dogovor/:id', component: AddClientLawfaseDogovorComponent },
       { path: 'booking-act/:id', component: BookingActComponent },
       { path: 'show-client-dogovor/:id', component: ShowClientDogovorComponent },
       { path: 'dogovors-client/:id', component: DogovorListComponent },
@@ -39,6 +41,7 @@ const routes = [
     AddClientDogovorComponent,
     DogovorListComponent,
     ShowClientDogovorComponent,
+    AddClientLawfaseDogovorComponent,
   ],
   imports: [
     CommonModule,

@@ -27,7 +27,7 @@
             <div class="col s12">
                 <ul class="tabs" #tabs>
                     <li class="tab col"><a href="#information" class="active">Общая информация</a></li>
-                    <li class="tab col"><a href="#dogovor">Документы</a></li>
+                    <li class="tab col"><a href="#docs">Документы</a></li>
                 </ul>
             </div>
 
@@ -185,6 +185,46 @@
                                 <span class="helper-text red-text"
                                     *ngIf="form.controls['boss_role'].invalid && form.controls['boss_role'].touched">
                                     <p *ngIf="form.controls['boss_role'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+
+
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="boss_name" type="text" class="validate" formControlName="boss_name"
+                                    [ngClass]="{'invalid': form.controls['boss_name'].invalid && form.controls['boss_name'].touched}">
+                                <label for="boss_name">Имя руководителя<span class="xszv">*</span></label>
+                                <span class="helper-text red-text" *ngIf="form.controls['boss_name'].invalid && form.controls['boss_name'].touched">
+                                    <p *ngIf="form.controls['boss_name'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+                            
+                            
+                            
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="boss_surname" type="text" class="validate" formControlName="boss_surname"
+                                    [ngClass]="{'invalid': form.controls['boss_surname'].invalid && form.controls['boss_surname'].touched}">
+                                <label for="boss_surname">Фамилия руководителя<span class="xszv">*</span></label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['boss_surname'].invalid && form.controls['boss_surname'].touched">
+                                    <p *ngIf="form.controls['boss_surname'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="boss_lastname" type="text" class="validate"
+                                    formControlName="boss_lastname"
+                                    [ngClass]="{'invalid': form.controls['boss_lastname'].invalid && form.controls['boss_lastname'].touched}">
+                                <label for="boss_lastname">Фамилия руководителя<span class="xszv">*</span></label>
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['boss_lastname'].invalid && form.controls['boss_lastname'].touched">
+                                    <p *ngIf="form.controls['boss_lastname'].errors?.required">
                                         Поле не должно быть пустым
                                     </p>
                                 </span>
@@ -380,8 +420,14 @@
                     </div>
                 </div>
             </div>
-            <div id="dogovor" class="col s12">
-                Договор клиента
+
+
+            <div id="docs" class="col s12" *ngIf="xsActualClient">
+                <button class="xs_create_dogovor" [routerLink]="['/add-client-lawfase-dogovor', xsActualClient._id]">
+                    <span class="material-icons">add_to_photos</span>
+                </button>
+            
+                <!-- <app-dogovor-list [clientId]="clientId"></app-dogovor-list> -->
             </div>
         </div>
     </div>

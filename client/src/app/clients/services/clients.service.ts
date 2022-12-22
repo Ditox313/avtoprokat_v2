@@ -79,6 +79,9 @@ export class ClientsService {
       fd.append('fact_address', client.fact_address);
       fd.append('mail_address', client.mail_address);
       fd.append('boss_role', client.boss_role);
+      fd.append('boss_name', client.boss_name);
+      fd.append('boss_surname', client.boss_surname);
+      fd.append('boss_lastname', client.boss_lastname);
       fd.append('osnovanie_boss_role', client.osnovanie_boss_role);
       fd.append('number_1', client.number_1);
       fd.append('number_2', client.number_2);
@@ -220,6 +223,9 @@ export class ClientsService {
       fd.append('fact_address', xsclient.fact_address);
       fd.append('mail_address', xsclient.mail_address);
       fd.append('boss_role', xsclient.boss_role);
+      fd.append('boss_name', xsclient.boss_name);
+      fd.append('boss_surname', xsclient.boss_surname);
+      fd.append('boss_lastname', xsclient.boss_lastname);
       fd.append('osnovanie_boss_role', xsclient.osnovanie_boss_role);
       fd.append('number_1', xsclient.number_1);
       fd.append('number_2', xsclient.number_2);

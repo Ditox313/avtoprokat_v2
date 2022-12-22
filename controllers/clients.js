@@ -63,6 +63,17 @@ module.exports.create = async function(req, res) {
 // Контроллер для create юр/лица
 module.exports.create_law_fase = async function (req, res) {
     try {
+
+        // Ищем номер последнего заказа глобального
+        const lastOrder = await Client_Law_Face.findOne({
+            user: req.user.id
+        }).sort({ date: -1 });
+
+
+        // Если мы нашли предполагаемы последнйи заказ, то устанвливает поле order
+        const maxOrder = lastOrder ? lastOrder.order : 0;
+
+
         const client = await new Client_Law_Face({
             name: req.body.name,
             short_name: req.body.short_name,
@@ -75,6 +86,9 @@ module.exports.create_law_fase = async function (req, res) {
             fact_address: req.body.fact_address,
             mail_address: req.body.mail_address,
             boss_role: req.body.boss_role,
+            boss_name: req.body.boss_name,
+            boss_surname: req.body.boss_surname,
+            boss_lastname: req.body.boss_lastname,
             osnovanie_boss_role: req.body.osnovanie_boss_role,
             number_1: req.body.number_1,
             number_2: req.body.number_2,
@@ -88,6 +102,7 @@ module.exports.create_law_fase = async function (req, res) {
             doc_2_img: req.files.doc_2_img[0].path ? req.files.doc_2_img[0].path : '',
             doc_3_img: req.files.doc_3_img[0].path ? req.files.doc_3_img[0].path : '',
             doc_4_img: req.files.doc_4_img[0].path ? req.files.doc_4_img[0].path : '',
+            order: maxOrder + 1
 
         }).save();
 

@@ -151,6 +151,9 @@ export interface Client_Law_Fase
     fact_address: string
     mail_address: string
     boss_role: string
+    boss_name?: string
+    boss_surname?: string
+    boss_lastname?: string
     osnovanie_boss_role: string
     number_1: string
     number_2: string
@@ -164,7 +167,8 @@ export interface Client_Law_Fase
     doc_3_img?: any
     doc_4_img?: any
     _id?: any,
-    date?: any
+    date?: any,
+    order?: any
 }
 
 
