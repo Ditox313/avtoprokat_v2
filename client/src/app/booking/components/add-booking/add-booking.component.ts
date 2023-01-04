@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { MaterialDatepicker, Summa } from 'src/app/shared/types/interfaces';
+import { Client, Client_Law_Fase, MaterialDatepicker, Summa } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 
 
@@ -46,6 +46,24 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   // Закончился ли ввод в поле нового залога
   isCustomeZalogCheck: boolean = false;
 
+  // Результат поиска
+  searchResult: any[] = [];
+  searchResultLawFase: any[] = [];
+
+  // Проверяем есть ли введенный запрос
+  hasQuery: Boolean = false;
+  hasQueryLawFase: Boolean = false;
+
+
+  // Видимость полей поиска по умолчанию
+  fizSearchIsVisible: Boolean = false;
+  lawSearchIsVisible: Boolean = false;
+
+
+  // Храним клиента выбранного при поиске
+  xs_actual_search__client: any = null;
+  xs_actual_search__client___lawfase: any = null;
+
 
 
   constructor(
@@ -68,6 +86,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       clear_auto: new FormControl(''),
       full_tank: new FormControl(''),
       isCustomeZalogControl: new FormControl(''),
+      search_fiz: new FormControl(''),
+      search_law: new FormControl(''),
     });
 
 
@@ -1030,6 +1050,96 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   }
 
 
+  // При выборе типа клиента
+  changeTypeClient(e)
+  {
+    if(e.target.value === 'fiz')
+    {
+      this.lawSearchIsVisible = false
+      this.fizSearchIsVisible = true;
+    }
+    else if (e.target.value === 'law')
+    {
+
+      this.lawSearchIsVisible = true
+      this.fizSearchIsVisible = false;
+    }
+    
+  }
+
+
+  // При выборе клиента физ/лица
+  changeClient(client)
+  {
+    this.form.patchValue({
+      search_fiz: client.surname + ' ' + client.name + ' ' + client.lastname
+    });
+    this.hasQuery = false;
+    this.xs_actual_search__client = JSON.stringify(client);
+  }
+
+
+
+  // При выборе клиента юр/лица
+  changeClientLawFase(client) {
+    this.form.patchValue({
+      search_law: client.name
+    });
+    this.hasQueryLawFase = false;
+    this.xs_actual_search__client___lawfase = JSON.stringify(client)
+  }
+
+
+  // Получаем данные для поиска физического лица
+  searchData(e: any) {
+    // Отчищаем запрос
+    let query: string = e.target.value.trim()
+    let xs_query = {
+      query: query,
+      type: 'fiz'
+    }
+
+    // Если запрос ничего не содержит или содержит только пробелы
+    let matchSpaces = query.match(/\s*/);
+    if (matchSpaces[0] === query) {
+      this.searchResult = [];
+      this.hasQuery = false;
+      return;
+    }
+
+
+    this.bookings.searchWidget(xs_query).subscribe(res => {
+      this.searchResult = res;
+      this.hasQuery = true;
+    })
+  }
+
+
+  // Получаем данные для поиска физического лица
+  searchDataLawFase(e: any) {
+    // Отчищаем запрос
+    let query: string = e.target.value.trim()
+    let xs_query = {
+      query: query,
+      type: 'law'
+    }
+
+    // Если запрос ничего не содержит или содержит только пробелы
+    let matchSpaces = query.match(/\s*/);
+    if (matchSpaces[0] === query) {
+      this.searchResultLawFase = [];
+      this.hasQuery = false;
+      return;
+    }
+
+
+    this.bookings.searchWidget(xs_query).subscribe(res => {
+      this.searchResultLawFase = res;
+      this.hasQueryLawFase = true;
+    })
+  }
+
+
 
   // Проверяем нажат ли чекбокс для скидки
   xs_isCustomeZalogCheck() {
@@ -1168,7 +1278,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       if (this.form.value.tariff === 'Город') {
         const booking = {
           car: JSON.parse(this.form.value.car),
-          client: JSON.parse(this.form.value.client),
+          client: JSON.parse(this.xs_actual_search__client),
           place_start: this.form.value.place_start,
           place_end: this.form.value.place_end,
           tariff: this.form.value.tariff,
@@ -1197,7 +1307,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       if (this.form.value.tariff === 'Межгород') {
         const booking = {
           car: JSON.parse(this.form.value.car),
-          client: JSON.parse(this.form.value.client),
+          client: JSON.parse(this.xs_actual_search__client),
           place_start: this.form.value.place_start,
           place_end: this.form.value.place_end,
           tariff: this.form.value.tariff,
@@ -1225,7 +1335,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       if (this.form.value.tariff === 'Россия') {
         const booking = {
           car: JSON.parse(this.form.value.car),
-          client: JSON.parse(this.form.value.client),
+          client: JSON.parse(this.xs_actual_search__client),
           place_start: this.form.value.place_start,
           place_end: this.form.value.place_end,
           tariff: this.form.value.tariff,
@@ -1255,7 +1365,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     {
       const booking = {
         car: JSON.parse(this.form.value.car),
-        client: JSON.parse(this.form.value.client),
+        client: JSON.parse(this.xs_actual_search__client),
         place_start: this.form.value.place_start,
         place_end: this.form.value.place_end,
         tariff: this.form.value.tariff,

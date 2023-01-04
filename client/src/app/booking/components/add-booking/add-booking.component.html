@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="xs_form__item">
-                        <div class="xs_form__item___mod xs_form__item___mod___client">
+                        <!-- <div class="xs_form__item___mod xs_form__item___mod___client">
                             <label for="marka">Клиент<span class="xszv">*</span></label>
                             <div class="input-field col s12">
                                 <select id="client" formControlName="client"
@@ -90,6 +90,73 @@
                                 </div>
                             </div>
 
+                        </div> -->
+
+
+                        <div class="xs_form__item___mod xs_form__item___mod___client">
+                            <fieldset>
+                                <label for="marka">Тип клиента<span class="xszv">*</span></label>
+                                <div class="input-field col s12">
+                                    <select id="client" formControlName="client" (change)="changeTypeClient($event)"
+                                        [ngClass]="{'invalid': form.controls['client'].invalid && form.controls['client'].touched}">
+                                        <option value="" selected disabled hidden>Выберите тип клиента</option>
+                                        <option value="fiz"  selected>Физическое лицо</option>
+                                        <option value="law">Юридическое лицо</option>
+                                    </select>
+                                </div>
+                            </fieldset>
+
+                            <div class="xs_fiz__search" *ngIf="fizSearchIsVisible">
+                                <div class="xs_search">
+                                    <label for="marka">Поиск клиента по Фамилии<span class="xszv">*</span></label>
+                                    <div class="xs_search__box">
+                                        <div class="input-field col s12">
+                                            <input type="text" (keyup)="searchData($event)" placeholder="Введите для поиска..." formControlName="search_fiz" id="search_fiz">
+                                        </div>
+                                        
+                                    </div>
+                                
+                                    <div class="xs_header_search_result" *ngIf="hasQuery">
+                                        <div *ngIf="searchResult.length < 1 && hasQuery" class="search_noresult_item">Результатов не найдено...</div>
+
+                                        <div *ngFor="let client of searchResult" class="search_result_item" (click)="changeClient(client)">
+                                            <div>{{client.surname}} {{client.name}} {{client.lastname}}</div>
+                                        </div>
+      
+                                
+                                        <!-- <p *ngFor="let client of searchResult" class="search_result_item">
+                                            <a [routerLink]="['/page','case-show-public',case._id]">{{case.title}}</a>
+                                        </p>
+                                
+                                        <p class="search_result_item_more" *ngIf="searchResult.length > 0 && hasQuery">
+                                            <a [routerLink]="['/page','search-result-page']">Смотреть результаты поиска</a>
+                                        </p> -->
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="xs_law__search" *ngIf="lawSearchIsVisible">
+                                <div class="xs_search">
+                                    <label for="marka">Поиск клиента по названии организации<span class="xszv">*</span></label>
+                                    <div class="xs_search__box">
+                                        <div class="input-field col s12">
+                                            <input type="text" (keyup)="searchDataLawFase($event)" placeholder="Введите для поиска..."
+                                                formControlName="search_law" id="search_law">
+                                        </div>
+                            
+                                    </div>
+                            
+                                    <div class="xs_header_search_result" *ngIf="hasQueryLawFase">
+                                        <div *ngIf="searchResultLawFase.length < 1 && hasQueryLawFase" class="search_noresult_item">Результатов не найдено...
+                                        </div>
+                            
+                                        <div *ngFor="let client of searchResultLawFase" class="search_result_item" (click)="changeClientLawFase(client)">
+                                            <div>{{client.name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 

@@ -1,5 +1,7 @@
 const bodyParser = require('body-parser');
 const Booking = require('../models/Booking');
+const Client = require('../models/Clients/Client');
+const Client_Law_Fase = require('../models/Clients/Client_Law_Fase');
 const Pays = require('../models/Pays');
 const errorHandler = require('../Utils/errorHendler');
 
@@ -274,4 +276,33 @@ module.exports.toggleStatus = async function (req, res) {
     } catch (e) {
         errorHandler(res, e);
     }
+};
+
+
+
+
+
+// Контроллер на поиск
+module.exports.searchWidget = async function (req, res) {
+    try {
+
+        if (req.body.searchData.type === 'fiz')
+        {
+            searchData = req.body.searchData.query
+            xsearch = await Client.find({ surname: { $regex: new RegExp('^' + searchData + '.*', 'i') } }).exec();
+            xsearch = xsearch.slice(0, 10);
+        }
+        else if (req.body.searchData.type === 'law')
+        {
+            searchData = req.body.searchData.query
+            xsearch = await Client_Law_Fase.find({ name: { $regex: new RegExp('^' + searchData + '.*', 'i') } }).exec();
+            xsearch = xsearch.slice(0, 10);
+        }
+        
+
+        res.status(200).json(xsearch);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+
 };

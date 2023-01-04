@@ -39,4 +39,12 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), controll
 // Роут на toggleStatus
 router.post('/toggleStatus', passport.authenticate('jwt', { session: false }), controller.toggleStatus);
 
+
+// Роут на toggleStatus
+router.post('/toggleStatus', passport.authenticate('jwt', { session: false }), controller.toggleStatus);
+
+
+// Роут на поиск
+router.post('/search_client', passport.authenticate('jwt', { session: false }), controller.searchWidget);
+
 module.exports = router;

@@ -2,7 +2,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { Booking } from 'src/app/shared/types/interfaces';
+import { map } from 'rxjs/operators';
+import { Booking, Client } from 'src/app/shared/types/interfaces';
 
 
 // Даем возможность инжектировать сервисы в класс
@@ -10,6 +11,15 @@ import { Booking } from 'src/app/shared/types/interfaces';
   providedIn: 'root', //Автоматичеки регистриует сервис в главном модуле
 })
 export class BookingsService {
+
+  // Храним запрос
+  query: string = '' || null;
+
+
+  // Храним результаты
+  searchResult: Client[];
+
+  
   constructor(private http: HttpClient) {}
 
   // Создаем новую бронь
@@ -62,5 +72,16 @@ export class BookingsService {
       bookingId: bookingId
     };
     return this.http.post<Booking>(`/api/bookings/toggleStatus`, body);
+  }
+
+
+  searchWidget(searchData: any): Observable<Client[]> {
+    return this.http.post<Client[]>('/api/bookings/search_client', { searchData: searchData }).pipe(
+      map(res => {
+        this.query = searchData.query;
+        this.searchResult = res;
+        return res;
+      })
+    )
   }
 }
