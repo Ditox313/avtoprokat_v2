@@ -63,6 +63,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   // Храним клиента выбранного при поиске
   xs_actual_search__client: any = null;
   xs_actual_search__client___lawfase: any = null;
+  
+
+  // Храним выбранный тип клиента
+  xs_actual_client_type: string = ''
 
 
 
@@ -1055,14 +1059,15 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   {
     if(e.target.value === 'fiz')
     {
-      this.lawSearchIsVisible = false
+      this.lawSearchIsVisible = false;
       this.fizSearchIsVisible = true;
+      this.xs_actual_client_type = 'fiz';
     }
     else if (e.target.value === 'law')
     {
-
-      this.lawSearchIsVisible = true
+      this.lawSearchIsVisible = true;
       this.fizSearchIsVisible = false;
+      this.xs_actual_client_type = 'law';
     }
     
   }
@@ -1128,7 +1133,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     let matchSpaces = query.match(/\s*/);
     if (matchSpaces[0] === query) {
       this.searchResultLawFase = [];
-      this.hasQuery = false;
+      this.hasQueryLawFase = false;
       return;
     }
 
@@ -1138,7 +1143,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       this.hasQueryLawFase = true;
     })
   }
-
 
 
   // Проверяем нажат ли чекбокс для скидки
@@ -1265,46 +1269,102 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   }
 
 
-
-
   onSubmit() {
     
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
 
-    if (!this.isCustomeZalog)
+    if (this.xs_actual_client_type === 'fiz')
     {
-      if (this.form.value.tariff === 'Город') {
-        const booking = {
-          car: JSON.parse(this.form.value.car),
-          client: JSON.parse(this.xs_actual_search__client),
-          place_start: this.form.value.place_start,
-          place_end: this.form.value.place_end,
-          tariff: this.form.value.tariff,
-          comment: this.form.value.comment,
-          booking_start: this.form.value.booking_start,
-          booking_end: this.form.value.booking_end,
-          booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-          summaFull: Math.round(this.summa.summaFull),
-          summa: Math.round(this.summa.summa),
-          dop_hours: this.summa.dop_hours,
-          dop_info_open: {
-            clear_auto: this.form.value.clear_auto || false,
-            full_tank: this.form.value.full_tank || false
-          },
-          booking_zalog: this.summa.car.zalog
-        };
+      if (!this.isCustomeZalog) {
+        if (this.form.value.tariff === 'Город') {
+          const booking = {
+            car: JSON.parse(this.form.value.car),
+            client: JSON.parse(this.xs_actual_search__client),
+            place_start: this.form.value.place_start,
+            place_end: this.form.value.place_end,
+            tariff: this.form.value.tariff,
+            comment: this.form.value.comment,
+            booking_start: this.form.value.booking_start,
+            booking_end: this.form.value.booking_end,
+            booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
+            summaFull: Math.round(this.summa.summaFull),
+            summa: Math.round(this.summa.summa),
+            dop_hours: this.summa.dop_hours,
+            dop_info_open: {
+              clear_auto: this.form.value.clear_auto || false,
+              full_tank: this.form.value.full_tank || false
+            },
+            booking_zalog: this.summa.car.zalog
+          };
 
 
 
-        // Отправляем запрос
-        this.bookings.create(booking).subscribe((booking) => {
-          MaterialService.toast('Бронь добавлена');
-          this.router.navigate(['/bookings-page']);
-        });
+          // Отправляем запрос
+          this.bookings.create(booking).subscribe((booking) => {
+            MaterialService.toast('Бронь добавлена');
+            this.router.navigate(['/bookings-page']);
+          });
+        }
+        if (this.form.value.tariff === 'Межгород') {
+          const booking = {
+            car: JSON.parse(this.form.value.car),
+            client: JSON.parse(this.xs_actual_search__client),
+            place_start: this.form.value.place_start,
+            place_end: this.form.value.place_end,
+            tariff: this.form.value.tariff,
+            comment: this.form.value.comment,
+            booking_start: this.form.value.booking_start,
+            booking_end: this.form.value.booking_end,
+            booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
+            summaFull: Math.round(this.summa.summaFull),
+            summa: Math.round(this.summa.summa),
+            dop_hours: this.summa.dop_hours,
+            dop_info_open: {
+              clear_auto: this.form.value.clear_auto || false,
+              full_tank: this.form.value.full_tank || false
+            },
+            booking_zalog: this.summa.car.zalog_mej
+          };
+
+
+          // Отправляем запрос
+          this.bookings.create(booking).subscribe((booking) => {
+            MaterialService.toast('Бронь добавлена');
+            this.router.navigate(['/bookings-page']);
+          });
+        }
+        if (this.form.value.tariff === 'Россия') {
+          const booking = {
+            car: JSON.parse(this.form.value.car),
+            client: JSON.parse(this.xs_actual_search__client),
+            place_start: this.form.value.place_start,
+            place_end: this.form.value.place_end,
+            tariff: this.form.value.tariff,
+            comment: this.form.value.comment,
+            booking_start: this.form.value.booking_start,
+            booking_end: this.form.value.booking_end,
+            booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
+            summaFull: Math.round(this.summa.summaFull),
+            summa: Math.round(this.summa.summa),
+            dop_hours: this.summa.dop_hours,
+            dop_info_open: {
+              clear_auto: this.form.value.clear_auto || false,
+              full_tank: this.form.value.full_tank || false
+            },
+            booking_zalog: this.summa.car.zalog_rus
+          };
+
+          // Отправляем запрос
+          this.bookings.create(booking).subscribe((booking) => {
+            MaterialService.toast('Бронь добавлена');
+            this.router.navigate(['/bookings-page']);
+          });
+
+        }
       }
-      if (this.form.value.tariff === 'Межгород') {
+      else {
         const booking = {
           car: JSON.parse(this.form.value.car),
           client: JSON.parse(this.xs_actual_search__client),
@@ -1322,8 +1382,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
             clear_auto: this.form.value.clear_auto || false,
             full_tank: this.form.value.full_tank || false
           },
-          booking_zalog: this.summa.car.zalog_mej
+          booking_zalog: this.form.value.isCustomeZalogControl
         };
+
 
 
         // Отправляем запрос
@@ -1331,65 +1392,129 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
           MaterialService.toast('Бронь добавлена');
           this.router.navigate(['/bookings-page']);
         });
-      }
-      if (this.form.value.tariff === 'Россия') {
-        const booking = {
-          car: JSON.parse(this.form.value.car),
-          client: JSON.parse(this.xs_actual_search__client),
-          place_start: this.form.value.place_start,
-          place_end: this.form.value.place_end,
-          tariff: this.form.value.tariff,
-          comment: this.form.value.comment,
-          booking_start: this.form.value.booking_start,
-          booking_end: this.form.value.booking_end,
-          booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-          summaFull: Math.round(this.summa.summaFull),
-          summa: Math.round(this.summa.summa),
-          dop_hours: this.summa.dop_hours,
-          dop_info_open: {
-            clear_auto: this.form.value.clear_auto || false,
-            full_tank: this.form.value.full_tank || false
-          },
-          booking_zalog: this.summa.car.zalog_rus
-        };
-
-        // Отправляем запрос
-        this.bookings.create(booking).subscribe((booking) => {
-          MaterialService.toast('Бронь добавлена');
-          this.router.navigate(['/bookings-page']);
-        });
-
       }
     }
-    else
+    else if (this.xs_actual_client_type === 'law')
     {
-      const booking = {
-        car: JSON.parse(this.form.value.car),
-        client: JSON.parse(this.xs_actual_search__client),
-        place_start: this.form.value.place_start,
-        place_end: this.form.value.place_end,
-        tariff: this.form.value.tariff,
-        comment: this.form.value.comment,
-        booking_start: this.form.value.booking_start,
-        booking_end: this.form.value.booking_end,
-        booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-        summaFull: Math.round(this.summa.summaFull),
-        summa: Math.round(this.summa.summa),
-        dop_hours: this.summa.dop_hours,
-        dop_info_open: {
-          clear_auto: this.form.value.clear_auto || false,
-          full_tank: this.form.value.full_tank || false
-        },
-        booking_zalog: this.form.value.isCustomeZalogControl
-      };
+
+      
+      if (!this.isCustomeZalog) {
+        if (this.form.value.tariff === 'Город') {
+          const booking = {
+            car: JSON.parse(this.form.value.car),
+            client: JSON.parse(this.xs_actual_search__client___lawfase),
+            place_start: this.form.value.place_start,
+            place_end: this.form.value.place_end,
+            tariff: this.form.value.tariff,
+            comment: this.form.value.comment,
+            booking_start: this.form.value.booking_start,
+            booking_end: this.form.value.booking_end,
+            booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
+            summaFull: Math.round(this.summa.summaFull),
+            summa: Math.round(this.summa.summa),
+            dop_hours: this.summa.dop_hours,
+            dop_info_open: {
+              clear_auto: this.form.value.clear_auto || false,
+              full_tank: this.form.value.full_tank || false
+            },
+            booking_zalog: this.summa.car.zalog
+          };
 
 
 
-      // Отправляем запрос
-      this.bookings.create(booking).subscribe((booking) => {
-        MaterialService.toast('Бронь добавлена');
-        this.router.navigate(['/bookings-page']);
-      });
+          // Отправляем запрос
+          this.bookings.create(booking).subscribe((booking) => {
+            MaterialService.toast('Бронь добавлена');
+            this.router.navigate(['/bookings-page']);
+          });
+        }
+        if (this.form.value.tariff === 'Межгород') {
+          const booking = {
+            car: JSON.parse(this.form.value.car),
+            client: JSON.parse(this.xs_actual_search__client___lawfase),
+            place_start: this.form.value.place_start,
+            place_end: this.form.value.place_end,
+            tariff: this.form.value.tariff,
+            comment: this.form.value.comment,
+            booking_start: this.form.value.booking_start,
+            booking_end: this.form.value.booking_end,
+            booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
+            summaFull: Math.round(this.summa.summaFull),
+            summa: Math.round(this.summa.summa),
+            dop_hours: this.summa.dop_hours,
+            dop_info_open: {
+              clear_auto: this.form.value.clear_auto || false,
+              full_tank: this.form.value.full_tank || false
+            },
+            booking_zalog: this.summa.car.zalog_mej
+          };
+
+
+          // Отправляем запрос
+          this.bookings.create(booking).subscribe((booking) => {
+            MaterialService.toast('Бронь добавлена');
+            this.router.navigate(['/bookings-page']);
+          });
+        }
+        if (this.form.value.tariff === 'Россия') {
+          const booking = {
+            car: JSON.parse(this.form.value.car),
+            client: JSON.parse(this.xs_actual_search__client___lawfase),
+            place_start: this.form.value.place_start,
+            place_end: this.form.value.place_end,
+            tariff: this.form.value.tariff,
+            comment: this.form.value.comment,
+            booking_start: this.form.value.booking_start,
+            booking_end: this.form.value.booking_end,
+            booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
+            summaFull: Math.round(this.summa.summaFull),
+            summa: Math.round(this.summa.summa),
+            dop_hours: this.summa.dop_hours,
+            dop_info_open: {
+              clear_auto: this.form.value.clear_auto || false,
+              full_tank: this.form.value.full_tank || false
+            },
+            booking_zalog: this.summa.car.zalog_rus
+          };
+
+          // Отправляем запрос
+          this.bookings.create(booking).subscribe((booking) => {
+            MaterialService.toast('Бронь добавлена');
+            this.router.navigate(['/bookings-page']);
+          });
+
+        }
+      }
+      else {
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          client: JSON.parse(this.xs_actual_search__client___lawfase),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.form.value.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
+          summaFull: Math.round(this.summa.summaFull),
+          summa: Math.round(this.summa.summa),
+          dop_hours: this.summa.dop_hours,
+          dop_info_open: {
+            clear_auto: this.form.value.clear_auto || false,
+            full_tank: this.form.value.full_tank || false
+          },
+          booking_zalog: this.form.value.isCustomeZalogControl
+        };
+
+
+
+        // Отправляем запрос
+        this.bookings.create(booking).subscribe((booking) => {
+          MaterialService.toast('Бронь добавлена');
+          this.router.navigate(['/bookings-page']);
+        });
+      }
     }
+   
   }
 }

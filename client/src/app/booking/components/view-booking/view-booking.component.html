@@ -39,12 +39,19 @@
                             
                             <div class="view_info_client">
                                 <span>Клиент:</span>
-                                <span [routerLink]="['/show-client','edit',xsActualClient._id]">{{actualBooking.client.surname}} {{actualBooking.client.name}} {{actualBooking.client.lastname}}</span>
+                                <span [routerLink]="['/show-client','edit',xsActualClient._id]" *ngIf="actualBooking.client.type === 'fiz'">
+                                    {{actualBooking.client.surname}} {{actualBooking.client.name}} {{actualBooking.client.lastname}}
+                                </span>
+
+                                <span [routerLink]="['/show-client-lawfase','edit',xsActualClient._id]" *ngIf="actualBooking.client.type === 'law'">
+                                    {{actualBooking.client.name}}
+                                </span>
                             </div>
                             
                             <div class="view_info_phone">
                                 <span>Телефон:</span>
-                                <a href="tel:{{actualBooking.client.phone_main}}">{{actualBooking.client.phone_main}}</a>
+                                <a href="tel:{{actualBooking.client.phone_main}}" *ngIf="actualBooking.client.type === 'fiz'">{{actualBooking.client.phone_main}}</a>
+                                <a href="tel:{{actualBooking.client.number_1}}" *ngIf="actualBooking.client.type === 'law'">{{actualBooking.client.number_1}}</a>
                             </div>
                             
                             <div>

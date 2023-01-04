@@ -18,6 +18,7 @@ import { CloseComponent } from './components/close/close.component';
 import { DocumentsModule } from '../documents/documents.module';
 
 
+
 const routes = [
   {
     path: '',

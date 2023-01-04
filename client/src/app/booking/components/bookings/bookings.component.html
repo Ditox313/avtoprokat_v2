@@ -55,7 +55,8 @@
                         <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.car.marka}} {{xsbooking.car.model}} ({{xsbooking.car.number}})</a> 
                     </td>
                     <td>
-                        <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.client.surname}} {{xsbooking.client.name}}</a> 
+                        <a [routerLink]="['/view-booking',xsbooking._id]" *ngIf="xsbooking.client.type === 'fiz'">{{xsbooking.client.surname}} {{xsbooking.client.name}}</a> 
+                        <a [routerLink]="['/view-booking',xsbooking._id]" *ngIf="xsbooking.client.type === 'law'">{{xsbooking.client.name}}</a> 
                     </td>
                     <td>
                         <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.booking_start | date : 'd MMMM y, H:mm'}}</a>
