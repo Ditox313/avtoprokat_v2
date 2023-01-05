@@ -63,7 +63,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
   // Храним клиента выбранного при поиске
   xs_actual_search__client: any = null;
+  xs_actual_search__client_no_json: any = null;
   xs_actual_search__client___lawfase: any = null;
+  xs_actual_search__client___lawfase_no_json: any = null;
   
 
   // Храним выбранный тип клиента
@@ -1102,6 +1104,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     });
     this.hasQuery = false;
     this.xs_actual_search__client = JSON.stringify(client);
+    this.xs_actual_search__client_no_json = client;
     
 
     this.documents.getDogovorActive(client._id).subscribe(dogovor=> {
@@ -1110,49 +1113,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
         this.xs_dogovor_number__actual = dogovor._id;
         this.isActiveDogovor = 'isActive';
 
-        if (this.form.value.booking_end < dogovor[0].date_end )
+        if (this.form.value.booking_end > dogovor[0].date_end )
         {
+          this.is_dogovor_finish_compare_booking = 'isDogovorFinish';
           console.log('Бронь закончится раньше договора');
-        }
-        else
-        {
-          console.log('Бронь закончится позже договора');
         }
 
       }
       else
       {
         this.isActiveDogovor = 'no_isActive';
-        this.is_dogovor_finish_compare_booking = 'isDogovorFinish';
       }
-      
-      // res.forEach(item=>{
-      //   if (item.state === 'active')
-      //   {
-      //     this.xs_dogovor_number__actual = item._id;
-
-      //     if (item.date_end < this.form.value.booking_end)
-      //     {
-
-      //       this.dogovor_finish_in_booking = true;
-      //       console.log('Договор истечет во время брони. Создайте новый договор для клиента');
-            
-      //     }
-
-      //     this.isActiveDogovor = true;
-          
-      //   }
-      // })
-
-      // if (this.isActiveDogovor)
-      // {
-      //   console.log('Есть активный договор у клиента!!!');
-      // }
-      // else
-      // {
-      //   this.isActiveDogovor = true;
-      //   console.log('Нет договора!!!');
-      // }
       
     })
   }
@@ -1166,6 +1137,26 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     });
     this.hasQueryLawFase = false;
     this.xs_actual_search__client___lawfase = JSON.stringify(client)
+    this.xs_actual_search__client___lawfase_no_json = client
+
+
+  
+    this.documents.getDogovorActive(client._id).subscribe(dogovor => {
+      if (Object.keys(dogovor).length > 0) {
+        this.xs_dogovor_number__actual = dogovor._id;
+        this.isActiveDogovor = 'isActive';
+
+        if (this.form.value.booking_end > dogovor[0].date_end) {
+          this.is_dogovor_finish_compare_booking = 'isDogovorFinish';
+          console.log('Бронь закончится раньше договора');
+        }
+
+      }
+      else {
+        this.isActiveDogovor = 'no_isActive';
+      }
+
+    })
   }
 
 

@@ -1429,3 +1429,15 @@ select {
     color: #fff;
     padding: 10px;
 }
+
+.no_dogovor_active a
+{
+    background-color: #fff;
+    display: inline-block;
+    outline: none;
+    color: #194A9E;
+    border-bottom: 1px solid #194A9E;
+    margin-left: 15px;
+    padding: 4px 10px;
+    font-size: 12px;
+}
