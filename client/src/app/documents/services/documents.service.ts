@@ -46,6 +46,12 @@ export class DocumentsService {
   }
 
 
+  //  Получаем акт по id
+  getActById(id: string): Observable<BookingAct> {
+    return this.http.get<BookingAct>(`/api/documents/get_act_by_id/${id}`);
+  }
+
+
   // Удалить договор
   delete_dogovor(id: any): Observable<any> {
     return this.http.delete<any>(`/api/documents/dogovor-delete/${id}`);

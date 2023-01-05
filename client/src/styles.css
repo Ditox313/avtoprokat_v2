@@ -1229,10 +1229,7 @@ select {
 }
 
 
-.xs_doc_file__act, .xs_doc_file_row
-{
-    padding: 0 40px;
-}
+
 
 .xs_booking_btn
 {
@@ -1441,3 +1438,5 @@ select {
     padding: 4px 10px;
     font-size: 12px;
 }
+
+

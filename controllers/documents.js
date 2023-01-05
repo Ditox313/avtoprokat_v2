@@ -83,6 +83,24 @@ module.exports.getDogovorsById = async function(req, res) {
 
 
 
+// Получаем акт по id
+module.exports.getActById = async function (req, res) {
+    try {
+
+        const act = await BookingAct.findOne({
+            _id: req.params.id
+        }).sort({ date: -1 })
+
+
+        res.status(200).json(act);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
 // Получаем список актов для брони по id брони
 module.exports.getActsByIdBooking = async function (req, res) {
     try {

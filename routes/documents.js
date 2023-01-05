@@ -19,6 +19,9 @@ router.get('/dogovors_list/:id', passport.authenticate('jwt', { session: false }
 // Роут на getActsByIdBooking
 router.get('/get_acts_by_id_booking/:id', passport.authenticate('jwt', { session: false }), controller.getActsByIdBooking);
 
+// Роут на getActById
+router.get('/get_act_by_id/:id', passport.authenticate('jwt', { session: false }), controller.getActById);
+
 // Роут на getDogovorActive
 router.get('/dogovor_active/:id', passport.authenticate('jwt', { session: false }), controller.getDogovorActive);
 

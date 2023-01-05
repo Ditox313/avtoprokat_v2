@@ -98,9 +98,6 @@ export class ViewBookingComponent implements OnInit {
       // Получаем список всех актов по данной брони
       this.ducumentsServise.getActsByIdBooking(this.bookingId).subscribe(acts=>{
         this.actualActs = acts;
-
-        console.log('111', this.actualActs);
-        
       })
 
       // Высчитываем какой тариф выбран
