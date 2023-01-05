@@ -123,16 +123,28 @@
                                         <div *ngFor="let client of searchResult" class="search_result_item" (click)="changeClient(client)">
                                             <div>{{client.surname}} {{client.name}} {{client.lastname}}</div>
                                         </div>
-      
-                                
-                                        <!-- <p *ngFor="let client of searchResult" class="search_result_item">
-                                            <a [routerLink]="['/page','case-show-public',case._id]">{{case.title}}</a>
-                                        </p>
-                                
-                                        <p class="search_result_item_more" *ngIf="searchResult.length > 0 && hasQuery">
-                                            <a [routerLink]="['/page','search-result-page']">Смотреть результаты поиска</a>
-                                        </p> -->
                                     </div>
+
+                                    <!-- Для физика -->
+                                    <div class="input-field col s12" *ngIf="isActiveDogovor === 'isActive'">
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_true" >
+                                            Есть активный договор!!!
+                                        </div>
+                                    </div>
+
+                                    <div class="input-field col s12" *ngIf="isActiveDogovor === 'no_isActive'">
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false" >
+                                            Нет активного договора!!!
+                                        </div>
+                                    </div>
+
+                                    <div class="input-field col s12" *ngIf="is_dogovor_finish_compare_booking === 'isDogovorFinish'">
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false">
+                                            Договор истечет во время брони!!!
+                                        </div>
+                                    </div>
+                                    <!-- Для физика -->
+
                                 </div>
                             </div>
 

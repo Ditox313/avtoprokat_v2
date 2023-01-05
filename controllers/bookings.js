@@ -41,7 +41,8 @@ module.exports.create = async function(req, res) {
             order: maxOrder + 1,
             dop_hours: req.body.dop_hours,
             dop_info_open: req.body.dop_info_open,
-            booking_zalog: req.body.booking_zalog
+            booking_zalog: req.body.booking_zalog,
+            dogovor_number__actual: req.body.dogovor_number__actual
         }).save();
 
         // Возвращаем пользователю позицию которую создали 

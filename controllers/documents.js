@@ -58,6 +58,25 @@ module.exports.getDogovorsById = async function(req, res) {
 
 
 
+// Получаем активный договор для клиента
+module.exports.getDogovorActive = async function (req, res) {
+    try {
+
+        const dogovor_active = await Dogovor.find({
+            clientId: req.params.id,
+            state: 'active'
+        })
+
+
+        res.status(200).json(dogovor_active);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
 // Получаем договор по id
 module.exports.getDogovorById = async function (req, res) {
     try {

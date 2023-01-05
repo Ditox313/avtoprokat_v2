@@ -1415,3 +1415,17 @@ select {
 {
     margin-bottom:  0 !important;
 }
+
+.xs_search_result__error___active____dogovor_true
+{
+    background-color: green;
+    color: #fff;
+    padding: 10px;
+}
+
+.xs_search_result__error___active____dogovor_false
+{
+    background-color: red;
+    color: #fff;
+    padding: 10px;
+}

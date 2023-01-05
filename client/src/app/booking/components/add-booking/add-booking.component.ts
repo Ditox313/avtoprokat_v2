@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
+import { DocumentsService } from 'src/app/documents/services/documents.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Client, Client_Law_Fase, MaterialDatepicker, Summa } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
@@ -66,7 +67,26 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   
 
   // Храним выбранный тип клиента
-  xs_actual_client_type: string = ''
+  xs_actual_client_type: string = '';
+
+
+
+  // Активный номер договора для физ/лица
+  xs_dogovor_number__actual: string = '';
+
+
+  // Есть ли у клиента активный договор
+  isActiveDogovor: any = '';
+
+
+  // Если договор закончится раньше брони
+  is_dogovor_finish_compare_booking: any = '';
+
+
+
+
+
+  
 
 
 
@@ -74,7 +94,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     private bookings: BookingsService,
     private router: Router,
     private cars: CarsService,
-    private clients: ClientsService
+    private clients: ClientsService,
+    private documents: DocumentsService
   ) {}
 
   ngOnInit(): void {
@@ -1081,6 +1102,59 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     });
     this.hasQuery = false;
     this.xs_actual_search__client = JSON.stringify(client);
+    
+
+    this.documents.getDogovorActive(client._id).subscribe(dogovor=> {
+      if (Object.keys(dogovor).length > 0)
+      {
+        this.xs_dogovor_number__actual = dogovor._id;
+        this.isActiveDogovor = 'isActive';
+
+        if (this.form.value.booking_end < dogovor[0].date_end )
+        {
+          console.log('Бронь закончится раньше договора');
+        }
+        else
+        {
+          console.log('Бронь закончится позже договора');
+        }
+
+      }
+      else
+      {
+        this.isActiveDogovor = 'no_isActive';
+        this.is_dogovor_finish_compare_booking = 'isDogovorFinish';
+      }
+      
+      // res.forEach(item=>{
+      //   if (item.state === 'active')
+      //   {
+      //     this.xs_dogovor_number__actual = item._id;
+
+      //     if (item.date_end < this.form.value.booking_end)
+      //     {
+
+      //       this.dogovor_finish_in_booking = true;
+      //       console.log('Договор истечет во время брони. Создайте новый договор для клиента');
+            
+      //     }
+
+      //     this.isActiveDogovor = true;
+          
+      //   }
+      // })
+
+      // if (this.isActiveDogovor)
+      // {
+      //   console.log('Есть активный договор у клиента!!!');
+      // }
+      // else
+      // {
+      //   this.isActiveDogovor = true;
+      //   console.log('Нет договора!!!');
+      // }
+      
+    })
   }
 
 
@@ -1296,7 +1370,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false
             },
-            booking_zalog: this.summa.car.zalog
+            booking_zalog: this.summa.car.zalog,
+            dogovor_number__actual: this.xs_dogovor_number__actual
           };
 
 
@@ -1325,7 +1400,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false
             },
-            booking_zalog: this.summa.car.zalog_mej
+            booking_zalog: this.summa.car.zalog_mej,
+            dogovor_number__actual: this.xs_dogovor_number__actual
           };
 
 
@@ -1353,7 +1429,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false
             },
-            booking_zalog: this.summa.car.zalog_rus
+            booking_zalog: this.summa.car.zalog_rus,
+            dogovor_number__actual: this.xs_dogovor_number__actual
           };
 
           // Отправляем запрос
@@ -1382,7 +1459,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
             clear_auto: this.form.value.clear_auto || false,
             full_tank: this.form.value.full_tank || false
           },
-          booking_zalog: this.form.value.isCustomeZalogControl
+          booking_zalog: this.form.value.isCustomeZalogControl,
+          dogovor_number__actual: this.xs_dogovor_number__actual
         };
 
 
@@ -1395,9 +1473,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       }
     }
     else if (this.xs_actual_client_type === 'law')
-    {
-
-      
+    { 
       if (!this.isCustomeZalog) {
         if (this.form.value.tariff === 'Город') {
           const booking = {

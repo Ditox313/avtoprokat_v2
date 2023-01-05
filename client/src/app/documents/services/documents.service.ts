@@ -22,6 +22,12 @@ export class DocumentsService {
     return this.http.get<Dogovor[]>(`/api/documents/dogovors_list/${id}`);
   }
 
+
+  //  Получаем активный договор для клиента
+  getDogovorActive(id: string): Observable<Dogovor> {
+    return this.http.get<Dogovor>(`/api/documents/dogovor_active/${id}`);
+  }
+
   //  Получаем договор по id 
   getDogovorById(id: string): Observable<Dogovor> {
     return this.http.get<Dogovor>(`/api/documents/dogovor/${id}`);

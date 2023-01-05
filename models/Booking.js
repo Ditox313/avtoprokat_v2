@@ -159,6 +159,12 @@ const bookingSchema = new Schema({
         default: 0,
         required: false,
     },
+
+    dogovor_number__actual: {
+        type: String,
+        default: '',
+        required: false,
+    }
     
 
 });

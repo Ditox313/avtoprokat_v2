@@ -275,7 +275,8 @@ export interface Booking {
   sale?: any
   dop_info_open?: any
   dop_info_close?: any
-  booking_zalog?: any
+  booking_zalog?: any,
+  dogovor_number__actual?: any
 }
 
 
