@@ -68,7 +68,6 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit {
       kor_rc_number: new FormControl('', [Validators.required]),
       bik_number: new FormControl('', [Validators.required]),
       name_bank: new FormControl('', [Validators.required]),
-
     });
 
     // Достаем параметры

@@ -204,7 +204,7 @@
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="boss_lastname" type="text" class="validate" formControlName="boss_lastname"
                                     [ngClass]="{'invalid': form.controls['boss_lastname'].invalid && form.controls['boss_lastname'].touched}">
-                                <label for="boss_lastname">Фамилия руководителя<span class="xszv">*</span></label>
+                                <label for="boss_lastname">Отчество руководителя<span class="xszv">*</span></label>
                                 <span class="helper-text red-text"
                                     *ngIf="form.controls['boss_lastname'].invalid && form.controls['boss_lastname'].touched">
                                     <p *ngIf="form.controls['boss_lastname'].errors?.required">
