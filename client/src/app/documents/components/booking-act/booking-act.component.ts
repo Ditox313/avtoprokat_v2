@@ -1,13 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Booking, User } from 'src/app/shared/types/interfaces';
+import { Booking, Client, User } from 'src/app/shared/types/interfaces';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import htmlToPdfmake from 'html-to-pdfmake';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { BookingsService } from 'src/app/booking/services/bookings.service';
-import { convert as convertNumberToWordsRu } from 'number-to-words-ru'
+import { convert as convertNumberToWordsRu } from 'number-to-words-ru';
+import { DatePipe } from '@angular/common';
+import { DocumentsService } from '../../services/documents.service';
+import { MaterialService } from 'src/app/shared/services/material.service';
 
 @Component({
   selector: 'app-booking-act',
@@ -19,7 +22,9 @@ export class BookingActComponent implements OnInit {
   bookingId!: string;
   actualBooking!: Booking;
   actualUser!: User;
+  actualClient!: Client;
   yearDate: any;
+  xs_actual_date: any;
   @ViewChild('content') content!: ElementRef;
   xsNumberSummAuto: string = '';
 
@@ -27,7 +32,9 @@ export class BookingActComponent implements OnInit {
     private bookings: BookingsService,
     private router: Router,
     private rote: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    private datePipe: DatePipe,
+    private documentService: DocumentsService,
   ) { }
 
   ngOnInit(): void {
@@ -37,9 +44,12 @@ export class BookingActComponent implements OnInit {
       this.bookingId = params['id'];
     });
 
+    this.xs_actual_date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+
     this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
       this.xsNumberSummAuto = convertNumberToWordsRu(this.actualBooking.car.price_ocenka)
+      this.actualClient = res.client
 
       this.yearDate = new Date(this.actualBooking.date);
       this.yearDate.setDate(this.yearDate.getDate() + 365);
@@ -50,9 +60,6 @@ export class BookingActComponent implements OnInit {
       this.actualUser = user;
     })
 
-    
-   
-    
 
   }
 
@@ -76,5 +83,30 @@ export class BookingActComponent implements OnInit {
     pdfMake.createPdf(docDefinition).open();
 
   } 
+
+
+
+  createAct() {
+
+
+    let administrator = this.actualUser;
+    delete administrator.password;
+
+    const act = {
+      date: this.xs_actual_date,
+      act_number: this.xs_actual_date + '/СТС-' + this.actualClient.order,
+      administrator: administrator,
+      content: this.content.nativeElement.innerHTML,
+      clientId: this.actualBooking.client._id,
+      booking: this.actualBooking,
+      bookingId: this.actualBooking._id
+    }
+
+    
+    this.documentService.create_booking_act(act).subscribe((act) => {
+      MaterialService.toast('Акт сохранен');
+      this.router.navigate(['/view-booking', this.actualBooking._id]);
+    });
+  }
 
 }

@@ -2,7 +2,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { Dogovor } from 'src/app/shared/types/interfaces';
+import { BookingAct, Dogovor } from 'src/app/shared/types/interfaces';
 
 
 // Даем возможность инжектировать сервисы в класс
@@ -15,6 +15,12 @@ export class DocumentsService {
   // Создаем договор
   create_dogovor(dogovor: Dogovor): Observable<Dogovor> {
     return this.http.post<Dogovor>(`/api/documents/create_dogovor`, dogovor);
+  }
+
+
+  // Создаем акт для брони
+  create_booking_act(act: BookingAct): Observable<BookingAct> {
+    return this.http.post<BookingAct>(`/api/documents/create_booking_act`, act);
   }
 
   //  Получаем список договоров по id клиента
@@ -31,6 +37,12 @@ export class DocumentsService {
   //  Получаем договор по id 
   getDogovorById(id: string): Observable<Dogovor> {
     return this.http.get<Dogovor>(`/api/documents/dogovor/${id}`);
+  }
+  
+
+  //  Получаем список актов для брони по id брони
+  getActsByIdBooking(id: string): Observable<BookingAct> {
+    return this.http.get<BookingAct>(`/api/documents/get_acts_by_id_booking/${id}`);
   }
 
 

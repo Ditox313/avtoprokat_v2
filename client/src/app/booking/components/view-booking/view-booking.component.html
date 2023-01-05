@@ -206,23 +206,29 @@
                         <div class="setting_view_info">
                             <div class="to_pay " *ngIf="+actualBooking.paidCount <= 0">
                                 <a [routerLink]="['/add-pay', bookingId]" class="to_pay_none">Оплатить</a>
-                                <a  class="to_pay_act" (click)="clickAct($event)">Акт приема/передачи</a>
+                                <a  class="to_pay_act" (click)="clickAct($event)" *ngIf="actualActs.length <= 0">Сформировать акт</a>
+
+                                <a class="to_pay_act" *ngIf="actualActs.length > 0">Просмотр акта</a>
                             </div>
 
                             <div class="to_pay " *ngIf="+actualBooking.paidCount > 0 && +actualBooking.paidCount < (+summa.summaFull)">
                                 <a [routerLink]="['/add-pay', bookingId]" class="to_pay_none">-{{+summa.summaFull - (+actualBooking.paidCount)}}</a>
-                                <a class="to_pay_act" (click)="clickAct($event)">Акт приема/передачи</a>
+                                <a class="to_pay_act" (click)="clickAct($event)" *ngIf="actualActs.length <= 0">Сформировать акт</a>
+                                
+                                <a class="to_pay_act" *ngIf="actualActs.length > 0">Просмотр акта</a>
                             </div>
 
                             <div class="to_pay" *ngIf="+actualBooking.paidCount >= (+summa.summaFull)">
                                 <a [routerLink]="['/add-pay', bookingId]" class="to_pay_ok">Оплачено</a>
-                                <a class="to_pay_act" (click)="clickAct($event)">Акт приема/передачи</a>
+                                <a class="to_pay_act" (click)="clickAct($event)" *ngIf="actualActs.length <= 0">Сформировать акт</a>
+                                
+                                <a class="to_pay_act" *ngIf="actualActs.length > 0">Просмотр акта</a>
                             </div>
 
                             <h5>Управление</h5>
 
                             <div class="setting_view_info__box" *ngIf="bookingStatus === 'В ожидании'">
-                                <span *ngIf="actualBooking.dop_info_open.clickedAct"  title="Выдать автомобиль"  (click)="toggleStatus('В аренде')">
+                                <span *ngIf="actualActs.length > 0"  title="Выдать автомобиль"  (click)="toggleStatus('В аренде')">
                                     <img src="../../../../assets/img/vidat_avto.png" alt="">
                                 </span>
 
@@ -230,16 +236,14 @@
                                     <img src="../../../../assets/img/edit_avto.png" alt="">
                                 </span>
 
-                                <span title="Сгенерировать документы">
+                                <!-- <span title="Сгенерировать документы">
                                     <img src="../../../../assets/img/docs.png" alt="" [routerLink]="['/booking-dogovor', bookingId]">
-                                </span>
+                                </span> -->
                             </div>
 
 
                             <div class="setting_view_info__box" *ngIf="bookingStatus=== 'В аренде'">
-                                <!-- <span title="Продлить бронь" (click)="toggleStatus('В ожидании')">
-                                    <img src="../../../../assets/img/vidat_avto.png" alt="">
-                                </span> -->
+      
                                 <span [routerLink]="['/extend-booking', bookingId]" title="Продлить бронь">
                                     <img src="../../../../assets/img/prodlit.png">
                                 </span>
@@ -252,16 +256,16 @@
                                     <img src="../../../../assets/img/edit_avto.png">
                                 </span>
                             
-                                <span title="Сгенерировать документы">
+                                <!-- <span title="Сгенерировать документы">
                                     <img src="../../../../assets/img/docs.png" [routerLink]="['/booking-dogovor', bookingId]">
-                                </span>
+                                </span> -->
                             </div>
 
 
                             <div class="setting_view_info__box" *ngIf="bookingStatus=== 'Закрыта'">
-                                <span title="Сгенерировать документы">
+                                <!-- <span title="Сгенерировать документы">
                                     <img src="../../../../assets/img/docs.png" [routerLink]="['/booking-dogovor', bookingId]">
-                                </span>
+                                </span> -->
                             </div>
 
 

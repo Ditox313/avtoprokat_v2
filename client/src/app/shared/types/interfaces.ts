@@ -331,6 +331,22 @@ export interface Dogovor {
 
 
 
+// Интерфейс для акта брони
+export interface BookingAct {
+  _id?: any;
+  date?: any;
+  act_number?: any;
+  administrator?: any;
+  content?: any;
+  clientId?: any;
+  booking?: any;
+  bookingId?: any;
+}
+
+
+
+
+
 
 
 

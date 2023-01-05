@@ -9,8 +9,12 @@
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
 
-            <button type="submit" (click)="generatePDF()">
+            <!-- <button type="submit" (click)="generatePDF()">
                 <span class="material-icons">cloud_download</span>Скачать
+            </button> -->
+
+            <button type="submit" style="margin-left: 15px;" (click)="createAct()">
+                <span class="material-icons">save</span>Сохранить
             </button>
         </div>
     </div>
@@ -31,8 +35,7 @@
                     средства без экипажа
                 </div>
                 <div align="right">
-                    №<strong>{{actualBooking.date | date:
-                    'ddMM'}}/СТС-{{actualBooking.order}} от {{actualBooking.date | date : 'd MMMM y'}}</strong>
+                    №<strong>{{xs_actual_date + '/СТС-' + actualClient.order}}</strong>
                 </div>
                 <div align="center">
                     <strong>АКТ</strong>

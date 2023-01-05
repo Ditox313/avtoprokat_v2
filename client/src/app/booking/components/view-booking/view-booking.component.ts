@@ -17,6 +17,7 @@ import { Booking, MaterialDatepicker, Summa } from 'src/app/shared/types/interfa
 import { BookingsService } from '../../services/bookings.service';
 import * as moment from 'moment';
 import { PaysService } from 'src/app/pays/services/pays.service';
+import { DocumentsService } from 'src/app/documents/services/documents.service';
 
 @Component({
   selector: 'app-view-booking',
@@ -61,11 +62,14 @@ export class ViewBookingComponent implements OnInit {
 
   clickedAct: boolean = false
 
+  actualActs: any = [];
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
     private rote: ActivatedRoute,
-    private pay: PaysService
+    private pay: PaysService,
+    private ducumentsServise: DocumentsService
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +94,14 @@ export class ViewBookingComponent implements OnInit {
       this.bookings.getById(this.bookingId).subscribe((res) => {
         this.bookingStatus = res.status;
       });
+
+      // Получаем список всех актов по данной брони
+      this.ducumentsServise.getActsByIdBooking(this.bookingId).subscribe(acts=>{
+        this.actualActs = acts;
+
+        console.log('111', this.actualActs);
+        
+      })
 
       // Высчитываем какой тариф выбран
       this.checkedTarif(this.summa.booking_days)

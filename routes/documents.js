@@ -9,8 +9,15 @@ const upload = require('../middleware/upload');
 // Роут на create dogovor
 router.post('/create_dogovor', passport.authenticate('jwt', { session: false }), controller.create_dogovor);
 
+
+// Роут на create bookingAct
+router.post('/create_booking_act', passport.authenticate('jwt', { session: false }), controller.create_booking_act);
+
 // Роут на getDogovorsById
 router.get('/dogovors_list/:id', passport.authenticate('jwt', { session: false }), controller.getDogovorsById);
+
+// Роут на getActsByIdBooking
+router.get('/get_acts_by_id_booking/:id', passport.authenticate('jwt', { session: false }), controller.getActsByIdBooking);
 
 // Роут на getDogovorActive
 router.get('/dogovor_active/:id', passport.authenticate('jwt', { session: false }), controller.getDogovorActive);

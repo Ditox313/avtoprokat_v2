@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const Dogovor = require('../models/Dogovor');
+const BookingAct = require('../models/BookingAct');
 const errorHandler = require('../Utils/errorHendler');
 
 
@@ -39,6 +40,30 @@ module.exports.create_dogovor = async function(req, res) {
 
 
 
+// Контроллер для create_booking_act
+module.exports.create_booking_act = async function (req, res) {
+    try {
+
+        const act = await new BookingAct({
+            date: req.body.date,
+            act_number: req.body.act_number,
+            administrator: req.body.administrator,
+            content: req.body.content,
+            clientId: req.body.clientId,
+            booking: req.body.booking,
+            bookingId: req.body.bookingId,
+        }).save();
+
+
+        res.status(201).json(act);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
 
 // Получаем список договоров для клиента
 module.exports.getDogovorsById = async function(req, res) {
@@ -50,6 +75,24 @@ module.exports.getDogovorsById = async function(req, res) {
             
 
         res.status(200).json(dogovors);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+// Получаем список актов для брони по id брони
+module.exports.getActsByIdBooking = async function (req, res) {
+    try {
+
+        const acts = await BookingAct.find({
+            bookingId: req.params.id
+        })
+
+
+        res.status(200).json(acts);
     } catch (e) {
         errorHandler(res, e);
     }
