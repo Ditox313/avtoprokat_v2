@@ -188,7 +188,25 @@ module.exports.remove_dogovor = async function(req, res) {
 
         // Возвращаем результат
         res.status(200).json({
-            message: "Догоров удален"
+            message: "Договор удален"
+        });
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+// Контроллер для remove act
+module.exports.remove_act = async function (req, res) {
+    try {
+        await BookingAct.remove({
+            _id: req.params.id
+        });
+
+        // Возвращаем результат
+        res.status(200).json({
+            message: "Акт удален"
         });
     } catch (e) {
         errorHandler(res, e);
@@ -210,6 +228,28 @@ module.exports.fetch = async function(req, res) {
 
         // Возвращаем пользователю позиции 
         res.status(200).json(dogovors);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+
+
+// Контроллер для fetch_acts
+module.exports.fetch_acts = async function (req, res) {
+    try {
+        const acts = await BookingAct.find({
+            clientId: req.query.clientId
+        }).sort({ date: -1 })
+            .skip(+req.query.offset)
+            .limit(+req.query.limit);
+
+        // Возвращаем пользователю позиции 
+        res.status(200).json(acts);
     } catch (e) {
         errorHandler(res, e);
     }

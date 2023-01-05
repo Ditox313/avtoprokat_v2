@@ -19,7 +19,8 @@
             <div class="col s12">
                 <ul class="tabs" #tabs>
                     <li class="tab col"><a href="#information" class="active">Общая информация</a></li>
-                    <li class="tab col"><a href="#docs">Документы</a></li>
+                    <li class="tab col"><a href="#docs">Договоры</a></li>
+                    <li class="tab col"><a href="#acts">Акты</a></li>
                 </ul>
             </div>
 
@@ -414,6 +415,10 @@
 
                 <app-dogovor-list [clientId]="clientId"></app-dogovor-list>
             </div>
+
+            <div id="acts">
+                <app-booking-act-list [clientId]="clientId"></app-booking-act-list>
+            </div> 
         </div>
     </div>
 </form>

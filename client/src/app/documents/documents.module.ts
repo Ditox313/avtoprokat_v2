@@ -15,6 +15,7 @@ import { DogovorListComponent } from './components/dogovor-list/dogovor-list.com
 import { ShowClientDogovorComponent } from './components/show-client-dogovor/show-client-dogovor.component';
 import { AddClientLawfaseDogovorComponent } from './components/add-client-lawfase-dogovor/add-client-lawfase-dogovor.component';
 import { ShowActBookingComponent } from './components/show-act-booking/show-act-booking.component';
+import { BookingActListComponent } from './components/booking-act-list/booking-act-list.component';
 
 
 const routes = [
@@ -45,6 +46,7 @@ const routes = [
     ShowClientDogovorComponent,
     AddClientLawfaseDogovorComponent,
     ShowActBookingComponent,
+    BookingActListComponent,
   ],
   imports: [
     CommonModule,
@@ -57,7 +59,8 @@ const routes = [
     LayoutsModule,
   ],
   exports: [
-    DogovorListComponent
+    DogovorListComponent,
+    BookingActListComponent
   ],
   providers: [DocumentsService],
 })

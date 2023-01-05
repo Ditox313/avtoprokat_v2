@@ -58,9 +58,25 @@ export class DocumentsService {
   }
 
 
+  // Удалить договор
+  delete_act(id: any): Observable<any> {
+    return this.http.delete<any>(`/api/documents/act-delete/${id}`);
+  }
+
+
   // Получаем список всех договоров
   fetch(params: any = {}): Observable<Dogovor[]> {
     return this.http.get<Dogovor[]>('/api/documents', {
+      params: new HttpParams({
+        fromObject: params,
+      }),
+    });
+  }
+
+
+  // Получаем список всех актов
+  fetch_acts(params: any = {}): Observable<BookingAct[]> {
+    return this.http.get<BookingAct[]>('/api/documents/fetch_acts', {
       params: new HttpParams({
         fromObject: params,
       }),

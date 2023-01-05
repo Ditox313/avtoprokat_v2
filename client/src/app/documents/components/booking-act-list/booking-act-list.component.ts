@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Dogovor } from 'src/app/shared/types/interfaces';
+import { BookingAct, Dogovor } from 'src/app/shared/types/interfaces';
 import { DocumentsService } from '../../services/documents.service';
 
 
@@ -10,18 +10,17 @@ import { DocumentsService } from '../../services/documents.service';
 const STEP = 3
 
 @Component({
-  selector: 'app-dogovor-list',
-  templateUrl: './dogovor-list.component.html',
-  styleUrls: ['./dogovor-list.component.css']
+  selector: 'app-booking-act-list',
+  templateUrl: './booking-act-list.component.html',
+  styleUrls: ['./booking-act-list.component.css']
 })
+export class BookingActListComponent implements OnInit {
 
-
-export class DogovorListComponent implements OnInit {
   @Input() clientId: string | undefined;
-  xs_dogovors: Dogovor[] = [];
+  xs_acts: BookingAct[] = [];
   offset: any = 0;
   limit: any = STEP;
-  noMoreDogovors: Boolean = false;
+  noMoreActs: Boolean = false;
   loading = false;
   Sub!: Subscription;
 
@@ -48,30 +47,30 @@ export class DogovorListComponent implements OnInit {
     }
 
     this.loading = true
-    this.Sub = this.documentsServices.fetch(params).subscribe((dogovors) => {
+    this.Sub = this.documentsServices.fetch_acts(params).subscribe((acts) => {
 
-      if (dogovors.length < STEP) {
-        this.noMoreDogovors = true
+      if (acts.length < STEP) {
+        this.noMoreActs = true
       }
 
       this.loading = false
-      this.xs_dogovors = this.xs_dogovors.concat(dogovors)
+      this.xs_acts = this.xs_acts.concat(acts)
     });
   }
 
 
-  DeleteDogovor(event: Event, xsdogovor: Dogovor): void {
+  DeleteAct(event: Event, xsact: BookingAct): void {
     event.stopPropagation();
 
-    const dicision = window.confirm(`Удалить договор?`);
+    const dicision = window.confirm(`Удалить акт?`);
 
     if (dicision) {
-      this.documentsServices.delete_dogovor(xsdogovor._id).subscribe(
+      this.documentsServices.delete_act(xsact._id).subscribe(
         (res) => {
-          const idxPos = this.xs_dogovors.findIndex(
-            (p) => p._id === xsdogovor._id
+          const idxPos = this.xs_acts.findIndex(
+            (p) => p._id === xsact._id
           );
-          this.xs_dogovors.splice(idxPos, 1);
+          this.xs_acts.splice(idxPos, 1);
           MaterialService.toast(res.message);
         },
         (error) => {

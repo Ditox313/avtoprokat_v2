@@ -9,6 +9,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import htmlToPdfmake from 'html-to-pdfmake';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-show-act-booking',
@@ -21,10 +22,12 @@ export class ShowActBookingComponent implements OnInit {
   act_id: string;
   xs_actual_act: BookingAct;
 
+
   constructor(
     private router: Router,
     private rote: ActivatedRoute,
     private documentsServices: DocumentsService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +42,11 @@ export class ShowActBookingComponent implements OnInit {
 
 
 
+  }
+
+
+  isGoBack() {
+    this.location.back();
   }
 
   generatePDF() {

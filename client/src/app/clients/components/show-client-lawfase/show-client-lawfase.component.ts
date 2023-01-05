@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Client_Law_Fase } from 'src/app/shared/types/interfaces';
 import { ClientsService } from '../../services/clients.service';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit {
   doc_3_img_preview: any = '';
   doc_4_img_preview: any = '';
 
-  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute,) { }
+  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -137,10 +138,12 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit {
   validate() { }
 
 
+  isGoBack() {
+    this.location.back();
+  }
+
+
   onSubmit() {
-
-
-
     const client = {
       name: this.form.value.name,
       short_name: this.form.value.short_name,

@@ -3,19 +3,11 @@
 
         <div class="xs_generate_docs__top____actions">
 
-            <a *ngIf="xs_actual_act" [routerLink]="['/view-booking', xs_actual_act.bookingId]"
+            <a *ngIf="xs_actual_act" (click)="isGoBack()"
                 class="xs_generate_docs_back">
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a> 
-            <!-- <a *ngIf="xs_actual_dogovor.client.type === 'fiz'"
-                [routerLink]="['/show-client/edit',xs_actual_act.client._id]" class="xs_generate_docs_back">
-                <span class="material-icons">arrow_back_ios</span>Назад
-            </a>
 
-            <a *ngIf="xs_actual_dogovor.client.type === 'law'"
-                [routerLink]="['/show-client-lawfase/edit',xs_actual_act.client._id]" class="xs_generate_docs_back">
-                <span class="material-icons">arrow_back_ios</span>Назад
-            </a> -->
 
             <button type="submit" (click)="generatePDF()" class="xs_download">
                 <span class="material-icons">cloud_download</span>Скачать

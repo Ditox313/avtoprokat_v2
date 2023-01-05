@@ -28,12 +28,18 @@ router.get('/dogovor_active/:id', passport.authenticate('jwt', { session: false 
 // Роут на getDogovorById
 router.get('/dogovor/:id', passport.authenticate('jwt', { session: false }), controller.getDogovorById);
 
-
-// // Роут на remove dogovor
+// Роут на remove dogovor
 router.delete('/dogovor-delete/:id', passport.authenticate('jwt', { session: false }), controller.remove_dogovor);
+
+
+// Роут на remove act
+router.delete('/act-delete/:id', passport.authenticate('jwt', { session: false }), controller.remove_act);
 
 // Роут на fetch
 router.get('/', passport.authenticate('jwt', { session: false }), controller.fetch);
+
+// Роут на fetch_acts
+router.get('/fetch_acts', passport.authenticate('jwt', { session: false }), controller.fetch_acts);
 
 
 // Роут на изменение state все договоров клиента при создании нового

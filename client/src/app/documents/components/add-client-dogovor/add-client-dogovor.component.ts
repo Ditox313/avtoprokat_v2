@@ -10,6 +10,7 @@ import { ClientsService } from 'src/app/clients/services/clients.service';
 import { DocumentsService } from '../../services/documents.service';
 import { DatePipe } from '@angular/common';
 import { MaterialService } from 'src/app/shared/services/material.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-client-dogovor',
@@ -32,7 +33,8 @@ export class AddClientDogovorComponent implements OnInit {
     private router: Router,
     private rote: ActivatedRoute,
     private auth: AuthService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +59,12 @@ export class AddClientDogovorComponent implements OnInit {
       this.clientDogovors = res;
     });
   }
+
+
+  isGoBack() {
+    this.location.back();
+  }
+
 
   generatePDF() {
     var html = htmlToPdfmake(this.content.nativeElement.innerHTML);
