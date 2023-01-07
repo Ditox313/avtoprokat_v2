@@ -14,12 +14,9 @@ import { registerAction } from '../../store/actions/register.action';
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.css'],
 })
-export class RegisterPageComponent implements OnInit, OnDestroy {
-  form!: FormGroup; //Инициализируем нашу форму
-  uSub!: Subscription; //Создаем переменную, в которую помещаем наш стим, что бы потом отписаться от него
-  isSubmitting$!: Observable<any>
+export class RegisterPageComponent implements OnInit {
+  form!: FormGroup; 
 
-  // Инжектируем необходимые сервисы в класс для их послдующего использования
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -27,8 +24,15 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     private store: Store
   ) {}
 
-  // Инициализируем форму. Говорим какие инпуты будут
+ 
   ngOnInit(): void {
+    this.initForm();
+    // Получаем данные из store
+    // this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector))
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
@@ -36,31 +40,18 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
         Validators.minLength(6),
       ]),
     });
-
-
-    // Получаем данные из store
-    // this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector))
-    
   }
 
-  // Отписываемся от стрима, что бы не было утечки памяти
-  ngOnDestroy() {
-    if (this.uSub) {
-      this.uSub.unsubscribe();
-    }
-  }
-
-  // Обрабатываем отправку формы
+  
+ 
   onSubmit(): void {
     this.form.disable();
 
-    // Создаем юзера(кандидата)
     const user = {
       email: this.form.value.email,
       password: this.form.value.password,
     };
 
-    // Диспатчим action для отправки запроса на регистрацию
     this.store.dispatch(registerAction({ user }));
     this.form.enable();
 

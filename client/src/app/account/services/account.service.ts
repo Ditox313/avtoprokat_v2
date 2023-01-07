@@ -10,5 +10,4 @@ import { Observable } from 'rxjs';
 export class AccountService {
   constructor(private http: HttpClient) {}
 
-
 }

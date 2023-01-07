@@ -35,7 +35,6 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
 
-
   patchValuesForm()
   {
     this.currentUser$ = this.auth.get_user().subscribe(user => {

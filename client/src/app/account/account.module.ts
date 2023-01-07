@@ -15,7 +15,7 @@ const routes = [
   {
     path: '',
     component: SiteLayoutComponent,
-    canActivate: [AuthGuard], //Защищаем роуты которые относятся к самому приложению
+    canActivate: [AuthGuard],
     children: [
       { path: 'account/:id', component: AccountComponent },
     ],

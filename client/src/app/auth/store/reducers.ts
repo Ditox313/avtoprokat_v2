@@ -59,7 +59,7 @@ const authReducer = createReducer(
       ...state,
       isLoggedIn: true,
       token: action.token,
-      currentUser: action.currentUser
+      currentUser: action.currentUser,
     })
   ),
   on(
