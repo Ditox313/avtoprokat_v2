@@ -2,21 +2,22 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Booking, MaterialDatepicker, Summa } from 'src/app/shared/types/interfaces';
+import { Booking, Summa } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 
 import * as moment from 'moment';
 import { PaysService } from 'src/app/pays/services/pays.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-extend-booking',
@@ -25,7 +26,7 @@ import { PaysService } from 'src/app/pays/services/pays.service';
 })
 
 
-export class ExtendBookingComponent implements OnInit, AfterViewInit {
+export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('tabs') tabs!: ElementRef;
 
@@ -89,8 +90,11 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
     },
   ]
 
-  defaultValueArenda: string = 'Наличные'
-  defaultValueZalog: string = 'Наличные'
+  defaultValueArenda: string = 'Наличные';
+  defaultValueZalog: string = 'Наличные';
+  subBookingById$: Subscription;
+  subBookingExtend$: Subscription;
+
 
 
   constructor(
@@ -103,9 +107,27 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.initForm();
+    this.getParams();
+    this.getBookingById();
+    this.xscars$ = this.cars.fetch();
+    this.xsclients$ = this.clients.fetch();
+    MaterialService.updateTextInputs();
+  }
 
+  ngOnDestroy(): void {
+    if (this.subBookingById$)
+    {
+      this.subBookingById$.unsubscribe();
+    }
+    if (this.subBookingExtend$)
+    {
+      this.subBookingExtend$.unsubscribe();
+    }
+  }
 
-
+  initForm()
+  {
     this.form = new FormGroup({
       car: new FormControl('', [Validators.required]),
       client: new FormControl('', [Validators.required]),
@@ -119,18 +141,11 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
       typePayArenda: new FormControl('',),
       isSaleCheckbox: new FormControl('',),
     });
+  }
 
-    
-    // Достаем параметры
-    this.rote.params.subscribe((params: any) => {
-      this.bookingId = params['id'];
-
-      if (params.view) {
-        this.bookingViewRef = params.view;
-      }
-    });
-
-    this.bookings.getById(this.bookingId).subscribe((res) => {
+  getBookingById()
+  {
+    this.subBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
       this.form.patchValue({
         car: JSON.stringify(res.car, null, 2),
@@ -156,15 +171,17 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
       this.xsActualClient = res.client;
       MaterialService.updateTextInputs();
     });
+  }
 
-   
+  getParams()
+  {
+    this.rote.params.subscribe((params: any) => {
+      this.bookingId = params['id'];
 
-
-    this.xscars$ = this.cars.fetch();
-    this.xsclients$ = this.clients.fetch();
-
-    MaterialService.updateTextInputs();
-
+      if (params.view) {
+        this.bookingViewRef = params.view;
+      }
+    });
   }
 
   
@@ -815,9 +832,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Отправка формы
-  
-  
   
   onSubmit() {
 
@@ -846,9 +860,9 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
         (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
     }
 
-    
-  
     const xs_sale = this.form.value.isSaleCheckbox;
+
+
 
     if (xs_sale <= 0)
     {
@@ -883,7 +897,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
         }
       };
 
-      this.bookings.extend(this.bookingId, booking).pipe(
+      this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
         map(res => {
           this.pays.create(pay).subscribe((pay) => {
             MaterialService.toast('Платеж создан');
@@ -930,7 +944,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit {
         }
       };
 
-      this.bookings.extend(this.bookingId, booking).pipe(
+      this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
         map(res => {
           this.pays.create(pay).subscribe((pay) => {
             MaterialService.toast('Платеж создан');

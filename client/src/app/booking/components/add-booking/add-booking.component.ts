@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
 import { DocumentsService } from 'src/app/documents/services/documents.service';
@@ -16,17 +15,29 @@ import { BookingsService } from '../../services/bookings.service';
   templateUrl: './add-booking.component.html',
   styleUrls: ['./add-booking.component.css'],
 })
-export class AddBookingComponent implements OnInit, AfterViewInit {
+export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
 
 
   form: any;
 
   // Храним все автомобили
-  xscars$!: any;
+  xscars$!: any ;
 
   // Храним всех клиентов
-  xsclients$!: any;
+  xsclients$!: any ;
+
+
+  // Храним стрим для активного договора
+  getDogovorActive$ : Subscription;
+
+
+  // Храним результат поиска клиента
+  searchResultClient$: Subscription;
+
+  
+  // Подписка для создания брони
+  subCreateBooking$: Subscription;
 
 
   // Храним объект суммы
@@ -85,13 +96,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   is_dogovor_finish_compare_booking: any = '';
 
 
-
-
-
-  
-
-
-
   constructor(
     private bookings: BookingsService,
     private router: Router,
@@ -101,6 +105,42 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.setMinDate();
+
+    this.xscars$ = this.cars.fetch();
+    this.xsclients$ = this.clients.fetch();
+
+    MaterialService.updateTextInputs();
+  }
+
+
+  ngAfterViewInit(): void {
+    // Инициализируем табы
+    MaterialService.initTabs(this.tabs.nativeElement);
+    // Обновление инпутов формы
+    MaterialService.updateTextInputs();
+  }
+
+  ngOnDestroy(): void {
+    if (this.getDogovorActive$)
+    {
+      this.getDogovorActive$.unsubscribe();
+    }
+
+    if (this.searchResultClient$)
+    {
+      this.searchResultClient$.unsubscribe();
+    }
+    if (this.subCreateBooking$)
+    {
+      this.subCreateBooking$.unsubscribe();
+    }
+  }
+
+
+  initForm()
+  {
     this.form = new FormGroup({
       car: new FormControl('', [Validators.required]),
       client: new FormControl('', [Validators.required]),
@@ -116,29 +156,18 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
       search_fiz: new FormControl(''),
       search_law: new FormControl(''),
     });
+  }
 
-
-    this.xscars$ = this.cars.fetch();
-    this.xsclients$ = this.clients.fetch();
-
-
-    MaterialService.updateTextInputs();
-
-    // Задаем минимальный параметр даты
+  // Задаем минимальный параметр даты
+  setMinDate()
+  {
+    
     let booking_start: any = document.getElementById('booking_start');
-    booking_start.min = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
+    booking_start.min = new Date().toISOString().slice(0, new Date().toISOString().lastIndexOf(":"));
 
     let booking_end: any = document.getElementById('booking_end');
-    booking_end.min = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
+    booking_end.min = new Date().toISOString().slice(0, new Date().toISOString().lastIndexOf(":"));
   }
-
-  ngAfterViewInit(): void {
-    // Инициализируем табы
-    MaterialService.initTabs(this.tabs.nativeElement);
-    // Обновление инпутов формы
-    MaterialService.updateTextInputs();
-  }
-
 
 
   // При выборе атомобиля
@@ -1107,7 +1136,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     this.xs_actual_search__client_no_json = client;
     
 
-    this.documents.getDogovorActive(client._id).subscribe(dogovor=> {
+    this.getDogovorActive$ = this.documents.getDogovorActive(client._id).subscribe(dogovor=> {
       if (Object.keys(dogovor).length > 0)
       {
         this.xs_dogovor_number__actual = dogovor._id;
@@ -1141,7 +1170,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
   
-    this.documents.getDogovorActive(client._id).subscribe(dogovor => {
+    this.getDogovorActive$ = this.documents.getDogovorActive(client._id).subscribe(dogovor => {
       if (Object.keys(dogovor).length > 0) {
         this.xs_dogovor_number__actual = dogovor._id;
         this.isActiveDogovor = 'isActive';
@@ -1178,7 +1207,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     }
 
 
-    this.bookings.searchWidget(xs_query).subscribe(res => {
+    this.searchResultClient$ = this.bookings.searchWidget(xs_query).subscribe(res => {
       this.searchResult = res;
       this.hasQuery = true;
     })
@@ -1203,7 +1232,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     }
 
 
-    this.bookings.searchWidget(xs_query).subscribe(res => {
+    this.searchResultClient$ = this.bookings.searchWidget(xs_query).subscribe(res => {
       this.searchResultLawFase = res;
       this.hasQueryLawFase = true;
     })
@@ -1328,6 +1357,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
     
   }
 
+
   onBlurMethod(e)
   {
     this.isCustomeZalogCheck = !this.isCustomeZalogCheck;
@@ -1368,7 +1398,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
           // Отправляем запрос
-          this.bookings.create(booking).subscribe((booking) => {
+          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -1397,7 +1427,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
           // Отправляем запрос
-          this.bookings.create(booking).subscribe((booking) => {
+          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -1425,7 +1455,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
           };
 
           // Отправляем запрос
-          this.bookings.create(booking).subscribe((booking) => {
+          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -1457,7 +1487,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
         // Отправляем запрос
-        this.bookings.create(booking).subscribe((booking) => {
+        this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
           MaterialService.toast('Бронь добавлена');
           this.router.navigate(['/bookings-page']);
         });
@@ -1490,7 +1520,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
           // Отправляем запрос
-          this.bookings.create(booking).subscribe((booking) => {
+          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -1518,7 +1548,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
           // Отправляем запрос
-          this.bookings.create(booking).subscribe((booking) => {
+          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -1545,7 +1575,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
           };
 
           // Отправляем запрос
-          this.bookings.create(booking).subscribe((booking) => {
+          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -1576,7 +1606,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit {
 
 
         // Отправляем запрос
-        this.bookings.create(booking).subscribe((booking) => {
+        this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
           MaterialService.toast('Бронь добавлена');
           this.router.navigate(['/bookings-page']);
         });

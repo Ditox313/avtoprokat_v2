@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { of, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -20,9 +19,10 @@ import { BookingsService } from '../../services/bookings.service';
   templateUrl: './bookings.component.html',
   styleUrls: ['./bookings.component.css'],
 })
-export class BookingsComponent implements OnInit {
-  //Создаем переменную, в которую помещаем наш стим, что бы потом отписаться от него
+export class BookingsComponent implements OnInit, OnDestroy {
+  
   Sub!: Subscription;
+  subDeleteBooking$: Subscription;
   xsbookings: Booking[] = [];
   xsclients: Client[] = [];
   offset: any = 0;
@@ -42,6 +42,18 @@ export class BookingsComponent implements OnInit {
     this.fetch();
   }
 
+  ngOnDestroy(): void {
+    if (this.Sub)
+    {
+      this.Sub.unsubscribe();
+    }
+
+    if (this.subDeleteBooking$)
+    {
+      this.subDeleteBooking$.unsubscribe();
+    }
+  }
+
   public fetch() {
     // Отправляем параметры для пагинации
     const params = {
@@ -50,6 +62,7 @@ export class BookingsComponent implements OnInit {
     };
 
     this.loading = true;
+
     this.Sub = this.bookings.fetch(params).subscribe((bookings) => {
       if (bookings.length < STEP) {
         this.noMoreCars = true;
@@ -101,7 +114,7 @@ export class BookingsComponent implements OnInit {
     const dicision = window.confirm(`Удалить бронь?`);
 
     if (dicision) {
-      this.bookings.delete(xsbooking._id).subscribe(
+      this.subDeleteBooking$ = this.bookings.delete(xsbooking._id).subscribe(
         (res) => {
           const idxPos = this.xsbookings.findIndex(
             (p) => p._id === xsbooking._id

@@ -8,11 +8,6 @@
 
     <div class="xs_add__car__content">
         <div class="row">
-            <!-- <div class="col s12">
-                <ul class="tabs" #tabs>
-                    <li class="tab col"><a href="#information" class="active">Общая информация</a></li>
-                </ul>
-            </div> -->
 
             <div id="information" class="col s12">
                 <div class="xs_booking_view_content">
@@ -44,7 +39,7 @@
                                 </span>
 
                                 <span [routerLink]="['/show-client-lawfase','edit',xsActualClient._id]" *ngIf="actualBooking.client.type === 'law'">
-                                    {{actualBooking.client.name}}
+                                    {{actualBooking.client.short_name}} {{actualBooking.client.name}}
                                 </span>
                             </div>
                             
@@ -236,9 +231,6 @@
                                     <img src="../../../../assets/img/edit_avto.png" alt="">
                                 </span>
 
-                                <!-- <span title="Сгенерировать документы">
-                                    <img src="../../../../assets/img/docs.png" alt="" [routerLink]="['/booking-dogovor', bookingId]">
-                                </span> -->
                             </div>
 
 
@@ -256,17 +248,8 @@
                                     <img src="../../../../assets/img/edit_avto.png">
                                 </span>
                             
-                                <!-- <span title="Сгенерировать документы">
-                                    <img src="../../../../assets/img/docs.png" [routerLink]="['/booking-dogovor', bookingId]">
-                                </span> -->
                             </div>
 
-
-                            <div class="setting_view_info__box" *ngIf="bookingStatus=== 'Закрыта'">
-                                <!-- <span title="Сгенерировать документы">
-                                    <img src="../../../../assets/img/docs.png" [routerLink]="['/booking-dogovor', bookingId]">
-                                </span> -->
-                            </div>
 
 
                             <div class="xs_booking_close_info" *ngIf="this.actualBooking.dop_info_close">

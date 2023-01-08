@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { PaysService } from 'src/app/pays/services/pays.service';
@@ -13,11 +14,13 @@ import { BookingsService } from '../../services/bookings.service';
   templateUrl: './close.component.html',
   styleUrls: ['./close.component.css']
 })
-export class CloseComponent implements OnInit {
+export class CloseComponent implements OnInit, OnDestroy {
 
   form!: FormGroup;
   bookingId!: string;
   actualBooking!: Booking;
+  subGetByIdBooking$: Subscription;
+  subBookingClose$: Subscription;
 
   PayTypes: Array<any> = [
     {
@@ -59,7 +62,25 @@ export class CloseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initForm();
+    this.getParams();
+    this.getByIdBooking();
+  }
 
+  ngOnDestroy(): void {
+    if (this.subGetByIdBooking$)
+    {
+      this.subGetByIdBooking$.unsubscribe();
+    }
+
+    if (this.subBookingClose$)
+    {
+      this.subBookingClose$.unsubscribe();
+    }
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       booking_end: new FormControl('', [Validators.required]),
       probeg_new: new FormControl('', [Validators.required]),
@@ -70,15 +91,19 @@ export class CloseComponent implements OnInit {
       return_part_price: new FormControl(''),
       typePayArenda: new FormControl('',),
     });
+  }
 
-    // Достаем параметры
+
+  getParams()
+  {
     this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
     });
+  }
 
-
-
-    this.bookings.getById(this.bookingId).subscribe((res) => {
+  getByIdBooking()
+  {
+    this.subGetByIdBooking$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
       this.form.patchValue({
         booking_end: res.booking_end,
@@ -100,8 +125,6 @@ export class CloseComponent implements OnInit {
 
   onSubmit()
   {
-    
-
     if (!this.form.value.clear_auto && !this.form.value.return_part)
     {
       const car: any = {
@@ -135,7 +158,7 @@ export class CloseComponent implements OnInit {
       }
 
 
-      this.bookings.close(this.bookingId, booking).pipe(
+      this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
         map(res => {
           this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
             MaterialService.toast('Возврат залога проведен');
@@ -186,7 +209,7 @@ export class CloseComponent implements OnInit {
       }
 
 
-      this.bookings.close(this.bookingId, booking).pipe(
+      this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
         map(res => {
           this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
           });
@@ -237,7 +260,7 @@ export class CloseComponent implements OnInit {
       }
 
 
-      this.bookings.close(this.bookingId, booking).pipe(
+      this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
         map(res => {
           this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
             MaterialService.toast('Частичный возврат залога');
@@ -283,7 +306,7 @@ export class CloseComponent implements OnInit {
       }
 
 
-      this.bookings.close(this.bookingId, booking).pipe(
+      this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
         map(res => {
           this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
             MaterialService.toast('Возврат залога проведен');
@@ -301,7 +324,5 @@ export class CloseComponent implements OnInit {
         this.router.navigate(['/bookings-page']);
       });
     }
-}
-
-
+  }
 }

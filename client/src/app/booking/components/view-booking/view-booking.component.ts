@@ -1,30 +1,25 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
-  OnChanges,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { CarsService } from 'src/app/cars/services/cars.service';
-import { ClientsService } from 'src/app/clients/services/clients.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Booking, MaterialDatepicker, Summa } from 'src/app/shared/types/interfaces';
+import { Booking, Summa } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 import * as moment from 'moment';
 import { PaysService } from 'src/app/pays/services/pays.service';
 import { DocumentsService } from 'src/app/documents/services/documents.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-booking',
   templateUrl: './view-booking.component.html',
   styleUrls: ['./view-booking.component.css'],
 })
-export class ViewBookingComponent implements OnInit {
+export class ViewBookingComponent implements OnInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
 
   summa: Summa = {
@@ -64,6 +59,16 @@ export class ViewBookingComponent implements OnInit {
 
   actualActs: any = [];
 
+  subGetBookingById$: Subscription;
+  
+  subGetActsByIdBooking$: Subscription;
+
+  subGetPaysByBookingId$: Subscription;
+
+  subToggleStatus$: Subscription;
+
+  subUpdateAct$: Subscription;
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
@@ -73,13 +78,47 @@ export class ViewBookingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Достаем параметры
+    this.getParams();
+    this.getBookingById();
+    this.getPaysByBookingId();
+    MaterialService.updateTextInputs();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subGetBookingById$)
+    {
+      this.subGetBookingById$.unsubscribe();
+    }
+    if (this.subGetActsByIdBooking$)
+    {
+      this.subGetActsByIdBooking$.unsubscribe();
+    }
+    if (this.subGetPaysByBookingId$)
+    {
+      this.subGetPaysByBookingId$.unsubscribe();
+    }
+    if (this.subToggleStatus$)
+    {
+      this.subToggleStatus$.unsubscribe();
+    }
+    if (this.subUpdateAct$)
+    {
+      this.subUpdateAct$.unsubscribe();
+    }
+  }
+
+  getParams()
+  {
     this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
     });
-    this.bookings.getById(this.bookingId).subscribe((res) => {
+  }
+
+  getBookingById()
+  {
+    this.subGetBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
-      
+
       this.summa.car = res.car;
       this.summa.sale = res.sale;
       this.summa.tariff = res.tariff;
@@ -91,50 +130,52 @@ export class ViewBookingComponent implements OnInit {
       this.summa.dop_hours = res.dop_hours;
       this.xsActualClient = res.client;
 
-      this.bookings.getById(this.bookingId).subscribe((res) => {
-        this.bookingStatus = res.status;
-      });
+      // this.bookings.getById(this.bookingId).subscribe((res) => {
+      //   this.bookingStatus = res.status;
+      // });
+
+      this.bookingStatus = res.status;
 
       // Получаем список всех актов по данной брони
-      this.ducumentsServise.getActsByIdBooking(this.bookingId).subscribe(acts=>{
+      this.subGetActsByIdBooking$ = this.ducumentsServise.getActsByIdBooking(this.bookingId).subscribe(acts => {
         this.actualActs = acts;
       })
 
       // Высчитываем какой тариф выбран
       this.checkedTarif(this.summa.booking_days)
-
-
     });
-
-    this.pay.getPaysByBookingId(this.bookingId).subscribe((res) => {
-      this.pays = res;
-    });
-
-    MaterialService.updateTextInputs();
   }
 
-  toggleStatus(status: string) {
-    
+  getPaysByBookingId()
+  {
+    this.subGetPaysByBookingId$ = this.pay.getPaysByBookingId(this.bookingId).subscribe((res) => {
+      this.pays = res;
+    });
+  }
 
+
+  toggleStatus(status: string) {
     if (+this.actualBooking.paidCount < (+this.summa.summaFull))
     {
       const dicision = window.confirm(`Бронь не оплачена! Вы уверены что хотите выдать автомобиль?`);
 
       if (dicision)
       {
-        this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
+        this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
           this.bookingStatus = res.status;
           MaterialService.toast(`Новый статус брони -  ${status}`);
         });
       }
     }
     else{
-      this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
+      this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
         this.bookingStatus = res.status;
         MaterialService.toast(`Новый статус брони -  ${status}`);
       });
     }
   }
+
+
 
   checkedTarif(countDay: any)
   {
@@ -167,13 +208,9 @@ export class ViewBookingComponent implements OnInit {
       },
     };
 
-    this.bookings.updateAct(this.bookingId, booking).subscribe((booking) => {
+    this.subUpdateAct$ = this.bookings.updateAct(this.bookingId, booking).subscribe((booking) => {
       this.router.navigate(['/booking-act', this.bookingId]);
-      // MaterialService.toast('Теперь можете выдать авто');
     });
-
-    
-    
   }
 
 }

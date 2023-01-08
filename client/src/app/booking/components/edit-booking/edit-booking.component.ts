@@ -2,13 +2,12 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -16,13 +15,15 @@ import { MaterialDatepicker, Summa } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
+import { DocumentsService } from 'src/app/documents/services/documents.service';
 
 @Component({
   selector: 'app-edit-booking',
   templateUrl: './edit-booking.component.html',
   styleUrls: ['./edit-booking.component.css'],
 })
-export class EditBookingComponent implements OnInit, AfterViewInit {
+export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
 
   summa: Summa = {
@@ -49,15 +50,92 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
 
   xsActualClient!: any;
 
+  subUpdateBooking$: Subscription;
+
+  // Результат поиска
+  searchResult: any[] = [];
+  searchResultLawFase: any[] = [];
+
+  // Проверяем есть ли введенный запрос
+  hasQuery: Boolean = false;
+  hasQueryLawFase: Boolean = false;
+
+  // Видимость полей поиска по умолчанию
+  fizSearchIsVisible: Boolean = false;
+  lawSearchIsVisible: Boolean = false;
+
+
+  // Храним клиента выбранного при поиске
+  xs_actual_search__client: any = null;
+  xs_actual_search__client_no_json: any = null;
+  xs_actual_search__client___lawfase: any = null;
+  xs_actual_search__client___lawfase_no_json: any = null;
+
+
+  // Храним выбранный тип клиента
+  xs_actual_client_type: string = '';
+
+
+
+  // Активный номер договора для физ/лица
+  xs_dogovor_number__actual: string = '';
+
+
+  // Есть ли у клиента активный договор
+  isActiveDogovor: any = '';
+
+
+  // Если договор закончится раньше брони
+  is_dogovor_finish_compare_booking: any = '';
+
+
+  // Подписка для активного договора
+  getDogovorActive$ : Subscription;
+
+  // Храним результат поиска клиента
+  searchResultClient$: Subscription;
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
     private cars: CarsService,
     private clients: ClientsService,
-    private rote: ActivatedRoute
+    private rote: ActivatedRoute,
+    private documents: DocumentsService
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.getParams();
+    this.getByIdBookong();
+    this.setMinDate();
+    this.xscars$ = this.cars.fetch();
+    this.xsclients$ = this.clients.fetch();
+    MaterialService.updateTextInputs();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subUpdateBooking$)
+    {
+      this.subUpdateBooking$.unsubscribe();
+    }
+    if (this.getDogovorActive$)
+    {
+      this.getDogovorActive$.unsubscribe();
+    }
+    if (this.searchResultClient$)
+    {
+      this.searchResultClient$.unsubscribe();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    MaterialService.initTabs(this.tabs.nativeElement);
+    MaterialService.updateTextInputs();
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       car: new FormControl('', [Validators.required]),
       client: new FormControl('', [Validators.required]),
@@ -69,9 +147,14 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
       comment: new FormControl(''),
       clear_auto: new FormControl(''),
       full_tank: new FormControl(''),
+      isCustomeZalogControl: new FormControl(''),
+      search_fiz: new FormControl(''),
+      search_law: new FormControl(''),
     });
+  }
 
-    // Достаем параметры
+  getParams()
+  {
     this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
 
@@ -79,11 +162,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         this.bookingViewRef = params.view;
       }
     });
+  }
 
+
+  getByIdBookong()
+  {
     this.bookings.getById(this.bookingId).subscribe((res) => {
+      console.log('111', res);
+      
       this.form.patchValue({
         car: JSON.stringify(res.car, null, 2),
-        client: JSON.stringify(res.client, null, 2),
+        client: res.client.type,
         booking_start: res.booking_start,
         booking_end: res.booking_end,
         place_start: res.place_start,
@@ -94,6 +183,9 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         full_tank: res.dop_info_open.full_tank,
       });
 
+      this.changeClient(res.client)
+      this.changeClientLawFase(res.client);
+
       this.summa.car = res.car;
       this.summa.tariff = res.tariff;
       this.summa.booking_start = res.booking_start;
@@ -102,17 +194,27 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
       this.summa.summaFull = res.summaFull;
       this.summa.booking_days = res.booking_days;
       this.summa.dop_hours = res.dop_hours;
-      
+
 
       this.xsActualClient = res.client;
+
+
+      if (res.client.type === 'fiz') {
+        this.lawSearchIsVisible = false;
+        this.fizSearchIsVisible = true;
+        this.xs_actual_client_type = 'fiz';
+      }
+      else if (res.client.type === 'law') {
+        this.lawSearchIsVisible = true;
+        this.fizSearchIsVisible = false;
+        this.xs_actual_client_type = 'law';
+      }
     });
+  }
 
-    this.xscars$ = this.cars.fetch();
-    this.xsclients$ = this.clients.fetch();
-
-    MaterialService.updateTextInputs();
-
-    // Задаем минимальный параметр даты
+  // Задаем минимальный параметр даты
+  setMinDate()
+  {
     let booking_start: any = document.getElementById('booking_start');
     booking_start.min = new Date()
       .toISOString()
@@ -124,10 +226,6 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
       .slice(0, new Date().toISOString().lastIndexOf(':'));
   }
 
-  ngAfterViewInit(): void {
-    MaterialService.initTabs(this.tabs.nativeElement);
-    MaterialService.updateTextInputs();
-  }
 
   // При выборе атомобиля
   onChangeCar(e: any)
@@ -720,7 +818,133 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Отправка формы
+
+  // При выборе типа клиента
+  changeTypeClient(e) {
+    if (e.target.value === 'fiz') {
+      this.lawSearchIsVisible = false;
+      this.fizSearchIsVisible = true;
+      this.xs_actual_client_type = 'fiz';
+    }
+    else if (e.target.value === 'law') {
+      this.lawSearchIsVisible = true;
+      this.fizSearchIsVisible = false;
+      this.xs_actual_client_type = 'law';
+    }
+
+  }
+
+
+  // При выборе клиента физ/лица
+  changeClient(client) {
+    this.form.patchValue({
+      search_fiz: client.surname + ' ' + client.name + ' ' + client.lastname
+    });
+    this.hasQuery = false;
+    this.xs_actual_search__client = JSON.stringify(client);
+    this.xs_actual_search__client_no_json = client;
+
+
+    this.getDogovorActive$ = this.documents.getDogovorActive(client._id).subscribe(dogovor => {
+      if (Object.keys(dogovor).length > 0) {
+        this.xs_dogovor_number__actual = dogovor._id;
+        this.isActiveDogovor = 'isActive';
+
+        if (this.form.value.booking_end > dogovor[0].date_end) {
+          this.is_dogovor_finish_compare_booking = 'isDogovorFinish';
+          console.log('Бронь закончится раньше договора');
+        }
+
+      }
+      else {
+        this.isActiveDogovor = 'no_isActive';
+      }
+
+    })
+  }
+
+
+
+  // При выборе клиента юр/лица
+  changeClientLawFase(client) {
+    this.form.patchValue({
+      search_law: client.name
+    });
+    this.hasQueryLawFase = false;
+    this.xs_actual_search__client___lawfase = JSON.stringify(client)
+    this.xs_actual_search__client___lawfase_no_json = client
+
+
+
+    this.getDogovorActive$ = this.documents.getDogovorActive(client._id).subscribe(dogovor => {
+      if (Object.keys(dogovor).length > 0) {
+        this.xs_dogovor_number__actual = dogovor._id;
+        this.isActiveDogovor = 'isActive';
+
+        if (this.form.value.booking_end > dogovor[0].date_end) {
+          this.is_dogovor_finish_compare_booking = 'isDogovorFinish';
+          console.log('Бронь закончится раньше договора');
+        }
+
+      }
+      else {
+        this.isActiveDogovor = 'no_isActive';
+      }
+
+    })
+  }
+
+
+  // Получаем данные для поиска физического лица
+  searchData(e: any) {
+    // Отчищаем запрос
+    let query: string = e.target.value.trim()
+    let xs_query = {
+      query: query,
+      type: 'fiz'
+    }
+
+    // Если запрос ничего не содержит или содержит только пробелы
+    let matchSpaces = query.match(/\s*/);
+    if (matchSpaces[0] === query) {
+      this.searchResult = [];
+      this.hasQuery = false;
+      return;
+    }
+
+
+    this.searchResultClient$ = this.bookings.searchWidget(xs_query).subscribe(res => {
+      this.searchResult = res;
+      this.hasQuery = true;
+    })
+  }
+
+
+  // Получаем данные для поиска физического лица
+  searchDataLawFase(e: any) {
+    // Отчищаем запрос
+    let query: string = e.target.value.trim()
+    let xs_query = {
+      query: query,
+      type: 'law'
+    }
+
+    // Если запрос ничего не содержит или содержит только пробелы
+    let matchSpaces = query.match(/\s*/);
+    if (matchSpaces[0] === query) {
+      this.searchResultLawFase = [];
+      this.hasQueryLawFase = false;
+      return;
+    }
+
+
+    this.searchResultClient$ = this.bookings.searchWidget(xs_query).subscribe(res => {
+      this.searchResultLawFase = res;
+      this.hasQueryLawFase = true;
+    })
+  }
+
+
   onSubmit() {
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
@@ -746,87 +970,170 @@ export class EditBookingComponent implements OnInit, AfterViewInit {
         (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
     }
 
-
-    if (this.form.value.tariff === 'Город')
+    if (this.xs_actual_client_type === 'fiz')
     {
-      const booking = {
-        car: JSON.parse(this.form.value.car),
-        client: JSON.parse(this.form.value.client),
-        place_start: this.form.value.place_start,
-        place_end: this.form.value.place_end,
-        tariff: this.form.value.tariff,
-        comment: this.form.value.comment,
-        booking_start: this.form.value.booking_start,
-        booking_end: this.form.value.booking_end,
-        booking_days: this.booking_days_fin,
-        summaFull: this.summa.summaFull,
-        summa: this.summa.summa,
-        dop_hours: this.summa.dop_hours,
-        dop_info_open: {
-          clear_auto: this.form.value.clear_auto,
-          full_tank: this.form.value.full_tank
-        },
-        booking_zalog: this.summa.car.zalog
-      };
+      if (this.form.value.tariff === 'Город') {
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          client: JSON.parse(this.xs_actual_search__client),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.form.value.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: this.booking_days_fin,
+          summaFull: this.summa.summaFull,
+          summa: this.summa.summa,
+          dop_hours: this.summa.dop_hours,
+          dop_info_open: {
+            clear_auto: this.form.value.clear_auto,
+            full_tank: this.form.value.full_tank
+          },
+          booking_zalog: this.summa.car.zalog
+        };
 
-      this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-        MaterialService.toast('Бронь обновлена');
-      });
+        this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          MaterialService.toast('Бронь обновлена');
+        });
+      }
+
+
+      if (this.form.value.tariff === 'Межгород') {
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          client: JSON.parse(this.xs_actual_search__client),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.form.value.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: this.booking_days_fin,
+          summaFull: this.summa.summaFull,
+          summa: this.summa.summa,
+          dop_hours: this.summa.dop_hours,
+          dop_info_open: {
+            clear_auto: this.form.value.clear_auto,
+            full_tank: this.form.value.full_tank
+          },
+          booking_zalog: this.summa.car.zalog_mej
+        };
+
+        this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          MaterialService.toast('Бронь обновлена');
+        });
+      }
+
+
+      if (this.form.value.tariff === 'Россия') {
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          client: JSON.parse(this.xs_actual_search__client),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.form.value.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: this.booking_days_fin,
+          summaFull: this.summa.summaFull,
+          summa: this.summa.summa,
+          dop_hours: this.summa.dop_hours,
+          dop_info_open: {
+            clear_auto: this.form.value.clear_auto,
+            full_tank: this.form.value.full_tank
+          },
+          booking_zalog: this.summa.car.zalog_rus
+        };
+
+        this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          MaterialService.toast('Бронь обновлена');
+        });
+      }
+    } else if (this.xs_actual_client_type === 'law')
+    {
+      if (this.form.value.tariff === 'Город') {
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          client: JSON.parse(this.xs_actual_search__client___lawfase),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.form.value.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: this.booking_days_fin,
+          summaFull: this.summa.summaFull,
+          summa: this.summa.summa,
+          dop_hours: this.summa.dop_hours,
+          dop_info_open: {
+            clear_auto: this.form.value.clear_auto,
+            full_tank: this.form.value.full_tank
+          },
+          booking_zalog: this.summa.car.zalog
+        };
+
+        this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          MaterialService.toast('Бронь обновлена');
+        });
+      }
+
+
+      if (this.form.value.tariff === 'Межгород') {
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          client: JSON.parse(this.xs_actual_search__client___lawfase),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.form.value.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: this.booking_days_fin,
+          summaFull: this.summa.summaFull,
+          summa: this.summa.summa,
+          dop_hours: this.summa.dop_hours,
+          dop_info_open: {
+            clear_auto: this.form.value.clear_auto,
+            full_tank: this.form.value.full_tank
+          },
+          booking_zalog: this.summa.car.zalog_mej
+        };
+
+        this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          MaterialService.toast('Бронь обновлена');
+        });
+      }
+
+
+      if (this.form.value.tariff === 'Россия') {
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          client: JSON.parse(this.xs_actual_search__client___lawfase),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.form.value.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: this.booking_days_fin,
+          summaFull: this.summa.summaFull,
+          summa: this.summa.summa,
+          dop_hours: this.summa.dop_hours,
+          dop_info_open: {
+            clear_auto: this.form.value.clear_auto,
+            full_tank: this.form.value.full_tank
+          },
+          booking_zalog: this.summa.car.zalog_rus
+        };
+
+        this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          MaterialService.toast('Бронь обновлена');
+        });
+      }
     }
-
-
-    if (this.form.value.tariff === 'Межгород') {
-      const booking = {
-        car: JSON.parse(this.form.value.car),
-        client: JSON.parse(this.form.value.client),
-        place_start: this.form.value.place_start,
-        place_end: this.form.value.place_end,
-        tariff: this.form.value.tariff,
-        comment: this.form.value.comment,
-        booking_start: this.form.value.booking_start,
-        booking_end: this.form.value.booking_end,
-        booking_days: this.booking_days_fin,
-        summaFull: this.summa.summaFull,
-        summa: this.summa.summa,
-        dop_hours: this.summa.dop_hours,
-        dop_info_open: {
-          clear_auto: this.form.value.clear_auto,
-          full_tank: this.form.value.full_tank
-        },
-        booking_zalog: this.summa.car.zalog_mej
-      };
-
-      this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-        MaterialService.toast('Бронь обновлена');
-      });
-    }
-
-
-    if (this.form.value.tariff === 'Россия') {
-      const booking = {
-        car: JSON.parse(this.form.value.car),
-        client: JSON.parse(this.form.value.client),
-        place_start: this.form.value.place_start,
-        place_end: this.form.value.place_end,
-        tariff: this.form.value.tariff,
-        comment: this.form.value.comment,
-        booking_start: this.form.value.booking_start,
-        booking_end: this.form.value.booking_end,
-        booking_days: this.booking_days_fin,
-        summaFull: this.summa.summaFull,
-        summa: this.summa.summa,
-        dop_hours: this.summa.dop_hours,
-        dop_info_open: {
-          clear_auto: this.form.value.clear_auto,
-          full_tank: this.form.value.full_tank
-        },
-        booking_zalog: this.summa.car.zalog_rus
-      };
-
-      this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-        MaterialService.toast('Бронь обновлена');
-      });
-    }
+    
     
   }
 }

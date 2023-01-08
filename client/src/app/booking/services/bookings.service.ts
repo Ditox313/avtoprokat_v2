@@ -6,28 +6,29 @@ import { map } from 'rxjs/operators';
 import { Booking, Client } from 'src/app/shared/types/interfaces';
 
 
-// Даем возможность инжектировать сервисы в класс
+
 @Injectable({
-  providedIn: 'root', //Автоматичеки регистриует сервис в главном модуле
+  providedIn: 'root', 
 })
 export class BookingsService {
 
-  // Храним запрос
-  query: string = '' || null;
+  // // Храним запрос
+  // query: string = '' || null;
 
-
-  // Храним результаты
-  searchResult: Client[];
+  // // Храним результаты
+  // searchResult: Client[];
 
   
+
+
+
   constructor(private http: HttpClient) {}
 
-  // Создаем новую бронь
   create(booking: Booking): Observable<Booking> {
     return this.http.post<Booking>(`/api/bookings`, booking);
   }
 
-  // Получаем список всех позиций
+  
   fetch(params: any = {}): Observable<Booking[]> {
     return this.http.get<Booking[]>('/api/bookings', {
       params: new HttpParams({
@@ -36,7 +37,7 @@ export class BookingsService {
     });
   }
 
-  // Получаем позицию по id
+ 
   getById(id: string): Observable<Booking> {
     return this.http.get<Booking>(`/api/bookings/${id}`);
   }
@@ -61,7 +62,6 @@ export class BookingsService {
     return this.http.patch<Booking>(`/api/bookings/close/${id}`, xsbooking);
   }
 
-  // Удаление
   delete(id: any): Observable<any> {
     return this.http.delete<any>(`/api/bookings/${id}`);
   }
@@ -78,8 +78,8 @@ export class BookingsService {
   searchWidget(searchData: any): Observable<Client[]> {
     return this.http.post<Client[]>('/api/bookings/search_client', { searchData: searchData }).pipe(
       map(res => {
-        this.query = searchData.query;
-        this.searchResult = res;
+        // this.query = searchData.query;
+        // this.searchResult = res;
         return res;
       })
     )
