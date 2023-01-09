@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -8,7 +8,6 @@ import { PartnersService } from '../../services/partners.service';
 import { Store, select } from '@ngrx/store';
 import {
   partnersAddAction,
-  partnersDeleteAction,
 } from '../../store/actions/partners.action';
 
 
@@ -20,9 +19,11 @@ import {
   templateUrl: './partners.component.html',
   styleUrls: ['./partners.component.css'],
 })
-export class PartnersComponent implements OnInit {
-  //Создаем переменную, в которую помещаем наш стим, что бы потом отписаться от него
+
+
+export class PartnersComponent implements OnInit, OnDestroy {
   Sub!: Subscription;
+  subDaletePartner$: Subscription;
   xspartners: Partner[] = [];
   offset: any = 0;
   limit: any = STEP;
@@ -39,9 +40,19 @@ export class PartnersComponent implements OnInit {
     this.fetch();
   }
 
-  // Получаем все кейсы
+  ngOnDestroy(): void {
+    if (this.Sub)
+    {
+      this.Sub
+    }
+    if (this.subDaletePartner$)
+    {
+      this.subDaletePartner$.unsubscribe();
+    }
+  }
+
+
   public fetch() {
-    // Отправляем параметры для пагинации
     const params = {
       offset: this.offset,
       limit: this.limit,
@@ -75,13 +86,13 @@ export class PartnersComponent implements OnInit {
     const dicision = window.confirm(`Удалить партнера?`);
 
     if (dicision) {
-      this.partners.delete(xspartner._id).subscribe(
+      this.subDaletePartner$ = this.partners.delete(xspartner._id).subscribe(
         (res) => {
           const idxPos = this.xspartners.findIndex(
             (p) => p._id === xspartner._id
           );
           this.xspartners.splice(idxPos, 1);
-          this.store.dispatch(partnersAddAction({ partners: this.xspartners }));
+          // this.store.dispatch(partnersAddAction({ partners: this.xspartners }));
           MaterialService.toast(res.message);
         },
         (error) => {

@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -9,31 +10,23 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { PartnersService } from '../../services/partners.service';
-import { MaterialDatepicker, Partner } from 'src/app/shared/types/interfaces';
+import {  Partner } from 'src/app/shared/types/interfaces';
 import { MaterialService } from 'src/app/shared/services/material.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-show-partner',
   templateUrl: './show-partner.component.html',
   styleUrls: ['./show-partner.component.css'],
 })
-export class ShowPartnerComponent implements OnInit, AfterViewInit {
+export class ShowPartnerComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
-
-
-
-
-  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
   @ViewChild('input2') inputRef2!: ElementRef;
 
   partnerId!: string;
   xsActualPartner!: Partner;
   form: any;
-
-
-
-
 
   // Храним фалы загруженных документов
   passport__1!: File;
@@ -43,6 +36,9 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
   passport_1_preview: any = '';
   passport_2_preview: any = '';
 
+  subParams$: Subscription;
+  subGetById$: Subscription;
+  subUpdatePartner$: Subscription;
 
 
   constructor(
@@ -53,6 +49,35 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.getParams();
+    this.getPartnerById();
+    MaterialService.updateTextInputs();
+  }
+
+  ngAfterViewInit(): void {
+    MaterialService.initTabs(this.tabs.nativeElement);
+    MaterialService.updateTextInputs();
+
+  }
+
+  ngOnDestroy(): void {
+    if (this.subParams$)
+    {
+      this.subParams$.unsubscribe();
+    }
+    if (this.subGetById$)
+    {
+      this.subGetById$.unsubscribe();
+    }
+    if (this.subUpdatePartner$)
+    {
+      this.subUpdatePartner$.unsubscribe();
+    }
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       surname: new FormControl('', [Validators.required]),
@@ -69,16 +94,21 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
       phone_2_dop_name: new FormControl('', [Validators.required]),
       phone_2_dop_number: new FormControl('', [Validators.required]),
     });
+  }
 
-    // Достаем параметры
-    this.rote.params.subscribe((params) => {
+  getParams()
+  {
+    this.subParams$ = this.rote.params.subscribe((params) => {
       this.partnerId = params['id'];
     });
+  }
 
-    this.partners.getById(this.partnerId).subscribe((res) => {
+  getPartnerById()
+  {
+    this.subGetById$ = this.partners.getById(this.partnerId).subscribe((res) => {
       this.xsActualPartner = res;
 
-      
+
       if (res.passport_1_img) {
         this.passport_1_preview = res.passport_1_img;
       }
@@ -105,21 +135,13 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
         phone_2_dop_number: res.phone_2_dop_number,
       });
     });
-
-    MaterialService.updateTextInputs();
   }
 
-  ngAfterViewInit(): void {
-    MaterialService.initTabs(this.tabs.nativeElement);
-    MaterialService.updateTextInputs();
 
-  }
-  // Валидация
-  validate() {}
+  
 
-  // Отправка формы
+
   onSubmit() {
-    // this.form.disable();
     const partner = {
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -137,7 +159,7 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit {
       phone_2_dop_number: this.form.value.phone_2_dop_number,
     };
 
-    this.partners
+    this.subUpdatePartner$ = this.partners
       .update(this.partnerId, partner, this.passport__1, this.passport__2)
       .subscribe((car) => {
         MaterialService.toast('Клиент Изменен');

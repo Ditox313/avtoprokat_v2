@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { MaterialDatepicker } from 'src/app/shared/types/interfaces';
 import { PartnersService } from '../../services/partners.service';
@@ -10,17 +11,13 @@ import { PartnersService } from '../../services/partners.service';
   templateUrl: './add-partner.component.html',
   styleUrls: ['./add-partner.component.css'],
 })
-export class AddPartnerComponent implements OnInit, AfterViewInit {
+export class AddPartnerComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('passport__date') passport__date__info!: ElementRef;
-  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
   @ViewChild('input2') inputRef2!: ElementRef;
 
-
   form: any;
-
-
 
 
   // Храним фалы загруженных документов
@@ -32,10 +29,31 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
   passport_1_preview: any = '';
   passport_2_preview: any = '';
 
+  subCreatePartner$: Subscription;
+
+
+
 
   constructor(private partners: PartnersService, private router: Router) { }
-
   ngOnInit(): void {
+    this.initForm();
+    MaterialService.updateTextInputs();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subCreatePartner$)
+    {
+      this.subCreatePartner$.unsubscribe();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    MaterialService.initTabs(this.tabs.nativeElement);
+    MaterialService.updateTextInputs();
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       surname: new FormControl('', [Validators.required]),
@@ -52,22 +70,11 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
       phone_2_dop_name: new FormControl('', [Validators.required]),
       phone_2_dop_number: new FormControl('', [Validators.required]),
     });
-
-    MaterialService.updateTextInputs();
   }
 
-  ngAfterViewInit(): void {
-    MaterialService.initTabs(this.tabs.nativeElement);
-    MaterialService.updateTextInputs();
 
-  }
-  // Валидация
-  validate() { }
 
-  // Отправка формы
   onSubmit() {
-
-    // Создаем DHNYTHF
     const partner = {
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -85,10 +92,7 @@ export class AddPartnerComponent implements OnInit, AfterViewInit {
       phone_2_dop_number: this.form.value.phone_2_dop_number,
     };
 
-
-
-
-    this.partners
+    this.subCreatePartner$ = this.partners
       .create(partner, this.passport__1, this.passport__2)
       .subscribe((partners) => {
         MaterialService.toast('Партнер добавлен');
