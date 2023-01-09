@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import {  Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Car } from 'src/app/shared/types/interfaces';
 import { CarsService } from '../../services/cars.service';
 import { Store, select } from '@ngrx/store';
 import {
   carsAddAction,
-  carsDeleteAction,
 } from '../../store/actions/cars.action';
 
 // Шаг пагинации
@@ -18,9 +17,10 @@ const STEP = 10;
   templateUrl: './cars-page.component.html',
   styleUrls: ['./cars-page.component.css'],
 })
-export class CarsPageComponent implements OnInit {
-  //Создаем переменную, в которую помещаем наш стим, что бы потом отписаться от него
+export class CarsPageComponent implements OnInit,OnDestroy {
+  
   Sub!: Subscription;
+  subDeleteCar$: Subscription;
   xscars: Car[] = [];
   offset: any = 0;
   limit: any = STEP;
@@ -38,11 +38,19 @@ export class CarsPageComponent implements OnInit {
     this.fetch();
   }
 
+  ngOnDestroy(): void {
+    if (this.Sub)
+    {
+      this.Sub.unsubscribe();
+    }
+    if (this.subDeleteCar$)
+    {
+      this.subDeleteCar$.unsubscribe();
+    }
+  }
 
 
-  // Получаем все кейсы
   public fetch() {
-    // Отправляем параметры для пагинации
     const params = {
       offset: this.offset,
       limit: this.limit,
@@ -69,19 +77,18 @@ export class CarsPageComponent implements OnInit {
     this.loading = false;
   }
 
-  // Удалить позицию
+  
   onDeleteCar(event: Event, xscar: Car): void {
     event.stopPropagation();
 
     const dicision = window.confirm(`Удалить автомобиль?`);
 
     if (dicision) {
-      this.cars.delete(xscar._id).subscribe(
+      this.subDeleteCar$ = this.cars.delete(xscar._id).subscribe(
         (res) => {
           const idxPos = this.xscars.findIndex((p) => p._id === xscar._id);
           this.xscars.splice(idxPos, 1);
 
-          // this.store.dispatch(carsDeleteAction({ cars: this.xscars }));
 
           MaterialService.toast(res.message);
         },

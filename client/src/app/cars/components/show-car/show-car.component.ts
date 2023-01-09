@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CarsService } from '../../services/cars.service';
 import { PartnersService } from 'src/app/partners/services/partners.service';
-import { Car, MaterialDatepicker } from 'src/app/shared/types/interfaces';
+import { Car } from 'src/app/shared/types/interfaces';
 import { MaterialService } from 'src/app/shared/services/material.service';
 
 
@@ -13,7 +13,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
   templateUrl: './show-car.component.html',
   styleUrls: ['./show-car.component.css']
 })
-export class ShowCarComponent implements OnInit {
+export class ShowCarComponent implements OnInit, OnDestroy {
 
 
   @ViewChild('tabs') tabs!: ElementRef;
@@ -25,45 +25,75 @@ export class ShowCarComponent implements OnInit {
   @ViewChild('to_date_info') to_date_info_avto!: ElementRef;
 
 
-  carId!: string; //Для хранения id авто
-  xsActualCar!: Car;//Текущий авто, который будем редактировать
-
-
-  //Создаем переменную, в которую помещаем наш стрим, что бы потом отписаться от него
+  carId!: string;
+  xsActualCar!: Car;
   Sub!: Subscription; 
-
-  // Валидность
   isValid: any = true;
-
-  //Инициализируем нашу форму
   form!: FormGroup; 
-
 
   // Задаем переменную для хранения картинки после пото как загрузили с устройтста
   image!: File
 
-
   // Превью изображения авто
   imagePreview : any = '';
-
 
   // Список владельцев
   xspartners!: any
 
+  subParams$ : Subscription;
+
+  subGetCarById$: Subscription;
+
+  subPartners$: Subscription;
+
+  subUpdateCar$: Subscription;
 
   // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
 
+
+
+
   constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, private partners: PartnersService) { }
 
   ngOnInit(): void {
+    this.initForm();
+    this.getparams();
+    this.getCarById();
+    this.getPartners();
+  }
+
+  ngOnDestroy(): void {
+    if (this.Sub)
+    {
+      this.Sub.unsubscribe();
+    }
+    if (this.subParams$)
+    {
+      this.subParams$.unsubscribe();
+    }
+    if (this.subGetCarById$)
+    {
+      this.subGetCarById$.unsubscribe();
+    }
+    if (this.subPartners$)
+    {
+      this.subPartners$.unsubscribe();
+    }
+    if (this.subUpdateCar$)
+    {
+      this.subUpdateCar$.unsubscribe();
+    }
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       marka: new FormControl('', [Validators.required]),
       model: new FormControl('', [Validators.required]),
       number: new FormControl('', [Validators.required]),
       probeg: new FormControl(''),
       transmission: new FormControl(''),
-      //price: new FormControl(''),
       start_arenda: new FormControl(''),
       end_arenda: new FormControl(''),
       vladelec: new FormControl('', [Validators.required]),
@@ -100,31 +130,29 @@ export class ShowCarComponent implements OnInit {
       zalog_rus: new FormControl(''),
       moyka: new FormControl(''),
     });
+  }
 
-
-
-    // Достаем параметры
-    this.rote.params.subscribe((params)=>{
+  getparams()
+  {
+    this.subParams$ = this.rote.params.subscribe((params) => {
       this.carId = params['id'];
     });
+  }
 
-
-    this.cars.getById(this.carId).subscribe((res)=> {
+  getCarById()
+  {
+    this.subGetCarById$ = this.cars.getById(this.carId).subscribe((res) => {
       this.xsActualCar = res
-      if(res.previewSrc)
-      {
+      if (res.previewSrc) {
         this.imagePreview = res.previewSrc
       }
 
-    
-        
       this.form.patchValue({
         marka: res.marka,
         model: res.model,
         number: res.number,
         probeg: res.probeg,
         transmission: res.transmission,
-        //price: res.price,
         start_arenda: res.start_arenda,
         end_arenda: res.end_arenda,
         vladelec: res.vladelec,
@@ -161,31 +189,17 @@ export class ShowCarComponent implements OnInit {
         zalog_rus: res.zalog_rus,
         moyka: res.moyka,
       });
-
-
-      
-      
-    
     });
-
-
-    // Получаем список партнеров
-    this.partners.get_all().subscribe(res => {this.xspartners = res;})
   }
 
-
-  
+  getPartners()
+  {
+    this.subPartners$ = this.partners.get_all().subscribe(res => { this.xspartners = res; })
+  }
 
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement)
     MaterialService.updateTextInputs();
-  }
-
-
-
-    // Валидация
-  validate() {
-
   }
 
 
@@ -224,18 +238,13 @@ export class ShowCarComponent implements OnInit {
 
 
 
-  // Отправка формы
   onSubmit(){
-    // this.form.disable();
-
-    // Обновляем авто
     const car = {
       marka: this.form.value.marka,
       model: this.form.value.model,
       number: this.form.value.number,
       probeg: this.form.value.probeg,
       transmission: this.form.value.transmission,
-      //price: this.form.value.price,
       start_arenda: this.form.value.start_arenda,
       end_arenda: this.form.value.end_arenda,
       vladelec: this.form.value.vladelec,
@@ -273,7 +282,7 @@ export class ShowCarComponent implements OnInit {
       moyka: this.form.value.moyka,
     };
     
-   this.cars.update(this.carId, car, this.image).subscribe((car) =>{
+    this.subUpdateCar$ = this.cars.update(this.carId, car, this.image).subscribe((car) =>{
         MaterialService.toast('Автомобиль Изменен')
     });    
 

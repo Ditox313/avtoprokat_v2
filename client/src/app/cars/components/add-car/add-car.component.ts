@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { CarsService } from '../../services/cars.service';
 import { PartnersService } from 'src/app/partners/services/partners.service';
-import { MaterialDatepicker } from 'src/app/shared/types/interfaces';
 import { MaterialService } from 'src/app/shared/services/material.service';
 
 @Component({
@@ -13,7 +12,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
   templateUrl: './add-car.component.html',
   styleUrls: ['./add-car.component.css']
 })
-export class AddCarComponent implements OnInit,AfterViewInit {
+export class AddCarComponent implements OnInit,AfterViewInit, OnDestroy {
 
   @ViewChild('tabs') tabs!: ElementRef;
 
@@ -41,19 +40,38 @@ export class AddCarComponent implements OnInit,AfterViewInit {
   // Список владельцев
   xspartners!: any
 
+  // Подписка для партнеров
+  subPartners$: Subscription;
+
 
   
 
   constructor(private cars: CarsService, private router: Router,private partners: PartnersService,  public datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    this.initForm();
+    this.getPartners();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subPartners$)
+    {
+      this.subPartners$.unsubscribe();
+    }
+    if (this.Sub)
+    {
+      this.Sub.unsubscribe();
+    }
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       marka: new FormControl('', [Validators.required]),
       model: new FormControl('', [Validators.required]),
       number: new FormControl('', [Validators.required]),
       probeg: new FormControl(''),
       transmission: new FormControl(''),
-      //price: new FormControl(''),
       start_arenda: new FormControl(''),
       end_arenda: new FormControl(''),
       vladelec: new FormControl('', [Validators.required]),
@@ -90,15 +108,13 @@ export class AddCarComponent implements OnInit,AfterViewInit {
       zalog_rus: new FormControl(''),
       moyka: new FormControl(''),
     });
-
-
-    // Получаем список партнеров
-    this.partners.get_all().subscribe(res => {this.xspartners = res;})
   }
 
+  getPartners()
+  {
+    this.subPartners$ = this.partners.get_all().subscribe(res => { this.xspartners = res; })
+  }
 
-
-  
 
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement)
@@ -107,10 +123,9 @@ export class AddCarComponent implements OnInit,AfterViewInit {
 
 
 
-  // Валидация
-  validate() {
+  // validate() {
     
-  }
+  // }
 
 
 
@@ -157,7 +172,6 @@ export class AddCarComponent implements OnInit,AfterViewInit {
       number: this.form.value.number,
       probeg: this.form.value.probeg,
       transmission: this.form.value.transmission,
-      //price: this.form.value.price,
       start_arenda: this.form.value.start_arenda,
       end_arenda: this.form.value.end_arenda,
       vladelec: this.form.value.vladelec,
