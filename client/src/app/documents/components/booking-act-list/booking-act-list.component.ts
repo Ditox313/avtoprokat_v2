@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -14,7 +14,7 @@ const STEP = 3
   templateUrl: './booking-act-list.component.html',
   styleUrls: ['./booking-act-list.component.css']
 })
-export class BookingActListComponent implements OnInit {
+export class BookingActListComponent implements OnInit, OnDestroy {
 
   @Input() clientId: string | undefined;
   xs_acts: BookingAct[] = [];
@@ -23,23 +23,32 @@ export class BookingActListComponent implements OnInit {
   noMoreActs: Boolean = false;
   loading = false;
   Sub!: Subscription;
+  subDalete$: Subscription;
 
 
 
   constructor(
-    private router: Router,
     private documentsServices: DocumentsService,
   ) { }
 
   ngOnInit(): void {
-
     this.fetch()
+  }
+
+  ngOnDestroy(): void {
+    if (this.Sub)
+    {
+      this.Sub.unsubscribe();
+    }
+    if (this.subDalete$)
+    {
+      this.subDalete$.unsubscribe();
+    }
   }
 
 
 
   public fetch() {
-    // Отправляем параметры для пагинации
     const params = {
       offset: this.offset,
       limit: this.limit,
@@ -47,6 +56,7 @@ export class BookingActListComponent implements OnInit {
     }
 
     this.loading = true
+
     this.Sub = this.documentsServices.fetch_acts(params).subscribe((acts) => {
 
       if (acts.length < STEP) {
@@ -65,7 +75,7 @@ export class BookingActListComponent implements OnInit {
     const dicision = window.confirm(`Удалить акт?`);
 
     if (dicision) {
-      this.documentsServices.delete_act(xsact._id).subscribe(
+      this.subDalete$ = this.documentsServices.delete_act(xsact._id).subscribe(
         (res) => {
           const idxPos = this.xs_acts.findIndex(
             (p) => p._id === xsact._id

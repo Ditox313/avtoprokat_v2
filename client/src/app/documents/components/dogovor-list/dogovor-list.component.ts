@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -16,7 +16,7 @@ const STEP = 3
 })
 
 
-export class DogovorListComponent implements OnInit {
+export class DogovorListComponent implements OnInit, OnDestroy {
   @Input() clientId: string | undefined;
   xs_dogovors: Dogovor[] = [];
   offset: any = 0;
@@ -24,23 +24,33 @@ export class DogovorListComponent implements OnInit {
   noMoreDogovors: Boolean = false;
   loading = false;
   Sub!: Subscription;
-
+  subDelete$: Subscription;
 
 
   constructor(
-    private router: Router,
     private documentsServices: DocumentsService,
   ) { }
 
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     this.fetch()
+  }
+
+
+  ngOnDestroy(): void {
+    if (this.Sub)
+    {
+      this.Sub.unsubscribe();
+    }
+    if (this.subDelete$)
+    {
+      this.subDelete$.unsubscribe();
+    }
   }
 
 
 
   public fetch() {
-    // Отправляем параметры для пагинации
     const params = {
       offset: this.offset,
       limit: this.limit,
@@ -66,7 +76,7 @@ export class DogovorListComponent implements OnInit {
     const dicision = window.confirm(`Удалить договор?`);
 
     if (dicision) {
-      this.documentsServices.delete_dogovor(xsdogovor._id).subscribe(
+      this.subDelete$ = this.documentsServices.delete_dogovor(xsdogovor._id).subscribe(
         (res) => {
           const idxPos = this.xs_dogovors.findIndex(
             (p) => p._id === xsdogovor._id

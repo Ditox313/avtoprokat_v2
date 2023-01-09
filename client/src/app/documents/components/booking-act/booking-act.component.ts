@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Booking, Client, User } from 'src/app/shared/types/interfaces';
 import pdfMake from "pdfmake/build/pdfmake";
@@ -11,13 +11,14 @@ import { convert as convertNumberToWordsRu } from 'number-to-words-ru';
 import { DatePipe } from '@angular/common';
 import { DocumentsService } from '../../services/documents.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-booking-act',
   templateUrl: './booking-act.component.html',
   styleUrls: ['./booking-act.component.css']
 })
-export class BookingActComponent implements OnInit {
+export class BookingActComponent implements OnInit, OnDestroy {
 
   bookingId!: string;
   actualBooking!: Booking;
@@ -27,6 +28,11 @@ export class BookingActComponent implements OnInit {
   xs_actual_date: any;
   @ViewChild('content') content!: ElementRef;
   xsNumberSummAuto: string = '';
+
+  subParams$: Subscription;
+  getUser$: Subscription;
+  subGetById$: Subscription;
+  createAct$: Subscription;
 
   constructor(
     private bookings: BookingsService,
@@ -38,30 +44,31 @@ export class BookingActComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    // Достаем параметры
-    this.rote.params.subscribe((params: any) => {
-      this.bookingId = params['id'];
-    });
-
+    this.getParams();
+    this.getUser();
+    this.getById();
     this.xs_actual_date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
-
-    this.bookings.getById(this.bookingId).subscribe((res) => {
-      this.actualBooking = res;
-      this.xsNumberSummAuto = convertNumberToWordsRu(this.actualBooking.car.price_ocenka)
-      this.actualClient = res.client
-
-      this.yearDate = new Date(this.actualBooking.date);
-      this.yearDate.setDate(this.yearDate.getDate() + 365);
-    });
-
-
-    this.auth.get_user().subscribe(user => {
-      this.actualUser = user;
-    })
-
-
   }
+
+  ngOnDestroy(): void {
+    if (this.subParams$)
+    {
+      this.subParams$.unsubscribe();
+    }
+    if (this.getUser$)
+    {
+      this.getUser$.unsubscribe();
+    }
+    if (this.subGetById$)
+    {
+      this.subGetById$.unsubscribe();
+    }
+    if (this.createAct$)
+    {
+      this.createAct$.unsubscribe();
+    }
+  }
+
 
   generatePDF() {
     var html = htmlToPdfmake(this.content.nativeElement.innerHTML);
@@ -81,14 +88,37 @@ export class BookingActComponent implements OnInit {
     };
 
     pdfMake.createPdf(docDefinition).open();
-
   } 
+
+  getParams()
+  {
+    this.subParams$ = this.rote.params.subscribe((params: any) => {
+      this.bookingId = params['id'];
+    });
+  }
+
+  getUser()
+  {
+    this.getUser$ = this.auth.get_user().subscribe(user => {
+      this.actualUser = user;
+    })
+  }
+
+  getById()
+  {
+    this.subGetById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
+      this.actualBooking = res;
+      this.xsNumberSummAuto = convertNumberToWordsRu(this.actualBooking.car.price_ocenka)
+      this.actualClient = res.client
+
+      this.yearDate = new Date(this.actualBooking.date);
+      this.yearDate.setDate(this.yearDate.getDate() + 365);
+    });
+  }
 
 
 
   createAct() {
-
-
     let administrator = this.actualUser;
     delete administrator.password;
 
@@ -103,7 +133,7 @@ export class BookingActComponent implements OnInit {
     }
 
     
-    this.documentService.create_booking_act(act).subscribe((act) => {
+    this.createAct$ = this.documentService.create_booking_act(act).subscribe((act) => {
       MaterialService.toast('Акт сохранен');
       this.router.navigate(['/view-booking', this.actualBooking._id]);
     });

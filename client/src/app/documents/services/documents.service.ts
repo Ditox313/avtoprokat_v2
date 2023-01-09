@@ -84,35 +84,6 @@ export class DocumentsService {
   }
 
 
-  // Обновим свойство state у всех старых договоров при создании нового
-  // update_state(clientId: string): Observable<any> {
-  //   const xs_data = {
-  //     clientId: clientId
-  //   }
-  //   return this.http.patch<any>(`/api/documents/clear_state`, xs_data);
-  // }
-
-  // Получаем список всех позиций
-  // fetch(params: any = {}): Observable<Booking[]> {
-  //   return this.http.get<Booking[]>('/api/bookings', {
-  //     params: new HttpParams({
-  //       fromObject: params,
-  //     }),
-  //   });
-  // }
-
-  
-
-  // update(id: string, xsbooking: Booking): Observable<Booking> {
-  //   xsbooking._id = id;
-  //   return this.http.patch<Booking>(`/api/bookings/${id}`, xsbooking);
-  // }
-
-
-  // Удаление
-  // delete(id: any): Observable<any> {
-  //   return this.http.delete<any>(`/api/bookings/${id}`);
-  // }
 
 
 }

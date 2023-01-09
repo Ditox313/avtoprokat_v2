@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client, Dogovor, User } from 'src/app/shared/types/interfaces';
 import pdfMake from "pdfmake/build/pdfmake";
@@ -11,13 +11,14 @@ import { DocumentsService } from '../../services/documents.service';
 import { DatePipe } from '@angular/common';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-client-dogovor',
   templateUrl: './add-client-dogovor.component.html',
   styleUrls: ['./add-client-dogovor.component.css']
 })
-export class AddClientDogovorComponent implements OnInit {
+export class AddClientDogovorComponent implements OnInit, OnDestroy {
   datePipeString: string;
   ClientId!: string;
   actualClient!: Client;
@@ -26,6 +27,14 @@ export class AddClientDogovorComponent implements OnInit {
   yearDate: any;
   xs_actual_date: any;
   @ViewChild('content') content!: ElementRef;
+
+  subParams$: Subscription;
+  subClientgetById$: Subscription;
+  subGetUser$: Subscription;
+  subGetDogovorsById$: Subscription;
+  subCreateDogovor$: Subscription;
+
+
 
   constructor(
     private clients: ClientsService,
@@ -38,24 +47,62 @@ export class AddClientDogovorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.rote.params.subscribe((params: any) => {
+    this.getParams();
+    this.getClientById();
+    this.getUser();
+    this.getDogovorsById();
+    this.xs_actual_date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+  }
+
+  ngOnDestroy(): void {
+    if (this.subParams$)
+    {
+      this.subParams$.unsubscribe();
+    }
+    if (this.subClientgetById$)
+    {
+      this.subClientgetById$
+    }
+    if (this.subGetUser$)
+    {
+      this.subGetUser$.unsubscribe();
+    }
+    if (this.subGetDogovorsById$)
+    {
+      this.subGetDogovorsById$.unsubscribe();
+    }
+    if (this.subCreateDogovor$)
+    {
+      this.subCreateDogovor$.unsubscribe();
+    }
+  }
+
+  getParams()
+  {
+    this.subParams$ = this.rote.params.subscribe((params: any) => {
       this.ClientId = params['id'];
     });
+  }
 
-    this.clients.getById(this.ClientId).subscribe((res) => {
+  getClientById()
+  {
+    this.subClientgetById$ = this.clients.getById(this.ClientId).subscribe((res) => {
       this.actualClient = res;
       this.yearDate = new Date(this.xs_actual_date);
       this.yearDate.setDate(this.yearDate.getDate() + 365);
     });
+  }
 
-
-    this.auth.get_user().subscribe(user => {
+  getUser()
+  {
+    this.subGetUser$ = this.auth.get_user().subscribe(user => {
       this.actualUser = user;
     })
+  }
 
-    this.xs_actual_date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
-
-    this.documentsServices.getDogovorsById(this.ClientId).subscribe((res) => {
+  getDogovorsById()
+  {
+    this.subGetDogovorsById$ = this.documentsServices.getDogovorsById(this.ClientId).subscribe((res) => {
       this.clientDogovors = res;
     });
   }
@@ -92,8 +139,6 @@ export class AddClientDogovorComponent implements OnInit {
 
   createDogovor()
   {
-
-  
     let administrator = this.actualUser;
     delete administrator.password;
     
@@ -108,7 +153,7 @@ export class AddClientDogovorComponent implements OnInit {
       state: 'active'
     }
 
-    this.documentsServices.create_dogovor(dogovor).subscribe((dogovor) => {
+    this.subCreateDogovor$ = this.documentsServices.create_dogovor(dogovor).subscribe((dogovor) => {
       MaterialService.toast('Договор создан');
       this.router.navigate(['/show-client/edit/', this.actualClient._id]);
     });
