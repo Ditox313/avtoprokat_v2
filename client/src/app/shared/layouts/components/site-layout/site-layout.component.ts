@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
-import { AfterViewInit, ViewChild, Component, ElementRef, OnInit} from '@angular/core';
+import { AfterViewInit, ViewChild, Component, ElementRef, OnInit, OnDestroy} from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/shared/types/interfaces';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,12 +11,10 @@ import { User } from 'src/app/shared/types/interfaces';
   styleUrls: ['./site-layout.component.css'],
 })
 
-// AfterViewInit интерфейс реализующий AfterViewInit метод, который покажет когда DOM компонента будет полностью загружен
-export class SiteLayoutComponent implements OnInit, AfterViewInit {
+export class SiteLayoutComponent implements OnInit, OnDestroy {
   currentUser!: any;
-
   @ViewChild('floating') floatingRef!: ElementRef;
-
+  subGetUser$: Subscription;
 
   
 
@@ -23,9 +22,21 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit {
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.auth.get_user().subscribe(user => {
+    this.getUser();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subGetUser$)
+    {
+      this.subGetUser$.unsubscribe();
+    }
+  }
+
+  getUser()
+  {
+    this.subGetUser$ = this.auth.get_user().subscribe(user => {
       this.currentUser = user;
-      
+
       this.links.push({
         url: `/account/${this.currentUser._id}`,
         name: 'Настройки',
@@ -33,10 +44,7 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit {
     })
   }
 
-  // Метод будет вызван когда загрузится все DOM дерево
-  ngAfterViewInit(): void {
-    // MaterialService.initializeFloatingButton(this.floatingRef);
-  }
+
 
   // Массив с ссылками навигации сайдбара
   links: any = [
