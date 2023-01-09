@@ -1,13 +1,11 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
-  OnChanges,
+  OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BookingsService } from 'src/app/booking/services/bookings.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -19,7 +17,7 @@ import { PaysService } from '../../services/pays.service';
   templateUrl: './add-pay.component.html',
   styleUrls: ['./add-pay.component.css']
 })
-export class AddPayComponent implements OnInit {
+export class AddPayComponent implements OnInit, OnDestroy {
   bookingId!: string;
   form!: FormGroup;
   actualBooking!: Booking;
@@ -54,28 +52,62 @@ export class AddPayComponent implements OnInit {
     },
   ]
 
+
+  subParams$: Subscription;
+  subGetByIdBooking$: Subscription;
+  subGetPaysByBookingId$: Subscription;
+  subCreatePay$: Subscription;
   
 
   constructor(private router: Router, private rote: ActivatedRoute, private bookings: BookingsService, private pays: PaysService) { }
 
   ngOnInit(): void {
+    this.initForm();
+    this.getParams();
+    this.getByIdBooking();
+    MaterialService.updateTextInputs();
+  }
 
+  ngOnDestroy(): void {
+    if (this.subParams$)
+    {
+      this.subParams$.unsubscribe();
+    }
+    if (this.subGetByIdBooking$)
+    {
+      this.subGetByIdBooking$.unsubscribe();
+    }
+    if (this.subGetPaysByBookingId$)
+    {
+      this.subGetPaysByBookingId$.unsubscribe();
+    }
+    if (this.subCreatePay$)
+    {
+      this.subCreatePay$.unsubscribe();
+    }
+  }
 
+  initForm()
+  {
     this.form = new FormGroup({
       arenda: new FormControl('',),
       typePayArenda: new FormControl('',),
       zalog: new FormControl('',),
       typePayZalog: new FormControl('',),
     });
-    
+  }
 
-    //Достаем параметры
-    this.rote.params.subscribe((params: any) => {
+
+  getParams()
+  {
+    this.subParams$ = this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
     });
+  }
 
-
-    this.bookings.getById(this.bookingId).subscribe((res) => {
+  getByIdBooking()
+  {
+    this.subGetByIdBooking$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
       this.summa.car = res.car;
       this.summa.tariff = res.tariff;
@@ -89,24 +121,18 @@ export class AddPayComponent implements OnInit {
       // Высчитываем какой тариф выбран
       this.checkedTarif(this.summa.booking_days)
 
-      this.pays.getPaysByBookingId(this.bookingId).subscribe((res) => {
+      this.subGetPaysByBookingId$ = this.pays.getPaysByBookingId(this.bookingId).subscribe((res) => {
         this.xspays = res;
       });
 
-
-
-      
-
-      if (+this.summa.dop_hours > 0)
-      {
-        // Подружаем сумму залога и аренды в поля
+      if (+this.summa.dop_hours > 0) {
+        // Подгружаем сумму залога и аренды в поля
         this.form.patchValue({
           arenda: +res.summa + (+this.summa.car.price_dop_hour * (+this.summa.dop_hours)),
           zalog: res.booking_zalog
         });
       }
-      else
-      {
+      else {
         // Подружаем сумму залога и аренды в поля
         this.form.patchValue({
           arenda: res.summa,
@@ -114,11 +140,6 @@ export class AddPayComponent implements OnInit {
         });
       }
     });
-
-
-    
-
-    MaterialService.updateTextInputs();
   }
 
 
@@ -144,7 +165,6 @@ export class AddPayComponent implements OnInit {
 
 
   onSubmit() {
-
     if (this.form.value.arenda && !this.form.value.zalog)
     {
       const pay = {
@@ -154,9 +174,8 @@ export class AddPayComponent implements OnInit {
         bookingId: this.bookingId,
       };
 
-      
 
-      this.pays.create(pay).subscribe((pay) => {
+      this.subCreatePay$ = this.pays.create(pay).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
         this.router.navigate(['/view-booking', this.bookingId]);
       });
@@ -171,7 +190,7 @@ export class AddPayComponent implements OnInit {
       };
 
 
-      this.pays.create(pay).subscribe((pay) => {
+      this.subCreatePay$ =  this.pays.create(pay).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
         this.router.navigate(['/view-booking', this.bookingId]);
       });
@@ -180,7 +199,6 @@ export class AddPayComponent implements OnInit {
 
     if (this.form.value.arenda && this.form.value.zalog)
     {
-
       const pay = {
         vid: 'Аренда',
         pricePay: this.form.value.arenda,
@@ -196,7 +214,7 @@ export class AddPayComponent implements OnInit {
       };
 
 
-      this.pays.create(pay).pipe(
+      this.subCreatePay$ = this.pays.create(pay).pipe(
         map(
           res => {
             this.pays.create(pay_2).pipe().subscribe((pay) => {
@@ -209,9 +227,6 @@ export class AddPayComponent implements OnInit {
       ).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
       });
-      
     }
-    
   }
-
 }
