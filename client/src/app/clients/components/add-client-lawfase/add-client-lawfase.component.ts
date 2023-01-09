@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { ClientsService } from '../../services/clients.service';
 
@@ -9,12 +10,11 @@ import { ClientsService } from '../../services/clients.service';
   templateUrl: './add-client-lawfase.component.html',
   styleUrls: ['./add-client-lawfase.component.css']
 })
-export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
+export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
-  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
   @ViewChild('input2') inputRef2!: ElementRef;
   @ViewChild('input3') inputRef3!: ElementRef;
@@ -22,8 +22,6 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
 
   form: any;
   breadcrumbsId!: any;
-
-
 
   // Храним фалы загруженных документов
   doc_1_img!: File;
@@ -37,16 +35,28 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
   doc_3_img_preview: any = '';
   doc_4_img_preview: any = '';
 
+
+  subGetParams$: Subscription;
+  subCreateClient$: Subscription;
+
+
   constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute,) { }
 
   ngOnInit(): void {
+    this.initForm();
+    this.getParams();
+    MaterialService.updateTextInputs();
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       short_name: new FormControl('', [Validators.required]),
       inn: new FormControl('', [Validators.required]),
       kpp: new FormControl('', [Validators.required]),
-      ogrn: new FormControl('', ),
-      ogrn_ip: new FormControl('', ),
+      ogrn: new FormControl('',),
+      ogrn_ip: new FormControl('',),
       svidetelstvo_ip: new FormControl('',),
       law_address: new FormControl('', [Validators.required]),
       fact_address: new FormControl('', [Validators.required]),
@@ -63,14 +73,25 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
       kor_rc_number: new FormControl('', [Validators.required]),
       bik_number: new FormControl('', [Validators.required]),
       name_bank: new FormControl('', [Validators.required]),
-      
     });
+  }
 
-    this.rote.params.subscribe((params: any) => {
+  getParams()
+  {
+    this.subGetParams$ = this.rote.params.subscribe((params: any) => {
       this.breadcrumbsId = params['id']
     });
+  }
 
-    MaterialService.updateTextInputs();
+  ngOnDestroy(): void {
+    if (this.subGetParams$)
+    {
+      this.subGetParams$.unsubscribe();
+    }
+    if (this.subCreateClient$)
+    {
+      this.subCreateClient$.unsubscribe();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -79,14 +100,9 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
 
 
   }
-  // Валидация
-  validate() { }
 
 
   onSubmit() {
-
-
-
     const client = {
       name: this.form.value.name,
       short_name: this.form.value.short_name,
@@ -112,9 +128,8 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
       name_bank: this.form.value.name_bank,
     };
 
-    
-
-    this.clients
+  
+    this.subCreateClient$ = this.clients
       .create_lawfase(
         client,
         this.doc_1_img,
@@ -131,7 +146,6 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
         else {
           this.router.navigate(['/clients-page']);
         }
-
       });
   }
 
@@ -214,5 +228,4 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit {
   triggerClick4() {
     this.inputRef4.nativeElement.click();
   }
-
 }

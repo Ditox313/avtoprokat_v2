@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 import { Client, Client_Law_Fase } from 'src/app/shared/types/interfaces';
 
 
-// Даем возможность инжектировать сервисы в класс
+
 @Injectable({
-  providedIn: 'root', //Автоматичеки регистриует сервис в главном модуле
+  providedIn: 'root', 
 })
 export class ClientsService {
   constructor(private http: HttpClient) {}

@@ -1,16 +1,12 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Client, Client_Law_Fase } from 'src/app/shared/types/interfaces';
 import { ClientsService } from '../../services/clients.service';
-
-
 import { Store, select } from '@ngrx/store';
 import {
   clientsAddAction,
-  clientsDeleteAction,
 } from '../../store/actions/clients.action';
 
 
@@ -23,11 +19,13 @@ import {
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.css']
 })
-export class ClientsComponent implements OnInit, AfterViewInit {
+export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('tabs') tabs!: ElementRef;
   Sub!: Subscription;
   Sub_clients_lawfase!: Subscription;
+  subDeleteClient$: Subscription;
+  subDeleteClientLawfase$: Subscription;
   xsclients: Client[] = []
   xsclients_lawfase: Client_Law_Fase[] = []
   offset: any = 0
@@ -44,6 +42,21 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     this.fetch_lawfase()   
   }
 
+  ngOnDestroy(): void {
+    if (this.subDeleteClient$)
+    {
+      this.subDeleteClient$.unsubscribe();
+    }
+    if (this.subDeleteClientLawfase$)
+    {
+      this.subDeleteClientLawfase$.unsubscribe();
+    }
+    if (this.Sub_clients_lawfase)
+    {
+      this.Sub_clients_lawfase.unsubscribe();
+    }
+  }
+
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
@@ -54,7 +67,6 @@ export class ClientsComponent implements OnInit, AfterViewInit {
 
   public fetch()
   {
-    // Отправляем параметры для пагинации
     const params = {
       offset: this.offset,
       limit: this.limit
@@ -77,7 +89,6 @@ export class ClientsComponent implements OnInit, AfterViewInit {
 
   public fetch_lawfase()
   {
-    // Отправляем параметры для пагинации
     const params = {
       offset: this.offset_lawfase,
       limit: this.limit_lawfase
@@ -117,7 +128,6 @@ export class ClientsComponent implements OnInit, AfterViewInit {
 
 
 
-
   
   onDeleteCar(event: Event, xsclient: Client): void
   {
@@ -127,10 +137,9 @@ export class ClientsComponent implements OnInit, AfterViewInit {
     const dicision = window.confirm(`Удалить клиента?`);
 
     if (dicision) {
-      this.clients.delete(xsclient._id).subscribe(res => {
+      this.subDeleteClient$ = this.clients.delete(xsclient._id).subscribe(res => {
         const idxPos = this.xsclients.findIndex((p) => p._id === xsclient._id);
         this.xsclients.splice(idxPos, 1);
-        // this.store.dispatch(clientsAddAction({ clients: this.xsclients }));
         MaterialService.toast(res.message)
         
       }, error => {

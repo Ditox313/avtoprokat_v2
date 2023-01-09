@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Client_Law_Fase } from 'src/app/shared/types/interfaces';
 import { ClientsService } from '../../services/clients.service';
 import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,12 +13,11 @@ import { Location } from '@angular/common';
   templateUrl: './show-client-lawfase.component.html',
   styleUrls: ['./show-client-lawfase.component.css']
 })
-export class ShowClientLawfaseComponent implements OnInit, AfterViewInit {
+export class ShowClientLawfaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
-  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
   @ViewChild('input2') inputRef2!: ElementRef;
   @ViewChild('input3') inputRef3!: ElementRef;
@@ -27,8 +27,9 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit {
   breadcrumbsId!: any;
   clientId!: string;
   xsActualClient!: Client_Law_Fase;
-
-
+  subGetByIdLawfase$: Subscription;
+  subParams$: Subscription;
+  subUpdateClientLawfase$: Subscription;
 
   // Храним фалы загруженных документов
   doc_1_img!: File;
@@ -45,6 +46,34 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit {
   constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
+    this.initForm();
+    this.getParams();
+    this.getByIdLawfase();
+    MaterialService.updateTextInputs();
+  }
+
+  ngAfterViewInit(): void {
+    MaterialService.initTabs(this.tabs.nativeElement);
+    MaterialService.updateTextInputs();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subGetByIdLawfase$)
+    {
+      this.subGetByIdLawfase$.unsubscribe();
+    }
+    if (this.subParams$)
+    {
+      this.subParams$.unsubscribe();
+    }
+    if (this.subUpdateClientLawfase$)
+    {
+      this.subUpdateClientLawfase$.unsubscribe();
+    }
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       short_name: new FormControl('', [Validators.required]),
@@ -69,13 +98,19 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit {
       bik_number: new FormControl('', [Validators.required]),
       name_bank: new FormControl('', [Validators.required]),
     });
+  }
 
-    // Достаем параметры
-    this.rote.params.subscribe((params) => {
+  getParams()
+  {
+    this.subParams$ = this.rote.params.subscribe((params) => {
       this.clientId = params['id'];
     });
 
-    this.clients.getByIdLawfase(this.clientId).subscribe((res) => {
+  }
+
+  getByIdLawfase()
+  {
+    this.subGetByIdLawfase$ = this.clients.getByIdLawfase(this.clientId).subscribe((res) => {
       this.xsActualClient = res;
 
       if (res.doc_1_img) {
@@ -119,22 +154,8 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit {
         name_bank: res.name_bank,
       });
     });
-
-    this.rote.params.subscribe((params: any) => {
-      this.breadcrumbsId = params['id']
-    });
-
-    MaterialService.updateTextInputs();
   }
 
-  ngAfterViewInit(): void {
-    MaterialService.initTabs(this.tabs.nativeElement);
-    MaterialService.updateTextInputs();
-
-
-  }
-  // Валидация
-  validate() { }
 
 
   isGoBack() {
@@ -169,8 +190,7 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit {
     };
 
 
-
-    this.clients
+    this.subUpdateClientLawfase$ = this.clients
       .update_lawfase(
         this.clientId,
         client,

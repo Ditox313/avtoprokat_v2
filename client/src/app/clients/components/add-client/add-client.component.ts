@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { MaterialDatepicker } from 'src/app/shared/types/interfaces';
 import { ClientsService } from '../../services/clients.service';
 
 
@@ -11,11 +11,10 @@ import { ClientsService } from '../../services/clients.service';
   templateUrl: './add-client.component.html',
   styleUrls: ['./add-client.component.css'],
 })
-export class AddClientComponent implements OnInit, AfterViewInit {
+export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
-  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
   @ViewChild('input2') inputRef2!: ElementRef;
   @ViewChild('input3') inputRef3!: ElementRef;
@@ -23,8 +22,6 @@ export class AddClientComponent implements OnInit, AfterViewInit {
 
   form: any;
   breadcrumbsId!: any;
-
-
 
   // Храним фалы загруженных документов
   passport__1!: File;
@@ -38,9 +35,35 @@ export class AddClientComponent implements OnInit, AfterViewInit {
   prava_1_preview: any = '';
   prava_2_preview: any = '';
 
+  subGetParams$: Subscription;
+  subClientCreate$: Subscription;
+
   constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute,) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.getParams();
+    MaterialService.updateTextInputs();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subGetParams$)
+    {
+      this.subGetParams$.unsubscribe();
+    }
+    if (this.subClientCreate$)
+    {
+      this.subClientCreate$.unsubscribe();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    MaterialService.initTabs(this.tabs.nativeElement);
+    MaterialService.updateTextInputs();
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       surname: new FormControl('', [Validators.required]),
@@ -66,28 +89,19 @@ export class AddClientComponent implements OnInit, AfterViewInit {
       phone_4_dop_name: new FormControl('', []),
       phone_4_dop_number: new FormControl('', []),
     });
+  }
 
-    this.rote.params.subscribe((params: any) => {
-        this.breadcrumbsId =  params['id']
+
+  getParams()
+  {
+    this.subGetParams$ = this.rote.params.subscribe((params: any) => {
+      this.breadcrumbsId = params['id']
     });
-
-    MaterialService.updateTextInputs();
-    
   }
 
-  ngAfterViewInit(): void {
-    MaterialService.initTabs(this.tabs.nativeElement);
-    MaterialService.updateTextInputs();
 
 
-  }
-  // Валидация
-  validate() {}
-
-  // Отправка формы
   onSubmit() {
-    // this.form.disable();
-    // Создаем авто
     const client = {
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -114,7 +128,7 @@ export class AddClientComponent implements OnInit, AfterViewInit {
       phone_4_dop_number: this.form.value.phone_4_dop_number,
     };
 
-    this.clients
+    this.subClientCreate$ = this.clients
       .create(
         client,
         this.passport__1,

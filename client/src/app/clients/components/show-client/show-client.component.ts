@@ -1,33 +1,31 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { ClientsService } from '../../services/clients.service';
-import { Client, MaterialDatepicker } from 'src/app/shared/types/interfaces';
+import { Client } from 'src/app/shared/types/interfaces';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { DogovorListComponent } from '../../../documents/components/dogovor-list/dogovor-list.component'
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-show-client',
   templateUrl: './show-client.component.html',
   styleUrls: ['./show-client.component.css'],
 })
-export class ShowClientComponent implements OnInit, AfterViewInit {
+export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
-  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
   @ViewChild('input') inputRef!: ElementRef;
   @ViewChild('input2') inputRef2!: ElementRef;
   @ViewChild('input3') inputRef3!: ElementRef;
   @ViewChild('input4') inputRef4!: ElementRef;
   
   
-
   clientId!: string;
   xsActualClient!: Client;
   form: any;
-
 
 
   // Храним фалы загруженных документов
@@ -42,17 +40,44 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
   prava_1_preview: any = '';
   prava_2_preview: any = '';
 
+  subParams$: Subscription;
+  subGetByClientId$: Subscription;
+  subUpdateClient$: Subscription;
 
   constructor(
     private clients: ClientsService,
-    private router: Router,
     private rote: ActivatedRoute,
     public datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.getParams();
+    this.getByClientId(); 
+    MaterialService.updateTextInputs();
+  }
 
-    
+  ngOnDestroy(): void {
+    if (this.subParams$)
+    {
+      this.subParams$.unsubscribe();
+    }
+    if (this.subGetByClientId$)
+    {
+      this.subGetByClientId$.unsubscribe();
+    }
+    if (this.subUpdateClient$)
+    {
+      this.subUpdateClient$.unsubscribe();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    MaterialService.initTabs(this.tabs.nativeElement);
+  }
+
+  initForm()
+  {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       surname: new FormControl('', [Validators.required]),
@@ -78,15 +103,20 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
       phone_4_dop_name: new FormControl('', []),
       phone_4_dop_number: new FormControl('', []),
     });
+  }
 
-    // Достаем параметры
-    this.rote.params.subscribe((params) => {
+  getParams()
+  {
+    this.subParams$ = this.rote.params.subscribe((params) => {
       this.clientId = params['id'];
     });
+  }
 
-    this.clients.getById(this.clientId).subscribe((res) => {
+  getByClientId()
+  {
+    this.subGetByClientId$ = this.clients.getById(this.clientId).subscribe((res) => {
       this.xsActualClient = res;
-      
+
 
       if (res.passport_1_img) {
         this.passport_1_preview = res.passport_1_img;
@@ -130,20 +160,11 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
         phone_4_dop_number: res.phone_4_dop_number,
       });
     });
-
-    MaterialService.updateTextInputs();
-    
   }
 
-  ngAfterViewInit(): void {
-    MaterialService.initTabs(this.tabs.nativeElement);
-  }
-  // Валидация
-  validate() {}
 
-  // Отправка формы
+
   onSubmit() {
-    // this.form.disable();
     const client = {
       name: this.form.value.name,
       surname: this.form.value.surname,
@@ -170,7 +191,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit {
       phone_4_dop_number: this.form.value.phone_4_dop_number,
     };
 
-    this.clients
+    this.subUpdateClient$ = this.clients
       .update(
         this.clientId,
         client,
