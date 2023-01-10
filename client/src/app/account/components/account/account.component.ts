@@ -68,6 +68,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   onSubmitProfile() {
+    
     const user = {
       name: this.form.value.name,
       secondName: this.form.value.secondName,
