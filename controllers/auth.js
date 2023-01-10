@@ -138,7 +138,12 @@ module.exports.update = async function (req, res) {
 
 
         const updated = req.body;
-        updated.password = bcrypt.hashSync(req.body.password, salt);
+        if (req.body.password !== null)
+        {
+            updated.password = bcrypt.hashSync(req.body.password, salt);
+        }
+
+        
 
 
 

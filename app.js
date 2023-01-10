@@ -14,6 +14,9 @@ const keys = require('./config/keys.js');
 const passport = require('passport');
 const app = express();
 
+// Если не работает path при деплое
+const path = require('path');
+
 
 // Регистрируем модуль bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,6 +31,16 @@ mongoose.connect(keys.mongoUri, { useNewUrlParser: true, useUnifiedTopology: tru
     .catch(function(error) {
         console.log(error);
     });
+
+
+
+// mongoose.connect('mongodb://localhost/avtoprokat0513', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+//     .then(function () {
+//         console.log('Мы подключились к БД приложения!!!');
+//     })
+//     .catch(function (error) {
+//         console.log(error);
+//     });
 
 
 

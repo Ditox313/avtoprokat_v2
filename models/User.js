@@ -15,7 +15,7 @@ const userSchema = new Schema({
     // Создаем поле паролем юзера
     password: {
         type: String,
-        required: true,
+        required: false,
     },
 
 
