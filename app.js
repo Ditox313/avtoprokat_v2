@@ -34,13 +34,6 @@ mongoose.connect(keys.mongoUri, { useNewUrlParser: true, useUnifiedTopology: tru
 
 
 
-// mongoose.connect('mongodb://localhost/avtoprokat0513', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
-//     .then(function () {
-//         console.log('Мы подключились к БД приложения!!!');
-//     })
-//     .catch(function (error) {
-//         console.log(error);
-//     });
 
 
 
