@@ -35,12 +35,6 @@ mongoose.connect(keys.mongoUri, { useNewUrlParser: true, useUnifiedTopology: tru
 
 
 
-
-
-
-
-
-
 // Регистрируем Morgan 
 app.use(morgan('dev'));
 

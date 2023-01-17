@@ -21,6 +21,7 @@ import '@angular/common/locales/global/ru'
 import { PaysModule } from './pays/pays.module';
 import { AccountModule } from './account/account.module';
 import { DocumentsModule } from './documents/documents.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 
@@ -47,7 +48,13 @@ import { DocumentsModule } from './documents/documents.module';
     }),
     PaysModule,
     AccountModule,
-    DocumentsModule
+    DocumentsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     {
